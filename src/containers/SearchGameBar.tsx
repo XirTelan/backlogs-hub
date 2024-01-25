@@ -1,7 +1,7 @@
 "use client";
 import GameCard from "@/components/GameCard/GameCard";
 import useDebounce from "@/hooks/useDebounce";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 export default function SearchGameBar({ onClose }: searchGameBarProps) {
   const [inputText, setInputText] = useState<string>("");
@@ -18,7 +18,7 @@ export default function SearchGameBar({ onClose }: searchGameBarProps) {
     async function search() {
       setLoading(true);
       const data = await fetch(`/api/gameSearch?game=${debounceSearch}`).then(
-        (res) => res.json()
+        (res) => res.json(),
       );
 
       setResults(data.data);
@@ -30,16 +30,31 @@ export default function SearchGameBar({ onClose }: searchGameBarProps) {
   return (
     <section>
       <div>SearchGameBar</div>
-      <input
-        type="text"
-        value={inputText}
-        onChange={inputHandler}
-        className=" bg-slate-800 w-full text-red-500"
-      />
-      <button onClick={() => onClose()}>Close</button>
-      {loading && <div>Loading</div>}
-      {!loading &&
-        results?.map((item) => <GameCard key={item.game_id} item={item} />)}
+      <div className="mb-1 flex">
+        <div className="flex items-center  rounded bg-slate-800 p-1">
+          <input
+            type="text"
+            value={inputText}
+            onChange={inputHandler}
+            className="bg-slate-800"
+          />
+          {/* <div className="rounded bg-neutral-800 p-1 ms-1 text-xs">HLTB</div> */}
+        </div>
+        <button onClick={() => onClose()}>Close</button>
+      </div>
+
+      <div className="flex ">
+        {loading && <div>Loading</div>}
+
+        <ul className="flex flex-wrap gap-4">
+          {!loading &&
+            results?.map((item) => (
+              <li key={item.game_id}>
+                <GameCard item={item} />
+              </li>
+            ))}
+        </ul>
+      </div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import GameCard from "@/components/GameCard/GameCard";
 import useDebounce from "@/hooks/useDebounce";
-import React, { Suspense, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 
 export default function SearchGameBar({ onClose }: searchGameBarProps) {
   const [inputText, setInputText] = useState<string>("");

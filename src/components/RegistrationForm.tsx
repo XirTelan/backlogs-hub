@@ -37,7 +37,7 @@ const RegistrationForm = () => {
           })}
         />
 
-        {errors.password && <p role="alert">{errors.password?.message}</p>}
+        {errors.password && `${errors.password?.message}`}
       </div>
       <button type="submit">Submit</button>
     </form>

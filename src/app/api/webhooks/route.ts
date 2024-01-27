@@ -1,10 +1,11 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { createUser } from "@/services/user";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
-  const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET; //whsec_dGUjKgV4rE7mKcBL/9h82TmixiiOTnve
+  const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
@@ -54,6 +55,15 @@ export async function POST(req: Request) {
 
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
   console.log("Webhook body:", body);
+  switch (eventType) {
+    case "user.created":
+      await createUser(payload.data);
+      break;
+    case "user.deleted":
+      break;
+    case "user.updated":
+      break;
+  }
 
   return new Response("", { status: 200 });
 }

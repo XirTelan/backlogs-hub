@@ -4,6 +4,7 @@ const UserSchema = new mongoose.Schema({
   userName: {
     type: String,
     required: true,
+    unique: true,
     maxlength: 24,
   },
   userClerkId: {
@@ -16,7 +17,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);

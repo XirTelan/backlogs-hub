@@ -13,7 +13,11 @@ export default async function NavBar() {
           <Link href={"/"}>Backlogs</Link>
         </div>
         <div className="me-2 flex h-6  w-6 items-center justify-center rounded-full bg-slate-400 text-sm">
-          <UserButton afterSignOutUrl="/" />
+          <UserButton
+            userProfileUrl={"/user-profile"}
+            userProfileMode="navigation"
+            afterSignOutUrl="/"
+          />
         </div>
       </div>
     </nav>

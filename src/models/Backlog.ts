@@ -14,7 +14,6 @@ const BacklogSchema = new mongoose.Schema({
   categories: {
     type: String,
   },
-  data
 });
 
 const Backlog =

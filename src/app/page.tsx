@@ -1,14 +1,17 @@
 import LogSignIn from "@/containers/LogSignIn";
 import Link from "next/link";
-import { SignInButton } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+import { SignInButton, auth, currentUser } from "@clerk/nextjs";
+
+export default async function Home() {
+  const user = await currentUser();
+  console.log("user", user);
+  if (user) {
+    redirect(`/user/${user.username}`);
+  }
+
   return (
-    <main className="flex min-h-screen  w-full flex-col items-center justify-center">
-      <div className="w-full">
-        <SignInButton />
-      </div>
-      <Link href={"/user/test/"}>My Profile</Link>
-    </main>
+    <section className="flex min-h-screen  w-full flex-col items-center justify-center"></section>
   );
 }

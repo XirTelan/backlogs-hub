@@ -1,20 +1,26 @@
 import mongoose from "mongoose";
 
-const BacklogSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    required: true,
-    maxlength: 24,
+const BacklogSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+      maxlength: 24,
+    },
+    backlogName: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    categories: [String],
+    visibility: {
+      type: String,
+    },
   },
-  backlogName: {
-    type: String,
-    required: true,
-    unique: true,
+  {
+    timestamps: true,
   },
-  categories: {
-    type: String,
-  },
-});
+);
 
 const Backlog =
   mongoose.models.Backlog || mongoose.model("Backlog", BacklogSchema);

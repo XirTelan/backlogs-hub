@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { backlogs } from "../../mock/data";
+import { backlogs } from "../../../mock/data";
 
 export default function Backloglist({ backlogId, addItem }: BackloglistProps) {
   const [categories, setCategories] = useState<string[] | null>(null);

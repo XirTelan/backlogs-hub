@@ -1,5 +1,5 @@
 "use client";
-import Backloglist from "@/containers/BacklogList";
+import Backloglist from "@/containers/Backlogs/BacklogList";
 import Feed from "@/containers/Feed";
 import GameBacklog from "@/containers/GameBacklog";
 import { useParams } from "next/navigation";

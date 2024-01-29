@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Backloglist from "./BacklogList";
+import Backloglist from "./Backlogs/BacklogList";
 import SearchGameBar from "./SearchGameBar";
 
 export default function GameBacklog() {

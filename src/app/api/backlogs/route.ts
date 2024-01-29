@@ -1,3 +1,4 @@
+import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import { getBacklogsByUserId } from "@/services/backlogs";
 import { NextRequest, NextResponse } from "next/server";
@@ -16,10 +17,20 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  console.log(request.body);
+  const data = await request.json();
+  try {
+    await dbConnect();
+    data.categories = data.categories.map(
+      (item: { category: string }) => item.category,
+    );
+    console.log("data", data);
 
-  const backlog = new Backlog({});
-  await backlog.save();
+    const backlog = new Backlog(data);
+    await backlog.save();
+    return NextResponse.json({ message: "created", backlog }, { status: 201 });
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
 
   return NextResponse.json({ message: `its work` }, { status: 200 });
 }

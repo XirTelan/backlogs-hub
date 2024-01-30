@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { backlogs } from "../../../mock/data";
 
@@ -29,7 +30,7 @@ export default function Backloglist({ backlogId, addItem }: BackloglistProps) {
       </div>
       <div>
         {itemsList.map((item) => (
-          <div>{item.title}</div>
+          <div key={item.title}>{item.title}</div>
         ))}
       </div>
     </>

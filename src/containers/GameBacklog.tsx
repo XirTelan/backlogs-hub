@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import Backloglist from "./Backlogs/BacklogList";
 import SearchGameBar from "./SearchGameBar";

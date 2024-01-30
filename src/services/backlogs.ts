@@ -6,7 +6,28 @@ import { NextResponse } from "next/server";
 export const getBacklogsByUserId = async (id: string) => {
   try {
     await dbConnect();
-    const backlogs = await Backlog.find({});
+    const backlogs = await Backlog.findById(id);
+    return NextResponse.json(backlogs);
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+};
+export const getBacklogsTitleByUserName = async (userName: string) => {
+  try {
+    await dbConnect();
+    const backlogs = await Backlog.find({ userName: userName }).select(
+      "backlogTitle",
+    );
+    return NextResponse.json(backlogs);
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+};
+
+export const getBacklogsByUserName = async (userName: string) => {
+  try {
+    await dbConnect();
+    const backlogs = await Backlog.find({ userName: userName });
     return NextResponse.json(backlogs);
   } catch (error) {
     throw new Error(`Error: ${error}`);

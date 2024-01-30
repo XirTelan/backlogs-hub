@@ -6,23 +6,16 @@ import React from "react";
 //   description: "All backlogs in one place",
 // };
 
-export default function Layout({
-  params: { userName, children },
-}: {
-  params: {
-    userName: string;
-    children: React.ReactNode;
-  };
-}) {
+export default function Layout({ children, params }) {
   return (
     <>
       <section className="flex w-full  flex-col items-center">
         <div className="flex w-full max-w-5xl flex-col p-4">
-          <div className=" flex w-full justify-between">
-            {userName}
-            <UserBacklogs userName={userName} />
+          <UserBacklogs userName={params.userName} />
+          <div>
+            <p>So...{JSON.stringify(params)}</p>
+            {children}
           </div>
-          {children}
         </div>
       </section>
     </>

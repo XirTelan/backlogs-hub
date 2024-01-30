@@ -1,30 +1,24 @@
-"use client";
+import BacklogHandler from "@/containers/Backlogs/BacklogHandler";
 import Backloglist from "@/containers/Backlogs/BacklogList";
 import Feed from "@/containers/Feed";
 import GameBacklog from "@/containers/GameBacklog";
-import { useParams } from "next/navigation";
+import { getBacklogsByUserId } from "@/services/backlogs";
 import React from "react";
 
-export default function Lists() {
-  const params = useParams();
-  const isActiveBacklog = params.list?.length > 0;
-
-  const renderBacklog = (backlog: string) => {
-    switch (backlog) {
-      case "Games":
-        return <GameBacklog />;
-        break;
-      default:
-        return (
-          <Backloglist addItem={() => console.log("add")} backlogId={backlog} />
-        );
-        break;
-    }
+export default async function Lists({
+  params: { userName, list },
+}: {
+  params: {
+    userName: string;
+    list: string[];
   };
+}) {
+  const isActiveBacklog = list?.length > 0;
+
   return (
-    <main className="flex w-full  flex-col items-center">
-      {JSON.stringify(params)}
-      {isActiveBacklog ? renderBacklog(params.list[0]) : <Feed />}
-    </main>
+    <div className="flex w-full  flex-col items-center">
+      <p>Page: backlogs/[[...list]] : {JSON.stringify(list)}</p>
+      {isActiveBacklog ? <BacklogHandler /> : <Feed />}
+    </div>
   );
 }

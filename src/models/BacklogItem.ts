@@ -22,7 +22,10 @@ const BacklogItemSchema = new mongoose.Schema({
   userFields: [DataItemSchema],
 });
 
+BacklogItemSchema.index({ backlogId: 1, title: 1 }, { unique: true });
+
 const BacklogItem =
-  mongoose.models.BacklogItem || mongoose.model("Backlog", BacklogItemSchema);
+  mongoose.models.BacklogItem ||
+  mongoose.model("BacklogItem", BacklogItemSchema);
 
 export default BacklogItem;

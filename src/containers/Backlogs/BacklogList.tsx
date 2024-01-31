@@ -10,7 +10,6 @@ export default function Backloglist({ backlogId, addItem }: BackloglistProps) {
     const res = backlogs.find((item) => item.title === backlogId);
     if (res?.categories) setCategories(res.categories);
     if (res?.data) setItemList(res?.data);
-    console.log(itemsList);
   }, [backlogId]);
 
   return (

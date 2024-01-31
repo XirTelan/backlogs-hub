@@ -1,21 +1,55 @@
 "use client";
-import { useParams, usePathname } from "next/navigation";
-import React, { useEffect } from "react";
+import { BacklogDTO } from "@/types";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-const BacklogHandler = (id: string) => {
-  const pathname = usePathname();
-  const params = useParams();
-  const getBacklogById = async (id: string) => {
-    const data = await fetch(`/api/backlogs/${id}`);
-  };
+const BacklogHandler = () => {
+  const { userName, list } = useParams();
+  const [currentBacklog, setCurrentBacklog] = useState<BacklogDTO>();
+  const [backlogData, setBacklogData] = useState([]);
 
-  useEffect(() => {}, [params]);
+  useEffect(() => {
+    if (!userName || !list) return;
+    const getBacklogInfo = async () => {
+      try {
+        const data = await fetch(
+          `/api/backlogs?userName=${userName}&backlogTitle=${list[0]}`,
+        ).then((data) => data.json());
+        setCurrentBacklog(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getBacklogInfo();
+  }, [userName, list]);
+
+  useEffect(() => {
+    if (!currentBacklog) return;
+    const getBacklogData = async () => {
+      try {
+        const res = await fetch(`/api/backlogs/${currentBacklog._id}/data`);
+        const data = await res.json();
+
+        setBacklogData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getBacklogData();
+  }, [currentBacklog]);
 
   return (
     <div>
       BacklogHandler
-      <div>{pathname};</div>
-      <div>{JSON.stringify(params)}</div>
+      <div className="flex ">
+        {/* <FilterBlock/> */}
+        {currentBacklog?.categories.map((item) => <div key={item}>{item}</div>)}
+      </div>
+      <div>
+        {backlogData &&
+          backlogData.length > 0 &&
+          backlogData.map((item) => <div key={item._id}>{item.title}</div>)}
+      </div>
     </div>
   );
 };

@@ -1,17 +1,12 @@
 "use client";
 import InputField from "@/components/InputField";
 import ListItemInput from "@/containers/ListItemInput";
-import { auth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-import { redirect, useRouter } from "next/navigation";
-import React, { useState } from "react";
-import {
-  Controller,
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 
 type FormData = {
   userId: string;
@@ -58,10 +53,8 @@ const CreateBacklog = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log("cur user", user?.id);
     if (user) data.userId = user?.id;
 
-    console.log("data", data);
     const res = await fetch("/api/backlogs/", {
       method: "POST",
       headers: {

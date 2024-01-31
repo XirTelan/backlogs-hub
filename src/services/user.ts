@@ -21,7 +21,7 @@ export async function createUser(data: any) {
     });
     await newUser.save();
   } catch (error) {
-    console.log("errors", error);
+    console.error("errors", error);
   }
   return NextResponse.json({ message: "User created" }, { status: 201 });
 }

@@ -1,6 +1,6 @@
 "use client";
 import { useParams, usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 const BacklogHandler = (id: string) => {
   const pathname = usePathname();
@@ -8,6 +8,8 @@ const BacklogHandler = (id: string) => {
   const getBacklogById = async (id: string) => {
     const data = await fetch(`/api/backlogs/${id}`);
   };
+
+  useEffect(() => {}, [params]);
 
   return (
     <div>

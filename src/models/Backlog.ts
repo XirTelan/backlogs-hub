@@ -9,27 +9,6 @@ const Field = new mongoose.Schema({
   },
 });
 
-const DataItem = new mongoose.Schema({
-  name: {
-    type: String,
-  },
-  value: {
-    type: String,
-  },
-});
-
-const BacklogItem = new mongoose.Schema({
-  title: {
-    type: String,
-    require: true,
-  },
-  category: {
-    type: String,
-    require: true,
-  },
-  userFields: [DataItem],
-});
-
 const BacklogSchema = new mongoose.Schema(
   {
     userId: {
@@ -58,7 +37,6 @@ const BacklogSchema = new mongoose.Schema(
       type: String,
       default: "public",
     },
-    data: [BacklogItem],
   },
   {
     timestamps: true,

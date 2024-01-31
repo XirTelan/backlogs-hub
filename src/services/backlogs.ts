@@ -24,6 +24,25 @@ export const getBacklogsTitleByUserName = async (userName: string) => {
   }
 };
 
+export const getUserBacklogByTitle = async ({
+  userName,
+  backlogTitle,
+}: {
+  userName: string;
+  backlogTitle: string;
+}) => {
+  try {
+    await dbConnect();
+    const backlogs = await Backlog.find({
+      userName: userName,
+      backlogTitle: backlogTitle,
+    });
+    return NextResponse.json(backlogs);
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+};
+
 export const getBacklogsByUserName = async (userName: string) => {
   try {
     await dbConnect();

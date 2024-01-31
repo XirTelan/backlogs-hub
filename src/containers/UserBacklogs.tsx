@@ -1,9 +1,7 @@
 import NavItem from "@/components/NavItem";
 import {
-  getBacklogsByUserId,
   getBacklogsTitleByUserName,
 } from "@/services/backlogs";
-import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 

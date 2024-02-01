@@ -2,18 +2,19 @@
 import { BacklogDTO } from "@/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import FilterBlock from "../FilterBlock";
 
 const BacklogHandler = () => {
-  const { userName, list } = useParams();
+  const { userName, backlog } = useParams();
   const [currentBacklog, setCurrentBacklog] = useState<BacklogDTO>();
   const [backlogData, setBacklogData] = useState([]);
 
   useEffect(() => {
-    if (!userName || !list) return;
+    if (!userName || !backlog) return;
     const getBacklogInfo = async () => {
       try {
         const data = await fetch(
-          `/api/backlogs?userName=${userName}&backlogTitle=${list[0]}`,
+          `/api/backlogs?userName=${userName}&backlogTitle=${backlog}`,
         ).then((data) => data.json());
         setCurrentBacklog(data);
       } catch (error) {
@@ -21,7 +22,7 @@ const BacklogHandler = () => {
       }
     };
     getBacklogInfo();
-  }, [userName, list]);
+  }, [userName, backlog]);
 
   useEffect(() => {
     if (!currentBacklog) return;
@@ -42,8 +43,9 @@ const BacklogHandler = () => {
     <div>
       BacklogHandler
       <div className="flex ">
-        {/* <FilterBlock/> */}
-        {currentBacklog?.categories.map((item) => <div key={item}>{item}</div>)}
+        {currentBacklog && (
+          <FilterBlock backlogCategories={currentBacklog?.categories} />
+        )}
       </div>
       <div>
         {backlogData &&

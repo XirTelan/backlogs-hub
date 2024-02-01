@@ -35,3 +35,9 @@ export type Field = {
   type: string;
   _id: string;
 };
+
+export type PageDefaultProps = {
+  children: React.ReactElement;
+  params: { [key: string]: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};

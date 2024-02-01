@@ -1,4 +1,5 @@
 import UserBacklogs from "@/containers/UserBacklogs";
+import { PageDefaultProps } from "@/types";
 import React from "react";
 
 // export const metadata: Metadata = {
@@ -6,7 +7,7 @@ import React from "react";
 //   description: "All backlogs in one place",
 // };
 
-export default function Layout({ children, params }) {
+export default function Layout({ children, params }: PageDefaultProps) {
   return (
     <>
       <section className="flex w-full  flex-col items-center">

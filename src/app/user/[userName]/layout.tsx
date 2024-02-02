@@ -1,4 +1,5 @@
-import UserBacklogs from "@/containers/UserBacklogs";
+import UserBacklogs from "@/containers/User/UserBacklogs";
+import UserNav from "@/containers/User/UserNav";
 import { PageDefaultProps } from "@/types";
 import React from "react";
 
@@ -10,15 +11,11 @@ import React from "react";
 export default function Layout({ children, params }: PageDefaultProps) {
   return (
     <>
-      <section className="flex w-full  flex-col items-center">
-        <div className="flex w-full max-w-5xl flex-col p-4">
-          <UserBacklogs userName={params.userName} />
-          <div>
-            <p>So...{JSON.stringify(params)}</p>
-            {children}
-          </div>
-        </div>
+      <section className=" container my-4 flex  w-full flex-col items-center">
+        <div>UserProfile</div>
+        <UserNav userName={params.userName} />
       </section>
+      <section>{children}</section>
     </>
   );
 }

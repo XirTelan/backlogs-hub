@@ -3,23 +3,35 @@ import BacklogItem from "@/models/BacklogItem";
 
 export const getBacklogItemsByBacklogId = async ({
   backlogId,
-  categories,
-}: BacklogItemDTO) => {
+}: {
+  backlogId: string;
+}) => {
   try {
     await dbConnect();
-    let backlogData;
-    if (categories && categories.length > 0) {
-      backlogData = await BacklogItem.find({
-        backlogId: backlogId,
-        category: { $in: categories },
-      });
-    } else {
-      backlogData = await BacklogItem.find({ backlogId: backlogId });
-    }
+    const backlogData = await BacklogItem.find({ backlogId: backlogId });
     return backlogData;
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
+};
+
+export const getBacklogItemsByQuery = async ({
+  backlogId,
+  categories,
+  search,
+}: {
+  backlogId: string;
+  categories: string[] | null | undefined;
+  search: string | null;
+}) => {
+  await dbConnect();
+  const stage = BacklogItem.aggregate();
+  stage.match({ backlogId: backlogId });
+  if (categories && categories.length > 0)
+    stage.match({ category: { $in: categories } });
+  if (search) stage.match({ title: new RegExp(search) });
+  const result = await stage.exec();
+  return result;
 };
 
 export const addBacklogItem = async (data) => {
@@ -29,7 +41,6 @@ export const addBacklogItem = async (data) => {
     await backlogItem.save();
     return backlogItem;
   } catch (error) {
-    console.log("here?", error);
     throw new Error(`Error: ${error}`);
   }
 };

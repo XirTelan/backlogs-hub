@@ -18,7 +18,7 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
   };
 
   return (
-    <div className=" flex w-full justify-between">
+    <div className=" mb-4 mt-2 flex w-full justify-between rounded border border-neutral-800 bg-neutral-900 p-4">
       <ul className="flex">{data?.length > 0 && backlogList()}</ul>
       <Link href={"/create/backlog"}>Create</Link>
     </div>

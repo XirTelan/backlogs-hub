@@ -1,47 +1,62 @@
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import InputField from "@/components/InputField";
+import ToggleButton from "@/components/ToggleButton";
+import useChangeSearchParams from "@/hooks/useChangeParams";
+import useDebounce from "@/hooks/useDebounce";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type FilterBlockProps = {
   backlogCategories: string[];
 };
 const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
-  const [categories, setCategories] = useState(backlogCategories);
-  const pathname = usePathname();
-  const router = useRouter();
+  const [categories] = useState(backlogCategories);
+  const [searchBar, setSearchBar] = useState("");
+  const debouncedValue = useDebounce(searchBar);
+  const changesParams = useChangeSearchParams();
 
   const [actviveCategories, setActiveCategories] = useState<string[]>([]);
   const searchParams = useSearchParams();
   const searchCategories = searchParams.get("categories");
 
-  const changeParams = () => {
-    console.log("searchParams.entries()", searchParams.entries());
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
-    console.log(current);
-    const search = current.toString();
-    // or const query = `${'?'.repeat(search.length && 1)}${search}`;
-    const query = search ? `?${search}` : "";
-    router.push(`${pathname}${query}`);
+  const onToggleChange = (toggle: string) => {
+    const toggleLower = toggle.toLowerCase();
+    let newQuery;
+    if (actviveCategories.includes(toggleLower)) {
+      newQuery = actviveCategories
+        .filter((category) => category != toggleLower)
+        .join("-");
+    } else {
+      newQuery = [...actviveCategories, toggleLower].join("-");
+    }
+    changesParams("categories", newQuery);
   };
 
   useEffect(() => {
-    if (searchCategories) setActiveCategories(searchCategories.split("-"));
+    changesParams("search", debouncedValue);
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    setActiveCategories(searchCategories ? searchCategories.split("-") : []);
   }, [searchCategories]);
 
   return (
-    <div>
-      List: {actviveCategories.join(",")}
-      <div>FilterBlock</div>
-      <div>
+    <div className="flex w-full flex-col gap-4">
+      <div className="flex gap-1">
         {categories.map((category) => (
-          <button key={category} onClick={changeParams}>
-            {category}
-          </button>
+          <ToggleButton
+            title={category}
+            isActive={actviveCategories.includes(category.toLowerCase())}
+            key={category}
+            onClick={() => onToggleChange(category)}
+          />
         ))}
+      </div>
+      <div>
+        <InputField
+          placeholder="Search... "
+          value={searchBar}
+          onChange={(e) => setSearchBar(e.target.value)}
+        />
       </div>
     </div>
   );

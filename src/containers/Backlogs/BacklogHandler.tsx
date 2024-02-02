@@ -8,6 +8,10 @@ const BacklogHandler = () => {
   const { userName, backlog } = useParams();
   const [currentBacklog, setCurrentBacklog] = useState<BacklogDTO>();
   const [backlogData, setBacklogData] = useState([]);
+  let search = "";
+  if (typeof window !== "undefined") {
+    search = window.location.search;
+  }
 
   useEffect(() => {
     if (!userName || !backlog) return;
@@ -28,7 +32,9 @@ const BacklogHandler = () => {
     if (!currentBacklog) return;
     const getBacklogData = async () => {
       try {
-        const res = await fetch(`/api/backlogs/${currentBacklog._id}/data`);
+        const res = await fetch(
+          `/api/backlogs/${currentBacklog._id}/data${search}`,
+        );
         const data = await res.json();
 
         setBacklogData(data);
@@ -37,12 +43,11 @@ const BacklogHandler = () => {
       }
     };
     getBacklogData();
-  }, [currentBacklog]);
+  }, [currentBacklog, search]);
 
   return (
-    <div>
-      BacklogHandler
-      <div className="flex ">
+    <div className="w-full">
+      <div className="mb-2 flex w-full  rounded bg-neutral-900 p-4">
         {currentBacklog && (
           <FilterBlock backlogCategories={currentBacklog?.categories} />
         )}

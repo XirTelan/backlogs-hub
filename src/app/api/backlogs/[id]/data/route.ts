@@ -1,6 +1,7 @@
 import {
   addBacklogItem,
   getBacklogItemsByBacklogId,
+  getBacklogItemsByQuery,
 } from "@/services/backlogItem";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,13 +9,21 @@ export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } },
 ) {
-  const categories = request.nextUrl.searchParams.get("categories");
-
+  const categories = request.nextUrl.searchParams.get("categories")?.split("-");
+  const search = request.nextUrl.searchParams.get("search");
+  let backlogData;
   try {
-    const backlogData = await getBacklogItemsByBacklogId({
-      backlogId: id,
-      categories: categories,
-    });
+    if (search || categories) {
+      backlogData = await getBacklogItemsByQuery({
+        backlogId: id,
+        categories: categories,
+        search: search,
+      });
+    } else {
+      backlogData = await getBacklogItemsByBacklogId({
+        backlogId: id,
+      });
+    }
     if (backlogData) {
       return NextResponse.json(backlogData);
     } else {
@@ -44,6 +53,6 @@ export async function POST(
     const res = await addBacklogItem(data);
     return NextResponse.json({ message: "created", res }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: error.message }, {status: 400 });
+    return NextResponse.json({ message: error.message }, { status: 400 });
   }
 }

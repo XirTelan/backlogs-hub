@@ -44,6 +44,15 @@ export const addBacklogItem = async (data) => {
     throw new Error(`Error: ${error}`);
   }
 };
+export const deleteBacklogItem = async (id: string) => {
+  try {
+    await dbConnect();
+    const deleteResult = await BacklogItem.deleteOne({ _id: id });
+    return deleteResult;
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+};
 
 interface BacklogItemDTO {
   backlogId: string;

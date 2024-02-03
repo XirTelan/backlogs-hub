@@ -1,42 +1,63 @@
 "use client";
+import { BacklogItemDTO } from "@/types";
 import React, { useEffect, useState } from "react";
-import { backlogs } from "../../../mock/data";
 
-export default function Backloglist({ backlogId, addItem }: BackloglistProps) {
-  const [categories, setCategories] = useState<string[] | null>(null);
-  const [itemsList, setItemList] = useState<any[]>([]); //todo
+export default function Backloglist({ items }: BackloglistProps) {
+  const [itemsList, setItemList] = useState<BacklogItemDTO[]>(items); //todo
 
   useEffect(() => {
-    const res = backlogs.find((item) => item.title === backlogId);
-    if (res?.categories) setCategories(res.categories);
-    if (res?.data) setItemList(res?.data);
-  }, [backlogId]);
+    setItemList(items);
+  }, [items]);
 
   return (
     <>
-      <div className="flex gap-1">
-        <input className=" bg-slate-900" placeholder="Search Game" />
-        <button
-          onClick={() => {
-            addItem();
-          }}
-        >
-          Add
-        </button>
-        <div className="flex gap-1">
-          {categories && categories.map((item) => <div key={item}>{item}</div>)}
-        </div>
-      </div>
-      <div>
+      <table className="w-full">
+        <thead>
+          <tr className=" my-1 border-b border-neutral-800 p-1">
+            <th className="w-full p-1 text-left" scope="col">
+              Title
+            </th>
+            <th className=" w-10" scope="col">
+              Actions
+            </th>
+          </tr>
+        </thead>
         {itemsList.map((item) => (
-          <div key={item.title}>{item.title}</div>
+          <tbody className="" key={item._id}>
+            <tr>
+              <td className="p-2">{item.title}</td>
+              <td className="p-2">
+                <button
+                  onClick={async () => {
+                    const res = await fetch(
+                      `/api/backlogs/${item.backlogId}/data/${item._id}`,
+                      {
+                        method: "DELETE",
+                      },
+                    );
+                    const data = await res.json();
+                    console.log("Delete res", data);
+                  }}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
         ))}
-      </div>
+        <tfoot>
+          <tr>
+            <td className=" text-sm text-neutral-600" colSpan={3}>
+              {" "}
+              Count: {itemsList.length}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </>
   );
 }
 
 interface BackloglistProps {
-  backlogId: string;
-  addItem: () => void;
+  items: BacklogItemDTO[];
 }

@@ -21,6 +21,18 @@ export type BacklogDTO = {
   updatedAt: Date;
 };
 
+type ItemField = {
+  name: string;
+  value: string;
+};
+export type BacklogItemDTO = {
+  _id: string;
+  backlogId: string;
+  title: string;
+  category: string;
+  userFields: ItemField[];
+};
+
 export type BacklogCreateDTO = {
   visibility: string;
   userId: string;

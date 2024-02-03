@@ -1,13 +1,14 @@
 "use client";
-import { BacklogDTO } from "@/types";
+import { BacklogDTO, BacklogItemDTO } from "@/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import FilterBlock from "../FilterBlock";
+import Backloglist from "./BacklogList";
 
 const BacklogHandler = () => {
   const { userName, backlog } = useParams();
   const [currentBacklog, setCurrentBacklog] = useState<BacklogDTO>();
-  const [backlogData, setBacklogData] = useState([]);
+  const [backlogData, setBacklogData] = useState<BacklogItemDTO[]>([]);
   let search = "";
   if (typeof window !== "undefined") {
     search = window.location.search;
@@ -46,18 +47,16 @@ const BacklogHandler = () => {
   }, [currentBacklog, search]);
 
   return (
-    <div className="w-full">
-      <div className="mb-2 flex w-full  rounded bg-neutral-900 p-4">
+    <>
+      <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
         {currentBacklog && (
           <FilterBlock backlogCategories={currentBacklog?.categories} />
         )}
-      </div>
-      <div>
-        {backlogData &&
-          backlogData.length > 0 &&
-          backlogData.map((item) => <div key={item._id}>{item.title}</div>)}
-      </div>
-    </div>
+      </section>
+      <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
+        <Backloglist items={backlogData} />
+      </section>
+    </>
   );
 };
 

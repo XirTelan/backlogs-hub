@@ -3,6 +3,7 @@ import {
   getBacklogItemsByBacklogId,
   getBacklogItemsByQuery,
 } from "@/services/backlogItem";
+import { sendErrorMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -39,7 +40,7 @@ export async function GET(
       );
     }
   } catch (error) {
-    throw new Error("error");
+    sendErrorMsg(error);
   }
 }
 
@@ -53,6 +54,6 @@ export async function POST(
     const res = await addBacklogItem(data);
     return NextResponse.json({ message: "created", res }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 400 });
+    sendErrorMsg(error);
   }
 }

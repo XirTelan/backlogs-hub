@@ -8,6 +8,16 @@ const Field = new mongoose.Schema({
     type: String,
   },
 });
+const Category = new mongoose.Schema({
+  name: {
+    type: String,
+    require: true,
+    unique: true,
+  },
+  color: {
+    type: String,
+  },
+});
 
 const BacklogSchema = new mongoose.Schema(
   {
@@ -32,7 +42,7 @@ const BacklogSchema = new mongoose.Schema(
       type: String,
     },
     fields: [Field],
-    categories: [String],
+    categories: [Category],
     visibility: {
       type: String,
       default: "public",

@@ -2,13 +2,15 @@
 import { BacklogItemDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 
-export default function Backloglist({ items }: BackloglistProps) {
+export default function Backloglist({
+  items,
+  categoriesMap,
+}: BackloglistProps) {
   const [itemsList, setItemList] = useState<BacklogItemDTO[]>(items); //todo
 
   useEffect(() => {
     setItemList(items);
   }, [items]);
-
   return (
     <>
       <table className="w-full">
@@ -25,7 +27,12 @@ export default function Backloglist({ items }: BackloglistProps) {
         {itemsList.map((item) => (
           <tbody className="" key={item._id}>
             <tr>
-              <td className="p-2">{item.title}</td>
+              <td
+                className="p-2"
+                style={{ color: categoriesMap.get(item.category) }}
+              >
+                {item.title}
+              </td>
               <td className="p-2">
                 <button
                   onClick={async () => {
@@ -36,7 +43,6 @@ export default function Backloglist({ items }: BackloglistProps) {
                       },
                     );
                     const data = await res.json();
-                    console.log("Delete res", data);
                   }}
                 >
                   Delete
@@ -60,4 +66,5 @@ export default function Backloglist({ items }: BackloglistProps) {
 
 interface BackloglistProps {
   items: BacklogItemDTO[];
+  categoriesMap: Map<string, string>;
 }

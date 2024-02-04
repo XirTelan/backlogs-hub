@@ -16,7 +16,7 @@ export type BacklogDTO = {
   userName: string;
   backlogTitle: string;
   fields: Field[];
-  categories: string[];
+  categories: { name: string; color: string }[];
   createdAt: Date;
   updatedAt: Date;
 };

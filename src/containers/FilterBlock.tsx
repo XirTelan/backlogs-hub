@@ -6,14 +6,13 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type FilterBlockProps = {
-  backlogCategories: string[];
+  backlogCategories: { name: string; color: string }[];
 };
 const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
   const [categories] = useState(backlogCategories);
   const [searchBar, setSearchBar] = useState("");
   const debouncedValue = useDebounce(searchBar);
   const changesParams = useChangeSearchParams();
-
   const [actviveCategories, setActiveCategories] = useState<string[]>([]);
   const searchParams = useSearchParams();
   const searchCategories = searchParams.get("categories");
@@ -40,14 +39,15 @@ const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
   }, [searchCategories]);
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col">
       <div className="flex gap-1">
         {categories.map((category) => (
           <ToggleButton
-            title={category}
-            isActive={actviveCategories.includes(category.toLowerCase())}
-            key={category}
-            onClick={() => onToggleChange(category)}
+            title={category.name}
+            isActive={actviveCategories.includes(category.name.toLowerCase())}
+            activeColor={category.color}
+            key={category.name}
+            onClick={() => onToggleChange(category.name)}
           />
         ))}
       </div>

@@ -8,6 +8,7 @@ import Backloglist from "./BacklogList";
 const BacklogHandler = () => {
   const { userName, backlog } = useParams();
   const [currentBacklog, setCurrentBacklog] = useState<BacklogDTO>();
+  const [categoriesMap, setCategoriesMap] = useState<Map<string, string>>();
   const [backlogData, setBacklogData] = useState<BacklogItemDTO[]>([]);
   let search = "";
   if (typeof window !== "undefined") {
@@ -43,9 +44,16 @@ const BacklogHandler = () => {
         console.error(error);
       }
     };
+    const categoriesMap = new Map();
+    currentBacklog.categories.forEach((category) => {
+      categoriesMap.set(category.name.toLowerCase(), category.color);
+    });
+    setCategoriesMap(categoriesMap);
     getBacklogData();
   }, [currentBacklog, search]);
 
+  const isData = backlogData && backlogData.length > 0 && categoriesMap;
+  
   return (
     <>
       <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
@@ -54,7 +62,9 @@ const BacklogHandler = () => {
         )}
       </section>
       <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
-        <Backloglist items={backlogData} />
+        {isData && (
+          <Backloglist categoriesMap={categoriesMap} items={backlogData} />
+        )}
       </section>
     </>
   );

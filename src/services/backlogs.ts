@@ -1,7 +1,7 @@
 "use server";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
-import { BacklogCreateDTO, BacklogDTO } from "@/types";
+import { BacklogCreateDTO } from "@/types";
 import { NextResponse } from "next/server";
 
 export const getBacklogById = async (id: string) => {

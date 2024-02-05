@@ -14,6 +14,15 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { maxHeight: "1rem" },
+          "50%": { maxHeight: "10rem" },
+        },
+      },
+      animation: {
+        wiggle: "wiggle 1s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

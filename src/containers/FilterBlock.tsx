@@ -51,12 +51,13 @@ const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
           />
         ))}
       </div>
-      <div>
+      <div className=" flex items-center">
         <InputField
           placeholder="Search... "
           value={searchBar}
           onChange={(e) => setSearchBar(e.target.value)}
         />
+        <button className="ms-4 rounded bg-neutral-800 p-2"> Add</button>
       </div>
     </div>
   );

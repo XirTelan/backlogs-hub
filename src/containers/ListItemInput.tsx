@@ -9,12 +9,14 @@ const ListItemInput = React.forwardRef<HTMLInputElement, ListItemInput>(
     return (
       <div className="relative flex items-center">
         <InputField {...props} ref={ref} />
-        <button
-          className="relative right-8  font-bold hover:text-red-800 active:text-red-600 "
-          onClick={onDelete}
-        >
-          <RiDeleteBack2Line size={24} />
-        </button>
+        {!props.disabled && (
+          <button
+            className="relative right-8  font-bold hover:text-red-800 active:text-red-600 "
+            onClick={onDelete}
+          >
+            <RiDeleteBack2Line size={24} />
+          </button>
+        )}
       </div>
     );
   },

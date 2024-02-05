@@ -6,10 +6,9 @@ export async function DELETE(
   request: NextRequest,
   { params: { itemId } }: { params: { id: string; itemId: string } },
 ) {
-  console.log("delete", itemId);
   try {
-    const res = await deleteBacklogItem(itemId);
-    return NextResponse.json({ message: "Deleted", res }, { status: 202 });
+    await deleteBacklogItem(itemId);
+    return NextResponse.json({ message: "Deleted" }, { status: 202 });
   } catch (error) {
     sendErrorMsg(error);
   }

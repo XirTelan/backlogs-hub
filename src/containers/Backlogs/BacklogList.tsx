@@ -5,12 +5,14 @@ import React, { useEffect, useState } from "react";
 export default function Backloglist({
   items,
   categoriesMap,
+  onDelete,
 }: BackloglistProps) {
   const [itemsList, setItemList] = useState<BacklogItemDTO[]>(items); //todo
 
   useEffect(() => {
     setItemList(items);
   }, [items]);
+
   return (
     <>
       <table className="w-full">
@@ -34,17 +36,7 @@ export default function Backloglist({
                 {item.title}
               </td>
               <td className="p-2">
-                <button
-                  onClick={async () => {
-                    const res = await fetch(
-                      `/api/backlogs/${item.backlogId}/data/${item._id}`,
-                      {
-                        method: "DELETE",
-                      },
-                    );
-                    const data = await res.json();
-                  }}
-                >
+                <button onClick={() => onDelete(item._id, item.backlogId)}>
                   Delete
                 </button>
               </td>
@@ -66,5 +58,6 @@ export default function Backloglist({
 
 interface BackloglistProps {
   items: BacklogItemDTO[];
+  onDelete: (id: string, backlogId: string) => void;
   categoriesMap: Map<string, string>;
 }

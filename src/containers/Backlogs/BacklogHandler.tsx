@@ -1,59 +1,36 @@
 "use client";
-import { BacklogDTO, BacklogItemDTO } from "@/types";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
 import FilterBlock from "../FilterBlock";
 import Backloglist from "./BacklogList";
+import useBacklogData from "@/hooks/useBacklogData";
+import toast from "react-hot-toast";
+import Loading from "@/components/Loading";
 
 const BacklogHandler = () => {
   const { userName, backlog } = useParams();
-  const [currentBacklog, setCurrentBacklog] = useState<BacklogDTO>();
-  const [categoriesMap, setCategoriesMap] = useState<Map<string, string>>();
-  const [backlogData, setBacklogData] = useState<BacklogItemDTO[]>([]);
   let search = "";
   if (typeof window !== "undefined") {
     search = window.location.search;
   }
 
-  useEffect(() => {
-    if (!userName || !backlog) return;
-    const getBacklogInfo = async () => {
-      try {
-        const data = await fetch(
-          `/api/backlogs?userName=${userName}&backlogTitle=${backlog}`,
-        ).then((data) => data.json());
-        setCurrentBacklog(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getBacklogInfo();
-  }, [userName, backlog]);
+  const {
+    currentBacklog,
+    backlogData,
+    categoriesMap,
+    isLoading,
+    updateBacklogData,
+  } = useBacklogData(userName, backlog, search);
 
-  useEffect(() => {
-    if (!currentBacklog) return;
-    const getBacklogData = async () => {
-      try {
-        const res = await fetch(
-          `/api/backlogs/${currentBacklog._id}/data${search}`,
-        );
-        const data = await res.json();
-
-        setBacklogData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const categoriesMap = new Map();
-    currentBacklog.categories.forEach((category) => {
-      categoriesMap.set(category.name.toLowerCase(), category.color);
+  const onDelete = async (id: string, backlogId: string) => {
+    const res = await fetch(`/api/backlogs/${backlogId}/data/${id}`, {
+      method: "DELETE",
     });
-    setCategoriesMap(categoriesMap);
-    getBacklogData();
-  }, [currentBacklog, search]);
+    await res.json();
+    toast.success(`Deleted`);
+    updateBacklogData();
+  };
 
   const isData = backlogData && backlogData.length > 0 && categoriesMap;
-  
   return (
     <>
       <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
@@ -62,9 +39,14 @@ const BacklogHandler = () => {
         )}
       </section>
       <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
-        {isData && (
-          <Backloglist categoriesMap={categoriesMap} items={backlogData} />
+        {isData && !isLoading && (
+          <Backloglist
+            onDelete={onDelete}
+            categoriesMap={categoriesMap}
+            items={backlogData}
+          />
         )}
+        {isLoading && <div>Loading...</div>}
       </section>
     </>
   );

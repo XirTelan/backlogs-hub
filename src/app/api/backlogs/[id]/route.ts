@@ -1,4 +1,4 @@
-import { getBacklogById } from "@/services/backlogs";
+import { getBacklogById, updateBacklogById } from "@/services/backlogs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -10,5 +10,15 @@ export async function GET(
     if (backlog) return NextResponse.json(backlog);
   } catch (error) {
     throw new Error("error");
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const data = await request.json();
+  try {
+    await updateBacklogById(data);
+    return NextResponse.json("Success");
+  } catch (error) {
+    throw new Error(`${error}`);
   }
 }

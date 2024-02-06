@@ -4,10 +4,12 @@ import FilterBlock from "../FilterBlock";
 import Backloglist from "./BacklogList";
 import useBacklogData from "@/hooks/useBacklogData";
 import toast from "react-hot-toast";
-import Loading from "@/components/Loading";
 
 const BacklogHandler = () => {
-  const { userName, backlog } = useParams();
+  const { userName, backlog } = useParams<{
+    userName: string;
+    backlog: string;
+  }>();
   let search = "";
   if (typeof window !== "undefined") {
     search = window.location.search;

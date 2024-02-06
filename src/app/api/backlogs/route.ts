@@ -1,4 +1,7 @@
-import { createBacklog, getUserBacklogByTitle } from "@/services/backlogs";
+import {
+  createBacklog,
+  getUserBacklogByTitle,
+} from "@/services/backlogs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {

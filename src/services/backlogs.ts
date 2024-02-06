@@ -1,7 +1,7 @@
 "use server";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
-import { BacklogCreateDTO } from "@/types";
+import { BacklogCreateDTO, BacklogDTO } from "@/types";
 import { NextResponse } from "next/server";
 
 export const getBacklogById = async (id: string) => {
@@ -64,4 +64,17 @@ export const createBacklog = async (data: BacklogCreateDTO) => {
   } catch (error) {
     throw new Error(`${error}`);
   }
+};
+
+export const updateBacklogById = async (data: BacklogDTO) => {
+  try {
+    await dbConnect();
+    await Backlog.updateOne({ _id: data._id }, { ...data });
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
+export const deleteBacklogById = async () => {
+  throw new Error("Not implemented");
 };

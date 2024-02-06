@@ -12,14 +12,9 @@ export type ListItemInput = {
 export type BacklogDTO = {
   visibility: string;
   _id: string;
-  userId: string;
-  userName: string;
-  backlogTitle: string;
-  fields: Field[];
-  categories: { name: string; color: string }[];
   createdAt: Date;
   updatedAt: Date;
-};
+} & BacklogFormData;
 
 type ItemField = {
   name: string;
@@ -44,12 +39,25 @@ export type BacklogCreateDTO = {
 
 export type Field = {
   name: string;
-  type: string;
+  type: "text" | "number";
   _id: string;
+};
+
+export type BacklogFormData = {
+  userId: string;
+  userName: string;
+  backlogTitle: string;
+  categories: { name: string; color: string }[];
+  fields: {
+    name: string;
+    type: "text" | "number";
+  }[];
 };
 
 export type PageDefaultProps = {
   children: React.ReactElement;
-  params: { [key: string]: string };
+  params: {
+    [key: string]: string;
+  };
   searchParams: { [key: string]: string | string[] | undefined };
 };

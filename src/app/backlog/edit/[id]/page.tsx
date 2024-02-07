@@ -19,7 +19,6 @@ const EditBacklog = ({ params: { id } }: PageDefaultProps) => {
   }, [id]);
 
   const onSubmit: SubmitHandler<BacklogDTO> = async (data) => {
-    console.log(data);
     if (data._id) {
       data._id;
     }

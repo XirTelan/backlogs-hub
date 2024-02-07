@@ -1,17 +1,16 @@
-import InputField from "@/components/InputField";
+import SearchBar from "@/components/SearchBar";
 import ToggleButton from "@/components/ToggleButton";
 import useChangeSearchParams from "@/hooks/useChangeParams";
-import useDebounce from "@/hooks/useDebounce";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type FilterBlockProps = {
+  backlogTitle: string;
   backlogCategories: { name: string; color: string }[];
 };
-const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
+const FilterBlock = ({ backlogTitle, backlogCategories }: FilterBlockProps) => {
   const [categories] = useState(backlogCategories);
-  const [searchBar, setSearchBar] = useState("");
-  const debouncedValue = useDebounce(searchBar);
   const changesParams = useChangeSearchParams();
   const [actviveCategories, setActiveCategories] = useState<string[]>([]);
   const searchParams = useSearchParams();
@@ -31,10 +30,6 @@ const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
   };
 
   useEffect(() => {
-    changesParams("search", debouncedValue);
-  }, [debouncedValue]);
-
-  useEffect(() => {
     setActiveCategories(searchCategories ? searchCategories.split("-") : []);
   }, [searchCategories]);
 
@@ -52,12 +47,13 @@ const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
         ))}
       </div>
       <div className=" flex items-center">
-        <InputField
-          placeholder="Search... "
-          value={searchBar}
-          onChange={(e) => setSearchBar(e.target.value)}
-        />
-        <button className="ms-4 rounded bg-neutral-800 p-2"> Add</button>
+        <SearchBar />
+        <Link
+          href={`/items/create?backlogTitle=${backlogTitle}`}
+          className="ms-4 rounded bg-neutral-800 p-2"
+        >
+          Add
+        </Link>
       </div>
     </div>
   );

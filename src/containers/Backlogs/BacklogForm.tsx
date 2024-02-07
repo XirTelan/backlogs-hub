@@ -5,21 +5,21 @@ import InputField from "@/components/InputField";
 import React from "react";
 import {
   Controller,
+  SubmitHandler,
   useFieldArray,
   useForm,
-  SubmitHandler,
 } from "react-hook-form";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import FieldsBlock from "../FieldsBlock";
 import ListItemInput from "../ListItemInput";
 import { BacklogFormData } from "@/types";
 
-const BacklogForm = ({
+const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
   onSubmit,
 }: {
-  defaultValues: BacklogFormData;
-  onSubmit: SubmitHandler<BacklogFormData>;
+  defaultValues: T;
+  onSubmit: SubmitHandler<T>;
 }) => {
   const { register, handleSubmit, control } = useForm<BacklogFormData>({
     defaultValues,
@@ -37,8 +37,11 @@ const BacklogForm = ({
     control,
   });
 
+  const onSubmitInternal = (data: BacklogFormData) =>
+    onSubmit({ ...defaultValues, ...data });
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitInternal)}>
       <div className="field group  relative mt-2 w-1/2 px-0 py-4  ">
         <InputField
           id="backlogTitle"
@@ -49,6 +52,7 @@ const BacklogForm = ({
       </div>
       <FieldsBlock
         title="Categories"
+        status="active"
         append={() => categoriesArray.append({ name: "", color: "#00ff00" })}
       >
         <>
@@ -83,6 +87,7 @@ const BacklogForm = ({
       </FieldsBlock>
       <FieldsBlock
         title="Backlog fields"
+        status="active"
         append={() => fieldsArray.append({ name: "Custom", type: "text" })}
       >
         <>

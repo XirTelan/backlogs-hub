@@ -20,6 +20,12 @@ type ItemField = {
   name: string;
   value: string;
 };
+export type BacklogItemCreationDTO = {
+  title: string;
+  category: string;
+  userFields: ItemField[];
+};
+
 export type BacklogItemDTO = {
   _id: string;
   backlogId: string;

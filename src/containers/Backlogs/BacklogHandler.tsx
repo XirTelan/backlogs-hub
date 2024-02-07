@@ -37,7 +37,10 @@ const BacklogHandler = () => {
     <>
       <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
         {currentBacklog && (
-          <FilterBlock backlogCategories={currentBacklog?.categories} />
+          <FilterBlock
+            backlogTitle={currentBacklog.backlogTitle}
+            backlogCategories={currentBacklog.categories}
+          />
         )}
       </section>
       <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">

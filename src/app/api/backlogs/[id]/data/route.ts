@@ -3,6 +3,7 @@ import {
   getBacklogItemsByBacklogId,
   getBacklogItemsByQuery,
 } from "@/services/backlogItem";
+import { BacklogItemDTO } from "@/types";
 import { sendErrorMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -48,8 +49,9 @@ export async function POST(
   request: NextRequest,
   { params: { id } }: { params: { id: string } },
 ) {
-  const data = await request.json();
+  const data: BacklogItemDTO = await request.json();
   data.backlogId = id;
+  data.category = data.category.toLowerCase();
   try {
     const res = await addBacklogItem(data);
     return NextResponse.json({ message: "created", res }, { status: 201 });

@@ -32,7 +32,7 @@ export const getUserBacklogByTitle = async ({
 }: {
   userName: string;
   backlogTitle: string;
-}) => {
+}): Promise<BacklogDTO> => {
   try {
     await dbConnect();
     const backlogs = await Backlog.findOne({

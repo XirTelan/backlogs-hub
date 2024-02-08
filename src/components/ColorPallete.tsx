@@ -29,12 +29,12 @@ const ColorPallete = ({
   console.log(value);
   return (
     <div
-      className={`bg relative h-6 w-6 cursor-pointer rounded-full`}
+      className={`bg relative h-6 min-h-6 w-6 min-w-6 cursor-pointer rounded-full`}
       style={{ backgroundColor: currentColor }}
       onClick={() => setIsOpen((prevValue) => !prevValue)}
     >
       {isOpen && (
-        <div className="absolute left-0 top-full z-10 flex h-auto gap-1 rounded bg-white p-1">
+        <div className="absolute left-0 top-full z-10 flex h-auto gap-1 rounded border border-neutral-700 bg-neutral-800 p-1">
           {defaultColors.map((color, index) => (
             <div
               key={index}

@@ -23,12 +23,7 @@ const CreateBacklog = () => {
     userName: user?.username || "",
     backlogTitle: "",
     categories: defaultCategories,
-    fields: [
-      {
-        name: "Title",
-        type: "text",
-      },
-    ],
+    fields: [],
   };
 
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {
@@ -36,7 +31,6 @@ const CreateBacklog = () => {
       data.userName = user.username!;
       data.userId = user?.id;
     }
-    console.log(data);
     const res = await fetch("/api/backlogs/", {
       method: "POST",
       headers: {

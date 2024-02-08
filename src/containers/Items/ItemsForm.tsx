@@ -41,8 +41,9 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
 
   if (!backlog) return <div>Loading</div>;
 
-  const onSubmitInternal = (data: BacklogItemCreationDTO) =>
+  const onSubmitInternal = (data: BacklogItemCreationDTO) => {
     onSubmit({ ...defaultValues, ...data });
+  };
 
   return (
     <div>
@@ -52,7 +53,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
             id="title"
             placeholder="Title"
             label="Title"
-            {...(register(`title`), { required: true })}
+            {...register("title", { required: true })}
           />
         </div>
         <div>

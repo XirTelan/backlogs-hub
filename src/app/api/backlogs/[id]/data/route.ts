@@ -56,6 +56,6 @@ export async function POST(
     const res = await addBacklogItem(data);
     return NextResponse.json({ message: "created", res }, { status: 201 });
   } catch (error) {
-    sendErrorMsg(error);
+    return sendErrorMsg(error);
   }
 }

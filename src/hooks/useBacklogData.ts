@@ -9,7 +9,12 @@ const useBacklogData = (userName: string, backlog: string, search: string) => {
 
   const updateBacklogData = () => {
     if (!currentBacklog) return;
-    getBacklogData(currentBacklog._id, search, setBacklogData, setIsLoading);
+    getBacklogData({
+      id: currentBacklog._id,
+      search,
+      setBacklogData,
+      setIsLoading,
+    });
   };
 
   useEffect(() => {
@@ -17,7 +22,7 @@ const useBacklogData = (userName: string, backlog: string, search: string) => {
     const getBacklogInfo = async () => {
       try {
         const data = await fetch(
-          `/api/backlogs?userName=${userName}&backlogTitle=${backlog}`,
+          `/api/backlogs?userName=${userName}&backlog=${backlog}`,
         ).then((data) => data.json());
         setCurrentBacklog(data);
       } catch (error) {
@@ -38,7 +43,12 @@ const useBacklogData = (userName: string, backlog: string, search: string) => {
       setCategoriesMap(categoriesMap);
     };
 
-    getBacklogData(currentBacklog._id, search, setBacklogData, setIsLoading);
+    getBacklogData({
+      id: currentBacklog._id,
+      search,
+      setBacklogData,
+      setIsLoading,
+    });
     getCategories();
   }, [currentBacklog, search]);
 
@@ -51,11 +61,16 @@ const useBacklogData = (userName: string, backlog: string, search: string) => {
   };
 };
 
-const getBacklogData = async (id, search, setBacklogData, setIsLoading) => {
+const getBacklogData = async ({
+  id,
+  search,
+  setBacklogData,
+  setIsLoading,
+}: getBacklogDataProps) => {
   try {
     setIsLoading(true);
-    const res = await fetch(`/api/backlogs/${id}/data${search}`);
-    const data = await res.json();
+    const res = await fetch(`/api/backlogs/${id}/items${search}`);
+    const data: BacklogItemDTO[] = await res.json();
     setBacklogData(data);
     setIsLoading(false);
   } catch (error) {
@@ -66,3 +81,10 @@ const getBacklogData = async (id, search, setBacklogData, setIsLoading) => {
 };
 
 export default useBacklogData;
+
+type getBacklogDataProps = {
+  id: string;
+  search: string;
+  setBacklogData: (data: BacklogItemDTO[]) => void;
+  setIsLoading: (state: boolean) => void;
+};

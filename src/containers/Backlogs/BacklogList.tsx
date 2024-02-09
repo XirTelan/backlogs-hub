@@ -1,5 +1,6 @@
 "use client";
 import { BacklogItemDTO } from "@/types";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function Backloglist({
@@ -36,6 +37,7 @@ export default function Backloglist({
                 {item.title}
               </td>
               <td className="p-2">
+                <Link href={`/items/edit/${item._id}`}>Edit</Link>
                 <button onClick={() => onDelete(item._id, item.backlogId)}>
                   Delete
                 </button>

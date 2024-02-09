@@ -1,4 +1,5 @@
 import { getBacklogById, updateBacklogById } from "@/services/backlogs";
+import { cleanParamString, sendErrorMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -6,10 +7,14 @@ export async function GET(
   { params: { id } }: { params: { id: string } },
 ) {
   try {
-    const backlog = await getBacklogById(id);
-    if (backlog) return NextResponse.json(backlog);
+    const backlog = await getBacklogById(cleanParamString(id));
+    if (backlog) {
+      return NextResponse.json(backlog);
+    } else {
+      return NextResponse.json("Not Found", { status: 404 });
+    }
   } catch (error) {
-    throw new Error("error");
+    return sendErrorMsg(error);
   }
 }
 

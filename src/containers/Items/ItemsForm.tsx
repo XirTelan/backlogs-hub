@@ -4,19 +4,22 @@ import { BacklogDTO, BacklogItemCreationDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import FieldsBlock from "../FieldsBlock";
-import { useSearchParams } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
+  backlogId,
   defaultValues,
   onSubmit,
 }: {
+  backlogId: string;
   defaultValues: T;
   onSubmit: SubmitHandler<T>;
 }) => {
+  const router = useRouter();
   const { user } = useUser();
-  const backlogTitle = useSearchParams().get("backlogTitle");
   const [backlog, setBacklog] = useState<BacklogDTO>();
+  const [fieldsTypeMap, setFieldsTypeMap] = useState<Map<string, string>>();
   const { handleSubmit, control, register } = useForm<BacklogItemCreationDTO>({
     defaultValues,
     mode: "onBlur",
@@ -28,21 +31,25 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   });
 
   useEffect(() => {
-    if (!backlogTitle || !user) return;
+    if (!backlogId || !user) return;
     const backlogData = async () => {
-      const res = await fetch(
-        `/api/backlogs?userName=${user.username}&backlogTitle=${backlogTitle}`,
-      );
-      const data = await res.json();
+      const res = await fetch(`/api/backlogs/${backlogId}`);
+      const data: BacklogDTO = await res.json();
+      const mapFields = data.fields.reduce((mapAccumulator, obj) => {
+        mapAccumulator.set(obj.name, obj.type);
+        return mapAccumulator;
+      }, new Map());
+      setFieldsTypeMap(mapFields);
       setBacklog(data);
     };
     backlogData();
-  }, [user, backlogTitle]);
+  }, [user, backlogId]);
 
   if (!backlog) return <div>Loading</div>;
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
     onSubmit({ ...defaultValues, ...data });
+    router.back();
   };
 
   return (
@@ -57,28 +64,28 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           />
         </div>
         <div>
-          {backlog.categories.map((cartegory) => (
-            <div key={cartegory.name}>
-              <label htmlFor={`radio_${cartegory.name}`}>
+          {backlog.categories.map((category) => (
+            <div key={category.name}>
+              <label htmlFor={`radio_${category.name}`}>
                 <input
-                  id={`radio_${cartegory.name}`}
+                  id={`radio_${category.name}`}
                   type="radio"
-                  value={cartegory.name}
+                  value={category.name.toLowerCase()}
                   {...register("category")}
                 />
-                {cartegory.name}
+                {category.name}
               </label>
             </div>
           ))}
         </div>
         <FieldsBlock status="disabled">
           <>
-            {backlog.fields.map((field, index) => (
+            {fieldsArray.fields.map((field, index) => (
               <li className="  w-auto" key={field.name}>
                 <InputField
                   label={field.name}
                   placeholder={field.name}
-                  type={field.type}
+                  type={fieldsTypeMap?.get(field.name)}
                   {...register(`userFields.${index}.value`, {
                     required: false,
                   })}
@@ -87,6 +94,9 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
             ))}
           </>
         </FieldsBlock>
+        <button type="button" onClick={() => router.back()}>
+          Cancel
+        </button>
         <button type="submit">Crate</button>
       </form>
     </div>

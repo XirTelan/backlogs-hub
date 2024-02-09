@@ -1,5 +1,21 @@
 import dbConnect from "@/lib/dbConnect";
 import BacklogItem from "@/models/BacklogItem";
+import { BacklogItemDTO } from "@/types";
+import { NextResponse } from "next/server";
+
+export const getBacklogItemById = async ({
+  itemId,
+}: {
+  itemId: string;
+}): Promise<BacklogItemDTO> => {
+  try {
+    await dbConnect();
+    const backlogData = await BacklogItem.findById(itemId);
+    return backlogData;
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+};
 
 export const getBacklogItemsByBacklogId = async ({
   backlogId,
@@ -44,6 +60,16 @@ export const addBacklogItem = async (data) => {
     throw new Error(`Error: ${error}`);
   }
 };
+
+export const putBacklogItem = async (data: BacklogItemDTO) => {
+  try {
+    await dbConnect();
+    await BacklogItem.updateOne({ _id: data._id }, data);
+    return NextResponse.json("ok");
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+};
 export const deleteBacklogItem = async (id: string) => {
   try {
     await dbConnect();
@@ -53,8 +79,3 @@ export const deleteBacklogItem = async (id: string) => {
     throw new Error(`Error: ${error}`);
   }
 };
-
-interface BacklogItemDTO {
-  backlogId: string;
-  categories?: string[] | null;
-}

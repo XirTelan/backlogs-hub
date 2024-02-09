@@ -17,27 +17,28 @@ export const getBacklogById = async (id: string) => {
 export const getBacklogsTitleByUserName = async (userName: string) => {
   try {
     await dbConnect();
-    const backlogs = await Backlog.find({ userName: userName }).select(
+    const backlogs = await Backlog.find({ userName: userName }).select([
+      "slug",
       "backlogTitle",
-    );
+    ]);
     return backlogs;
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
 };
 
-export const getUserBacklogByTitle = async ({
+export const getUserBacklogBySlug = async ({
   userName,
-  backlogTitle,
+  backlogSlug,
 }: {
   userName: string;
-  backlogTitle: string;
+  backlogSlug: string;
 }): Promise<BacklogDTO> => {
   try {
     await dbConnect();
     const backlogs = await Backlog.findOne({
       userName: userName,
-      backlogTitle: backlogTitle,
+      slug: backlogSlug,
     });
     return backlogs;
   } catch (error) {
@@ -45,7 +46,9 @@ export const getUserBacklogByTitle = async ({
   }
 };
 
-export const getBacklogsByUserName = async (userName: string) => {
+export const getBacklogsByUserName = async (
+  userName: string,
+): Promise<BacklogDTO[]> => {
   try {
     await dbConnect();
     const backlogs = await Backlog.find({ userName: userName });

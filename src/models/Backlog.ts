@@ -35,6 +35,10 @@ const BacklogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
     },
@@ -52,7 +56,7 @@ const BacklogSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
-BacklogSchema.index({ userName: 1, backlogTitle: 1 }, { unique: true });
+BacklogSchema.index({ userName: 1, slug: 1 }, { unique: true });
 const Backlog =
   mongoose.models.Backlog || mongoose.model("Backlog", BacklogSchema);
 

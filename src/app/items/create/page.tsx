@@ -1,35 +1,32 @@
 import ItemsCreateForm from "@/containers/Items/ItemsCreateForm";
-import { getUserBacklogByTitle } from "@/services/backlogs";
+import { getUserBacklogBySlug } from "@/services/backlogs";
 import { BacklogItemCreationDTO, PageDefaultProps } from "@/types";
+import { cleanParamString } from "@/utils";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-const CreateItem = async ({
-  searchParams: { backlogTitle },
-}: PageDefaultProps) => {
+const CreateItem = async ({ searchParams: { backlog } }: PageDefaultProps) => {
   const user = await currentUser();
-  if (!user || !user.username || !backlogTitle) redirect("/");
+  if (!user || !user.username || !backlog) redirect("/");
 
-  const backlog = await getUserBacklogByTitle({
+  const backlogInfo = await getUserBacklogBySlug({
     userName: user.username,
-    backlogTitle: backlogTitle as string,
+    backlogSlug: backlog as string,
   });
+  if (!backlog) redirect("/");
 
   const defaultValues: BacklogItemCreationDTO = {
     title: "",
-    category: backlog.categories[0].name || "",
-    userFields: backlog.fields.map((field) => ({
+    category: backlogInfo.categories[0].name.toLowerCase() || "",
+    userFields: backlogInfo.fields.map((field) => ({
       name: field.name,
       value: "",
     })),
   };
-
+  const id = cleanParamString(JSON.stringify(backlogInfo._id));
   return (
     <div>
-      <ItemsCreateForm
-        backlogId={JSON.stringify(backlog._id)}
-        defaultValues={defaultValues}
-      />
+      <ItemsCreateForm backlogId={id} defaultValues={defaultValues} />
     </div>
   );
 };

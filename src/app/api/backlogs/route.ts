@@ -1,19 +1,26 @@
 import {
   createBacklog,
-  getUserBacklogByTitle,
+  getBacklogsByUserName,
+  getUserBacklogBySlug,
 } from "@/services/backlogs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const userName = request.nextUrl.searchParams.get("userName");
-  const backlogTitle = request.nextUrl.searchParams.get("backlogTitle");
-  if (!userName || !backlogTitle)
+  const backlogSlug = request.nextUrl.searchParams.get("backlog");
+  let resultData;
+  if (!userName) {
     return NextResponse.json(
       { message: `Params not provided` },
       { status: 400 },
     );
-  const data = await getUserBacklogByTitle({ userName, backlogTitle });
-  return NextResponse.json(data, { status: 200 });
+  }
+  if (!backlogSlug) {
+    resultData = await getBacklogsByUserName(userName);
+  } else {
+    resultData = await getUserBacklogBySlug({ userName, backlogSlug });
+  }
+  return NextResponse.json(resultData, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {

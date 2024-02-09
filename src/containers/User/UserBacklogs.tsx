@@ -7,16 +7,17 @@ import React from "react";
 
 const UserBacklogs = async ({ userName }: { userName: string }) => {
   const data = await getBacklogsTitleByUserName(userName);
-
   const backlogList = () => {
-    return data.map((backlog) => (
-      <li key={backlog.backlogTitle}>
-        <NavItem
-          href={`/user/${userName}/backlogs/${backlog.backlogTitle}`}
-          label={backlog.backlogTitle}
-        />
-      </li>
-    ));
+    return data.map((backlog) => {
+      return (
+        <li key={backlog._id}>
+          <NavItem
+            href={`/user/${userName}/backlogs/${backlog.slug}`}
+            label={backlog.backlogTitle}
+          />
+        </li>
+      );
+    });
   };
 
   return (

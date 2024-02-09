@@ -52,6 +52,7 @@ export type Field = {
 export type BacklogFormData = {
   userId: string;
   userName: string;
+  slug: string;
   backlogTitle: string;
   categories: { name: string; color: string }[];
   fields: {

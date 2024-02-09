@@ -6,6 +6,7 @@ import React from "react";
 import { SubmitHandler } from "react-hook-form";
 import { BacklogFormData } from "@/types";
 import BacklogForm from "@/containers/Backlogs/BacklogForm";
+import { generateSlug } from "@/utils";
 
 const CreateBacklog = () => {
   const { user } = useUser();
@@ -22,11 +23,13 @@ const CreateBacklog = () => {
     userId: user?.id,
     userName: user?.username || "",
     backlogTitle: "",
+    slug: "",
     categories: defaultCategories,
     fields: [],
   };
 
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {
+    data.slug = generateSlug(data.backlogTitle);
     if (user) {
       data.userName = user.username!;
       data.userId = user?.id;

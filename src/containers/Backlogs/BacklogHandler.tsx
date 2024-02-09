@@ -22,9 +22,8 @@ const BacklogHandler = () => {
     isLoading,
     updateBacklogData,
   } = useBacklogData(userName, backlog, search);
-
   const onDelete = async (id: string, backlogId: string) => {
-    const res = await fetch(`/api/backlogs/${backlogId}/data/${id}`, {
+    const res = await fetch(`/api/backlogs/${backlogId}/items/${id}`, {
       method: "DELETE",
     });
     await res.json();
@@ -38,7 +37,7 @@ const BacklogHandler = () => {
       <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
         {currentBacklog && (
           <FilterBlock
-            backlogTitle={currentBacklog.backlogTitle}
+            backlogSlug={currentBacklog.slug}
             backlogCategories={currentBacklog.categories}
           />
         )}

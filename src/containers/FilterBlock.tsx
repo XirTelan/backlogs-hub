@@ -6,10 +6,10 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type FilterBlockProps = {
-  backlogTitle: string;
+  backlogSlug: string;
   backlogCategories: { name: string; color: string }[];
 };
-const FilterBlock = ({ backlogTitle, backlogCategories }: FilterBlockProps) => {
+const FilterBlock = ({ backlogSlug, backlogCategories }: FilterBlockProps) => {
   const [categories] = useState(backlogCategories);
   const changesParams = useChangeSearchParams();
   const [actviveCategories, setActiveCategories] = useState<string[]>([]);
@@ -49,7 +49,7 @@ const FilterBlock = ({ backlogTitle, backlogCategories }: FilterBlockProps) => {
       <div className=" flex items-center">
         <SearchBar />
         <Link
-          href={`/items/create?backlogTitle=${backlogTitle}`}
+          href={`/items/create?backlog=${backlogSlug}`}
           className="ms-4 rounded bg-neutral-800 p-2"
         >
           Add

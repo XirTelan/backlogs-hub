@@ -1,4 +1,8 @@
-import { getBacklogById, updateBacklogById } from "@/services/backlogs";
+import {
+  deleteBacklogById,
+  getBacklogById,
+  updateBacklogById,
+} from "@/services/backlogs";
 import { cleanParamString, sendErrorMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -22,6 +26,17 @@ export async function PUT(request: NextRequest) {
   const data = await request.json();
   try {
     await updateBacklogById(data);
+    return NextResponse.json("Success");
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+}
+export async function DELETE(
+  request: NextRequest,
+  { params: { id } }: { params: { id: string } },
+) {
+  try {
+    await deleteBacklogById(id);
     return NextResponse.json("Success");
   } catch (error) {
     throw new Error(`${error}`);

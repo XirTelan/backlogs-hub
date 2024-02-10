@@ -78,6 +78,11 @@ export const updateBacklogById = async (data: BacklogDTO) => {
   }
 };
 
-export const deleteBacklogById = async () => {
-  throw new Error("Not implemented");
+export const deleteBacklogById = async (id: string) => {
+  try {
+    await dbConnect();
+    await Backlog.deleteOne({ _id: id });
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
 };

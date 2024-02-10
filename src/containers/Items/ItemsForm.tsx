@@ -1,5 +1,5 @@
 "use client";
-import InputField from "@/components/InputField";
+import InputField from "@/components/Common/InputField";
 import { BacklogDTO, BacklogItemCreationDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";

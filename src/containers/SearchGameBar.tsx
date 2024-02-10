@@ -1,5 +1,5 @@
 "use client";
-import GameCard from "@/components/GameCard/GameCard";
+import GameCard from "@/components/GameCard";
 import useDebounce from "@/hooks/useDebounce";
 import React, {  useEffect, useState } from "react";
 

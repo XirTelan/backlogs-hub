@@ -1,7 +1,7 @@
 "use client";
 
-import ColorPallete from "@/components/ColorPallete";
-import InputField from "@/components/InputField";
+import ColorPallete from "@/components/Common/ColorPallete";
+import InputField from "@/components/Common/InputField";
 import React from "react";
 import {
   Controller,
@@ -46,7 +46,7 @@ const BacklogForm = <T extends BacklogFormData>({
           id="backlogTitle"
           placeholder="Backlog title"
           label="Backlog title"
-          {...(register(`backlogTitle`), { required: true })}
+          {...register(`backlogTitle`, { required: true })}
         />
       </div>
       <div className="flex flex-col lg:flex-row lg:gap-4 ">

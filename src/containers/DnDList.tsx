@@ -87,7 +87,7 @@ const DnDList = ({ userName }: { userName: string }) => {
       </div>
       {isDirty && (
         <div className="mt-2 flex w-full justify-center">
-          <ActionButton title="Save changes" onClick={onSave}>
+          <ActionButton shrink={false} title="Save changes" onClick={onSave}>
             <RiSave3Fill />
           </ActionButton>
         </div>

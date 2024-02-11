@@ -5,12 +5,15 @@ import { Reorder } from "framer-motion";
 import BacklogDndCard from "./Backlogs/BacklogDndCard";
 import ActionButton from "@/components/ActionButton";
 import { IoAdd } from "react-icons/io5";
+import { RiSave3Fill } from "react-icons/ri";
 
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const DnDList = ({ userName }: { userName: string }) => {
   const [backlogs, setBacklogs] = useState<BacklogDTO[]>([]);
+  const [isDirty, setIsDirty] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -25,6 +28,25 @@ const DnDList = ({ userName }: { userName: string }) => {
     if (res.ok) {
       toast.success("Deleted");
       loadData(userName, setBacklogs);
+    }
+  };
+
+  const onSave = async () => {
+    backlogs.forEach((backlog, index) => {
+      backlog.order = index;
+    });
+    console.log(backlogs);
+    const res = await fetch(`/api/backlogs/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(backlogs),
+    });
+    if (res.ok) {
+      toast.success("Saved");
+      loadData(userName, setBacklogs);
+      setIsDirty(false);
     }
   };
 
@@ -47,7 +69,10 @@ const DnDList = ({ userName }: { userName: string }) => {
             className="flex flex-col gap-2"
             axis="y"
             values={backlogs}
-            onReorder={setBacklogs}
+            onReorder={(newOrder) => {
+              if (!isDirty) setIsDirty(true);
+              setBacklogs(newOrder);
+            }}
           >
             {backlogs.map((backlog) => (
               <BacklogDndCard
@@ -60,6 +85,13 @@ const DnDList = ({ userName }: { userName: string }) => {
           </Reorder.Group>
         </div>
       </div>
+      {isDirty && (
+        <div className="mt-2 flex w-full justify-center">
+          <ActionButton title="Save changes" onClick={onSave}>
+            <RiSave3Fill />
+          </ActionButton>
+        </div>
+      )}
     </>
   );
 };
@@ -70,9 +102,10 @@ const loadData = async (
   userName: string,
   setBacklogs: (data: BacklogDTO[]) => void,
 ) => {
-  const res = await fetch(`/api/backlogs?userName=${userName}`, {
+  const res = await fetch(`/api/backlogs?userName=${userName}&type=baseInfo`, {
     next: { tags: ["backlogs"] },
   });
   const data = await res.json();
+  console.log("get", data);
   setBacklogs(data);
 };

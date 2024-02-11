@@ -16,6 +16,16 @@ export type BacklogDTO = {
   updatedAt: Date;
 } & BacklogFormData;
 
+export type BacklogFormData = {
+  userId: string;
+  userName: string;
+  order: number;
+  slug: string;
+  backlogTitle: string;
+  categories: { name: string; color: string }[];
+  fields: Field[];
+};
+
 type ItemField = {
   name: string;
   value: string;
@@ -34,31 +44,10 @@ export type BacklogItemDTO = {
   userFields: ItemField[];
 };
 
-export type BacklogCreateDTO = {
-  visibility: string;
-  userId: string;
-  userName: string;
-  backlogTitle: string;
-  fields: Field[];
-  categories: string[];
-};
-
 export type Field = {
   name: string;
   type: "text" | "number";
   _id: string;
-};
-
-export type BacklogFormData = {
-  userId: string;
-  userName: string;
-  slug: string;
-  backlogTitle: string;
-  categories: { name: string; color: string }[];
-  fields: {
-    name: string;
-    type: "text" | "number";
-  }[];
 };
 
 export type PageDefaultProps = {

@@ -7,13 +7,16 @@ const ActionButton = ({
   onClick,
   variant = "primary",
 }: ActionButtonProps) => {
-  const bgColor = variant === "primary" ? "bg-neutral-500" : "bg-danger";
+  const styles = {
+    primary: "bg-neutral-500",
+    danger: "bg-danger",
+  };
   return (
     <motion.button
       title={title}
       whileHover={{ scale: 1.1 }}
       onClick={onClick}
-      className={`hover:${bgColor} flex h-8 w-8 items-center justify-center rounded-full bg-neutral-700 p-1 lg:w-auto lg:rounded`}
+      className={`hover:${styles[variant]} flex h-8 w-8 items-center justify-center rounded-full bg-neutral-700 p-1 lg:w-auto lg:rounded`}
     >
       <div>{children}</div>
       <span className="hidden lg:mx-2 lg:block ">{title}</span>

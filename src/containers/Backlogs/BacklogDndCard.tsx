@@ -14,7 +14,6 @@ interface Props {
 
 const BacklogDndCard = ({ editAction, deleteAction, item }: Props) => {
   const dragControls = useDragControls();
-  console.log(item);
   return (
     <Reorder.Item
       initial={{ y: 50, opacity: 0 }}

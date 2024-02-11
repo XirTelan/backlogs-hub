@@ -12,7 +12,6 @@ const Category = new mongoose.Schema({
   name: {
     type: String,
     require: true,
-    unique: true,
   },
   color: {
     type: String,
@@ -44,6 +43,9 @@ const BacklogSchema = new mongoose.Schema(
     },
     features: {
       type: String,
+    },
+    order: {
+      type: Number,
     },
     fields: [Field],
     categories: [Category],

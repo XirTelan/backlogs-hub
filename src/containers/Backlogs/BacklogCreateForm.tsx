@@ -5,8 +5,12 @@ import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
 import { generateSlug } from "@/utils";
 import { useUser } from "@clerk/nextjs";
+import Title from "@/components/Common/Title";
+import { useState } from "react";
+import BacklogTemplate from "./BacklogTemplate";
 
 const BacklogCreateForm = () => {
+  const [useTemplate, setUseTemplate] = useState(false);
   const { user } = useUser();
   const router = useRouter();
   if (!user) return <div>Loading</div>;
@@ -20,6 +24,7 @@ const BacklogCreateForm = () => {
   const defaultValues: BacklogFormData = {
     userId: user?.id,
     userName: user?.username || "",
+    order: 99,
     backlogTitle: "",
     slug: "",
     categories: defaultCategories,
@@ -45,10 +50,18 @@ const BacklogCreateForm = () => {
   };
 
   return (
-    <div>
-      <h1>Creating backlog </h1>
-      <BacklogForm defaultValues={defaultValues} onSubmit={onSubmit} />
-    </div>
+    <>
+      <Title title="Creating backlog ">
+        <button onClick={() => setUseTemplate((prev) => !prev)}>
+          {useTemplate ? "Create my own" : "Use template"}
+        </button>
+      </Title>
+      {useTemplate ? (
+        <BacklogTemplate />
+      ) : (
+        <BacklogForm defaultValues={defaultValues} onSubmit={onSubmit} />
+      )}
+    </>
   );
 };
 

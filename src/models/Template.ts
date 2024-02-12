@@ -1,16 +1,10 @@
 import mongoose from "mongoose";
 
-const BacklogSchema = new mongoose.Schema(
+const TemplateSchema = new mongoose.Schema(
   {
-    userId: {
+    templateName: {
       type: String,
       required: true,
-      maxlength: 60,
-    },
-    userName: {
-      type: String,
-      required: true,
-      maxlength: 60,
     },
     backlogTitle: {
       type: String,
@@ -26,9 +20,6 @@ const BacklogSchema = new mongoose.Schema(
     features: {
       type: String,
     },
-    order: {
-      type: Number,
-    },
     fields: [
       {
         name: { type: String, required: true },
@@ -41,18 +32,12 @@ const BacklogSchema = new mongoose.Schema(
         color: { type: String, required: true },
       },
     ],
-    visibility: {
-      type: String,
-      default: "public",
-    },
   },
   {
     timestamps: true,
   },
 );
-BacklogSchema.index({ userName: 1, slug: 1 }, { unique: true });
-const Backlog =
-  mongoose.models.Backlog || mongoose.model("Backlog", BacklogSchema);
+const Template =
+  mongoose.models.Template || mongoose.model("Template", TemplateSchema);
 
-export default Backlog;
-
+export default Template;

@@ -9,6 +9,7 @@ import { RiSave3Fill } from "react-icons/ri";
 
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Title from "@/components/Common/Title";
 
 const DnDList = ({ userName }: { userName: string }) => {
   const [backlogs, setBacklogs] = useState<BacklogDTO[]>([]);
@@ -53,17 +54,14 @@ const DnDList = ({ userName }: { userName: string }) => {
   return (
     <>
       <div className="rounded border border-neutral-800 bg-neutral-900 px-2 pb-2 ">
-        <div className="my-2 flex items-center border-b border-neutral-800 py-2  ">
-          <h2 className=" text-2xl font-bold">Manage Backlogs</h2>
-          <div className="ms-auto">
-            <ActionButton
-              title={"Create backlog"}
-              onClick={() => router.push("/backlog/create")}
-            >
-              <IoAdd />
-            </ActionButton>
-          </div>
-        </div>
+        <Title title="Manage backlogs">
+          <ActionButton
+            title={"Create backlog"}
+            onClick={() => router.push("/backlog/create")}
+          >
+            <IoAdd />
+          </ActionButton>
+        </Title>
         <div>
           <Reorder.Group
             className="flex flex-col gap-2"

@@ -51,7 +51,7 @@ export type Field = {
 };
 
 export type PageDefaultProps = {
-  children: React.ReactElement;
+  children?: React.ReactElement;
   params: {
     [key: string]: string;
   };

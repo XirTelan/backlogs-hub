@@ -44,6 +44,20 @@ export type BacklogItemDTO = {
   userFields: ItemField[];
 };
 
+export type TemplateDTO = {
+  _id: string;
+} & TemplateCreationDTO;
+
+export type TemplateCreationDTO = {
+  templateTitle: string;
+  fields: Field[];
+  description: string;
+  features: string;
+  categories: { name: string; color: string }[];
+  author: string;
+  visability: string;
+};
+
 export type Field = {
   name: string;
   type: "text" | "number";

@@ -26,7 +26,6 @@ const ColorPallete = ({
   useEffect(() => {
     setCurrentColor(value);
   }, [value]);
-  console.log(value);
   return (
     <div
       className={`bg relative h-6 min-h-6 w-6 min-w-6 cursor-pointer rounded-full`}

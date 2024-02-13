@@ -36,7 +36,6 @@ const DnDList = ({ userName }: { userName: string }) => {
     backlogs.forEach((backlog, index) => {
       backlog.order = index;
     });
-    console.log(backlogs);
     const res = await fetch(`/api/backlogs/`, {
       method: "PATCH",
       headers: {
@@ -104,6 +103,5 @@ const loadData = async (
     next: { tags: ["backlogs"] },
   });
   const data = await res.json();
-  console.log("get", data);
   setBacklogs(data);
 };

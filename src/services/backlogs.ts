@@ -2,8 +2,8 @@
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import { BacklogDTO, BacklogFormData } from "@/types";
-import { NextResponse } from "next/server";
 
+//GET SECTION
 export const getBacklogById = async (id: string) => {
   try {
     await dbConnect();
@@ -61,17 +61,22 @@ export const getBacklogsByUserName = async (
   }
 };
 
+//POST SECTION
 export const createBacklog = async (data: BacklogFormData) => {
   try {
     await dbConnect();
+    const isExist = await isBacklogExist(data.userName, data.slug);
+    if (isExist) {
+      return Promise.reject(new Error("Already exist"));
+    }
     const backlog = new Backlog(data);
     await backlog.save();
-    return NextResponse.json(backlog);
+    return backlog;
   } catch (error) {
     throw new Error(`${error}`);
   }
 };
-
+//PUT/PATCH SECTION
 export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
   try {
     await dbConnect();
@@ -91,11 +96,25 @@ export const updateBacklogById = async (data: BacklogDTO) => {
     throw new Error(`${error}`);
   }
 };
-
+//DELETE SECTION
 export const deleteBacklogById = async (id: string) => {
   try {
     await dbConnect();
     await Backlog.deleteOne({ _id: id });
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
+//HELPERS SECTION
+export const isBacklogExist = async (userName: string, slug: string) => {
+  try {
+    await dbConnect();
+    const isExist = await Backlog.exists({
+      userName: userName,
+      slug: slug,
+    });
+    return isExist;
   } catch (error) {
     throw new Error(`${error}`);
   }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export const sendErrorMsg = (error: unknown, status = 400) => {
-  let message = "Unknonw error";
+  let message = "Unknown error";
   if (error instanceof Error) {
     message = error.message;
   }

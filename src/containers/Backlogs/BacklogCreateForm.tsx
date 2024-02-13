@@ -32,21 +32,23 @@ const BacklogCreateForm = () => {
   };
 
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {
-    console.log(data);
     data.slug = generateSlug(data.backlogTitle);
     if (user) {
       data.userName = user.username!;
       data.userId = user?.id;
     }
-    const res = await fetch("/api/backlogs/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (res.ok) router.push("/");
+    try {
+      const res = await fetch("/api/backlogs/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) router.push("/");
+    } catch (error) {
+      console.error("error", error);
+    }
   };
 
   return (
@@ -57,7 +59,15 @@ const BacklogCreateForm = () => {
         </button>
       </Title>
       {useTemplate ? (
-        <BacklogTemplate />
+        <>
+          <BacklogTemplate
+            onSubmit={onSubmit}
+            user={{
+              usename: user.username || "",
+              id: user.id,
+            }}
+          />
+        </>
       ) : (
         <BacklogForm defaultValues={defaultValues} onSubmit={onSubmit} />
       )}

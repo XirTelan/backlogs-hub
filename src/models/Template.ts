@@ -2,15 +2,7 @@ import mongoose from "mongoose";
 
 const TemplateSchema = new mongoose.Schema(
   {
-    templateName: {
-      type: String,
-      required: true,
-    },
-    backlogTitle: {
-      type: String,
-      required: true,
-    },
-    slug: {
+    templateTitle: {
       type: String,
       required: true,
     },
@@ -32,6 +24,8 @@ const TemplateSchema = new mongoose.Schema(
         color: { type: String, required: true },
       },
     ],
+    author: String,
+    visability: String,
   },
   {
     timestamps: true,

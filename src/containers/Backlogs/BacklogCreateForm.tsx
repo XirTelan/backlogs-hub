@@ -27,6 +27,7 @@ const BacklogCreateForm = () => {
     order: 99,
     backlogTitle: "",
     slug: "",
+    visibility: "public",
     categories: defaultCategories,
     fields: [],
   };
@@ -54,9 +55,12 @@ const BacklogCreateForm = () => {
   return (
     <>
       <Title title="Creating backlog ">
-        <button onClick={() => setUseTemplate((prev) => !prev)}>
-          {useTemplate ? "Create my own" : "Use template"}
-        </button>
+        <>
+  
+          <button onClick={() => setUseTemplate((prev) => !prev)}>
+            {useTemplate ? "Create my own" : "Use template"}
+          </button>
+        </>
       </Title>
       {useTemplate ? (
         <>

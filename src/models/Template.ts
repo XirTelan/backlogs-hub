@@ -27,7 +27,7 @@ const TemplateSchema = new mongoose.Schema(
       },
     ],
     author: String,
-    visability: String,
+    visibility: String,
   },
   {
     timestamps: true,

@@ -3,7 +3,7 @@ import InputField from "@/components/Common/InputField";
 import { BacklogDTO, BacklogItemCreationDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import FieldsBlock from "../FieldsBlock";
+import FieldsBlock from "../../components/FieldsBlock";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
@@ -53,53 +53,51 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmitInternal)}>
-        <div className="field group  relative mt-2 w-1/2 px-0 py-4  ">
-          <InputField
-            id="title"
-            placeholder="Title"
-            label="Title"
-            {...register("title", { required: true })}
-          />
-        </div>
-        <div>
-          {backlog.categories.map((category) => (
-            <div key={category.name}>
-              <label htmlFor={`radio_${category.name}`}>
-                <input
-                  id={`radio_${category.name}`}
-                  type="radio"
-                  value={category.name.toLowerCase()}
-                  {...register("category")}
-                />
-                {category.name}
-              </label>
-            </div>
+    <form onSubmit={handleSubmit(onSubmitInternal)}>
+      <div className="field group  relative mt-2 w-1/2 px-0 py-4  ">
+        <InputField
+          id="title"
+          placeholder="Title"
+          label="Title"
+          {...register("title", { required: true })}
+        />
+      </div>
+      <div>
+        {backlog.categories.map((category) => (
+          <div key={category.name}>
+            <label htmlFor={`radio_${category.name}`}>
+              <input
+                id={`radio_${category.name}`}
+                type="radio"
+                value={category.name.toLowerCase()}
+                {...register("category")}
+              />
+              {category.name}
+            </label>
+          </div>
+        ))}
+      </div>
+      <FieldsBlock status="disabled">
+        <>
+          {fieldsArray.fields.map((field, index) => (
+            <li className="  w-auto" key={field.name}>
+              <InputField
+                label={field.name}
+                placeholder={field.name}
+                type={fieldsTypeMap?.get(field.name)}
+                {...register(`userFields.${index}.value`, {
+                  required: false,
+                })}
+              />
+            </li>
           ))}
-        </div>
-        <FieldsBlock status="disabled">
-          <>
-            {fieldsArray.fields.map((field, index) => (
-              <li className="  w-auto" key={field.name}>
-                <InputField
-                  label={field.name}
-                  placeholder={field.name}
-                  type={fieldsTypeMap?.get(field.name)}
-                  {...register(`userFields.${index}.value`, {
-                    required: false,
-                  })}
-                />
-              </li>
-            ))}
-          </>
-        </FieldsBlock>
-        <button type="button" onClick={() => router.back()}>
-          Cancel
-        </button>
-        <button type="submit">Crate</button>
-      </form>
-    </div>
+        </>
+      </FieldsBlock>
+      <button type="button" onClick={() => router.back()}>
+        Cancel
+      </button>
+      <button type="submit">Crate</button>
+    </form>
   );
 };
 

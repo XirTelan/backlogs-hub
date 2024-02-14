@@ -25,9 +25,9 @@ const CreateItem = async ({ searchParams: { backlog } }: PageDefaultProps) => {
   };
   const id = cleanParamString(JSON.stringify(backlogInfo._id));
   return (
-    <div>
+    <main className="container">
       <ItemsCreateForm backlogId={id} defaultValues={defaultValues} />
-    </div>
+    </main>
   );
 };
 

@@ -28,13 +28,13 @@ const ItemsCreateForm = ({
   };
 
   return (
-    <div>
+    <>
       <ItemsForm
         backlogId={backlogId}
         defaultValues={defaultValues}
         onSubmit={onSubmit}
       />
-    </div>
+    </>
   );
 };
 

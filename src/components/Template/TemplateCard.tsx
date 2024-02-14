@@ -18,8 +18,8 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
   };
 
   return (
-    <>
-      <div className="relative flex grow flex-col  ">
+    <div className="min-w-80 max-w-80">
+      <div className="relative flex  grow flex-col  ">
         <div
           className=" absolute bottom-0 left-0 right-0 top-0 z-0 w-full  rounded-t-xl bg-gradient-to-b from-neutral-900 "
           style={{
@@ -87,7 +87,14 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
         </div>
       </div>
       <motion.div className="relative mb-8 px-4 pt-2  ">
-        <p>{template.description}</p>
+        <div className=" absolute -top-4 left-0 right-0 flex items-center justify-center">
+          <div className="h-0.5 w-1/6 bg-cyan-500" />
+          <div className=" rounded-lg border-2 border-cyan-500 bg-neutral-600 p-1">
+            Description
+          </div>
+          <div className="h-0.5 w-full bg-cyan-500" />
+        </div>
+        <p className="mt-4 break-words">{template.description}</p>
       </motion.div>
       <button
         onClick={toSubmit}
@@ -95,12 +102,24 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
       >
         Use Template
       </button>
-    </>
+    </div>
   );
 };
 
 export default TemplateCard;
 
+/**
+ * Returns the average of two numbers.
+ *
+ * @remarks
+ * This method is part of the {@link core-library#Statistics | Statistics subsystem}.
+ *
+ * @param x - The first input number
+ * @param y - The second input number
+ * @returns The arithmetic mean of `x` and `y`
+ *
+ * @beta
+ */
 type TemplateCardProps = {
   template: TemplateDTO;
   toSubmit: () => void;

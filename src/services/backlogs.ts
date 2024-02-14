@@ -1,6 +1,7 @@
 "use server";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
+import BacklogItem from "@/models/BacklogItem";
 import { BacklogDTO, BacklogFormData } from "@/types";
 
 //GET SECTION
@@ -101,6 +102,7 @@ export const deleteBacklogById = async (id: string) => {
   try {
     await dbConnect();
     await Backlog.deleteOne({ _id: id });
+    await BacklogItem.deleteMany({ backlogId: id });
   } catch (error) {
     throw new Error(`${error}`);
   }

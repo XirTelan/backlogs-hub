@@ -5,6 +5,13 @@ export type InputField = {
   HTMLInputElement
 >;
 
+export type TextArea = {
+  label?: string;
+} & React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLTextAreaElement>,
+  HTMLTextAreaElement
+>;
+
 export type ListItemInput = {
   onDelete: () => void;
 } & InputField;
@@ -24,6 +31,7 @@ export type BacklogFormData = {
   backlogTitle: string;
   categories: BacklogCategory[];
   fields: Field[];
+  visibility: string;
 };
 
 type ItemField = {
@@ -61,7 +69,7 @@ export type TemplateCreationDTO = {
   features: string;
   categories: BacklogCategory[];
   author: string;
-  visability: string;
+  visibility: string;
 };
 
 export type Field = {

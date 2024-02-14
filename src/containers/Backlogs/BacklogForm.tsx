@@ -1,17 +1,16 @@
 "use client";
 
-import ColorPallete from "@/components/Common/ColorPallete";
 import InputField from "@/components/Common/InputField";
-import React from "react";
-import {
-  Controller,
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
-import { RiDeleteBack2Line } from "react-icons/ri";
-import FieldsBlock from "../FieldsBlock";
+import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { BacklogFormData } from "@/types";
+import { motion } from "framer-motion";
+import { IoMdAdd } from "react-icons/io";
+import { GrTemplate } from "react-icons/gr";
+import Modal from "@/components/Common/Modal";
+import TemplatePreview from "@/components/Template/TemplatePreview";
+import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
+import UserFieldsBlock from "./UserFieldsBlock";
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
@@ -20,127 +19,94 @@ const BacklogForm = <T extends BacklogFormData>({
   defaultValues: T;
   onSubmit: SubmitHandler<T>;
 }) => {
-  const { register, handleSubmit, control } = useForm<BacklogFormData>({
+  const [showTemplate, setShowTemplate] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm<BacklogFormData>({
     defaultValues,
     mode: "onBlur",
   });
-
-  const fieldsArray = useFieldArray({
-    name: "fields",
-    control,
-    rules: {},
-  });
-
-  const categoriesArray = useFieldArray({
-    name: "categories",
-    control,
-  });
-
+  const handleShowTemplate = () => {
+    clearErrors();
+    const isCategoriesValid = Object.values(watchAllFields.categories).every(
+      (value) => {
+        return value.name.length > 0;
+      },
+    );
+    const isFieldsValid = Object.values(watchAllFields.fields).every(
+      (value) => {
+        return value.name.length > 0;
+      },
+    );
+    if (isCategoriesValid && isFieldsValid) {
+      setShowTemplate((prev) => !prev);
+    } else {
+      setError("fields", {
+        type: "manual",
+        message:
+          "All fields and categories  names must be filled to save template",
+      });
+    }
+  };
   const onSubmitInternal = (data: BacklogFormData) =>
     onSubmit({ ...defaultValues, ...data });
-
+  const watchAllFields = watch();
   return (
-    <form onSubmit={handleSubmit(onSubmitInternal)}>
-      <div className="field group relative my-4  w-full rounded border border-neutral-800 bg-neutral-900 px-2 py-2 ">
-        <InputField
-          id="backlogTitle"
-          placeholder="Backlog title"
-          label="Backlog title"
-          {...register(`backlogTitle`, { required: true })}
-        />
-      </div>
-      <div className="flex flex-col lg:flex-row lg:gap-4 ">
-        <FieldsBlock
-          title="Categories"
-          status="active"
-          append={() =>
-            categoriesArray.append({
-              name: "",
-              color: "#00ff00",
-              protected: false,
-            })
-          }
-        >
-          <>
-            {categoriesArray.fields.map((item, index) => (
-              <li className="flex items-center gap-2" key={item.id}>
-                <div className=" text-sm text-neutral-500">{index + 1}</div>
-                <Controller
-                  control={control}
-                  name={`categories.${index}.color`}
-                  render={({ field: { onChange, value } }) => (
-                    <ColorPallete onChange={onChange} value={value} />
-                  )}
-                />
-                <InputField
-                  id={`category_${index}`}
-                  placeholder="Category name"
-                  {...register(`categories.${index}.name`)}
-                />
-                <div className="flex">
-                  <button
-                    className="right-8  font-bold hover:text-red-800 active:text-red-600 "
-                    onClick={() => {
-                      categoriesArray.remove(index);
-                    }}
-                  >
-                    <RiDeleteBack2Line size={24} />
-                  </button>
+    <>
+      <form onSubmit={handleSubmit(onSubmitInternal)}>
+        <div className="field group relative my-4  w-full rounded border border-neutral-800 bg-neutral-900 px-2 py-2 ">
+          <InputField
+            id="backlogTitle"
+            placeholder="Backlog title"
+            label="Backlog title"
+            {...register(`backlogTitle`, { required: true })}
+          />
+        </div>
+        <div className="flex flex-col lg:flex-row lg:gap-4 ">
+          <CategoriesFieldsBlock control={control} register={register} />
+          <UserFieldsBlock control={control} register={register} />
+        </div>
+        <div className="flex w-full flex-col items-center justify-center">
+          {errors.fields && <p>{errors.fields.message}</p>}
+          <div className=" relative flex w-80 items-center  rounded  bg-neutral-500 p-2">
+            <motion.button
+              initial={{ left: "auto" }}
+              whileHover={{ left: 0 }}
+              onClick={handleShowTemplate}
+              type="button"
+              className="group absolute bottom-0 right-0 top-0 flex shrink items-center rounded bg-red-500"
+            >
+              <div className="flex w-full items-center justify-between p-2">
+                <GrTemplate />
+                <div className=" invisible m-auto hidden  opacity-0 group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-1000">
+                  Save as template
                 </div>
-              </li>
-            ))}
-          </>
-        </FieldsBlock>
-        <FieldsBlock
-          title="Backlog fields"
-          status="active"
-          className="w-full lg:w-3/4"
-          append={() =>
-            fieldsArray.append({ name: "", type: "text", protected: false })
-          }
-        >
-          <>
-            <li>
-              <InputField name="Title" value={"Title"} disabled>
-                <div className=" absolute bottom-0 right-0 top-0 flex items-center self-center text-neutral-600 ">
-                  <p>
-                    This field is required and cannot be changed or deleted.
-                  </p>
-                </div>
-              </InputField>
-            </li>
-            {fieldsArray.fields.map((item, index) => (
-              <li key={item.id} className="flex items-center  gap-2">
-                <InputField
-                  disabled={item.protected}
-                  placeholder="Field name"
-                  {...register(`fields.${index}.name`)}
-                />
-                <select
-                  disabled={item.protected}
-                  className="rounded bg-neutral-800 p-2"
-                  {...register(`fields.${index}.type`)}
-                >
-                  <option value="text">Text</option>
-                  <option value="timer">Timer</option>
-                  <option value="number">Number</option>
-                  <option value="date">Date</option>
-                </select>
-                {!item.protected && (
-                  <button onClick={() => fieldsArray.remove(index)}>
-                    <RiDeleteBack2Line size={24} />
-                  </button>
-                )}
-              </li>
-            ))}
-          </>
-        </FieldsBlock>
-      </div>
+              </div>
+            </motion.button>
+            <IoMdAdd />
+            <button className="w-full text-center" type="submit">
+              Create Backlog
+            </button>
+          </div>
+        </div>
+      </form>
 
-      <div className="flex justify-center">
-        <button type="submit">Create</button>
-      </div>
-    </form>
+      {showTemplate && (
+        <Modal setClose={() => setShowTemplate(false)}>
+          <TemplatePreview
+            onClose={() => setShowTemplate(false)}
+            backlogData={watchAllFields}
+          />
+        </Modal>
+      )}
+    </>
   );
 };
 

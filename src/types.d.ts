@@ -22,13 +22,19 @@ export type BacklogFormData = {
   order: number;
   slug: string;
   backlogTitle: string;
-  categories: { name: string; color: string }[];
+  categories: BacklogCategory[];
   fields: Field[];
 };
 
 type ItemField = {
   name: string;
   value: string;
+};
+
+export type BacklogCategory = {
+  name: string;
+  color: string;
+  protected: boolean;
 };
 export type BacklogItemCreationDTO = {
   title: string;
@@ -53,15 +59,15 @@ export type TemplateCreationDTO = {
   fields: Field[];
   description: string;
   features: string;
-  categories: { name: string; color: string }[];
+  categories: BacklogCategory[];
   author: string;
   visability: string;
 };
 
 export type Field = {
   name: string;
+  protected: boolean;
   type: "text" | "number";
-  _id: string;
 };
 
 export type PageDefaultProps = {

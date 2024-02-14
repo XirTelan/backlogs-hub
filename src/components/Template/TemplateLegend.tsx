@@ -5,6 +5,7 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { IoMdTimer } from "react-icons/io";
 import { IoText } from "react-icons/io5";
 import { TbWindowMinimize } from "react-icons/tb";
+import { FaLock } from "react-icons/fa";
 
 const TemplateLegend = () => {
   const [isMinimized, setIsMinimized] = useState(true);
@@ -44,6 +45,12 @@ const TemplateLegend = () => {
               <IconDescription title="Date field" text={descriptions.date}>
                 <FaCalendarCheck />
               </IconDescription>
+              <IconDescription title="Date field" text={descriptions.date}>
+                <FaCalendarCheck />
+              </IconDescription>
+              <IconDescription title="Protected field" text={descriptions.lock}>
+                <FaLock />
+              </IconDescription>
             </div>
           </div>
         </>
@@ -75,7 +82,8 @@ export default TemplateLegend;
 
 const descriptions = {
   text: `One line text field`,
-  timer: `Provides functionality for tracking and displaying elapsed time durations. Users can input a specific duration in hours and/or minutes. This field type include features such as start, pause, and reset`,
+  timer: `Provides functionality for tracking and displaying elapsed time durations. You can input a specific duration in hours and/or minutes. This field type include features such as start, pause, and reset`,
   date: `You can select date from DatePicker or type it itself.`,
   number: `Contains only numbers `,
+  lock: "Field cannot be changed or deleted",
 };

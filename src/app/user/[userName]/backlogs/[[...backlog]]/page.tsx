@@ -8,9 +8,13 @@ export default async function Backlog({ params }: PageDefaultProps) {
   const isActiveBacklog = params.backlog;
 
   return (
-    <div className="flex w-full  flex-col items-center">
-      <UserBacklogs userName={params.userName} />
-      {isActiveBacklog ? <BacklogHandler /> : <Feed />}
-    </div>
+    <>
+      <div className="container flex w-full  flex-col items-center">
+        <UserBacklogs userName={params.userName} />
+      </div>
+      <main className="container w-full ">
+        {isActiveBacklog ? <BacklogHandler /> : <Feed />}
+      </main>
+    </>
   );
 }

@@ -3,9 +3,9 @@ import { PageDefaultProps } from "@/types";
 
 const ManageBacklogs = async ({ params: { userName } }: PageDefaultProps) => {
   return (
-    <div>
+    <main className="container">
       <DnDList userName={userName} />
-    </div>
+    </main>
   );
 };
 

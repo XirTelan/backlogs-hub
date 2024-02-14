@@ -3,9 +3,9 @@ import { PageDefaultProps } from "@/types";
 
 const EditBacklog = ({ params: { id } }: PageDefaultProps) => {
   return (
-    <div>
+    <main className="container">
       <BacklogEditForm id={id} />
-    </div>
+    </main>
   );
 };
 

@@ -16,12 +16,14 @@ const TemplateSchema = new mongoose.Schema(
       {
         name: { type: String, required: true },
         type: { type: String, required: true },
+        protected: Boolean,
       },
     ],
     categories: [
       {
         name: { type: String, required: true },
         color: { type: String, required: true },
+        protected: Boolean,
       },
     ],
     author: String,

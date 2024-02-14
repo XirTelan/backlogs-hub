@@ -7,7 +7,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputField>(
       ? " placeholder:text-transparent"
       : "placeholder:text-neutral-400";
     return (
-      <div className="field group relative  w-full  px-0 py-4  ">
+      <div className="field group relative w-full  px-0 py-4  ">
         <input
           type="input"
           className={`peer w-full border-0 border-b border-b-neutral-600 bg-transparent px-0 py-2 outline-0 transition-colors ${isLabel}`}

@@ -6,6 +6,7 @@ import { IoMdTimer } from "react-icons/io";
 import { IoText } from "react-icons/io5";
 import { AiOutlineFieldNumber } from "react-icons/ai";
 import { FaCalendarCheck } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 
 const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
   const icons = {
@@ -13,6 +14,7 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
     text: <IoText />,
     number: <AiOutlineFieldNumber />,
     date: <FaCalendarCheck />,
+    lock: <FaLock />,
   };
 
   return (
@@ -45,9 +47,14 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
                     key={field.name}
                   >
                     <div className="ms-8">{field.name}</div>
-                    <div className="absolute bottom-0 left-0 top-0 ms-auto flex items-center rounded-s-xl border-s border-s-neutral-700  bg-green-800 p-2">
+                    <div className="absolute bottom-0 left-0 top-0 ms-auto flex items-center rounded-s-xl border-e border-e-neutral-700  bg-green-800 p-2">
                       {icons[field.type]}
                     </div>
+                    {field.protected && (
+                      <div className="absolute bottom-0 right-0 top-0 ms-auto flex items-center rounded-e-xl border-s border-s-neutral-700  bg-green-800 p-2">
+                        {icons.lock}
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -61,10 +68,17 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
                 {template.categories.map((category) => (
                   <li
                     key={category.name}
-                    className="rounded-xl  border border-neutral-700 bg-neutral-800 p-1 text-center"
+                    className={`relative rounded-lg  border border-neutral-700 bg-neutral-800 p-1 text-center`}
                     style={{ color: category.color || "#fff" }}
                   >
-                    {category.name}
+                    <span className={`${category.protected && "me-6"}`}>
+                      {category.name}
+                    </span>
+                    {category.protected && (
+                      <div className="border-s-lg absolute bottom-0 right-0 top-0 ms-auto flex items-center rounded-e border-s-neutral-700 bg-green-800  p-1 text-white">
+                        {icons.lock}
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>

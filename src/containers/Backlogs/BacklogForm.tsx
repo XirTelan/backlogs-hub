@@ -53,7 +53,13 @@ const BacklogForm = <T extends BacklogFormData>({
         <FieldsBlock
           title="Categories"
           status="active"
-          append={() => categoriesArray.append({ name: "", color: "#00ff00" })}
+          append={() =>
+            categoriesArray.append({
+              name: "",
+              color: "#00ff00",
+              protected: false,
+            })
+          }
         >
           <>
             {categoriesArray.fields.map((item, index) => (
@@ -88,31 +94,43 @@ const BacklogForm = <T extends BacklogFormData>({
         <FieldsBlock
           title="Backlog fields"
           status="active"
-          append={() => fieldsArray.append({ name: "", type: "text" })}
+          className="w-full lg:w-3/4"
+          append={() =>
+            fieldsArray.append({ name: "", type: "text", protected: false })
+          }
         >
           <>
             <li>
-              <InputField name="asd" value={"Title"} disabled />
+              <InputField name="Title" value={"Title"} disabled>
+                <div className=" absolute bottom-0 right-0 top-0 flex items-center self-center text-neutral-600 ">
+                  <p>
+                    This field is required and cannot be changed or deleted.
+                  </p>
+                </div>
+              </InputField>
             </li>
             {fieldsArray.fields.map((item, index) => (
               <li key={item.id} className="flex items-center  gap-2">
-                {/* {item.name=='Title' ? } */}
                 <InputField
+                  disabled={item.protected}
                   placeholder="Field name"
                   {...register(`fields.${index}.name`)}
                 />
                 <select
+                  disabled={item.protected}
                   className="rounded bg-neutral-800 p-2"
                   {...register(`fields.${index}.type`)}
                 >
                   <option value="text">Text</option>
+                  <option value="timer">Timer</option>
                   <option value="number">Number</option>
                   <option value="date">Date</option>
                 </select>
-                <button onClick={() => fieldsArray.remove(index)}>
-                  {" "}
-                  <RiDeleteBack2Line size={24} />
-                </button>
+                {!item.protected && (
+                  <button onClick={() => fieldsArray.remove(index)}>
+                    <RiDeleteBack2Line size={24} />
+                  </button>
+                )}
               </li>
             ))}
           </>

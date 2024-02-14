@@ -1,5 +1,5 @@
 "use client";
-import { BacklogFormData } from "@/types";
+import { BacklogCategory, BacklogFormData } from "@/types";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
@@ -15,11 +15,11 @@ const BacklogCreateForm = () => {
   const router = useRouter();
   if (!user) return <div>Loading</div>;
 
-  const defaultCategories = [
-    { name: "Completed", color: "#00ff00" },
-    { name: "Playing", color: "#00ff00" },
-    { name: "Backlog", color: "#00ff00" },
-    { name: "Retired", color: "#00ff00" },
+  const defaultCategories: BacklogCategory[] = [
+    { name: "Completed", color: "#00ff00", protected: false },
+    { name: "Playing", color: "#00ff00", protected: false },
+    { name: "Backlog", color: "#00ff00", protected: false },
+    { name: "Retired", color: "#00ff00", protected: false },
   ];
   const defaultValues: BacklogFormData = {
     userId: user?.id,

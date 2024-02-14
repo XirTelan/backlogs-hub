@@ -38,9 +38,8 @@ export default function RootLayout({
             }}
           />
           <NavBar />
-          <main className="container flex grow flex-col justify-center">
-            {children}
-          </main>
+          {children}
+
           <Footer />
         </body>
       </ClerkProvider>

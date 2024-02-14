@@ -3,7 +3,9 @@ import BacklogCreateForm from "@/containers/Backlogs/BacklogCreateForm";
 const CreateBacklog = () => {
   return (
     <>
-      <BacklogCreateForm />
+      <main className="container flex grow flex-col">
+        <BacklogCreateForm />
+      </main>
     </>
   );
 };

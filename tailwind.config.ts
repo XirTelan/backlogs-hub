@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        around: "0 0 15px 5px rgba(0, 0, 0, 0.3)",
+      },
       colors: {
         danger: "#cf6679",
       },

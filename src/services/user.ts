@@ -1,7 +1,6 @@
 "use server";
 import dbConnect from "@/lib/dbConnect";
 import UserDB from "@/models/User";
-import { User } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function createUser(data: any) {
@@ -16,7 +15,6 @@ export async function createUser(data: any) {
       );
     const newUser = new UserDB({
       userName: data.username,
-      userClerkId: data.id,
       email: emailAddress,
     });
     await newUser.save();

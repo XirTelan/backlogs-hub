@@ -2,11 +2,10 @@ import ItemsEditForm from "@/containers/Items/ItemsEditForm";
 import { getBacklogItemById } from "@/services/backlogItem";
 import { PageDefaultProps } from "@/types";
 import { cleanParamString } from "@/utils";
-import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 const EditItem = async ({ params: { itemId } }: PageDefaultProps) => {
-  const user = await currentUser();
+  const user = {username: 'user'} //stub
   if (!user || !user.username || !itemId) redirect("/");
 
   const itemData = await getBacklogItemById({

@@ -8,7 +8,6 @@ import {
 } from "@/services/backlogs";
 import { BacklogDTO } from "@/types";
 import { sendErrorMsg } from "@/utils";
-import { currentUser } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -21,7 +20,7 @@ export async function GET(request: NextRequest) {
   const type = request.nextUrl.searchParams.get("type")?.toLowerCase();
   let resultData;
   if (!userName) {
-    const user = await currentUser();
+    const user = {username: "user"} //stub;
     if (!user || !user.username) {
       return NextResponse.json(
         { message: `Params not provided` },

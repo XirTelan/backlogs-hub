@@ -2,11 +2,10 @@ import ItemsCreateForm from "@/containers/Items/ItemsCreateForm";
 import { getUserBacklogBySlug } from "@/services/backlogs";
 import { BacklogItemCreationDTO, PageDefaultProps } from "@/types";
 import { cleanParamString } from "@/utils";
-import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 const CreateItem = async ({ searchParams: { backlog } }: PageDefaultProps) => {
-  const user = await currentUser();
+  const user = {username: 'user'} //stub
   if (!user || !user.username || !backlog) redirect("/");
 
   const backlogInfo = await getUserBacklogBySlug({

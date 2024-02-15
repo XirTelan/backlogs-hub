@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 
 import NavBar from "@/containers/NavBar";
@@ -24,7 +23,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ClerkProvider>
         <body className={`${roboto.className} flex flex-col items-center `}>
           <Toaster
             toastOptions={{
@@ -42,7 +40,6 @@ export default function RootLayout({
 
           <Footer />
         </body>
-      </ClerkProvider>
     </html>
   );
 }

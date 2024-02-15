@@ -4,14 +4,13 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
 import { generateSlug } from "@/utils";
-import { useUser } from "@clerk/nextjs";
 import Title from "@/components/Common/Title";
 import { useState } from "react";
 import BacklogTemplate from "./BacklogTemplate";
 
 const BacklogCreateForm = () => {
   const [useTemplate, setUseTemplate] = useState(false);
-  const { user } = useUser();
+  const user = { id: "1", username: "user" }; //stub
   const router = useRouter();
   if (!user) return <div>Loading</div>;
 
@@ -56,7 +55,6 @@ const BacklogCreateForm = () => {
     <>
       <Title title="Creating backlog ">
         <>
-  
           <button onClick={() => setUseTemplate((prev) => !prev)}>
             {useTemplate ? "Create my own" : "Use template"}
           </button>

@@ -4,7 +4,6 @@ import { BacklogDTO, BacklogItemCreationDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
@@ -17,7 +16,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   onSubmit: SubmitHandler<T>;
 }) => {
   const router = useRouter();
-  const { user } = useUser();
+  const user = { username: "user" }; //stub
   const [backlog, setBacklog] = useState<BacklogDTO>();
   const [fieldsTypeMap, setFieldsTypeMap] = useState<Map<string, string>>();
   const { handleSubmit, control, register } = useForm<BacklogItemCreationDTO>({

@@ -12,7 +12,6 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
 
   useEffect(() => {
     const mapToTemplate = (data: BacklogFormData) => {
-      console.log("data", data);
       const template: Partial<TemplateDTO> = {
         ...data,
         templateTitle: teamplateTitle || "",

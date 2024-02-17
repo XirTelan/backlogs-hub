@@ -1,9 +1,23 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { getTokenData } from "./auth/utils";
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  console.log(request.cookies.get("access_token"));
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get("access_token")?.value || "";
+  let userData = null;
+  if (token) {
+    const { payload } = await getTokenData(token);
+    if (!payload) {
+      const response = NextResponse.next();
+      response.cookies.delete("access_token");
+      return response;
+    }
+    userData = payload;
+  }
+  if (request.nextUrl.pathname === "/" && userData)
+    return NextResponse.redirect(
+      new URL(`/user/${userData.username}`, request.nextUrl),
+    );
 }
 
 // See "Matching Paths" below to learn more

@@ -23,23 +23,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={`${roboto.className} flex flex-col items-center `}>
-          <Toaster
-            toastOptions={{
-              className: "",
-              style: {
-                borderRadius: "5px",
-                background: "#222",
-                color: "#fff",
-                border: "solid 2px #333",
-              },
-            }}
-          />
-          <NavBar />
-          {children}
+      <body className={`${roboto.className} flex flex-col items-center `}>
+        <Toaster
+          toastOptions={{
+            className: "",
+            style: {
+              borderRadius: "5px",
+              background: "#222",
+              color: "#fff",
+              border: "solid 2px #333",
+            },
+          }}
+        />
+        <NavBar />
+        {children}
 
-          <Footer />
-        </body>
+        <Footer />
+      </body>
     </html>
   );
 }

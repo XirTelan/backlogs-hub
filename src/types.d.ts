@@ -17,6 +17,8 @@ export type ListItemInput = {
 } & InputField;
 
 export type BacklogDTO = {
+  userId: string;
+  userName: string;
   visibility: string;
   _id: string;
   createdAt: Date;
@@ -24,8 +26,6 @@ export type BacklogDTO = {
 } & BacklogFormData;
 
 export type BacklogFormData = {
-  userId: string;
-  userName: string;
   order: number;
   slug: string;
   backlogTitle: string;

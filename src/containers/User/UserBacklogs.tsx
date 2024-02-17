@@ -43,7 +43,7 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
   };
 
   return (
-    <div className=" mb-4 mt-2 flex w-full items-center justify-between rounded border border-neutral-800 bg-neutral-900 p-4">
+    <div className=" mb-4 flex w-full items-center justify-between rounded border border-neutral-800 bg-neutral-900 p-4">
       {data?.length > 0 ? (
         backlogList()
       ) : (

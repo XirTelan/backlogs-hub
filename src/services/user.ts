@@ -1,19 +1,19 @@
 "use server";
 import dbConnect from "@/lib/dbConnect";
-import UserDB from "@/models/User";
+import User from "@/models/User";
 import { NextResponse } from "next/server";
 
 export async function createUser(data: any) {
   const emailAddress = data.email_addresses[0].email_address;
   try {
     await dbConnect();
-    const user = await UserDB.findOne({ email: emailAddress });
+    const user = await User.findOne({ email: emailAddress });
     if (user)
       return NextResponse.json(
         { message: "User already exist" },
         { status: 409 },
       );
-    const newUser = new UserDB({
+    const newUser = new User({
       userName: data.username,
       email: emailAddress,
     });
@@ -26,7 +26,7 @@ export async function createUser(data: any) {
 
 export async function updateUser(data: User) {
   await dbConnect();
-  const user = await UserDB.findOne({ email: data.emailAddresses });
+  const user = await User.findOne({ email: data.emailAddresses });
   if (user)
     return NextResponse.json(
       { message: "User already exist" },
@@ -37,9 +37,22 @@ export async function updateUser(data: User) {
 export async function deleteUser(id: string) {
   try {
     await dbConnect();
-    await UserDB.deleteOne({ _id: id });
+    await User.deleteOne({ _id: id });
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 400 });
   }
   return NextResponse.json(null, { status: 200 });
+}
+
+export async function getUserVisibility(username: string) {
+  try {
+    await dbConnect();
+    const visibility = await User.findOne({ username: username }).select([
+      "profileVisibility",
+      "-_id",
+    ]);
+    return visibility.profileVisibility;
+  } catch (error) {
+    return NextResponse.json({ error: error }, { status: 400 });
+  }
 }

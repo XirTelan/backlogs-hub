@@ -6,14 +6,14 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      maxlength: 24,
+      maxlength: 60,
     },
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    
+    profileVisibility: { type: String, default: "public" },
   },
   {
     timestamps: true,

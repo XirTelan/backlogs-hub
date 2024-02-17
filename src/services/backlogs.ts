@@ -1,4 +1,5 @@
 "use server";
+import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
@@ -16,13 +17,26 @@ export const getBacklogById = async (id: string) => {
 };
 
 export const getBacklogsBaseInfoByUserName = async (userName: string) => {
+  const user = await getCurrentUserInfo();
   try {
     await dbConnect();
-    const backlogs = await Backlog.find({ userName: userName })
-      .select(["slug", "backlogTitle", "order"])
-      .sort({
-        order: 1,
-      });
+    let backlogs;
+    if (user && user.username === userName) {
+      backlogs = await Backlog.find({ userName: userName })
+        .select(["slug", "backlogTitle", "order"])
+        .sort({
+          order: 1,
+        });
+    } else {
+      backlogs = await Backlog.find({
+        userName: userName,
+        visibility: "public",
+      })
+        .select(["slug", "backlogTitle", "order"])
+        .sort({
+          order: 1,
+        });
+    }
     return backlogs;
   } catch (error) {
     throw new Error(`Error: ${error}`);

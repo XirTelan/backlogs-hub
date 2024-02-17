@@ -21,8 +21,6 @@ const BacklogCreateForm = () => {
     { name: "Retired", color: "#00ff00", protected: false },
   ];
   const defaultValues: BacklogFormData = {
-    userId: user?.id,
-    userName: user?.username || "",
     order: 99,
     backlogTitle: "",
     slug: "",
@@ -33,10 +31,6 @@ const BacklogCreateForm = () => {
 
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {
     data.slug = generateSlug(data.backlogTitle);
-    if (user) {
-      data.userName = user.username!;
-      data.userId = user?.id;
-    }
     try {
       const res = await fetch("/api/backlogs/", {
         method: "POST",

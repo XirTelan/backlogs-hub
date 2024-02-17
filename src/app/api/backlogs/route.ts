@@ -1,3 +1,4 @@
+import { getCurrentUserInfo } from "@/auth/utils";
 import {
   createBacklog,
   getBacklogsByUserName,
@@ -8,6 +9,7 @@ import {
 } from "@/services/backlogs";
 import { BacklogDTO } from "@/types";
 import { sendErrorMsg } from "@/utils";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -20,7 +22,7 @@ export async function GET(request: NextRequest) {
   const type = request.nextUrl.searchParams.get("type")?.toLowerCase();
   let resultData;
   if (!userName) {
-    const user = {username: "user"} //stub;
+    const user = { username: "user" }; //stub;
     if (!user || !user.username) {
       return NextResponse.json(
         { message: `Params not provided` },
@@ -54,8 +56,14 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const data = await request.json();
+  const user = await getCurrentUserInfo();
+  if (user) {
+    data.userId = user.id;
+    data.userName = user.username;
+  }
   try {
     const backlog = await createBacklog(data);
+    revalidatePath(`/user/${data.username}/backlogs`);
     return NextResponse.json({ message: "created", backlog }, { status: 201 });
   } catch (error) {
     return sendErrorMsg(error);

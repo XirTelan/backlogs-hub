@@ -1,9 +1,14 @@
-import { getToken } from "@/auth/providers/googleProviders";
-import { getTokenData } from "@/auth/utils";
+import {
+  getRedirectOauthLink,
+  getUserData as getDiscordUser,
+} from "@/auth/providers/discordProvirer";
+import { getUserData as getGoogleUser } from "@/auth/providers/googleProvider";
+import { generateAccessToken, getTokenData } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
+import { createUser } from "@/services/user";
+import { UserDTO } from "@/types";
 import { sendErrorMsg } from "@/utils";
-import { SignJWT, decodeJwt } from "jose";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,7 +17,7 @@ export async function GET(
   { params: { auth } }: { params: { auth: string | string[] } },
 ) {
   const type = auth[0];
-  const provider = auth[1];
+
   if (type === "session") {
     const token = request.cookies.get("access_token")?.value || "";
     const { payload } = await getTokenData(token);
@@ -23,32 +28,31 @@ export async function GET(
       role: payload.role,
     });
   }
-
-  if (type === "callback" && provider === "google") {
+  if (type === "signIn") {
+    const url = await getRedirectOauthLink();
+    return NextResponse.redirect(url);
+  }
+  if (type === "callback") {
     const searchParams = request.nextUrl.searchParams;
     const code = searchParams.get("code");
-    if (!code) return sendErrorMsg("Message");
-    const token = await getToken(code);
-    const userData = decodeJwt(token.id_token);
+    const provider = auth[1];
+    if (!code) return sendErrorMsg("code not specified");
+    let userData: Omit<UserDTO, "id"> | undefined = undefined;
+    switch (provider) {
+      case "google":
+        userData = await getGoogleUser(code);
+        break;
+      case "discord":
+        userData = await getDiscordUser(code);
+        break;
+    }
+    if (!userData) return sendErrorMsg("Try again later");
     await dbConnect();
     let user = await User.findOne({ email: userData.email });
     if (!user) {
-      const newUser = new User({
-        id: user._id,
-        username: `user_G${userData.sub}`,
-        email: userData.email,
-      });
-      user = await newUser.save();
+      user = await createUser(userData);
     }
-
-    const secret = new TextEncoder().encode(process.env.AUTH_SECRET!);
-    const tokenData = { id: user._id, username: user.username, role: "user" };
-    const access_token = await new SignJWT(tokenData)
-      .setProtectedHeader({
-        alg: "HS256",
-      })
-      .setExpirationTime("1h")
-      .sign(secret);
+    const access_token = await generateAccessToken(user);
     const response = NextResponse.redirect(new URL("/", request.url));
     response.cookies.set("access_token", access_token, { httpOnly: true });
     return response;

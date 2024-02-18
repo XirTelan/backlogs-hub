@@ -1,7 +1,11 @@
 "use server";
+
+import { UserDTO } from "@/types";
+import { JWTPayload, decodeJwt } from "jose";
+
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 
-export const getToken = async (code: string) => {
+export const getGoogleToken = async (code: string) => {
   const params = {
     client_id: process.env.GOOGLE_ID!,
     client_secret: process.env.GOOGLE_SECRET!,
@@ -21,4 +25,15 @@ export const getToken = async (code: string) => {
   return data;
 };
 
-export const authorize = () => {};
+export const getRedirectOauthLink = async () => {};
+
+export const getUserData = async (code: string) => {
+  const token = await getGoogleToken(code);
+  const userData: Partial<UserDTO> & JWTPayload = decodeJwt(token.id_token);
+  console.log("userData", userData);
+  return {
+    username: `user_G${userData.sub}`,
+    email: userData.email || "",
+    profileVisibility: "public",
+  };
+};

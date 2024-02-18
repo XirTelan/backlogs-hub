@@ -85,3 +85,10 @@ export type PageDefaultProps = {
   };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export type UserDTO = {
+  id: string;
+  username: string;
+  email: string;
+  profileVisibility: string;
+};

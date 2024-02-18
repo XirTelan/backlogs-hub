@@ -1,32 +1,29 @@
 "use server";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
+import { UserDTO } from "@/types";
 import { NextResponse } from "next/server";
 
-export async function createUser(data: any) {
-  const emailAddress = data.email_addresses[0].email_address;
+export async function createUser(data: Omit<UserDTO, "id">) {
   try {
     await dbConnect();
-    const user = await User.findOne({ email: emailAddress });
+    const user = await User.findOne({ email: data.email });
     if (user)
       return NextResponse.json(
         { message: "User already exist" },
         { status: 409 },
       );
-    const newUser = new User({
-      userName: data.username,
-      email: emailAddress,
-    });
-    await newUser.save();
+    const newUser = new User(data);
+    return await newUser.save();
   } catch (error) {
     console.error("errors", error);
   }
   return NextResponse.json({ message: "User created" }, { status: 201 });
 }
 
-export async function updateUser(data: User) {
+export async function updateUser(data: UserDTO) {
   await dbConnect();
-  const user = await User.findOne({ email: data.emailAddresses });
+  const user = await User.findOne({ email: data.email });
   if (user)
     return NextResponse.json(
       { message: "User already exist" },

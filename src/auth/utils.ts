@@ -1,9 +1,8 @@
 "use server";
-import { jwtVerify } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
 export const getTokenData = async (token: string) => {
-  "use server";
   try {
     const tokenData = await jwtVerify(
       token,
@@ -25,3 +24,21 @@ export const getCurrentUserInfo = async () => {
     role: payload.role,
   };
 };
+
+export const generateAccessToken = async (user: {
+  _id: string;
+  username: string;
+  role: string;
+}) => {
+  const secret = new TextEncoder().encode(process.env.AUTH_SECRET!);
+  const tokenData = { id: user._id, username: user.username, role: "user" };
+  const access_token = await new SignJWT(tokenData)
+    .setProtectedHeader({
+      alg: "HS256",
+    })
+    .setExpirationTime("1h")
+    .sign(secret);
+
+  return access_token;
+};
+

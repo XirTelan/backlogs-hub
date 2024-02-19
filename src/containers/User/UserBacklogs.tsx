@@ -9,7 +9,7 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
   const data = await getBacklogsBaseInfoByUserName(userName);
   const backlogList = () => {
     return (
-      <>
+      <div className=" mb-4 flex w-full items-center justify-between rounded  p-4">
         <ul className="flex flex-col flex-wrap md:flex-row">
           {data.map((backlog) => {
             return (
@@ -38,35 +38,31 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
             <IoMdOptions />
           </Link>
         </div>
-      </>
+      </div>
     );
   };
 
-  return (
-    <div className=" mb-4 flex w-full items-center justify-between rounded border border-neutral-800 bg-neutral-900 p-4">
-      {data?.length > 0 ? (
-        backlogList()
-      ) : (
-        <div className="flex w-full flex-col">
-          <p>
-            No backlogs? No problem! <br />
-            Choose to create your own or pick from ready-made templates.
-            <br />
-            Click below to get started
-          </p>
+  return data?.length > 0 ? (
+    backlogList()
+  ) : (
+    <div className="flex flex-col justify-center rounded  border border-neutral-800 bg-neutral-900 p-4">
+      <p className="p-2">
+        No backlogs? No problem! <br />
+        Choose to create your own or pick from ready-made templates.
+        <br />
+        Click below to get started
+      </p>
 
-          <Link
-            title="Create backlog"
-            className="mt-2  rounded border border-neutral-700 bg-neutral-800 p-2 text-center  hover:bg-green-500  "
-            href={"/backlog/create"}
-          >
-            <div className="flex items-center justify-center">
-              <RiPlayListAddLine />
-              <p className="ms-2">Create backlog</p>
-            </div>
-          </Link>
+      <Link
+        title="Create backlog"
+        className="mt-2  rounded border border-neutral-700 bg-neutral-800 p-2 text-center  hover:bg-green-500  "
+        href={"/backlog/create"}
+      >
+        <div className="flex items-center justify-center">
+          <RiPlayListAddLine />
+          <p className="ms-2">Create backlog</p>
         </div>
-      )}
+      </Link>
     </div>
   );
 };

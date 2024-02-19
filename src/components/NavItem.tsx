@@ -10,7 +10,7 @@ const NavItem = ({ href, label, mode = "include" }: NavItemProps) => {
   return (
     <Link
       href={href}
-      className={`${isActive ? " bg-green-500" : ""} rounded-sm p-2 hover:bg-neutral-700 `}
+      className={`${isActive ? " bg-secondary-container text-on-secondary-container hover:bg-on-secondary-container/10" : "hover:bg-on-surface/10"}  rounded-sm p-2 `}
     >
       {label}
     </Link>

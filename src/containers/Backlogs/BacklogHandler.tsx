@@ -34,7 +34,7 @@ const BacklogHandler = () => {
   const isData = backlogData && backlogData.length > 0 && categoriesMap;
   return (
     <>
-      <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
+      <section className="mb-4 flex w-full  rounded p-4">
         {currentBacklog && (
           <FilterBlock
             backlogSlug={currentBacklog.slug}
@@ -42,7 +42,7 @@ const BacklogHandler = () => {
           />
         )}
       </section>
-      <section className="mb-4 flex w-full  rounded border border-neutral-800 bg-neutral-900 p-4">
+      <section className="mb-4 flex w-full  rounded  p-4">
         {isData && !isLoading && (
           <Backloglist
             onDelete={onDelete}

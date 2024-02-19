@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+// import { Roboto } from "next/font/google";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
@@ -7,7 +8,7 @@ import NavBar from "@/containers/NavBar";
 import Footer from "@/containers/Footer";
 
 const roboto = Roboto({
-  weight: "400",
+  weight: ["400", "500", "700", "900"],
   subsets: ["latin"],
 });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} flex flex-col items-center `}>
+      <body
+        className={`${roboto.className} bg-surface flex flex-col items-center `}
+      >
         <Toaster
           toastOptions={{
             className: "",

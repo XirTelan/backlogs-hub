@@ -8,7 +8,7 @@ import useSession from "@/hooks/useSession";
 const NavBar = () => {
   const { user } = useSession();
   return (
-    <nav className=" flex h-14 w-full justify-center gap-1 bg-neutral-900 p-2">
+    <nav className=" bg-surface-container-1 flex h-14 w-full justify-center gap-1  p-2">
       <div className="container flex w-full items-center justify-between text-xl">
         <div className="flex gap-2">
           <Link href={"/"}>

@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-import NavBar from "@/containers/NavBar";
+import Header from "@/containers/Header";
 import Footer from "@/containers/Footer";
 
 const roboto = Roboto({
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -38,7 +39,7 @@ export default function RootLayout({
             },
           }}
         />
-        <NavBar />
+        <Header />
         {children}
 
         <Footer />

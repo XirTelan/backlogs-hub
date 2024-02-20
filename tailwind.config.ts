@@ -13,57 +13,52 @@ const config: Config = {
         around: "0 0 15px 5px rgba(0, 0, 0, 0.3)",
       },
       colors: {
+        strong: {
+          1: "#6F6F6F",
+          2: "#8d8d8d",
+          3: "#a8a8a8",
+        },
+        subtle: {
+          1: "#525252",
+          2: "#6f6f6f",
+          3: "#8d8d8d",
+        },
+        borderinteractive: "#4589FF",
+        field: {
+          1: "#262626",
+          2: "#393939",
+          3: "#525252",
+          hover: "#e8e8e8",
+        },
+        inverse: "#161616",
+        layer: {
+          1: "#262626",
+          2: "#393939",
+          3: "#525252",
+          accent: {
+            1: "#393939",
+          },
+        },
         primary: {
-          DEFAULT: "#80D5D4",
-          container: "9CF1F0",
+          text: "#F4F4F4",
+          btn: {
+            DEFAULT: "#0F62FE",
+            hover: "#0050E6",
+          },
         },
         secondary: {
-          DEFAULT: "#B0CCCB",
-          container: "#324B4B",
+          text: "#C6C6C6",
+          btn: {
+            DEFAULT: "#6F6F6F",
+            hover: "#5E5E5E",
+            active: "#393939",
+          },
         },
         tertiary: {
-          DEFAULT: "#B3C8E8",
-          container: "#334863",
-        },
-        error: {
-          DEFAULT: "#FFB4AB",
-          container: "#93000A",
-        },
-        surface: {
-          DEFAULT: "#0E1514",
-          variant: "#3F4948",
-          container: {
-            1: "#090F0F",
-            2: "#161D1D",
-            3: "#1A2121",
-            4: "#252B2B",
-            5: "#2F3636",
-          },
-        },
-        outline: {
-          DEFAULT: "#889392",
-          variant: "#3F4948",
-        },
-        on: {
-          primary: {
-            DEFAULT: "#003737",
-            container: "#004F4F",
-          },
-          secondary: {
-            DEFAULT: "#1B3534",
-            container: "#CCE8E7",
-          },
-          tertiary: {
-            DEFAULT: "#1C314B",
-            container: "#D3E4FF",
-          },
-          error: {
-            DEFAULT: "#690005",
-            container: "#FFDAD6",
-          },
-          surface: {
-            DEFAULT: "#DDE4E3",
-            variant: "#BEC9C8",
+          btn: {
+            DEFAULT: "#ffffff",
+            hover: "#F4F4F4",
+            active: "#C6C6C6",
           },
         },
       },

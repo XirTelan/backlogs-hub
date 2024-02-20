@@ -1,4 +1,5 @@
 "use server";
+import { UserDTO } from "@/types";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
@@ -14,7 +15,7 @@ export const getTokenData = async (token: string) => {
   }
 };
 
-export const getCurrentUserInfo = async () => {
+export const getCurrentUserInfo = async (): Promise<UserDTO | null> => {
   const token = cookies().get("access_token")?.value || "";
   const { payload } = await getTokenData(token);
   if (!payload) return null;
@@ -41,4 +42,3 @@ export const generateAccessToken = async (user: {
 
   return access_token;
 };
-

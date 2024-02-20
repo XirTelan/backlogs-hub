@@ -1,5 +1,4 @@
 import { getCurrentUserInfo } from "@/auth/utils";
-import UserNav from "@/containers/User/UserNav";
 import { getUserVisibility } from "@/services/user";
 import { PageDefaultProps } from "@/types";
 import React from "react";
@@ -21,13 +20,6 @@ export default async function Layout({ children, params }: PageDefaultProps) {
 
   return (
     <>
-      <div className="container w-full">
-        <div>
-          UserProfile: {profileVisibility.profileVisibility}/
-          {JSON.stringify(profileVisibility)}
-        </div>
-        <UserNav userName={params.userName} />
-      </div>
       <>{children}</>
     </>
   );

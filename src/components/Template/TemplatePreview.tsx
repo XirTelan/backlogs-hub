@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import TemplateCard from "./TemplateCard";
 import { BacklogFormData, TemplateDTO } from "@/types";
-import InputField from "../Common/InputField";
+import InputField from "../Common/UI/InputField";
 import TextArea from "../Common/TextArea";
 import toast from "react-hot-toast";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {

@@ -1,24 +1,38 @@
-"use client";
-import Link from "next/link";
+import NavLink from "@/components/NavLink";
 import React from "react";
-import SignInButton from "./Auth/SignInButton";
-import SignOutButton from "./Auth/SignOutButton";
-import useSession from "@/hooks/useSession";
 
-const NavBar = () => {
-  const { user } = useSession();
+const NavBar = ({ userName }: { userName: string }) => {
+  const BASE = `/user/${userName}`;
+  const links = [
+    {
+      title: "Profile",
+      pathname: "",
+    },
+    {
+      title: "Backlogs",
+      pathname: `/backlogs`,
+    },
+    {
+      title: "Options",
+      pathname: `/options`,
+    },
+  ];
   return (
-    <nav className=" bg-surface-container-1 flex h-14 w-full justify-center gap-1  p-2">
-      <div className="container flex w-full items-center justify-between text-xl">
-        <div className="flex gap-2">
-          <Link href={"/"}>
-            <span className=" font-sans font-bold	">BacklogsHub</span>
-          </Link>
-        </div>
-        <div className="me-2 flex items-center justify-center">
-          {user ? <SignOutButton /> : <SignInButton />}
-        </div>
+    <nav className="flex items-center">
+      <div className="flex py-3 pe-4">
+        <div className="bg-subtle-1  h-6 w-[1px] grow "></div>
       </div>
+      <ul className="flex h-full">
+        {links.map((link) => {
+          return (
+            <NavLink
+              key={link.title}
+              href={`${BASE}${link.pathname}`}
+              label={link.title}
+            />
+          );
+        })}
+      </ul>
     </nav>
   );
 };

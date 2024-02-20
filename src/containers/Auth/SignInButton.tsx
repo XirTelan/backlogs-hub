@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import LogSignIn from "./LogSignIn";
+import SignInForm from "./SignInForm";
 import Modal from "@/components/Common/Modal";
 
 const SignInButton = () => {
@@ -10,7 +10,7 @@ const SignInButton = () => {
       <button onClick={() => setShowForm(true)}>Login</button>
       {showForm ? (
         <Modal setClose={() => setShowForm(false)}>
-          <LogSignIn />
+          <SignInForm />
         </Modal>
       ) : null}
     </div>

@@ -1,31 +1,31 @@
 import React from "react";
 
 const ButtonBase = ({
+  children,
   text = "Click",
-  variant = "filled",
+  variant = "primary",
+  ...props
 }: ButtonBaseProps) => {
   const variants = {
-    filled: {
-      btn: "bg-primary hover:bg-primary/90  disabled:bg-on-surface/10 ",
-      text: "text-on-primary group-hovered:text-on-primary/10 group-disabled:text-on-surface/40",
-    },
-    outline: {
-      btn: " border border-outline",
-      text: "text-primary",
-    },
+    primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
+    secondary: "bg-secondary-btn hover:bg-secondary-btn-hover",
+    tertiary:
+      "outline text-white  hover:text-inverse outline-1 -outline-offset-2 outline-white hover:bg-tertiary-btn-hover",
+    ghost: "",
+    dangerPrimary: "",
+    dangerTertiary: "",
+    dangerGhost: "",
   };
 
   return (
     <>
       <button
-        className={`${variants[variant].btn} group inline-flex h-10 w-[83px] flex-col items-center justify-center rounded-full shadow `}
+        {...props}
+        className={`${variants[variant]}   relative flex h-12 w-full   items-center pe-12 ps-4 `}
       >
-        <div className="inline-flex items-center justify-center gap-2 self-stretch px-6 py-2.5">
-          <div
-            className={`${variants[variant].text} text-center  text-sm font-medium leading-tight tracking-tight `}
-          >
-            {text}
-          </div>
+        {text}
+        <div className="absolute right-4 flex items-center justify-center bg-white bg-opacity-0 ">
+          {children}
         </div>
       </button>
     </>
@@ -35,6 +35,17 @@ const ButtonBase = ({
 export default ButtonBase;
 
 type ButtonBaseProps = {
+  children?: React.ReactElement;
   text?: string;
-  variant?: "filled" | "outline";
-};
+  variant?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "ghost"
+    | "dangerPrimary"
+    | "dangerTertiary"
+    | "dangerGhost";
+} & React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;

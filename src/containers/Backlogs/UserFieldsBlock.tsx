@@ -1,4 +1,4 @@
-import InputField from "@/components/Common/InputField";
+import InputField from "@/components/Common/UI/InputField";
 import React from "react";
 import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
 import { RiDeleteBack2Line } from "react-icons/ri";
@@ -23,11 +23,13 @@ const UserFieldsBlock = ({ control, register }: FieldsBlockProps) => {
     >
       <>
         <li>
-          <InputField name="Title" value={"Title"} disabled>
-            <div className=" absolute bottom-0 right-0 top-0 flex items-center self-center text-neutral-600 ">
-              <p>This field is required and cannot be changed or deleted.</p>
-            </div>
-          </InputField>
+          <InputField
+            readOnly
+            label="Field name"
+            name="Title"
+            value={"Title"}
+            disabled
+          ></InputField>
         </li>
         {fieldsArray.fields.map((item, index) => (
           <li key={item.id} className="flex items-center  gap-2">

@@ -1,6 +1,6 @@
 "use client";
 
-import InputField from "@/components/Common/InputField";
+import InputField from "@/components/Common/UI/InputField";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BacklogFormData } from "@/types";
@@ -11,6 +11,7 @@ import Modal from "@/components/Common/Modal";
 import TemplatePreview from "@/components/Template/TemplatePreview";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
 import UserFieldsBlock from "./UserFieldsBlock";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
@@ -61,11 +62,11 @@ const BacklogForm = <T extends BacklogFormData>({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitInternal)}>
-        <div className="field group relative my-4  w-full rounded border border-neutral-800 bg-neutral-900 px-2 py-2 ">
+        <div className="field    w-full py-2  ps-4 ">
           <InputField
             id="backlogTitle"
             placeholder="Backlog title"
-            label="Backlog title"
+            label="Backlog title (required)"
             {...register(`backlogTitle`, { required: true })}
           />
         </div>
@@ -73,29 +74,17 @@ const BacklogForm = <T extends BacklogFormData>({
           <CategoriesFieldsBlock control={control} register={register} />
           <UserFieldsBlock control={control} register={register} />
         </div>
-        <div className="flex w-full flex-col items-center justify-center">
-          {errors.fields && <p>{errors.fields.message}</p>}
-          <div className=" relative flex w-80 items-center  rounded  bg-neutral-500 p-2">
-            <motion.button
-              initial={{ left: "auto" }}
-              whileHover={{ left: 0 }}
-              onClick={handleShowTemplate}
-              type="button"
-              className="group absolute bottom-0 right-0 top-0 flex shrink items-center rounded bg-red-500"
-            >
-              <div className="flex w-full items-center justify-between p-2">
-                <GrTemplate />
-                <div className=" invisible m-auto hidden  opacity-0 group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-1000">
-                  Save as template
-                </div>
-              </div>
-            </motion.button>
-            <IoMdAdd />
-            <button className="w-full text-center" type="submit">
-              Create Backlog
-            </button>
-          </div>
+        {/* // onClick={handleShowTemplate} */}
+        {errors.fields && <p>{errors.fields.message}</p>}
+        <div className="mt-4 flex w-1/4 flex-col gap-4">
+          <ButtonBase text="Create template" />
+          <ButtonBase
+            variant="secondary"
+            onClick={handleShowTemplate}
+            text="Save as template"
+          />
         </div>
+        <div className="flex w-full flex-col items-center justify-center"></div>
       </form>
 
       {showTemplate && (

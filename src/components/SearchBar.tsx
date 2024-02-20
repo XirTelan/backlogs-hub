@@ -1,6 +1,6 @@
 import useDebounce from "@/hooks/useDebounce";
 import React, { useEffect, useState } from "react";
-import InputField from "./Common/InputField";
+import InputField from "./Common/UI/InputField";
 import useChangeSearchParams from "@/hooks/useChangeParams";
 
 const SearchBar = () => {

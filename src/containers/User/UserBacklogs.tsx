@@ -1,9 +1,12 @@
-import NavItem from "@/components/NavItem";
+import NavLink from "@/components/NavLink";
 import { getBacklogsBaseInfoByUserName } from "@/services/backlogs";
 import { RiPlayListAddLine } from "react-icons/ri";
 import { IoMdOptions } from "react-icons/io";
 import Link from "next/link";
 import React from "react";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
+import { FaPlus } from "react-icons/fa";
+import Title from "@/components/Common/Title";
 
 const UserBacklogs = async ({ userName }: { userName: string }) => {
   const data = await getBacklogsBaseInfoByUserName(userName);
@@ -14,7 +17,7 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
           {data.map((backlog) => {
             return (
               <li key={backlog._id}>
-                <NavItem
+                <NavLink
                   href={`/user/${userName}/backlogs/${backlog.slug}`}
                   label={backlog.backlogTitle}
                 />
@@ -42,28 +45,33 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
     );
   };
 
-  return data?.length > 0 ? (
-    backlogList()
-  ) : (
-    <div className="flex flex-col justify-center rounded  border border-neutral-800 bg-neutral-900 p-4">
-      <p className="p-2">
-        No backlogs? No problem! <br />
-        Choose to create your own or pick from ready-made templates.
-        <br />
-        Click below to get started
-      </p>
-
-      <Link
-        title="Create backlog"
-        className="mt-2  rounded border border-neutral-700 bg-neutral-800 p-2 text-center  hover:bg-green-500  "
-        href={"/backlog/create"}
-      >
-        <div className="flex items-center justify-center">
-          <RiPlayListAddLine />
-          <p className="ms-2">Create backlog</p>
-        </div>
-      </Link>
-    </div>
+  return (
+    <>
+      {data?.length > 0 ? (
+        backlogList()
+      ) : (
+        <>
+          <Title title={"Backlogs"}>
+            <Link href={"/backlog/create"}>
+              <ButtonBase text="Create Backlog">
+                <FaPlus />
+              </ButtonBase>
+            </Link>
+          </Title>
+          <div className="flex h-80 w-full flex-col justify-center     bg-layer-1 p-4">
+            <p className="mb-4 text-xl">
+              You don&apos;t have any backlogs here yet
+            </p>
+            <p className=" text-secondary-text">
+              No backlogs? No problem! <br />
+              Choose to create your own or pick from ready-made templates.
+              <br />
+              Click Create backlog to get started
+            </p>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

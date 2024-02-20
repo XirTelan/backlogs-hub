@@ -15,10 +15,7 @@ const TemplateWrapper = ({ template, onSubmit }: TemplateCardProps) => {
 
   return (
     <>
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        className="relative mb-auto   mt-4 flex w-80 shrink-0 flex-col  break-words rounded-xl  bg-[#222222] hover:shadow-around hover:shadow-cyan-500/50 "
-      >
+      <div className="relative mb-auto   mt-4 flex w-80 shrink-0 flex-col  break-words   bg-layer-1 hover:shadow-around hover:shadow-cyan-500/50 ">
         {isSubmit ? (
           <TemplateForm
             handleSubmit={handleSubmit}
@@ -30,7 +27,7 @@ const TemplateWrapper = ({ template, onSubmit }: TemplateCardProps) => {
             template={template}
           />
         )}
-      </motion.div>
+      </div>
     </>
   );
 };

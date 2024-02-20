@@ -1,5 +1,5 @@
 import ColorPallete from "@/components/Common/ColorPallete";
-import InputField from "@/components/Common/InputField";
+import InputField from "@/components/Common/UI/InputField";
 import React from "react";
 import {
   Control,
@@ -43,6 +43,7 @@ const CategoriesFieldsBlock = ({ control, register }: FieldsBlockProps) => {
             />
             <InputField
               id={`category_${index}`}
+              layer={2}
               placeholder="Category name"
               {...register(`categories.${index}.name`)}
             />

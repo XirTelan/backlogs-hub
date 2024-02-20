@@ -1,7 +1,7 @@
 import useDebounce from "@/hooks/useDebounce";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import InputField from "../Common/InputField";
+import InputField from "../Common/UI/InputField";
 
 const TemplateForm = ({
   defaultValue,
@@ -58,7 +58,7 @@ const TemplateForm = ({
                 animate={{
                   scale: [1, 1.1, 1.2, 1.1, 1],
                 }}
-                className="rounded bg-danger p-1"
+                className="bg-danger rounded p-1"
               >
                 Already exist
               </motion.p>
@@ -71,7 +71,7 @@ const TemplateForm = ({
         or if one already exists
       </p>
       <div className="flex gap-2">
-        <button className="mt-auto w-full rounded-xl bg-danger p-2 disabled:bg-neutral-500">
+        <button className="bg-danger mt-auto w-full rounded-xl p-2 disabled:bg-neutral-500">
           Cancel
         </button>
         <button

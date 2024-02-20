@@ -1,9 +1,12 @@
-
+import SignInForm from "@/containers/Auth/SignInForm";
 
 export default async function Home() {
-
-
   return (
-    <section className="flex min-h-screen  w-full flex-col items-center justify-center"></section>
+    <div className="bg-red flex min-h-screen w-full  ">
+      <div className="flex ps-8 ">
+        <SignInForm />
+      </div>
+      <div className=" flex grow">2</div>
+    </div>
   );
 }

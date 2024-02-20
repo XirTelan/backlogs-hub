@@ -7,6 +7,7 @@ import { generateSlug } from "@/utils";
 import Title from "@/components/Common/Title";
 import { useState } from "react";
 import BacklogTemplate from "./BacklogTemplate";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
 
 const BacklogCreateForm = () => {
   const [useTemplate, setUseTemplate] = useState(false);
@@ -49,9 +50,11 @@ const BacklogCreateForm = () => {
     <>
       <Title title="Creating backlog ">
         <>
-          <button onClick={() => setUseTemplate((prev) => !prev)}>
-            {useTemplate ? "Create my own" : "Use template"}
-          </button>
+          <ButtonBase
+            onClick={() => setUseTemplate((prev) => !prev)}
+            variant="tertiary"
+            text={useTemplate ? "Create my own backlog" : "Select template"}
+          />
         </>
       </Title>
       {useTemplate ? (

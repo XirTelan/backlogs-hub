@@ -1,4 +1,4 @@
-import InputField from "@/components/Common/InputField";
+import InputField from "@/components/Common/UI/InputField";
 import { RiDeleteBack2Line } from "react-icons/ri";
 
 import { ListItemInput } from "@/types";

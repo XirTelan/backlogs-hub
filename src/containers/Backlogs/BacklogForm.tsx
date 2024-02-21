@@ -62,11 +62,10 @@ const BacklogForm = <T extends BacklogFormData>({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitInternal)}>
-        <div className="field    w-full py-2  ps-4 ">
+        <div className="field    w-full py-2  ">
           <InputField
             id="backlogTitle"
-            placeholder="Backlog title"
-            label="Backlog title (required)"
+            label="Title (required)"
             {...register(`backlogTitle`, { required: true })}
           />
         </div>
@@ -77,7 +76,7 @@ const BacklogForm = <T extends BacklogFormData>({
         {/* // onClick={handleShowTemplate} */}
         {errors.fields && <p>{errors.fields.message}</p>}
         <div className="mt-4 flex w-1/4 flex-col gap-4">
-          <ButtonBase text="Create template" />
+          <ButtonBase text="Create backlog" />
           <ButtonBase
             variant="secondary"
             onClick={handleShowTemplate}

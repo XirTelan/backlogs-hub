@@ -14,7 +14,7 @@ const UserFieldsBlock = ({ control, register }: FieldsBlockProps) => {
 
   return (
     <FieldsBlock
-      title="Backlog fields"
+      title="Fields"
       status="active"
       className="w-full lg:w-3/4"
       append={() =>

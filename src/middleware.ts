@@ -1,9 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getTokenData } from "./auth/utils";
 
-// This function can be marked `async` if using `await` inside
+const BACKLOG_CREATE = "/backlog/create";
+const BACKLOG_EDIT = "/backlog/edit";
+
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value || "";
+  const curPath = request.nextUrl.pathname;
+  const protectedRoutes = [BACKLOG_CREATE, BACKLOG_EDIT];
+  const isProtected = protectedRoutes.some((elem) => curPath.includes(elem));
+
   let userData = null;
   if (token) {
     const { payload } = await getTokenData(token);
@@ -14,10 +20,15 @@ export async function middleware(request: NextRequest) {
     }
     userData = payload;
   }
-  if (request.nextUrl.pathname === "/" && userData)
+
+  if (!userData && isProtected)
+    return NextResponse.redirect(new URL(`/`, request.nextUrl));
+
+  if (curPath === "/" && userData) {
     return NextResponse.redirect(
       new URL(`/user/${userData.username}`, request.nextUrl),
     );
+  }
 }
 
 // See "Matching Paths" below to learn more
@@ -33,4 +44,3 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };
-

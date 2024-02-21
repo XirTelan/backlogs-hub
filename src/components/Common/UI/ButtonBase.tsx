@@ -2,7 +2,7 @@ import React from "react";
 
 const ButtonBase = ({
   children,
-  text = "Click",
+  text,
   variant = "primary",
   ...props
 }: ButtonBaseProps) => {
@@ -21,7 +21,7 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${variants[variant]}   relative flex h-12 w-full   items-center pe-12 ps-4 `}
+        className={`${variants[variant]} relative flex h-12 w-full items-center pe-12 ${text && "ps-4"}  `}
       >
         {text}
         <div className="absolute right-4 flex items-center justify-center bg-white bg-opacity-0 ">

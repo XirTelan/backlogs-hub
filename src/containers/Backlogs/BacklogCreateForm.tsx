@@ -8,18 +8,19 @@ import Title from "@/components/Common/Title";
 import { useState } from "react";
 import BacklogTemplate from "./BacklogTemplate";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
+import useSession from "@/hooks/useSession";
 
 const BacklogCreateForm = () => {
-  const [useTemplate, setUseTemplate] = useState(false);
-  const user = { id: "1", username: "user" }; //stub
   const router = useRouter();
-  if (!user) return <div>Loading</div>;
-
+  const [useTemplate, setUseTemplate] = useState(false);
+  const { user, isLoading } = useSession();
+  if (isLoading) return <div>Loading</div>;
+  if (!user) return router.push("/");
   const defaultCategories: BacklogCategory[] = [
-    { name: "Completed", color: "#00ff00", protected: false },
-    { name: "Playing", color: "#00ff00", protected: false },
-    { name: "Backlog", color: "#00ff00", protected: false },
-    { name: "Retired", color: "#00ff00", protected: false },
+    { name: "Completed", color: "#11380B", protected: false },
+    { name: "Playing", color: "#11380B", protected: false },
+    { name: "Backlog", color: "#11380B", protected: false },
+    { name: "Retired", color: "#11380B", protected: false },
   ];
   const defaultValues: BacklogFormData = {
     order: 99,

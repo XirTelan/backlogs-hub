@@ -3,9 +3,15 @@ import React from "react";
 const ButtonBase = ({
   children,
   text,
+  size = "large",
   variant = "primary",
   ...props
 }: ButtonBaseProps) => {
+  const sizes = {
+    small: "h-8 pe-8",
+    medium: "h-10 pe-10",
+    large: "h-12 pe-12 ",
+  };
   const variants = {
     primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
     secondary: "bg-secondary-btn hover:bg-secondary-btn-hover",
@@ -21,10 +27,10 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${variants[variant]} relative flex h-12 w-full items-center pe-12 ${text && "ps-4"}  `}
+        className={`${variants[variant]} ${sizes[size]} relative flex w-full min-w-fit items-center text-nowrap  ${text && "ps-4"}  `}
       >
         {text}
-        <div className="absolute right-4 flex items-center justify-center bg-white bg-opacity-0 ">
+        <div className="absolute inset-0  flex items-center justify-center bg-white bg-opacity-0 ">
           {children}
         </div>
       </button>
@@ -37,6 +43,7 @@ export default ButtonBase;
 type ButtonBaseProps = {
   children?: React.ReactElement;
   text?: string;
+  size?: "small" | "medium" | "large";
   variant?:
     | "primary"
     | "secondary"

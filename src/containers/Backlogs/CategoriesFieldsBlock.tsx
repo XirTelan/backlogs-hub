@@ -7,9 +7,11 @@ import {
   UseFormRegister,
   useFieldArray,
 } from "react-hook-form";
-import { RiDeleteBack2Line } from "react-icons/ri";
+import { IoClose } from "react-icons/io5";
+
 import FieldsBlock from "../../components/FieldsBlock";
 import { BacklogFormData } from "@/types";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
 
 const CategoriesFieldsBlock = ({ control, register }: FieldsBlockProps) => {
   const categoriesArray = useFieldArray({
@@ -21,41 +23,44 @@ const CategoriesFieldsBlock = ({ control, register }: FieldsBlockProps) => {
     <FieldsBlock
       title="Categories"
       status="active"
-      className="grow"
       append={() =>
         categoriesArray.append({
           name: "",
-          color: "#00ff00",
+          color: "#11380B",
           protected: false,
         })
       }
     >
       <>
         {categoriesArray.fields.map((item, index) => (
-          <li className="flex items-center gap-2" key={item.id}>
-            <div className=" text-sm text-neutral-500">{index + 1}</div>
-            <Controller
-              control={control}
-              name={`categories.${index}.color`}
-              render={({ field: { onChange, value } }) => (
-                <ColorPallete onChange={onChange} value={value} />
-              )}
-            />
+          <li className="flex h-8 items-center gap-2 " key={item.id}>
+            <div className=" w-8 text-sm text-secondary-text">{index + 1}</div>
+
             <InputField
               id={`category_${index}`}
+              isSimple
+              variant="small"
               layer={2}
               placeholder="Category name"
               {...register(`categories.${index}.name`)}
             />
-            <div className="flex">
-              <button
-                className="right-8  font-bold hover:text-red-800 active:text-red-600 "
+            <div className="me-4 flex gap-2">
+              <Controller
+                control={control}
+                name={`categories.${index}.color`}
+                render={({ field: { onChange, value } }) => (
+                  <ColorPallete onChange={onChange} value={value} />
+                )}
+              />
+              <ButtonBase
+                variant="secondary"
+                size="small"
                 onClick={() => {
                   categoriesArray.remove(index);
                 }}
               >
-                <RiDeleteBack2Line size={24} />
-              </button>
+                <IoClose />
+              </ButtonBase>
             </div>
           </li>
         ))}

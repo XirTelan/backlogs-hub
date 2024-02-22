@@ -2,7 +2,8 @@ export type InputField = {
   label?: string;
   layer?: 1 | 2 | 3;
   helperText?: string;
-  size?: "small" | "mediim" | "large";
+  variant?: "small" | "medium" | "large";
+  isSimple?: boolean;
 } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement

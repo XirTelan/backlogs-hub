@@ -4,9 +4,6 @@ import InputField from "@/components/Common/UI/InputField";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BacklogFormData } from "@/types";
-import { motion } from "framer-motion";
-import { IoMdAdd } from "react-icons/io";
-import { GrTemplate } from "react-icons/gr";
 import Modal from "@/components/Common/Modal";
 import TemplatePreview from "@/components/Template/TemplatePreview";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
@@ -73,7 +70,6 @@ const BacklogForm = <T extends BacklogFormData>({
           <CategoriesFieldsBlock control={control} register={register} />
           <UserFieldsBlock control={control} register={register} />
         </div>
-        {/* // onClick={handleShowTemplate} */}
         {errors.fields && <p>{errors.fields.message}</p>}
         <div className="mt-4 flex w-1/4 flex-col gap-4">
           <ButtonBase text="Create backlog" />

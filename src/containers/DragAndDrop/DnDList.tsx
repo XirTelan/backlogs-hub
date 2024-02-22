@@ -2,7 +2,7 @@
 import { BacklogDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import { Reorder } from "framer-motion";
-import BacklogDndCard from "./Backlogs/BacklogDndCard";
+import BacklogDndCard from "../Backlogs/BacklogDndCard";
 import ActionButton from "@/components/ActionButton";
 import { IoAdd } from "react-icons/io5";
 import { RiSave3Fill } from "react-icons/ri";

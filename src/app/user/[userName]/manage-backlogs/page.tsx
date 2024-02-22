@@ -1,4 +1,4 @@
-import DnDList from "@/containers/DnDList";
+import DnDList from "@/containers/DragAndDrop/DnDList";
 import { PageDefaultProps } from "@/types";
 
 const ManageBacklogs = async ({ params: { userName } }: PageDefaultProps) => {

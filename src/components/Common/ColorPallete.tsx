@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { IoIosColorPalette } from "react-icons/io";
+import ButtonBase from "./UI/ButtonBase";
+import useOutsideClickReg from "@/hooks/useOutsideClickReg";
 
 const defaultColors = [
   "FF6900",
@@ -22,18 +25,28 @@ const ColorPallete = ({
 }) => {
   const [currentColor, setCurrentColor] = useState("#ffffff");
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  useOutsideClickReg(isOpen, ref, () => setIsOpen(false));
 
   useEffect(() => {
     setCurrentColor(value);
   }, [value]);
   return (
-    <div
-      className={`bg relative h-6 min-h-6 w-6 min-w-6 cursor-pointer rounded-full`}
-      style={{ backgroundColor: currentColor }}
-      onClick={() => setIsOpen((prevValue) => !prevValue)}
-    >
+    <div className="relative">
+      <ButtonBase
+        type="button"
+        variant="secondary"
+        size="small"
+        style={{ backgroundColor: currentColor }}
+        onClick={() => setIsOpen((prevValue) => !prevValue)}
+      >
+        <IoIosColorPalette />
+      </ButtonBase>
       {isOpen && (
-        <div className="absolute left-0 top-full z-10 flex h-auto gap-1 rounded border border-neutral-700 bg-neutral-800 p-1">
+        <div
+          ref={ref}
+          className="absolute right-0 top-full z-10 flex h-auto gap-1  border border-subtle-1 bg-layer-1  p-2"
+        >
           {defaultColors.map((color, index) => (
             <div
               key={index}
@@ -41,6 +54,7 @@ const ColorPallete = ({
               style={{ backgroundColor: `#${color}` }}
               onClick={() => {
                 onChange(`#${color}`);
+                setIsOpen(false);
               }}
             ></div>
           ))}

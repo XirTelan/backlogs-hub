@@ -7,12 +7,12 @@ const NavLink = ({ href, label, children }: NavItemProps) => {
   const pathname = usePathname();
   const isActive = pathname === href;
   const style = isActive
-    ? " after:top-[calc(100%-3px)] after:h-[3px] after:bg-borderinteractive "
-    : "after:top-[calc(100%-1px)]  after:h-[1px] after:top-full after:bg-subtle-1";
+    ? " border-b-[3px] border-borderinteractive"
+    : "border-b border-subtle-1";
 
   return (
     <li
-      className={`${style} fter:bg-border-interactive relative h-12  list-none   after:absolute after:w-full hover:bg-subtle-3/15   `}
+      className={`${style} fter:bg-border-interactive relative h-12  list-none    after:absolute after:w-full hover:bg-subtle-3/15   `}
     >
       <Link href={href} className="flex  items-center text-primary-text">
         {label && (

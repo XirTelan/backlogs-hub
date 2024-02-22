@@ -1,11 +1,12 @@
 "use server";
-import { UserDTO } from "@/types";
-import { SignJWT, jwtVerify } from "jose";
+import { JWTPayload, JWTVerifyResult, SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+
+const EXPIRATION_TIME = "7d";
 
 export const getTokenData = async (token: string) => {
   try {
-    const tokenData = await jwtVerify(
+    const tokenData: JWTVerifyResult<JWTPayload & TokenData> = await jwtVerify(
       token,
       new TextEncoder().encode(process.env.AUTH_SECRET!),
     );
@@ -15,7 +16,7 @@ export const getTokenData = async (token: string) => {
   }
 };
 
-export const getCurrentUserInfo = async (): Promise<UserDTO | null> => {
+export const getCurrentUserInfo = async (): Promise<TokenData | null> => {
   const token = cookies().get("access_token")?.value || "";
   const { payload } = await getTokenData(token);
   if (!payload) return null;
@@ -37,8 +38,13 @@ export const generateAccessToken = async (user: {
     .setProtectedHeader({
       alg: "HS256",
     })
-    .setExpirationTime("1h")
+    .setExpirationTime(EXPIRATION_TIME)
     .sign(secret);
-
   return access_token;
+};
+
+type TokenData = {
+  id: string;
+  username: string;
+  role: string;
 };

@@ -1,7 +1,8 @@
 export type InputField = {
   label?: string;
   layer?: 1 | 2 | 3;
-  helperText?: string;
+  error?: string;
+  helperText?: { message: string; type: "text" | "error" };
   variant?: "small" | "medium" | "large";
   isSimple?: boolean;
 } & React.DetailedHTMLProps<
@@ -37,6 +38,11 @@ export type BacklogFormData = {
   fields: Field[];
   visibility: string;
 };
+
+export type BacklogCreationDTO = Omit<
+  BacklogDTO,
+  "_id" | "updatedAt" | "createdAt"
+>;
 
 type ItemField = {
   name: string;
@@ -96,3 +102,7 @@ export type UserDTO = {
   email: string;
   profileVisibility: string;
 };
+
+export type UserCreationDTO = {
+  password?: string;
+} & Omit<UserDTO, "id">;

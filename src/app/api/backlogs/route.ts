@@ -7,7 +7,7 @@ import {
   updateBacklogsOrderById,
   isBacklogExist,
 } from "@/services/backlogs";
-import { BacklogDTO } from "@/types";
+import { BacklogCreationDTO, BacklogDTO, BacklogFormData } from "@/types";
 import { sendErrorMsg } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -55,15 +55,17 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const data = await request.json();
+  const data: BacklogFormData = await request.json();
   const user = await getCurrentUserInfo();
-  if (user) {
-    data.userId = user.id;
-    data.userName = user.username;
-  }
+  if (!user) return sendErrorMsg("", 401);
+  const backlogData: BacklogCreationDTO = {
+    ...data,
+    userId: user.id,
+    userName: user.username,
+  };
   try {
-    const backlog = await createBacklog(data);
-    revalidatePath(`/user/${data.username}/backlogs`);
+    const backlog = await createBacklog(backlogData);
+    revalidatePath(`/user/${user.username}/backlogs`);
     return NextResponse.json({ message: "created", backlog }, { status: 201 });
   } catch (error) {
     return sendErrorMsg(error);

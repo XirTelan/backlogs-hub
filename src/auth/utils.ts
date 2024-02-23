@@ -1,6 +1,8 @@
 "use server";
+
 import { JWTPayload, JWTVerifyResult, SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 const EXPIRATION_TIME = "7d";
 
@@ -47,4 +49,13 @@ type TokenData = {
   id: string;
   username: string;
   role: string;
+};
+
+export const setTokenCookies = async (token: string, url: string) => {
+  const response = NextResponse.redirect(new URL("/", url));
+  response.cookies.set("access_token", token, {
+    httpOnly: true,
+    maxAge: 604800,
+  });
+  return response;
 };

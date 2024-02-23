@@ -1,5 +1,5 @@
 import SearchBar from "@/components/SearchBar";
-import ToggleButton from "@/components/ToggleButton";
+import ToggleButton from "@/components/Common/UI/ToggleButton";
 import useChangeSearchParams from "@/hooks/useChangeParams";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";

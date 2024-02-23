@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    password: String,
     profileVisibility: { type: String, default: "public" },
   },
   {

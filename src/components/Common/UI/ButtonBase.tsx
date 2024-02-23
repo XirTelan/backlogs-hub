@@ -27,10 +27,12 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${variants[variant]} ${sizes[size]} relative flex w-full min-w-fit items-center text-nowrap  ${text && "ps-4"}  `}
+        className={`${variants[variant]} ${sizes[size]} relative flex w-full min-w-fit items-center text-nowrap  ${text && "ps-4"} disabled:bg-layer-3 disabled:text-white/25 `}
       >
         {text}
-        <div className="absolute inset-0  flex items-center justify-center bg-white bg-opacity-0 ">
+        <div
+          className={`${text ? "right-[calc(0%+1rem)]" : "inset-0"} absolute   flex items-center justify-center bg-white bg-opacity-0 `}
+        >
           {children}
         </div>
       </button>

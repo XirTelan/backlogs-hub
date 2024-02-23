@@ -16,6 +16,10 @@ const InputField = React.forwardRef<HTMLInputElement, InputField>(
     },
     ref,
   ) => {
+    const helperType = {
+      text: " text-subtle-3",
+      error: " text-error-text",
+    };
     const sizes = {
       small: "h-8 px-4 py-[7px] ",
       medium: "h-10 px-4 py-[11px] ",
@@ -26,6 +30,20 @@ const InputField = React.forwardRef<HTMLInputElement, InputField>(
       2: "bg-field-2 border-strong-2",
       3: "bg-field-3 border-strong-3",
     };
+
+    const helperTextBlock = () => {
+      if (!helperText) return <div className="h-5 pt-1" />;
+      return (
+        <div className="h-5 pt-1">
+          <span
+            className={`${helperType[helperText?.type]} flex h-4 text-base leading-4 `}
+          >
+            {helperText.message}
+          </span>
+        </div>
+      );
+    };
+
     return (
       <div className="h-30 group relative flex  w-full flex-col  ">
         {!isSimple && (
@@ -35,20 +53,14 @@ const InputField = React.forwardRef<HTMLInputElement, InputField>(
         )}
         <input
           type="input"
-          className={`${inputLayers[layer]} ${sizes[variant]}    border-b border-strong-1   text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white `}
+          className={`${inputLayers[layer]} ${sizes[variant]} ${helperText?.type === "error" ? "outline-error-support outline-2 -outline-offset-2" : "border-b border-strong-1"}     text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white `}
           placeholder={placeholder}
           name={id}
           id={id}
           {...props}
           ref={ref}
         />
-        {!isSimple && (
-          <div className="h-5 pt-1">
-            <span className="flex h-4 text-base leading-4 text-subtle-3">
-              {helperText}
-            </span>
-          </div>
-        )}
+        {!isSimple && helperTextBlock()}
         {children}
       </div>
     );

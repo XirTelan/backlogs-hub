@@ -41,6 +41,7 @@ const config: Config = {
         },
         primary: {
           text: "#F4F4F4",
+          link: "#78A9FF",
           btn: {
             DEFAULT: "#0F62FE",
             hover: "#0050E6",
@@ -60,6 +61,10 @@ const config: Config = {
             hover: "#F4F4F4",
             active: "#C6C6C6",
           },
+        },
+        error: {
+          support: "#FA4D56",
+          text: "#FF8389",
         },
       },
       backgroundImage: {

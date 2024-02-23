@@ -3,7 +3,7 @@ import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
-import { BacklogDTO, BacklogFormData } from "@/types";
+import { BacklogCreationDTO, BacklogDTO } from "@/types";
 
 //GET SECTION
 export const getBacklogById = async (id: string) => {
@@ -77,7 +77,7 @@ export const getBacklogsByUserName = async (
 };
 
 //POST SECTION
-export const createBacklog = async (data: BacklogFormData) => {
+export const createBacklog = async (data: BacklogCreationDTO) => {
   try {
     await dbConnect();
     const isExist = await isBacklogExist(data.userName, data.slug);

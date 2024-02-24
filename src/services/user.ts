@@ -28,7 +28,7 @@ export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
     }
     const newUser = new User(data);
     await newUser.save();
-    delete newUser.password;
+    newUser.password = undefined;
     return {
       status: "success",
       data: newUser,

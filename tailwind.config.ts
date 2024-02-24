@@ -23,6 +23,10 @@ const config: Config = {
           2: "#6f6f6f",
           3: "#8d8d8d",
         },
+        support: {
+          info: "#4589FF",
+          success: "#42BE65",
+        },
         borderinteractive: "#4589FF",
         field: {
           1: "#262626",

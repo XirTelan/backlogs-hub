@@ -32,15 +32,12 @@ const UserRegisterForm = () => {
       },
       body: JSON.stringify(data),
     });
-    const bode = await res.json();
-    console.log(bode);
-    console.log("Status", res.status);
+    const body = await res.json();
     if (res.ok) {
-      toast.success("ye?");
       router.push("/");
     }
     if (res.status === 400) {
-      toast.error(bode.message);
+      toast.error(body.message);
     }
     reset();
   };
@@ -93,7 +90,3 @@ const UserRegisterForm = () => {
 };
 
 export default UserRegisterForm;
-
-type UserRegisterFormProps = {
-  onSubmit: () => void;
-};

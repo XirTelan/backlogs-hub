@@ -29,7 +29,9 @@ export default function RootLayout({
         className={`${roboto.className} bg-surface flex flex-col items-center `}
       >
         <Toaster
+          reverseOrder={false}
           toastOptions={{
+            position: "top-right",
             className: "",
             style: {
               borderRadius: "5px",

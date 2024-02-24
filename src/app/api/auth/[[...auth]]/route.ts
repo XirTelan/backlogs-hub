@@ -10,7 +10,6 @@ import bcrypt from "bcrypt";
 
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 
 export async function GET(
   request: NextRequest,
@@ -69,12 +68,10 @@ export async function POST(
     const parsedCredentials = SignInSchema.safeParse(data);
     if (!parsedCredentials.success)
       return sendErrorMsg("Username or password is incorrect");
-    console.log("parsed", parsedCredentials);
     await dbConnect();
     const user = await User.findOne({ username: data.username });
-    console.log(user);
     if (!user.password)
-      return sendErrorMsg("Username or password is incorrect 2");
+      return sendErrorMsg("Username or password is incorrect");
     const passwordMatch = await bcrypt.compare(
       parsedCredentials.data.password,
       user.password,
@@ -82,7 +79,6 @@ export async function POST(
     if (!passwordMatch)
       return sendErrorMsg("Username or password is incorrect");
     const access_token = await generateAccessToken(user);
-    console.log("data sign in", data, passwordMatch);
     return setTokenCookies(access_token, request.url);
   }
 

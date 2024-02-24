@@ -4,9 +4,9 @@ import InputField from "@/components/Common/UI/InputField";
 import LinkBase from "@/components/Common/UI/LinkBase";
 import { SignInSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { FaArrowRight } from "react-icons/fa6";
 import { z } from "zod";
 
@@ -15,7 +15,6 @@ const UserLoginForm = () => {
   const {
     handleSubmit,
     register,
-    control,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -26,6 +25,8 @@ const UserLoginForm = () => {
     resolver: zodResolver(SignInSchema),
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: FormData) => {
     const res = await fetch("/api/auth/signIn", {
       method: "POST",
@@ -34,8 +35,7 @@ const UserLoginForm = () => {
       },
       body: JSON.stringify(data),
     });
-    console.log("Status", res.status);
-    if (res.ok) toast.success("ye?");
+    if (res.ok) router.refresh();
   };
 
   return (
@@ -52,6 +52,7 @@ const UserLoginForm = () => {
         {...register("username")}
       />
       <InputField
+        type="password"
         helperText={
           errors.password && {
             message: errors.password.message!,

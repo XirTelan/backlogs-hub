@@ -3,12 +3,12 @@
 import InputField from "@/components/Common/UI/InputField";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BacklogFormData } from "@/types";
 import Modal from "@/components/Common/Modal";
 import TemplatePreview from "@/components/Template/TemplatePreview";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
 import UserFieldsBlock from "./UserFieldsBlock";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
+import { BacklogFormData } from "@/zodTypes";
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
@@ -26,7 +26,7 @@ const BacklogForm = <T extends BacklogFormData>({
     control,
     setError,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<BacklogFormData>({
     defaultValues,
     mode: "onBlur",
@@ -61,6 +61,12 @@ const BacklogForm = <T extends BacklogFormData>({
       <form onSubmit={handleSubmit(onSubmitInternal)}>
         <div className="field    w-full py-2  ">
           <InputField
+            helperText={
+              errors.backlogTitle && {
+                message: errors.backlogTitle.message!,
+                type: "error",
+              }
+            }
             id="backlogTitle"
             label="Title (required)"
             {...register(`backlogTitle`, { required: true })}
@@ -72,8 +78,10 @@ const BacklogForm = <T extends BacklogFormData>({
         </div>
         {errors.fields && <p>{errors.fields.message}</p>}
         <div className="mt-4 flex w-1/4 flex-col gap-4">
-          <ButtonBase text="Create backlog" />
+          <ButtonBase disabled={!isValid} text="Create backlog" />
           <ButtonBase
+            disabled={!isValid}
+            type="button"
             variant="secondary"
             onClick={handleShowTemplate}
             text="Save as template"

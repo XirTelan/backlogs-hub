@@ -21,24 +21,6 @@ export type ListItemInput = {
   onDelete: () => void;
 } & InputField;
 
-export type BacklogDTO = {
-  userId: string;
-  userName: string;
-  visibility: string;
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
-} & BacklogFormData;
-
-export type BacklogFormData = {
-  order: number;
-  slug: string;
-  backlogTitle: string;
-  categories: BacklogCategory[];
-  fields: Field[];
-  visibility: string;
-};
-
 export type BacklogCreationDTO = Omit<
   BacklogDTO,
   "_id" | "updatedAt" | "createdAt"
@@ -49,11 +31,6 @@ type ItemField = {
   value: string;
 };
 
-export type BacklogCategory = {
-  name: string;
-  color: string;
-  protected: boolean;
-};
 export type BacklogItemCreationDTO = {
   title: string;
   category: string;
@@ -80,12 +57,6 @@ export type TemplateCreationDTO = {
   categories: BacklogCategory[];
   author: string;
   visibility: string;
-};
-
-export type Field = {
-  name: string;
-  protected: boolean;
-  type: "text" | "number";
 };
 
 export type PageDefaultProps = {

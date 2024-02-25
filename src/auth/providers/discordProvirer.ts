@@ -42,9 +42,7 @@ export const getRedirectOauthLink = async () => {
 };
 export const getUserData = async (code: string) => {
   const token = await getDiscordToken(code);
-  console.log("Discord token", token.access_token);
   const userData = await getAuthInformation(token.access_token);
-  console.log(userData);
   return {
     username: userData.username,
     email: userData.email,

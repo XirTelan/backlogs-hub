@@ -1,3 +1,7 @@
+import { FieldError } from "react-hook-form";
+import { BacklogCategory } from "./zodTypes";
+import { Field } from "./zodTypes";
+
 export type InputField = {
   label?: string;
   layer?: 1 | 2 | 3;
@@ -40,10 +44,7 @@ export type BacklogItemCreationDTO = {
 export type BacklogItemDTO = {
   _id: string;
   backlogId: string;
-  title: string;
-  category: string;
-  userFields: ItemField[];
-};
+} & BacklogItemCreationDTO;
 
 export type TemplateDTO = {
   _id: string;
@@ -59,12 +60,20 @@ export type TemplateCreationDTO = {
   visibility: string;
 };
 
-export type PageDefaultProps = {
-  children?: React.ReactElement;
-  params: {
-    [key: string]: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
+export type FieldsBlockProps = {
+  errors?:
+    | Merge<
+        FieldError,
+        (
+          | Merge<FieldError, FieldErrorsImpl<Field | BacklogCategory>>
+          | undefined
+        )[]
+      >
+    | undefined;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<BacklogFormData, any>;
+  register: UseFormRegister<BacklogFormData>;
 };
 
 export type UserDTO = {

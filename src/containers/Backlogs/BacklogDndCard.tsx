@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Reorder, useDragControls } from "framer-motion";
 import { MdDragIndicator, MdEdit } from "react-icons/md";
-import { BacklogDTO } from "@/types";
 import { MdRemove } from "react-icons/md";
 
 import ActionButton from "@/components/ActionButton";
+import { BacklogDTO } from "@/zodTypes";
 
 interface Props {
   editAction: () => void;

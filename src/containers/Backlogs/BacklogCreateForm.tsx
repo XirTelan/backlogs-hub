@@ -1,5 +1,4 @@
 "use client";
-import { BacklogCategory, BacklogFormData } from "@/types";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
@@ -9,13 +8,16 @@ import { useState } from "react";
 import BacklogTemplate from "./BacklogTemplate";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import useSession from "@/hooks/useSession";
+import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 
 const BacklogCreateForm = () => {
   const router = useRouter();
   const [useTemplate, setUseTemplate] = useState(false);
   const { user, isLoading } = useSession();
   if (isLoading) return <div>Loading</div>;
-  if (!user) return router.push("/");
+  if (!user) {
+    router.push("/");
+  }
   const defaultCategories: BacklogCategory[] = [
     { name: "Completed", color: "#11380B", protected: false },
     { name: "Playing", color: "#11380B", protected: false },
@@ -60,13 +62,7 @@ const BacklogCreateForm = () => {
       </Title>
       {useTemplate ? (
         <>
-          <BacklogTemplate
-            onSubmit={onSubmit}
-            user={{
-              usename: user.username || "",
-              id: user.id,
-            }}
-          />
+          <BacklogTemplate onSubmit={onSubmit} />
         </>
       ) : (
         <BacklogForm defaultValues={defaultValues} onSubmit={onSubmit} />

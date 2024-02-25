@@ -30,7 +30,6 @@ export const getRedirectOauthLink = async () => {};
 export const getUserData = async (code: string) => {
   const token = await getGoogleToken(code);
   const userData: Partial<UserDTO> & JWTPayload = decodeJwt(token.id_token);
-  console.log("userData", userData);
   return {
     username: `user_G${userData.sub}`,
     email: userData.email || "",

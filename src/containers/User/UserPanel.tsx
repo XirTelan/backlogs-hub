@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { VscAccount } from "react-icons/vsc";
 import SignOutButton from "../Auth/SignOutButton";
 
-const UserPanel = ({ children }: { children: React.ReactElement }) => {
+const UserPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClickReg(isOpen, ref, () => setIsOpen(false));
@@ -29,7 +29,6 @@ const UserPanel = ({ children }: { children: React.ReactElement }) => {
         >
           <ul>
             <SignOutButton />
-            {children}
           </ul>
         </div>
       )}

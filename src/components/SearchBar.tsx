@@ -10,7 +10,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     changesParams("search", debouncedValue);
-  }, [debouncedValue]);
+  }, [changesParams, debouncedValue]);
 
   return (
     <div>

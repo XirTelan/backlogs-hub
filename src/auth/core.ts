@@ -4,7 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { createUser } from "@/services/user";
 import { UserDTO } from "@/types";
-import { sendErrorMsg } from "@/utils";
+import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { getTokenData, generateAccessToken, setTokenCookies } from "./utils";
 import { getUserData as getDiscordUser } from "@/auth/providers/discordProvirer";
@@ -25,14 +25,14 @@ export const handleCallback = async (
   request: NextRequest,
   provider: string,
 ) => {
-  if (!provider) return sendErrorMsg("Provider is required");
+  if (!provider) return sendMsg.error("Provider is required");
   const searchParams = request.nextUrl.searchParams;
   const errors = searchParams.get("error");
   if (errors && errors === "access_denied") {
     return NextResponse.redirect(new URL("/", request.url));
   }
   const code = searchParams.get("code");
-  if (!code) return sendErrorMsg("code not specified");
+  if (!code) return sendMsg.error("code not specified");
 
   let userData: Omit<UserDTO, "id"> | undefined = undefined;
   switch (provider) {
@@ -43,7 +43,7 @@ export const handleCallback = async (
       userData = await getDiscordUser(code);
       break;
   }
-  if (!userData) return sendErrorMsg("Try again later");
+  if (!userData) return sendMsg.error("Try again later");
   await dbConnect();
   let user = await User.findOne({ email: userData.email });
   if (!user) {

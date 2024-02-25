@@ -1,5 +1,5 @@
 import { createTemplate, getTemplates } from "@/services/template";
-import { sendErrorMsg } from "@/utils";
+import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
@@ -7,7 +7,7 @@ export async function GET() {
     const resultData = await getTemplates();
     return NextResponse.json(resultData, { status: 200 });
   } catch (error) {
-    return sendErrorMsg(error);
+    return sendMsg.error(error);
   }
 }
 
@@ -17,6 +17,6 @@ export async function POST(request: NextRequest) {
     const resultData = await createTemplate(data);
     return NextResponse.json(resultData, { status: 200 });
   } catch (error) {
-    return sendErrorMsg(error);
+    return sendMsg.error(error);
   }
 }

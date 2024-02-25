@@ -3,15 +3,21 @@ import toast, { Toast } from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 
-export const sendErrorMsg = (error: unknown, status = 400) => {
-  let message = "Unknown error";
-  if (error instanceof Error) {
-    message = error.message;
-  } else if (typeof error === "string") {
-    message = error;
-  }
-  return NextResponse.json({ message: message }, { status: status });
+export const sendMsg = {
+  success: (message: string, status: number = 200) => {
+    return NextResponse.json({ message: message }, { status: status });
+  },
+  error: (error: unknown, status: number = 400) => {
+    let message = "Unknown error";
+    if (error instanceof Error) {
+      message = error.message;
+    } else if (typeof error === "string") {
+      message = error;
+    }
+    return NextResponse.json({ message: message }, { status: status });
+  },
 };
+
 export const cleanParamString = (str: string) => {
   return str.replace(/["\\]/g, "");
 };
@@ -63,9 +69,8 @@ export const generateSlug = (name: string): string => {
   return slug;
 };
 
-export const fetcher = (
-  ...args: [string | URL | Request, RequestInit | undefined]
-) => fetch(...args).then((res) => res.json());
+export const fetcher = (...args: Parameters<typeof fetch>) =>
+  fetch(...args).then((res) => res.json());
 
 export const toastCustom = (
   text: string,

@@ -1,19 +1,38 @@
 "use client";
 import { BacklogItemDTO } from "@/types";
+import { fetcher } from "@/utils";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import useSWR from "swr";
 
-export default function Backloglist({
-  items,
-  categoriesMap,
-  onDelete,
-}: BackloglistProps) {
-  const [itemsList, setItemList] = useState<BacklogItemDTO[]>(items); //todo
+export default function Backloglist({ id, categoriesMap }: BackloglistProps) {
+  const [search, setSearch] = useState("");
+  const { data, isLoading } = useSWR(
+    `/api/backlogs/${id}/items${search}`,
+    fetcher,
+  );
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    setItemList(items);
-  }, [items]);
+    let query = "?";
+    searchParams.forEach((value, key) => {
+      query += `${key}=${value}&`;
+    });
+    query = query.slice(0, -1);
+    setSearch(query);
+  }, [searchParams]);
 
+  if (isLoading) return <div>Loadbg</div>;
+
+  const onDelete = async (id: string, backlogId: string) => {
+    const res = await fetch(`/api/backlogs/${backlogId}/items/${id}`, {
+      method: "DELETE",
+    });
+    await res.json();
+    toast.success(`Deleted`);
+  };
   return (
     <>
       <table className="w-full">
@@ -27,7 +46,7 @@ export default function Backloglist({
             </th>
           </tr>
         </thead>
-        {itemsList.map((item) => (
+        {data.map((item: BacklogItemDTO) => (
           <tbody className="" key={item._id}>
             <tr>
               <td
@@ -48,8 +67,7 @@ export default function Backloglist({
         <tfoot>
           <tr>
             <td className=" text-sm text-neutral-600" colSpan={3}>
-              {" "}
-              Count: {itemsList.length}
+              Count: {data.length}
             </td>
           </tr>
         </tfoot>
@@ -59,7 +77,7 @@ export default function Backloglist({
 }
 
 interface BackloglistProps {
-  items: BacklogItemDTO[];
-  onDelete: (id: string, backlogId: string) => void;
+  id: string;
+  // onDelete: (id: string, backlogId: string) => void;
   categoriesMap: Map<string, string>;
 }

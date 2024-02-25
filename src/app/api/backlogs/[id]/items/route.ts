@@ -4,7 +4,7 @@ import {
   getBacklogItemsByQuery,
 } from "@/services/backlogItem";
 import { BacklogItemDTO } from "@/types";
-import { sendErrorMsg } from "@/utils";
+import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -22,9 +22,7 @@ export async function GET(
         search: search,
       });
     } else {
-      backlogData = await getBacklogItemsByBacklogId({
-        backlogId: id,
-      });
+      backlogData = await getBacklogItemsByBacklogId(id);
     }
     if (backlogData) {
       return NextResponse.json(backlogData);
@@ -41,7 +39,7 @@ export async function GET(
       );
     }
   } catch (error) {
-    sendErrorMsg(error);
+    sendMsg.error(error);
   }
 }
 
@@ -56,6 +54,6 @@ export async function POST(
     const res = await addBacklogItem(data);
     return NextResponse.json({ message: "created", res }, { status: 201 });
   } catch (error) {
-    return sendErrorMsg(error);
+    return sendMsg.error(error);
   }
 }

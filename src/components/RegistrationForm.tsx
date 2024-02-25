@@ -1,4 +1,5 @@
 "use client";
+import { UserCreationDTO } from "@/types";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -7,16 +8,16 @@ const RegistrationForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<UserCreationDTO>();
 
-  const handleRegistration = (data) => console.log(data);
+  const handleRegistration = (data: UserCreationDTO) => console.log(data);
 
   return (
     <form className="text-lg" onSubmit={handleSubmit(handleRegistration)}>
       <div>
         <label>User Name</label>
-        <input {...register("name", { required: true })} />
-        {errors.name && "errorrs"}
+        <input {...register("username", { required: true })} />
+        {errors.username && "errorrs"}
       </div>
       <div>
         <label>Email</label>

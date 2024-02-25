@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import TemplateCard from "./TemplateCard";
-import { BacklogFormData, TemplateDTO } from "@/types";
+import {  TemplateDTO } from "@/types";
 import InputField from "../Common/UI/InputField";
 import TextArea from "../Common/TextArea";
 import toast from "react-hot-toast";
+import { BacklogFormData } from "@/zodTypes";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
   const [data, setData] = useState<Partial<TemplateDTO>>();
   const [description, setDescription] = useState<string>("");

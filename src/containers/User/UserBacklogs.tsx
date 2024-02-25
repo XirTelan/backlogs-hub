@@ -16,12 +16,11 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
         <ul className="flex flex-col flex-wrap md:flex-row">
           {data.map((backlog) => {
             return (
-              <li key={backlog._id}>
-                <NavLink
-                  href={`/user/${userName}/backlogs/${backlog.slug}`}
-                  label={backlog.backlogTitle}
-                />
-              </li>
+              <NavLink
+                key={backlog._id}
+                href={`/user/${userName}/backlogs/${backlog.slug}`}
+                label={backlog.backlogTitle}
+              />
             );
           })}
         </ul>

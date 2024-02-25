@@ -3,7 +3,8 @@ import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
-import { BacklogCreationDTO, BacklogDTO } from "@/types";
+import { BacklogCreationDTO } from "@/types";
+import { BacklogDTO } from "@/zodTypes";
 
 //GET SECTION
 export const getBacklogById = async (id: string) => {
@@ -43,20 +44,20 @@ export const getBacklogsBaseInfoByUserName = async (userName: string) => {
   }
 };
 
-export const getUserBacklogBySlug = async ({
-  userName,
-  backlogSlug,
-}: {
-  userName: string;
-  backlogSlug: string;
-}): Promise<BacklogDTO> => {
+export const getUserBacklogBySlug = async (
+  userName: string,
+  backlogSlug: string,
+): Promise<BacklogDTO | null> => {
   try {
     await dbConnect();
-    const backlogs = await Backlog.findOne({
-      userName: userName,
-      slug: backlogSlug,
-    });
-    return backlogs;
+    const backlog: BacklogDTO | null = await Backlog.findOne(
+      {
+        userName: userName,
+        slug: backlogSlug,
+      },
+      { "categories._id": 0, "fields._id": 0 },
+    ).lean();
+    return backlog;
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -130,7 +131,7 @@ export const isBacklogExist = async (userName: string, slug: string) => {
       userName: userName,
       slug: slug,
     });
-    return isExist;
+    return isExist || undefined;
   } catch (error) {
     throw new Error(`${error}`);
   }

@@ -1,9 +1,9 @@
 "use client";
-import { BacklogDTO } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
+import { BacklogDTO } from "@/zodTypes";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const [data, setData] = useState<BacklogDTO>();

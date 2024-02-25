@@ -1,5 +1,5 @@
 import { deleteBacklogItem, putBacklogItem } from "@/services/backlogItem";
-import { sendErrorMsg } from "@/utils";
+import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
@@ -10,7 +10,7 @@ export async function DELETE(
     await deleteBacklogItem(itemId);
     return NextResponse.json({ message: "Deleted" }, { status: 202 });
   } catch (error) {
-    sendErrorMsg(error);
+    sendMsg.error(error);
   }
 }
 

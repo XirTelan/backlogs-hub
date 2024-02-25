@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { TemplateDTO } from "@/types";
 import { IoMdTimer } from "react-icons/io";
 import { IoText } from "react-icons/io5";
@@ -109,18 +108,6 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
 
 export default TemplateCard;
 
-/**
- * Returns the average of two numbers.
- *
- * @remarks
- * This method is part of the {@link core-library#Statistics | Statistics subsystem}.
- *
- * @param x - The first input number
- * @param y - The second input number
- * @returns The arithmetic mean of `x` and `y`
- *
- * @beta
- */
 type TemplateCardProps = {
   template: TemplateDTO;
   toSubmit: () => void;

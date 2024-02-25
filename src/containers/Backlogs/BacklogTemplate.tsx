@@ -1,10 +1,11 @@
 "use client";
 import TemplateLegend from "@/components/Template/TemplateLegend";
-import { BacklogFormData, TemplateDTO } from "@/types";
+import { TemplateDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import TemplateWrapper from "../TemplateWrapper";
+import { BacklogFormData } from "@/zodTypes";
 
-const BacklogTemplate = ({ user, onSubmit }: BacklogTemplateProps) => {
+const BacklogTemplate = ({ onSubmit }: BacklogTemplateProps) => {
   const [templates, setTemplates] = useState<TemplateDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,10 +24,9 @@ const BacklogTemplate = ({ user, onSubmit }: BacklogTemplateProps) => {
       categories: data.categories,
       backlogTitle: data.templateTitle,
       fields: data.fields,
-      userId: user.id,
-      userName: user.usename,
       order: 99,
       slug: "",
+      visibility: "public",
     };
     try {
       onSubmit(backlog);
@@ -59,5 +59,4 @@ const BacklogTemplate = ({ user, onSubmit }: BacklogTemplateProps) => {
 export default BacklogTemplate;
 type BacklogTemplateProps = {
   onSubmit: (data: BacklogFormData) => void;
-  user: { usename: string; id: string };
 };

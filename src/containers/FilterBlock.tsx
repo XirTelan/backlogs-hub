@@ -1,3 +1,4 @@
+"use client";
 import SearchBar from "@/components/SearchBar";
 import ToggleButton from "@/components/Common/UI/ToggleButton";
 import useChangeSearchParams from "@/hooks/useChangeParams";
@@ -11,8 +12,8 @@ type FilterBlockProps = {
 };
 const FilterBlock = ({ backlogSlug, backlogCategories }: FilterBlockProps) => {
   const [categories] = useState(backlogCategories);
-  const changesParams = useChangeSearchParams();
   const [actviveCategories, setActiveCategories] = useState<string[]>([]);
+  const changesParams = useChangeSearchParams();
   const searchParams = useSearchParams();
   const searchCategories = searchParams.get("categories");
 

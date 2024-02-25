@@ -1,10 +1,14 @@
 "use client";
 import InputField from "@/components/Common/UI/InputField";
-import { BacklogDTO, BacklogItemCreationDTO } from "@/types";
+import { BacklogItemCreationDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
+import useSession from "@/hooks/useSession";
+import { BacklogDTO } from "@/zodTypes";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
+import { CgSpinner } from "react-icons/cg";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlogId,
@@ -16,7 +20,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   onSubmit: SubmitHandler<T>;
 }) => {
   const router = useRouter();
-  const user = { username: "user" }; //stub
+  const user = useSession();
   const [backlog, setBacklog] = useState<BacklogDTO>();
   const [fieldsTypeMap, setFieldsTypeMap] = useState<Map<string, string>>();
   const { handleSubmit, control, register } = useForm<BacklogItemCreationDTO>({
@@ -30,7 +34,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   });
 
   useEffect(() => {
-    if (!backlogId || !user) return;
+    if (!backlogId) return;
     const backlogData = async () => {
       const res = await fetch(`/api/backlogs/${backlogId}`);
       const data: BacklogDTO = await res.json();
@@ -42,9 +46,16 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       setBacklog(data);
     };
     backlogData();
-  }, [user, backlogId]);
+  }, [backlogId]);
 
-  if (!backlog) return <div>Loading</div>;
+  if (!backlog)
+    return (
+      <div className="flex w-full items-center justify-center">
+        <div className=" animate-spin">
+          <CgSpinner />
+        </div>
+      </div>
+    );
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
     onSubmit({ ...defaultValues, ...data });
@@ -95,7 +106,9 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       <button type="button" onClick={() => router.back()}>
         Cancel
       </button>
-      <button type="submit">Crate</button>
+      <div className="w-1/4 ">
+        <ButtonBase text="Create" type="submit" />
+      </div>
     </form>
   );
 };

@@ -3,7 +3,7 @@ import {
   getBacklogById,
   updateBacklogById,
 } from "@/services/backlogs";
-import { cleanParamString, sendErrorMsg } from "@/utils";
+import { cleanParamString, sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -18,7 +18,7 @@ export async function GET(
       return NextResponse.json("Not Found", { status: 404 });
     }
   } catch (error) {
-    return sendErrorMsg(error);
+    return sendMsg.error(error);
   }
 }
 

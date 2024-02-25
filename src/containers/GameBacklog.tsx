@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Backloglist from "./Backlogs/BacklogList";
 import SearchGameBar from "./SearchGameBar";
 
 export default function GameBacklog() {
@@ -10,14 +9,7 @@ export default function GameBacklog() {
     <>
       <div>GameBacklog</div>
 
-      {isSearchGame ? (
-        <SearchGameBar onClose={() => setIsSearchGame(false)} />
-      ) : (
-        <Backloglist
-          backlogId={"Games"}
-          addItem={() => setIsSearchGame(true)}
-        />
-      )}
+      {isSearchGame && <SearchGameBar onClose={() => setIsSearchGame(false)} />}
     </>
   );
 }

@@ -2,7 +2,6 @@
 import TemplateCard from "@/components/Template/TemplateCard";
 import TemplateForm from "@/components/Template/TemplateForm";
 import { TemplateDTO } from "@/types";
-import { motion } from "framer-motion";
 import React, { useState } from "react";
 
 const TemplateWrapper = ({ template, onSubmit }: TemplateCardProps) => {

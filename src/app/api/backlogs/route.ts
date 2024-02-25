@@ -1,4 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
+import { getBacklogItemsByBacklogId } from "@/services/backlogItem";
 import {
   createBacklog,
   getBacklogsByUserName,
@@ -7,10 +8,19 @@ import {
   updateBacklogsOrderById,
   isBacklogExist,
 } from "@/services/backlogs";
-import { BacklogCreationDTO, BacklogDTO, BacklogFormData } from "@/types";
-import { sendErrorMsg } from "@/utils";
+import { BacklogCreationDTO, BacklogItemDTO } from "@/types";
+import { sendMsg } from "@/utils";
+import { BacklogDTO, BacklogFormData } from "@/zodTypes";
+import { Types } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+
+const accessTypes = ["withData", "baseInfo", "exist"] as const;
+type Types = (typeof accessTypes)[number];
+
+const isType = (value: unknown): value is Types => {
+  return accessTypes.some((valid) => valid === value);
+};
 
 export async function GET(request: NextRequest) {
   let userName = request.nextUrl.searchParams
@@ -19,37 +29,45 @@ export async function GET(request: NextRequest) {
   const backlogSlug = request.nextUrl.searchParams
     .get("backlog")
     ?.toLowerCase();
-  const type = request.nextUrl.searchParams.get("type")?.toLowerCase();
-  let resultData;
+  const queryType: unknown = request.nextUrl.searchParams.get("type");
   if (!userName) {
-    const user = { username: "user" }; //stub;
+    const user = await getCurrentUserInfo();
     if (!user || !user.username) {
-      return NextResponse.json(
-        { message: `Params not provided` },
-        { status: 400 },
-      );
+      return sendMsg.error(`Params not provided`);
     }
     userName = user.username;
   }
-  if (type) {
-    switch (type) {
-      case "baseInfo":
-        resultData = await getBacklogsBaseInfoByUserName(userName);
-        return NextResponse.json(resultData, { status: 200 });
-      case "exist":
-        if (!backlogSlug)
-          return NextResponse.json(
-            { message: `Params not provided` },
-            { status: 400 },
-          );
-        resultData = await isBacklogExist(userName, backlogSlug);
-        return NextResponse.json(resultData, { status: 200 });
+  const resultData: {
+    backlog: Partial<BacklogDTO> | BacklogDTO[] | null | undefined;
+    backlogData?: Partial<BacklogItemDTO>[];
+  } = {
+    backlog: null,
+  };
+  if (isType(queryType)) {
+    switch (queryType) {
+      case "withData": {
+        if (!backlogSlug) return sendMsg.error("Wrong parameters");
+        resultData.backlog = await getUserBacklogBySlug(userName, backlogSlug);
+        resultData.backlogData = await getBacklogItemsByBacklogId(
+          resultData?.backlog?._id,
+        );
+        return NextResponse.json(resultData);
+      }
+      case "baseInfo": {
+        resultData.backlog = await getBacklogsBaseInfoByUserName(userName);
+        return NextResponse.json(resultData);
+      }
+      case "exist": {
+        if (!backlogSlug) return sendMsg.error(`Params not provided`);
+        resultData.backlog = await isBacklogExist(userName, backlogSlug);
+        return NextResponse.json(resultData);
+      }
     }
   }
   if (!backlogSlug) {
-    resultData = await getBacklogsByUserName(userName);
+    resultData.backlog = await getBacklogsByUserName(userName);
   } else {
-    resultData = await getUserBacklogBySlug({ userName, backlogSlug });
+    resultData.backlog = await getUserBacklogBySlug(userName, backlogSlug);
   }
   return NextResponse.json(resultData, { status: 200 });
 }
@@ -57,7 +75,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const data: BacklogFormData = await request.json();
   const user = await getCurrentUserInfo();
-  if (!user) return sendErrorMsg("", 401);
+  if (!user) return sendMsg.error("", 401);
   const backlogData: BacklogCreationDTO = {
     ...data,
     userId: user.id,
@@ -66,9 +84,9 @@ export async function POST(request: NextRequest) {
   try {
     const backlog = await createBacklog(backlogData);
     revalidatePath(`/user/${user.username}/backlogs`);
-    return NextResponse.json({ message: "created", backlog }, { status: 201 });
+    return NextResponse.json(backlog);
   } catch (error) {
-    return sendErrorMsg(error);
+    return sendMsg.error(error);
   }
 }
 
@@ -76,7 +94,7 @@ export async function PATCH(request: NextRequest) {
   const data: BacklogDTO[] = await request.json();
   try {
     await updateBacklogsOrderById(data);
-    return NextResponse.json({ message: "created" }, { status: 201 });
+    return sendMsg.success(`Created`, 201);
   } catch (error) {
     throw new Error(`${error}`);
   }

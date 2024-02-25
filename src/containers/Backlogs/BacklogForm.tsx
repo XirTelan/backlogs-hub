@@ -9,6 +9,8 @@ import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
 import UserFieldsBlock from "./UserFieldsBlock";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogFormData } from "@/zodTypes";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { BacklogFormSchema } from "@/zod";
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
@@ -28,6 +30,7 @@ const BacklogForm = <T extends BacklogFormData>({
     clearErrors,
     formState: { errors, isValid },
   } = useForm<BacklogFormData>({
+    resolver: zodResolver(BacklogFormSchema),
     defaultValues,
     mode: "onBlur",
   });
@@ -73,8 +76,16 @@ const BacklogForm = <T extends BacklogFormData>({
           />
         </div>
         <div className="flex flex-col lg:flex-row lg:gap-4 ">
-          <CategoriesFieldsBlock control={control} register={register} />
-          <UserFieldsBlock control={control} register={register} />
+          <CategoriesFieldsBlock
+            errors={errors.categories}
+            control={control}
+            register={register}
+          />
+          <UserFieldsBlock
+            errors={errors.fields}
+            control={control}
+            register={register}
+          />
         </div>
         {errors.fields && <p>{errors.fields.message}</p>}
         <div className="mt-4 flex w-1/4 flex-col gap-4">

@@ -1,18 +1,23 @@
+import { getCurrentUserInfo } from "@/auth/utils";
 import ItemsCreateForm from "@/containers/Items/ItemsCreateForm";
 import { getUserBacklogBySlug } from "@/services/backlogs";
-import { BacklogItemCreationDTO, PageDefaultProps } from "@/types";
+import { BacklogItemCreationDTO } from "@/types";
 import { cleanParamString } from "@/utils";
 import { redirect } from "next/navigation";
 
-const CreateItem = async ({ searchParams: { backlog } }: PageDefaultProps) => {
-  const user = {username: 'user'} //stub
+const CreateItem = async ({
+  searchParams: { backlog },
+}: {
+  searchParams: { backlog: string };
+}) => {
+  const user = await getCurrentUserInfo();
   if (!user || !user.username || !backlog) redirect("/");
 
-  const backlogInfo = await getUserBacklogBySlug({
-    userName: user.username,
-    backlogSlug: backlog as string,
-  });
-  if (!backlog) redirect("/");
+  const backlogInfo = await getUserBacklogBySlug(
+    user.username,
+    backlog as string,
+  );
+  if (!backlogInfo) redirect("/");
 
   const defaultValues: BacklogItemCreationDTO = {
     title: "",

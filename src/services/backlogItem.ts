@@ -1,13 +1,11 @@
 import dbConnect from "@/lib/dbConnect";
 import BacklogItem from "@/models/BacklogItem";
-import { BacklogItemDTO } from "@/types";
+import { BacklogItemCreationDTO, BacklogItemDTO } from "@/types";
 import { NextResponse } from "next/server";
 
-export const getBacklogItemById = async ({
-  itemId,
-}: {
-  itemId: string;
-}): Promise<BacklogItemDTO> => {
+export const getBacklogItemById = async (
+  itemId: string,
+): Promise<BacklogItemDTO> => {
   try {
     await dbConnect();
     const backlogData = await BacklogItem.findById(itemId);
@@ -17,14 +15,15 @@ export const getBacklogItemById = async ({
   }
 };
 
-export const getBacklogItemsByBacklogId = async ({
-  backlogId,
-}: {
-  backlogId: string;
-}) => {
+export const getBacklogItemsByBacklogId = async (
+  backlogId: string | undefined,
+) => {
+  if (!backlogId) return;
   try {
     await dbConnect();
-    const backlogData = await BacklogItem.find({ backlogId: backlogId });
+    const backlogData: BacklogItemDTO[] = await BacklogItem.find({
+      backlogId: backlogId,
+    }).lean();
     return backlogData;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -50,7 +49,7 @@ export const getBacklogItemsByQuery = async ({
   return result;
 };
 
-export const addBacklogItem = async (data) => {
+export const addBacklogItem = async (data: BacklogItemCreationDTO) => {
   try {
     await dbConnect();
     const backlogItem = new BacklogItem(data);

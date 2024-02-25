@@ -3,6 +3,7 @@
 import { BacklogItemCreationDTO } from "@/types";
 import ItemsForm from "./ItemsForm";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const ItemsCreateForm = ({
   backlogId,
@@ -11,6 +12,7 @@ const ItemsCreateForm = ({
   backlogId: string;
   defaultValues: BacklogItemCreationDTO;
 }) => {
+  const router = useRouter();
   const onSubmit = async (data: BacklogItemCreationDTO) => {
     try {
       const res = await fetch(`/api/backlogs/${backlogId}/items`, {
@@ -21,7 +23,8 @@ const ItemsCreateForm = ({
         body: JSON.stringify(data),
       });
       if (res.ok) toast.success("Created");
-
+      
+      router.refresh();
     } catch (error) {
       console.error(error);
     }

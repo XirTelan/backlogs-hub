@@ -1,19 +1,18 @@
 import ColorPallete from "@/components/Common/ColorPallete";
 import InputField from "@/components/Common/UI/InputField";
 import React from "react";
-import {
-  Control,
-  Controller,
-  UseFormRegister,
-  useFieldArray,
-} from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 
 import FieldsBlock from "../../components/FieldsBlock";
-import { BacklogFormData } from "@/types";
+import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 
-const CategoriesFieldsBlock = ({ control, register }: FieldsBlockProps) => {
+const CategoriesFieldsBlock = ({
+  errors,
+  control,
+  register,
+}: FieldsBlockProps) => {
   const categoriesArray = useFieldArray({
     name: "categories",
     control,
@@ -38,6 +37,13 @@ const CategoriesFieldsBlock = ({ control, register }: FieldsBlockProps) => {
 
             <InputField
               id={`category_${index}`}
+              helperText={
+                errors &&
+                errors[index] && {
+                  message: errors[index].name.message,
+                  type: "error",
+                }
+              }
               isSimple
               variant="small"
               layer={2}
@@ -70,9 +76,3 @@ const CategoriesFieldsBlock = ({ control, register }: FieldsBlockProps) => {
 };
 
 export default CategoriesFieldsBlock;
-
-type FieldsBlockProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: Control<BacklogFormData, any>;
-  register: UseFormRegister<BacklogFormData>;
-};

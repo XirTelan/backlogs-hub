@@ -24,8 +24,11 @@ export default async function Layout({
   }
 
   return (
-    <>
+    <div className="flex w-full grow">
+      <aside className=" h-full w-80 self-start px-4 pt-4 ">
+        <nav></nav>
+      </aside>
       <>{children}</>
-    </>
+    </div>
   );
 }

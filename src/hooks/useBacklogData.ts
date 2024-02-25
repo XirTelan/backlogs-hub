@@ -1,7 +1,13 @@
-import { BacklogDTO, BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/types";
+import { BacklogDTO } from "@/zodTypes";
 import { useEffect, useState } from "react";
 
-const useBacklogData = (userName: string, backlog: string, search: string) => {
+const useBacklogData = (
+  userName: string,
+  backlog: string,
+  search: string,
+  type?: string,
+) => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentBacklog, setCurrentBacklog] = useState<BacklogDTO>();
   const [categoriesMap, setCategoriesMap] = useState<Map<string, string>>();
@@ -22,36 +28,35 @@ const useBacklogData = (userName: string, backlog: string, search: string) => {
     const getBacklogInfo = async () => {
       try {
         const data = await fetch(
-          `/api/backlogs?userName=${userName}&backlog=${backlog}`,
+          `/api/backlogs?userName=${userName}&backlog=${backlog}${type && `&type=${type}`}`,
         ).then((data) => data.json());
-        setCurrentBacklog(data);
+        setCurrentBacklog(data.backlog);
+        setBacklogData(data.backlogData);
+        getCategories(data.backlog);
       } catch (error) {
         console.error(error);
       }
     };
-    getBacklogInfo();
-  }, [userName, backlog]);
-
-  useEffect(() => {
-    if (!currentBacklog) return;
-
-    const getCategories = () => {
+    const getCategories = (backlog: BacklogDTO) => {
       const categoriesMap = new Map();
-      currentBacklog.categories.forEach((category) => {
+      backlog.categories.forEach((category) => {
         categoriesMap.set(category.name.toLowerCase(), category.color);
       });
       setCategoriesMap(categoriesMap);
     };
+    getBacklogInfo();
+    setIsLoading(false);
+  }, [userName, backlog]);
 
+  useEffect(() => {
+    if (!search || !currentBacklog) return;
     getBacklogData({
-      id: currentBacklog._id,
+      id: currentBacklog!._id,
       search,
       setBacklogData,
       setIsLoading,
     });
-    getCategories();
-  }, [currentBacklog, search]);
-
+  }, [search]);
   return {
     currentBacklog,
     categoriesMap,

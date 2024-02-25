@@ -1,7 +1,6 @@
 import BacklogEditForm from "@/containers/Backlogs/BacklogEditForm";
-import { PageDefaultProps } from "@/types";
 
-const EditBacklog = ({ params: { id } }: PageDefaultProps) => {
+const EditBacklog = ({ params: { id } }: { params: { id: string } }) => {
   return (
     <main className="container">
       <BacklogEditForm id={id} />

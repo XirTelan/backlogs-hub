@@ -1,5 +1,4 @@
 "use client";
-import { BacklogDTO } from "@/types";
 import React, { useEffect, useState } from "react";
 import { Reorder } from "framer-motion";
 import BacklogDndCard from "../Backlogs/BacklogDndCard";
@@ -10,6 +9,7 @@ import { RiSave3Fill } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Title from "@/components/Common/Title";
+import { BacklogDTO } from "@/zodTypes";
 
 const DnDList = ({ userName }: { userName: string }) => {
   const [backlogs, setBacklogs] = useState<BacklogDTO[]>([]);

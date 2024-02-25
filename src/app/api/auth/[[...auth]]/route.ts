@@ -4,7 +4,7 @@ import { generateAccessToken, setTokenCookies } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { createUser } from "@/services/user";
-import { sendErrorMsg } from "@/utils";
+import { sendMsg } from "@/utils";
 import { RegistrationSchema, SignInSchema } from "@/zod";
 import bcrypt from "bcrypt";
 
@@ -45,7 +45,7 @@ export async function POST(
     const data = await request.json();
     const parsedCredentials = RegistrationSchema.safeParse(data);
     if (!parsedCredentials.success)
-      return sendErrorMsg("Unexpected error. Try again later");
+      return sendMsg.error("Unexpected error. Try again later");
 
     const passwordHashed = await bcrypt.hash(
       parsedCredentials.data.password,
@@ -57,7 +57,7 @@ export async function POST(
       password: passwordHashed,
       profileVisibility: "public",
     });
-    if (result.status === "error") return sendErrorMsg(result.message);
+    if (result.status === "error") return sendMsg.error(result.message);
     return NextResponse.json(
       { message: "Created", data: result.data },
       { status: 201 },
@@ -67,17 +67,17 @@ export async function POST(
     const data = await request.json();
     const parsedCredentials = SignInSchema.safeParse(data);
     if (!parsedCredentials.success)
-      return sendErrorMsg("Username or password is incorrect");
+      return sendMsg.error("Username or password is incorrect");
     await dbConnect();
     const user = await User.findOne({ username: data.username });
     if (!user.password)
-      return sendErrorMsg("Username or password is incorrect");
+      return sendMsg.error("Username or password is incorrect");
     const passwordMatch = await bcrypt.compare(
       parsedCredentials.data.password,
       user.password,
     );
     if (!passwordMatch)
-      return sendErrorMsg("Username or password is incorrect");
+      return sendMsg.error("Username or password is incorrect");
     const access_token = await generateAccessToken(user);
     return setTokenCookies(access_token, request.url);
   }

@@ -12,7 +12,7 @@ const Header = async () => {
       <div className="relative   flex h-12 w-full items-center border-b border-subtle-1 ">
         <Link
           href={"/"}
-          className="py-[15px] pe-8 ps-4 text-sm leading-[18px] text-primary-text"
+          className=" hidden py-[15px] pe-8 ps-4 text-sm leading-[18px] text-primary-text lg:block"
         >
           BacklogsHub
         </Link>

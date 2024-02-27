@@ -1,25 +1,26 @@
+"use client";
 import useDebounce from "@/hooks/useDebounce";
-import React, { useEffect, useState } from "react";
-import InputField from "./Common/UI/InputField";
+import { useEffect, useState } from "react";
 import useChangeSearchParams from "@/hooks/useChangeParams";
+import SearchField from "./Common/UI/SearchField";
 
 const SearchBar = () => {
   const [searchBar, setSearchBar] = useState("");
   const debouncedValue = useDebounce(searchBar);
-  const changesParams = useChangeSearchParams();
+  const { changeParams } = useChangeSearchParams();
 
   useEffect(() => {
-    changesParams("search", debouncedValue);
-  }, [changesParams, debouncedValue]);
+    changeParams("search", debouncedValue);
+  }, [debouncedValue, changeParams]);
 
   return (
-    <div>
-      <InputField
+    <>
+      <SearchField
         placeholder="Search... "
         value={searchBar}
         onChange={(e) => setSearchBar(e.target.value)}
       />
-    </div>
+    </>
   );
 };
 

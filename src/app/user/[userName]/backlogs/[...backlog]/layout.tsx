@@ -1,4 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
+import UserBacklogs from "@/containers/User/UserBacklogs";
 import { getUserVisibility } from "@/services/user";
 import React from "react";
 
@@ -25,8 +26,10 @@ export default async function Layout({
 
   return (
     <div className="flex w-full grow">
-      <aside className=" hidden h-full w-80 self-start px-4 pt-4 lg:block ">
-        <nav></nav>
+      <aside className=" hidden h-full w-64 self-start px-4 pt-4 lg:block ">
+        <nav>
+          <UserBacklogs userName={params.userName} />
+        </nav>
       </aside>
       <>{children}</>
     </div>

@@ -13,6 +13,13 @@ export type InputField = {
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >;
+export type SearchBar = {
+  layer?: 1 | 2 | 3;
+  variant?: "small" | "medium" | "large";
+} & React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
 export type TextArea = {
   label?: string;

@@ -8,9 +8,9 @@ const ButtonBase = ({
   ...props
 }: ButtonBaseProps) => {
   const sizes = {
-    small: "h-8 pe-8",
-    medium: "h-10 pe-10",
-    large: "h-12 pe-12 ",
+    small: "h-8  lg:pe-8",
+    medium: "h-10  lg:pe-10",
+    large: "h-12 lg:pe-12 ",
   };
   const variants = {
     primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",

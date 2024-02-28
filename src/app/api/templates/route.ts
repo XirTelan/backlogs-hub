@@ -1,10 +1,28 @@
-import { createTemplate, getTemplates } from "@/services/template";
+import { getCurrentUserInfo } from "@/auth/utils";
+import {
+  createTemplate,
+  getTemplates,
+  getTemplatesByUsername,
+} from "@/services/template";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const resultData = await getTemplates();
+    const type = request.nextUrl.searchParams.get("filter");
+    let resultData;
+    switch (type) {
+      case "my":
+        {
+          const currentUser = await getCurrentUserInfo();
+          resultData = await getTemplatesByUsername(currentUser?.username);
+        }
+        break;
+      case "all":
+      default:
+        resultData = await getTemplates();
+        break;
+    }
     return NextResponse.json(resultData, { status: 200 });
   } catch (error) {
     return sendMsg.error(error);

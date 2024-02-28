@@ -13,14 +13,19 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
     rules: {},
   });
 
-  const handleAction = () => {
-    fieldsArray.append({
-      name: "",
-      type: "text",
-      protected: false,
-    });
-  };
-  const addButton = <ButtonBase />;
+  const addButton = (
+    <ButtonBase
+      type="button"
+      text="Add field"
+      onClick={() =>
+        fieldsArray.append({
+          name: "",
+          type: "text",
+          protected: false,
+        })
+      }
+    />
+  );
 
   return (
     <>

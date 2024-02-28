@@ -13,3 +13,15 @@ body {
     text-wrap: balance;
   }
 }
+
+/*
+UI/Switcher
+*/
+
+.sw-btn:not(:last-child) p {
+  border-right: 1px solid #525252;
+}
+.sw-btn.preactive p,
+.sw-btn.active p {
+  border: none;
+}

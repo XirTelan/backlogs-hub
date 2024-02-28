@@ -4,15 +4,11 @@ import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
 import { generateSlug } from "@/utils";
 import Title from "@/components/Common/Title";
-import { useState } from "react";
-import BacklogTemplate from "./BacklogTemplate";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
 import useSession from "@/hooks/useSession";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 
 const BacklogCreateForm = () => {
   const router = useRouter();
-  const [useTemplate, setUseTemplate] = useState(false);
   const { user, isLoading } = useSession();
   if (isLoading) return <div>Loading</div>;
   if (!user) {
@@ -32,7 +28,6 @@ const BacklogCreateForm = () => {
     categories: defaultCategories,
     fields: [],
   };
-
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {
     data.slug = generateSlug(data.backlogTitle);
     try {
@@ -51,22 +46,8 @@ const BacklogCreateForm = () => {
 
   return (
     <>
-      <Title title="Creating backlog ">
-        <>
-          <ButtonBase
-            onClick={() => setUseTemplate((prev) => !prev)}
-            variant="tertiary"
-            text={useTemplate ? "Create my own backlog" : "Select template"}
-          />
-        </>
-      </Title>
-      {useTemplate ? (
-        <>
-          <BacklogTemplate onSubmit={onSubmit} />
-        </>
-      ) : (
-        <BacklogForm defaultValues={defaultValues} onSubmit={onSubmit} />
-      )}
+      <Title title="Creating backlog "></Title>
+      <BacklogForm defaultValues={defaultValues} onSubmit={onSubmit} />
     </>
   );
 };

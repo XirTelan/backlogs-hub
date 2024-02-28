@@ -10,7 +10,11 @@ const NavBar = ({ userName }: { userName: string }) => {
     },
     {
       title: "Backlogs",
-      pathname: `/backlogs`,
+      pathname: `${BASE}/backlogs`,
+    },
+    {
+      title: "Templates",
+      pathname: `/templates`,
     },
     {
       title: "Options",
@@ -27,7 +31,7 @@ const NavBar = ({ userName }: { userName: string }) => {
           return (
             <NavLink
               key={link.title}
-              href={`${BASE}${link.pathname}`}
+              href={`${link.pathname}`}
               label={link.title}
             />
           );

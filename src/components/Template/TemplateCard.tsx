@@ -33,6 +33,7 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
         <div className=" absolute bottom-0 left-0 right-0 top-0 z-0 w-full   bg-neutral-900 opacity-90  "></div>
         <div className=" relative z-10  ">
           <Title title={template.templateTitle} variant={2} />
+          <p className="ps-4 text-secondary-text">{template.author}</p>
           <div className=" p-4  text-base">
             <div>
               <strong>Features:</strong> <div>{template.features}</div>
@@ -87,11 +88,11 @@ const TemplateCard = ({ template, toSubmit }: TemplateCardProps) => {
       </div>
       <div className="relative px-4 pt-2  ">
         <div className=" absolute -top-4 left-0 right-0 flex items-center justify-center">
-          <div className="bg-primary-btn h-0.5  w-1/6" />
-          <div className=" border-primary-btn rounded-lg border-2 bg-neutral-600 p-1">
+          <div className="h-0.5 w-1/6  bg-primary-btn" />
+          <div className=" rounded-lg border-2 border-primary-btn bg-neutral-600 p-1">
             Description
           </div>
-          <div className="bg-primary-btn h-0.5 w-full" />
+          <div className="h-0.5 w-full bg-primary-btn" />
         </div>
         <p className="mt-4 break-words">{template.description}</p>
       </div>

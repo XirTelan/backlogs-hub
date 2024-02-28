@@ -15,7 +15,16 @@ export const getTemplateById = async (id: string) => {
 export const getTemplates = async () => {
   try {
     await dbConnect();
-    const templates = await Template.find();
+    const templates = await Template.find().lean();
+    return templates;
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+};
+export const getTemplatesByUsername = async (username: string) => {
+  try {
+    await dbConnect();
+    const templates = await Template.find({ author: username }).lean();
     return templates;
   } catch (error) {
     throw new Error(`Error: ${error}`);

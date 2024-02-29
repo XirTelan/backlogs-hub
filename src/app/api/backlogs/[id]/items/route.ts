@@ -5,6 +5,7 @@ import {
 } from "@/services/backlogItem";
 import { BacklogItemDTO } from "@/types";
 import { sendMsg } from "@/utils";
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -52,6 +53,7 @@ export async function POST(
   data.category = data.category.toLowerCase();
   try {
     const res = await addBacklogItem(data);
+    revalidateTag(`backloglist${id}`);
     return NextResponse.json({ message: "created", res }, { status: 201 });
   } catch (error) {
     return sendMsg.error(error);

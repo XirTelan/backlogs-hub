@@ -1,16 +1,19 @@
 "use client";
 import { BacklogItemDTO } from "@/types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 
 const BacklogItemTr = ({ item, color }: BacklogItemTrProps) => {
+  const router = useRouter();
   const onDelete = async (id: string, backlogId: string) => {
     const res = await fetch(`/api/backlogs/${backlogId}/items/${id}`, {
       method: "DELETE",
     });
     await res.json();
     toast.success(`Deleted`);
+    router.refresh();
   };
 
   return (

@@ -10,17 +10,23 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Title from "@/components/Common/Title";
 import { BacklogDTO } from "@/zodTypes";
+import useSWR from "swr";
+import { fetcher } from "@/utils";
 
 const DnDList = ({ userName }: { userName: string }) => {
-  const [backlogs, setBacklogs] = useState<BacklogDTO[]>([]);
+  const { data, isLoading, mutate } = useSWR(
+    `/api/backlogs?userName=${userName}&type=baseInfo`,
+    fetcher,
+  );
   const [isDirty, setIsDirty] = useState(false);
 
+  const [backlogs, setBacklogs] = useState<BacklogDTO[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    if (!userName) return;
-    loadData(userName, setBacklogs);
-  }, [userName]);
+    if (!data) return;
+    setBacklogs(data.backlog);
+  }, [data]);
 
   const onDelete = async (id: string) => {
     const res = await fetch(`/api/backlogs/${id}`, {
@@ -28,7 +34,7 @@ const DnDList = ({ userName }: { userName: string }) => {
     });
     if (res.ok) {
       toast.success("Deleted");
-      loadData(userName, setBacklogs);
+      mutate();
     }
   };
 
@@ -45,11 +51,11 @@ const DnDList = ({ userName }: { userName: string }) => {
     });
     if (res.ok) {
       toast.success("Saved");
-      loadData(userName, setBacklogs);
+      mutate();
       setIsDirty(false);
     }
   };
-
+  if (isLoading) return <div>Loading</div>;
   return (
     <>
       <div className="rounded border border-neutral-800 bg-neutral-900 px-2 pb-2 ">
@@ -94,14 +100,3 @@ const DnDList = ({ userName }: { userName: string }) => {
 };
 
 export default DnDList;
-
-const loadData = async (
-  userName: string,
-  setBacklogs: (data: BacklogDTO[]) => void,
-) => {
-  const res = await fetch(`/api/backlogs?userName=${userName}&type=baseInfo`, {
-    next: { tags: ["backlogs"] },
-  });
-  const data = await res.json();
-  setBacklogs(data);
-};

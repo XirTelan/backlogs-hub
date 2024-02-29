@@ -1,14 +1,12 @@
-"use client";
 import React from "react";
 import ButtonBase from "./Common/UI/ButtonBase";
+import Link from "next/link";
 
-const BacklogListAdd = () => {
+const BacklogListAdd = ({ backlog }: { backlog: string }) => {
   return (
-    <ButtonBase
-      type="button"
-      text="Add new"
-      onClick={() => console.log("test")}
-    />
+    <Link href={`/items/create?backlog=${backlog}`}>
+      <ButtonBase type="button" text="Add new" />
+    </Link>
   );
 };
 

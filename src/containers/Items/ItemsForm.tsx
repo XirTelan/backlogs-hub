@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
-import useSession from "@/hooks/useSession";
 import { BacklogDTO } from "@/zodTypes";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { CgSpinner } from "react-icons/cg";
@@ -20,7 +19,6 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   onSubmit: SubmitHandler<T>;
 }) => {
   const router = useRouter();
-  const user = useSession();
   const [backlog, setBacklog] = useState<BacklogDTO>();
   const [fieldsTypeMap, setFieldsTypeMap] = useState<Map<string, string>>();
   const { handleSubmit, control, register } = useForm<BacklogItemCreationDTO>({
@@ -90,7 +88,10 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       <FieldsBlock status="disabled">
         <>
           {fieldsArray.fields.map((field, index) => (
-            <li className="  w-auto" key={field.name}>
+            <li
+              className={`${inputTypes[fieldsTypeMap?.get(field?.name)]}  w-auto`}
+              key={field.name}
+            >
               <InputField
                 label={field.name}
                 placeholder={field.name}
@@ -103,14 +104,25 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           ))}
         </>
       </FieldsBlock>
-      <button type="button" onClick={() => router.back()}>
-        Cancel
-      </button>
-      <div className="w-1/4 ">
+
+      <div className="flex w-1/4 flex-col gap-4 ">
         <ButtonBase text="Create" type="submit" />
+        <ButtonBase
+          text="Cancel"
+          variant="secondary"
+          onClick={() => router.back()}
+        />
       </div>
     </form>
   );
 };
 
 export default ItemsForm;
+
+const inputTypes = {
+  text: "col-span-2",
+  textArea: "col-span-4",
+  date: "",
+  number: "col-span-2",
+  timer: "col-span-4",
+};

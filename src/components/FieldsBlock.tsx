@@ -19,8 +19,8 @@ const FieldsBlock = (props: FieldsBlockProps) => {
           </Title>
         </div>
       )}
-      <div className="  mb-4 flex-wrap rounded  p-4">
-        <ul className=" flex max-h-[calc(100vh-40rem)] flex-col gap-1  ">
+      <div className="mb-4 flex-wrap rounded  p-4">
+        <ul className=" grid max-h-[calc(100vh-40rem)] grid-cols-4 flex-col gap-1  ">
           {props.children}
         </ul>
       </div>

@@ -6,7 +6,7 @@ const NavBar = ({ userName }: { userName: string }) => {
   const links = [
     {
       title: "Profile",
-      pathname: "",
+      pathname: "/",
     },
     {
       title: "Backlogs",

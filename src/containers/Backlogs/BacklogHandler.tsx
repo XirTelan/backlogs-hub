@@ -36,6 +36,7 @@ const BacklogHandler = async ({
         <Suspense fallback={<SkeletonDataTable />}>
           <Backloglist
             search={search}
+            backlogSlug={data.slug}
             categoriesMap={categoriesMap}
             id={data._id.toString()}
           />

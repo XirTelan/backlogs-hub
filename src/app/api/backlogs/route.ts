@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
     .get("backlog")
     ?.toLowerCase();
   const queryType: unknown = request.nextUrl.searchParams.get("type");
+
   if (!userName) {
     const user = await getCurrentUserInfo();
     if (!user || !user.username) {
@@ -37,34 +38,12 @@ export async function GET(request: NextRequest) {
     }
     userName = user.username;
   }
-  const resultData: {
-    backlog: Partial<BacklogDTO> | BacklogDTO[] | null | undefined;
-    backlogData?: Partial<BacklogItemDTO>[];
-  } = {
+  const resultData: GetResult = {
     backlog: null,
   };
   if (isType(queryType)) {
-    switch (queryType) {
-      case "withData": {
-        if (!backlogSlug) return sendMsg.error("Wrong parameters");
-        resultData.backlog = await getUserBacklogBySlug(userName, backlogSlug);
-        resultData.backlogData = await getBacklogItemsByBacklogId(
-          resultData?.backlog?._id,
-        );
-        return NextResponse.json(resultData);
-      }
-      case "baseInfo": {
-        resultData.backlog = await getBacklogsBaseInfoByUserName(userName);
-        return NextResponse.json(resultData);
-      }
-      case "exist": {
-        if (!backlogSlug) return sendMsg.error(`Params not provided`);
-        resultData.backlog = await isBacklogExist(userName, backlogSlug);
-        return NextResponse.json(resultData);
-      }
-    }
-  }
-  if (!backlogSlug) {
+    await handleTypeGet(queryType, resultData, userName, backlogSlug);
+  } else if (!backlogSlug) {
     resultData.backlog = await getBacklogsByUserName(userName);
   } else {
     resultData.backlog = await getUserBacklogBySlug(userName, backlogSlug);
@@ -99,3 +78,39 @@ export async function PATCH(request: NextRequest) {
     throw new Error(`${error}`);
   }
 }
+
+const handleTypeGet = async (
+  queryType: Types,
+  resultData: GetResult,
+  userName: string,
+  backlogSlug: string | undefined,
+) => {
+  switch (queryType) {
+    case "withData": {
+      if (!backlogSlug) return sendMsg.error("Wrong parameters");
+      resultData.backlog = await getUserBacklogBySlug(userName, backlogSlug);
+      resultData.backlogData = await getBacklogItemsByBacklogId(
+        resultData?.backlog?._id,
+      );
+      break;
+    }
+    case "baseInfo": {
+      resultData.backlog = await getBacklogsBaseInfoByUserName(userName);
+      break;
+    }
+    case "exist": {
+      if (!backlogSlug) return sendMsg.error(`Params not provided`);
+      resultData.backlog = await isBacklogExist(userName, backlogSlug);
+      console.log("asdasd", resultData.backlog);
+      break;
+    }
+    default:
+      return sendMsg.error("error");
+  }
+};
+
+type GetResult = {
+  status?: number;
+  backlog: Partial<BacklogDTO> | BacklogDTO[] | null | undefined;
+  backlogData?: Partial<BacklogItemDTO>[];
+};

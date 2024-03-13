@@ -131,7 +131,7 @@ export const isBacklogExist = async (userName: string, slug: string) => {
       userName: userName,
       slug: slug,
     });
-    return isExist || undefined;
+    return isExist;
   } catch (error) {
     throw new Error(`${error}`);
   }

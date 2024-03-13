@@ -19,9 +19,7 @@ export default async function Backlog({
 
   return (
     <>
-      <main className="container w-full ">
-        <BacklogHandler search={query} userName={userName} backlog={backlog} />
-      </main>
+      <BacklogHandler search={query} userName={userName} backlog={backlog} />
     </>
   );
 }

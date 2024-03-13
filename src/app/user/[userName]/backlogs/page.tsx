@@ -32,7 +32,7 @@ export default async function Backlogs({
             </Link>
           </div>
         </Title>
-        <UserBacklogs userName={params.userName} />
+        <UserBacklogs type="card" userName={params.userName} />
 
         <Feed />
       </main>

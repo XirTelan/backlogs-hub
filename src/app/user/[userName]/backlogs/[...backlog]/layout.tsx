@@ -1,6 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
 import UserBacklogs from "@/containers/User/UserBacklogs";
-import { getUserVisibility } from "@/services/user";
 import React from "react";
 
 // export const metadata: Metadata = {
@@ -13,25 +11,19 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactElement;
-  params: { userName: string };
+  params: { userName: string; backlog: string[] };
 }) {
-  const user = await getCurrentUserInfo();
-  const profileVisibility = await getUserVisibility(params.userName);
-  if (
-    (!user || user.username !== params.userName) &&
-    profileVisibility === "private"
-  ) {
-    return <div>Access denied</div>;
-  }
-
   return (
-    <div className="flex w-full grow">
-      <aside className=" hidden h-full w-64 self-start px-4 pt-4 lg:block ">
+    <div className="grid w-full md:grid-cols-[16rem_calc(100%-16rem)] ">
+      <aside className=" hidden h-full w-64 pt-4 md:block ">
         <nav>
-          <UserBacklogs userName={params.userName} />
+          <UserBacklogs
+            activeBacklog={params.backlog[0]}
+            userName={params.userName}
+          />
         </nav>
       </aside>
-      <>{children}</>
+      <main>{children}</main>
     </div>
   );
 }

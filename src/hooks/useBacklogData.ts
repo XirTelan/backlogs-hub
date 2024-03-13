@@ -46,7 +46,7 @@ const useBacklogData = (
     };
     getBacklogInfo();
     setIsLoading(false);
-  }, [userName, backlog]);
+  }, [userName, backlog, type]);
 
   useEffect(() => {
     if (!search || !currentBacklog) return;
@@ -56,7 +56,7 @@ const useBacklogData = (
       setBacklogData,
       setIsLoading,
     });
-  }, [search]);
+  }, [currentBacklog, search]);
   return {
     currentBacklog,
     categoriesMap,

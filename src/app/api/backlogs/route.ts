@@ -25,9 +25,11 @@ const isType = (value: unknown): value is Types => {
 export async function GET(request: NextRequest) {
   let userName = request.nextUrl.searchParams
     .get("userName")
-    ?.toLocaleLowerCase();
+    ?.trim()
+    .toLocaleLowerCase();
   const backlogSlug = request.nextUrl.searchParams
     .get("backlog")
+    ?.trim()
     ?.toLowerCase();
   const queryType: unknown = request.nextUrl.searchParams.get("type");
 
@@ -39,7 +41,8 @@ export async function GET(request: NextRequest) {
     userName = user.username;
   }
   const resultData: GetResult = {
-    backlog: null,
+    backlog: undefined,
+    backlogData: undefined,
   };
   if (isType(queryType)) {
     await handleTypeGet(queryType, resultData, userName, backlogSlug);
@@ -101,11 +104,8 @@ const handleTypeGet = async (
     case "exist": {
       if (!backlogSlug) return sendMsg.error(`Params not provided`);
       resultData.backlog = await isBacklogExist(userName, backlogSlug);
-      console.log("asdasd", resultData.backlog);
       break;
     }
-    default:
-      return sendMsg.error("error");
   }
 };
 

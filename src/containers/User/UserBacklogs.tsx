@@ -1,60 +1,56 @@
-import NavLink from "@/components/NavLink";
 import { getBacklogsBaseInfoByUserName } from "@/services/backlogs";
-import Link from "next/link";
 import React from "react";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
-import { FaPlus } from "react-icons/fa";
-import Title from "@/components/Common/Title";
+import BacklogCard from "@/components/Backlog/BacklogCard";
+import PanelItem from "@/components/Common/UI/PanelItem";
 
-const UserBacklogs = async ({ userName }: { userName: string }) => {
+const UserBacklogs = async ({
+  userName,
+  activeBacklog = "",
+  type = "link",
+}: {
+  activeBacklog?: string;
+  userName: string;
+  type?: "link" | "card";
+}) => {
   const data = await getBacklogsBaseInfoByUserName(userName);
-  const backlogList = () => {
-    return (
-      <div className=" mb-4 flex w-full items-center justify-between rounded  p-4">
-        <ul className="flex flex-col flex-wrap md:flex-row">
-          {data.map((backlog) => {
-            return (
-              <NavLink
-                key={backlog._id}
-                href={`/user/${userName}/backlogs/${backlog.slug}`}
-                label={backlog.backlogTitle}
-              />
-            );
-          })}
-        </ul>
+  const backlogs = data.map((backlog) => (
+    <PanelItem
+      key={backlog._id}
+      href={`/user/${userName}/backlogs/`}
+      backlogSlug={backlog.slug}
+      activeBacklog={activeBacklog}
+    >
+      {backlog.backlogTitle}
+    </PanelItem>
+  ));
 
-      </div>
-    );
-  };
-
-  return (
-    <>
-      {data?.length > 0 ? (
-        backlogList()
+  const backlogList = (
+    <div className="  flex w-full items-center justify-between rounded ">
+      {type === "link" ? (
+        <ul className="flex w-full flex-col flex-wrap">{backlogs}</ul>
       ) : (
-        <>
-          <Title title={"Backlogs"}>
-            <Link href={"/backlog/create"}>
-              <ButtonBase text="Create Backlog">
-                <FaPlus />
-              </ButtonBase>
-            </Link>
-          </Title>
-          <div className="flex h-80 w-full flex-col justify-center     bg-layer-1 p-4">
-            <p className="mb-4 text-xl">
-              You don&apos;t have any backlogs here yet
-            </p>
-            <p className=" text-secondary-text">
-              No backlogs? No problem! <br />
-              Choose to create your own or pick from ready-made templates.
-              <br />
-              Click Create backlog to get started
-            </p>
-          </div>
-        </>
+        <BacklogCard />
       )}
+    </div>
+  );
+
+  const listIsEmpty = (
+    <>
+      <div className="flex h-80 w-full flex-col justify-center     bg-layer-1 p-4">
+        <p className="mb-4 text-xl">
+          You don&apos;t have any backlogs here yet
+        </p>
+        <p className=" text-secondary-text">
+          No backlogs? No problem! <br />
+          Choose to create your own or pick from ready-made templates.
+          <br />
+          Click Create backlog to get started
+        </p>
+      </div>
     </>
   );
+
+  return <>{data?.length > 0 ? backlogList : listIsEmpty}</>;
 };
 
 export default UserBacklogs;

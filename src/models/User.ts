@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema(
       unique: true,
     },
     password: String,
+    folders: [String],
     profileVisibility: { type: String, default: "public" },
   },
   {

@@ -26,6 +26,7 @@ export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
         message: "User already exist",
       };
     }
+    data.folders = ["Uncategorized"];
     const newUser = new User(data);
     await newUser.save();
     newUser.password = undefined;

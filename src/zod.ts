@@ -33,6 +33,7 @@ export const BacklogCategorySchema = z
 export const BacklogFormSchema = z.object({
   order: z.number().default(99),
   categories: BacklogCategorySchema.array(),
+  folder: z.string().default("uncategorized"),
   fields: FieldSchema.array(),
   slug: z.string(),
   backlogTitle: z.string().trim().min(1, "This field cannot be empty"),

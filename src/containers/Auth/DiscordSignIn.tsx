@@ -19,7 +19,9 @@ const DiscordSignIn = () => {
           fill="#5865F2"
         />
       </svg>
-      <div className="w-full text-center">Sign in with Discord</div>
+      <div className="w-full text-center text-primary-text">
+        Sign in with Discord
+      </div>
     </Link>
   );
 };

@@ -24,26 +24,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.className} bg-surface flex flex-col items-center `}
-      >
-        <Toaster
-          reverseOrder={false}
-          toastOptions={{
-            position: "top-right",
-            className: "",
-            style: {
-              borderRadius: "5px",
-              background: "#222",
-              color: "#fff",
-              border: "solid 2px #333",
-            },
-          }}
-        />
-        <Header />
-        {children}
+      <body className={`${roboto.className} `}>
+        <div id="app" className="bg-surface flex flex-col items-center ">
+          <Toaster
+            reverseOrder={false}
+            toastOptions={{
+              position: "top-right",
+              className: "",
+              style: {
+                borderRadius: "5px",
+                background: "#222",
+                color: "#fff",
+                border: "solid 2px #333",
+              },
+            }}
+          />
+          <Header />
+          {children}
 
-        <Footer />
+          <Footer />
+        </div>
       </body>
     </html>
   );

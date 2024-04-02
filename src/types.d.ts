@@ -28,6 +28,12 @@ export type TextArea = {
   HTMLTextAreaElement
 >;
 
+export type BacklogNavProps = {
+  activeBacklog: string;
+  backlogSlug: string;
+} & LinkProps &
+  AnchorHTMLAttributes<HTMLAnchorElement>;
+
 export type ListItemInput = {
   onDelete: () => void;
 } & InputField;
@@ -92,4 +98,22 @@ export type UserDTO = {
 
 export type UserCreationDTO = {
   password?: string;
+  folders?: string[];
 } & Omit<UserDTO, "id">;
+
+export type ButtonBaseProps = {
+  children?: React.ReactElement;
+  text?: string;
+  size?: "small" | "medium" | "large";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "ghost"
+    | "dangerPrimary"
+    | "dangerTertiary"
+    | "dangerGhost";
+} & React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;

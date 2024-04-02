@@ -1,38 +1,40 @@
 import Title from "@/components/Common/Title";
+import LinkButton from "@/components/Common/UI/LinkButton";
 import Feed from "@/containers/Feed";
 import UserBacklogs from "@/containers/User/UserBacklogs";
-import Link from "next/link";
 import React from "react";
-import { IoMdOptions } from "react-icons/io";
-import { RiPlayListAddLine } from "react-icons/ri";
+import { MdOutlineManageSearch } from "react-icons/md";
+
+import { IoAdd } from "react-icons/io5";
+import { getCurrentUserInfo } from "@/auth/utils";
+import { redirect } from "next/navigation";
 
 export default async function Backlogs({
   params,
 }: {
   params: { userName: string };
 }) {
+  const user = await getCurrentUserInfo();
+  if (!user || user.username != params.userName) return redirect("/");
+
   return (
     <>
       <main className="container flex w-full  flex-col items-center">
         <Title title={"My backlogs"}>
           <div className="flex">
-            <Link
-              title="Create backlog"
-              className=" rounded-bl-xl rounded-tl-xl border border-neutral-700 bg-neutral-800  p-2 hover:bg-green-500  "
-              href={"/backlog/create"}
+            <LinkButton
+              href={`/manage-backlogs`}
+              text="Manage backlogs"
+              button={{ variant: "ghost" }}
             >
-              <RiPlayListAddLine />
-            </Link>
-            <Link
-              title="Manage backlogs"
-              className=" rounded-br-xl rounded-tr-xl border border-neutral-700 bg-neutral-800 p-2 hover:bg-neutral-500 "
-              href={`/user/${params.userName}/manage-backlogs`}
-            >
-              <IoMdOptions />
-            </Link>
+              <MdOutlineManageSearch size={24} />
+            </LinkButton>
+            <LinkButton href={`/backlog/create`} text="Create new backlog">
+              <IoAdd />
+            </LinkButton>
           </div>
         </Title>
-        <UserBacklogs type="card" userName={params.userName} />
+        <UserBacklogs userName={params.userName} />
 
         <Feed />
       </main>

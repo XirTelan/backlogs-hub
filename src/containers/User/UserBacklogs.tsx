@@ -1,38 +1,17 @@
 import { getBacklogsBaseInfoByUserName } from "@/services/backlogs";
 import React from "react";
 import BacklogCard from "@/components/Backlog/BacklogCard";
-import PanelItem from "@/components/Common/UI/PanelItem";
 
-const UserBacklogs = async ({
-  userName,
-  activeBacklog = "",
-  type = "link",
-}: {
-  activeBacklog?: string;
-  userName: string;
-  type?: "link" | "card";
-}) => {
+const UserBacklogs = async ({ userName }: { userName: string }) => {
   const data = await getBacklogsBaseInfoByUserName(userName);
-  const backlogs = data.map((backlog) => (
-    <PanelItem
+  const backlogItems = data.map((backlog) => (
+    <BacklogCard
+      href={`/user/${userName}/backlogs/${backlog.slug}`}
       key={backlog._id}
-      href={`/user/${userName}/backlogs/`}
-      backlogSlug={backlog.slug}
-      activeBacklog={activeBacklog}
     >
       {backlog.backlogTitle}
-    </PanelItem>
+    </BacklogCard>
   ));
-
-  const backlogList = (
-    <div className="  flex w-full items-center justify-between rounded ">
-      {type === "link" ? (
-        <ul className="flex w-full flex-col flex-wrap">{backlogs}</ul>
-      ) : (
-        <BacklogCard />
-      )}
-    </div>
-  );
 
   const listIsEmpty = (
     <>
@@ -50,7 +29,17 @@ const UserBacklogs = async ({
     </>
   );
 
-  return <>{data?.length > 0 ? backlogList : listIsEmpty}</>;
+  return (
+    <>
+      {data?.length > 0 ? (
+        <div className="  flex w-full items-center justify-between rounded ">
+          <div className="flex flex-wrap gap-4">{backlogItems}</div>
+        </div>
+      ) : (
+        listIsEmpty
+      )}
+    </>
+  );
 };
 
 export default UserBacklogs;

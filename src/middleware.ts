@@ -1,14 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getTokenData } from "./auth/utils";
-
-const BACKLOG_CREATE = "/backlog/create";
-const BACKLOG_EDIT = "/backlog/edit";
+import { routesURL } from "./data";
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value || "";
   const curPath = request.nextUrl.pathname;
-  const protectedRoutes = [BACKLOG_CREATE, BACKLOG_EDIT];
-  const isProtected = protectedRoutes.some((elem) => curPath.includes(elem));
+  const isProtected = routesURL.protectedRoutes.some((elem) =>
+    curPath.includes(elem),
+  );
 
   let userData = null;
   if (token) {

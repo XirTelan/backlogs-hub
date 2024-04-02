@@ -1,6 +1,7 @@
 "use client";
-import Link, { LinkProps } from "next/link";
-import React, { AnchorHTMLAttributes } from "react";
+import { BacklogNavProps } from "@/types";
+import Link from "next/link";
+import React from "react";
 
 const PanelItem = ({
   activeBacklog,
@@ -8,7 +9,7 @@ const PanelItem = ({
   backlogSlug,
   children,
   ...props
-}: PanelItemProps) => {
+}: BacklogNavProps) => {
   const itemLink = `${href}${backlogSlug}`;
   console.log(
     `${backlogSlug}:${activeBacklog} ${backlogSlug === activeBacklog} ${typeof backlogSlug} ${typeof activeBacklog}`,
@@ -25,9 +26,3 @@ const PanelItem = ({
 };
 
 export default PanelItem;
-
-type PanelItemProps = {
-  activeBacklog: string;
-  backlogSlug: string;
-} & LinkProps &
-  AnchorHTMLAttributes<HTMLAnchorElement>;

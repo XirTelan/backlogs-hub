@@ -4,7 +4,7 @@ const Title = ({ title, variant = 1, children }: TitleProps) => {
   const fonts = {
     1: "text-3xl font-semibold",
     2: "text-2xl",
-    3: "",
+    3: "text-xl",
     4: "",
     5: "",
     6: "",
@@ -13,7 +13,7 @@ const Title = ({ title, variant = 1, children }: TitleProps) => {
   const sizes = {
     1: "my-10",
     2: "my-4",
-    3: "",
+    3: "my-2",
     4: "",
     5: "",
     6: "",

@@ -7,7 +7,7 @@ import { BacklogCreationDTO } from "@/types";
 import { BacklogDTO } from "@/zodTypes";
 
 //GET SECTION
-export const getBacklogById = async (id: string) => {
+export const getBacklogById = async (id: string): Promise<BacklogDTO> => {
   try {
     await dbConnect();
     const backlog = await Backlog.findById(id);
@@ -17,31 +17,38 @@ export const getBacklogById = async (id: string) => {
   }
 };
 
-export const getBacklogsBaseInfoByUserName = async (userName: string) => {
+export const getBacklogsBaseInfoByUserName = async (
+  userName: string,
+): Promise<BacklogDTO[]> => {
   const user = await getCurrentUserInfo();
   try {
     await dbConnect();
-    let backlogs;
+    let backlogs: BacklogDTO[] = [];
     if (user && user.username === userName) {
-      backlogs = await Backlog.find({ userName: userName })
-        .select(["slug", "backlogTitle", "order"])
+      backlogs = (await Backlog.find({ userName: userName })
+        .select(["slug", "backlogTitle", "folder", "order"])
         .sort({
           order: 1,
-        });
-    } else {
-      backlogs = await Backlog.find({
-        userName: userName,
-        visibility: "public",
-      })
-        .select(["slug", "backlogTitle", "order"])
-        .sort({
-          order: 1,
-        });
+        })
+        .lean()) as BacklogDTO[];
     }
     return backlogs;
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
+};
+export const getBacklogsByFolder = async (userName: string) => {
+  const data = await getBacklogsBaseInfoByUserName(userName);
+  const hashMap = new Map();
+  for (const backlog of data) {
+    console.log(backlog.folder);
+    if (!hashMap.has(backlog.folder)) {
+      hashMap.set(backlog.folder, []);
+    }
+    backlog._id = backlog._id.toString();
+    hashMap.get(backlog.folder).push(backlog);
+  }
+  return hashMap;
 };
 
 export const getUserBacklogBySlug = async (

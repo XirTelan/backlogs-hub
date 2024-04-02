@@ -22,7 +22,6 @@ const SidePanel = ({
   const styleButton = isOpen
     ? ` ${styleButtonPos} bg-layer-1 border-subtle-1 border-b border-b-layer-1`
     : "border-b border-subtle-1 border-s border-s-transparent";
-
   return (
     <div
       ref={ref}
@@ -38,7 +37,7 @@ const SidePanel = ({
       </button>
       {isOpen && (
         <div
-          className={`${styleDropDownPos} absolute top-full z-50 border-b  border-subtle-1 bg-layer-1 p-4  w-64 `}
+          className={`${styleDropDownPos} absolute top-full z-50 w-64  border-b border-subtle-1 bg-layer-1  p-4 `}
         >
           {children}
         </div>

@@ -1,3 +1,4 @@
+import { ButtonBaseProps } from "@/types";
 import React from "react";
 
 const ButtonBase = ({
@@ -17,7 +18,7 @@ const ButtonBase = ({
     secondary: "bg-secondary-btn hover:bg-secondary-btn-hover",
     tertiary:
       "outline text-white  hover:text-inverse outline-1 -outline-offset-2 outline-white hover:bg-tertiary-btn-hover",
-    ghost: "",
+    ghost: "text-primary-link hover:bg-subtle-3/15",
     dangerPrimary: "",
     dangerTertiary: "",
     dangerGhost: "",
@@ -27,7 +28,7 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${variants[variant]} ${sizes[size]} relative flex w-full min-w-fit items-center text-nowrap  ${text && "lg:ps-4"} disabled:bg-layer-3 disabled:text-white/25 `}
+        className={`${variants[variant]} ${sizes[size]} relative  flex w-full min-w-fit items-center text-nowrap   ${text && "lg:ps-4"} disabled:bg-layer-3 disabled:text-white/25 `}
       >
         {text}
         <div
@@ -41,20 +42,3 @@ const ButtonBase = ({
 };
 
 export default ButtonBase;
-
-type ButtonBaseProps = {
-  children?: React.ReactElement;
-  text?: string;
-  size?: "small" | "medium" | "large";
-  variant?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "ghost"
-    | "dangerPrimary"
-    | "dangerTertiary"
-    | "dangerGhost";
-} & React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;

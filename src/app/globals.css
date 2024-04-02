@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+#app {
   color: #dde4e3;
   background: #161616;
   min-height: 100vh;

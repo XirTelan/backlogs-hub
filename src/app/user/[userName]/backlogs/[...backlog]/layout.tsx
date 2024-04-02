@@ -1,4 +1,5 @@
-import UserBacklogs from "@/containers/User/UserBacklogs";
+import { getCurrentUserInfo } from "@/auth/utils";
+import UserBacklogsSideNav from "@/containers/User/UserBacklogsSideNav";
 import React from "react";
 
 // export const metadata: Metadata = {
@@ -13,16 +14,20 @@ export default async function Layout({
   children: React.ReactElement;
   params: { userName: string; backlog: string[] };
 }) {
+  const user = await getCurrentUserInfo();
+  const isOwner = user?.username == params.userName;
   return (
-    <div className="grid w-full md:grid-cols-[16rem_calc(100%-16rem)] ">
-      <aside className=" hidden h-full w-64 pt-4 md:block ">
-        <nav>
-          <UserBacklogs
+    <div
+      className={`grid w-full  ${isOwner ? "md:grid-cols-[16rem_calc(100%-16rem)]" : ""} `}
+    >
+      {user && (
+        <aside className=" hidden h-full w-64 pt-4 md:block ">
+          <UserBacklogsSideNav
             activeBacklog={params.backlog[0]}
             userName={params.userName}
           />
-        </nav>
-      </aside>
+        </aside>
+      )}
       <main>{children}</main>
     </div>
   );

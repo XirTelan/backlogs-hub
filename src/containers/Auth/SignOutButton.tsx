@@ -1,24 +1,27 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
+import { GrLogout } from "react-icons/gr";
 
 const SignOutButton = () => {
   const router = useRouter();
   return (
-    <div>
-      <button
-        onClick={async () => {
-          await fetch("/api/auth/signOut", {
-            method: "POST",
-          });
+    <button
+      className="flex h-12 w-full items-center justify-between hover:bg-subtle-3/15 "
+      onClick={async () => {
+        await fetch("/api/auth/signOut", {
+          method: "POST",
+        });
 
-          mutate("/api/auth/session");
-          router.refresh();
-        }}
-      >
+        mutate("/api/auth/session");
+        router.refresh();
+      }}
+    >
+      <div className="mx-4  text-[18px] leading-[18px] text-primary-text">
         SignOut
-      </button>
-    </div>
+      </div>
+      <GrLogout size={18} className="me-3" />
+    </button>
   );
 };
 

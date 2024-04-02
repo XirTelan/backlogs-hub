@@ -49,6 +49,9 @@ export const handleCallback = async (
   if (!user) {
     user = await createUser(userData);
   }
+
+  if (user.status === "error")
+    return NextResponse.json({ message: user.message }, { status: 500 });
   const access_token = await generateAccessToken(user);
   return await setTokenCookies(access_token, request.url);
 };

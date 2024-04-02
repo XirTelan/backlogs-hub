@@ -11,8 +11,9 @@ const Backloglist = async ({
 }: BackloglistProps) => {
   const data = await fetch(
     `${process.env.DOMAIN_URL}/api/backlogs/${id}/items${search}`,
-    { next: { tags: [`backloglist${id}`] } ,},
+    { next: { tags: [`backloglist${id}`] } },
   ).then((res) => res.json());
+
   return (
     <>
       <TableBase
@@ -30,17 +31,31 @@ const Backloglist = async ({
               color={categoriesMap.get(item.category) || "#fff"}
             />
           ))
+        ) : search ? (
+          <>
+            <tr>
+              <td colSpan={2} className=" p-4 text-center">
+                <div className="flex w-full flex-col justify-center">
+                  <p className="mb-4 text-xl">
+                    Nothing found with selected filters
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </>
         ) : (
-          <tr>
-            <td colSpan={2} className=" p-4 text-center">
-              <div className="flex w-full flex-col justify-center">
-                <p className="mb-4 text-xl">Your backlog is empty yet</p>
-                <p className=" text-secondary-text">
-                  Click Add new to get started
-                </p>
-              </div>
-            </td>
-          </tr>
+          <>
+            <tr>
+              <td colSpan={2} className=" p-4 text-center">
+                <div className="flex w-full flex-col justify-center">
+                  <p className="mb-4 text-xl">Your backlog is empty yet</p>
+                  <p className=" text-secondary-text">
+                    Click Add new to get started
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </>
         )}
       </TableBase>
     </>

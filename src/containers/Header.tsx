@@ -9,7 +9,7 @@ const Header = async () => {
   const user = await getCurrentUserInfo();
   return (
     <>
-      <div className="relative   flex h-12 w-full items-center border-b border-subtle-1 ">
+      <header className="relative   flex h-12 w-full items-center border-b border-subtle-1 ">
         <span className="hidden md:inline">
           <HomeLink />
         </span>
@@ -25,7 +25,7 @@ const Header = async () => {
             <SignInButton />
           </div>
         )}
-      </div>
+      </header>
     </>
   );
 };

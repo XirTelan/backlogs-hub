@@ -39,14 +39,13 @@ export const getBacklogsBaseInfoByUserName = async (
 };
 export const getBacklogsByFolder = async (userName: string) => {
   const data = await getBacklogsBaseInfoByUserName(userName);
-  const hashMap = new Map();
+  const hashMap: { [key: string]: BacklogDTO[] } = {};
   for (const backlog of data) {
-    console.log(backlog.folder);
-    if (!hashMap.has(backlog.folder)) {
-      hashMap.set(backlog.folder, []);
+    if (!Object.prototype.hasOwnProperty.call(hashMap, backlog.folder)) {
+      hashMap[backlog.folder] = [];
     }
     backlog._id = backlog._id.toString();
-    hashMap.get(backlog.folder).push(backlog);
+    hashMap[backlog.folder].push(backlog);
   }
   return hashMap;
 };

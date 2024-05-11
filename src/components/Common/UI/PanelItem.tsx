@@ -11,9 +11,7 @@ const PanelItem = ({
   ...props
 }: BacklogNavProps) => {
   const itemLink = `${href}${backlogSlug}`;
-  console.log(
-    `${backlogSlug}:${activeBacklog} ${backlogSlug === activeBacklog} ${typeof backlogSlug} ${typeof activeBacklog}`,
-  );
+
   return (
     <Link
       {...props}

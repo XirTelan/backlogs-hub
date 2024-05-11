@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    removeConsole: {
+      exclude: ["error"],
+    },
+  },
   experimental: {
-    esmExternals: "loose", 
-    serverComponentsExternalPackages: ["mongoose"], 
+    esmExternals: "loose",
+    serverComponentsExternalPackages: ["mongoose"],
   },
   images: {
     remotePatterns: [

@@ -1,163 +1,123 @@
 "use client";
-import React, { useState } from "react";
-import { Reorder } from "framer-motion";
-import BacklogDndCard from "../Backlogs/BacklogDndCard";
-import ActionButton from "@/components/ActionButton";
-import { RiSave3Fill } from "react-icons/ri";
+import React, { useCallback, useState } from "react";
 
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { BacklogDTO } from "@/zodTypes";
-import { Item } from "@/components/dnd/Item";
 import {
   useSensors,
   useSensor,
   PointerSensor,
   KeyboardSensor,
-  closestCorners,
   closestCenter,
-  pointerWithin,
-  DragOverEvent,
-  DragStartEvent,
   DndContext,
-  DragOverlay,
+  DragEndEvent,
 } from "@dnd-kit/core";
-import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
-import SortableContainer from "@/components/dnd/SortableContainer";
+import {
+  sortableKeyboardCoordinates,
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import Title from "@/components/Common/Title";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
+import { SortableItem } from "@/components/dnd/SortableItem";
+import FolderItem from "@/components/FolderItem";
 
-const DnDList = ({ data }: { data: unknown }) => {
-  const [activeId, setActiveId] = useState<unknown>(null);
+const DnDList = ({ data, userName }: { data: DndItem[]; userName: string }) => {
   const [items, setItems] = useState(data);
+  const [createNew, setCreateNew] = useState(false);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-  function customCollisionDetectionAlgorithm(args) {
-    const closestCornersCollisions = closestCorners(args);
-    const closestCenterCollisions = closestCenter(args);
-    const pointerWithinCollisions = pointerWithin(args);
 
-    if (
-      closestCornersCollisions.length > 0 &&
-      closestCenterCollisions.length > 0 &&
-      pointerWithinCollisions.length > 0
-    ) {
-      return pointerWithinCollisions;
-    }
-
-    return [];
-  }
-
-  function handleDragOver(event: DragOverEvent) {
-    const { active, over } = event;
-    const { id } = active;
-    if (!over) return;
-    const { id: overId } = over;
-    // Find the containers
-    const activeContainer = findContainer(id);
-    const overContainer = findContainer(overId);
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer === overContainer
-    ) {
-      return;
-    }
-    setItems((prev) => {
-      const activeItems = prev[activeContainer];
-      const overItems = prev[overContainer];
-
-      // Find the indexes for the items
-      const activeIndex = activeItems.findIndex((item) => item._id == id);
-      const overIndex = overItems.findIndex((item) => item._id == overId);
-
-      const result = {
-        ...prev,
-        [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item._id !== active.id),
-        ],
-        [overContainer]: [
-          ...prev[overContainer].slice(0, overIndex),
-          items[activeContainer][activeIndex],
-          ...prev[overContainer].slice(overIndex, prev[overContainer].length),
-        ],
-      };
-      return result;
-    });
-  }
-
-  function handleDragEnd(event) {
-    const { active, over } = event;
-    const { id } = active;
-    if (!over) return;
-    const { id: overId } = over;
-
-    const activeContainer = findContainer(id);
-    const overContainer = findContainer(overId);
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer !== overContainer
-    ) {
-      return;
-    }
-
-    const activeIndex = items[activeContainer].findIndex(
-      (item) => item._id == active.id,
-    );
-    const overIndex = items[overContainer].findIndex(
-      (item) => item._id == overId,
-    );
-    if (activeIndex !== overIndex) {
-      setItems((items) => ({
-        ...items,
-        [overContainer]: arrayMove(
-          items[overContainer],
-          activeIndex,
-          overIndex,
-        ),
-      }));
-    }
-    setActiveId(null);
-  }
-  function findContainer(id) {
-    if (id in items) {
-      return id;
-    }
-
-    return Object.keys(items).find((key) =>
-      items[key].some((item) => item._id == id),
-    );
-  }
-  function handleDragStart(event: DragStartEvent) {
-    const { active } = event;
-    const { id } = active;
-    const containerId = active?.data?.current?.sortable.containerId;
-    setActiveId(
-      containerId
-        ? items[containerId].find((item) => item._id === id).backlogTitle || id
-        : id,
-    );
-  }
-  return (
-    <DndContext
-      id="manageBacklog"
-      sensors={sensors}
-      collisionDetection={customCollisionDetectionAlgorithm}
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDragEnd={handleDragEnd}
-    >
-      <div className=" flex w-full flex-col  border p-4">
-        {Object.keys(items).map((key) => (
-          <SortableContainer key={key} id={key} items={items[key]} />
-        ))}
-      </div>
-      <DragOverlay>{activeId ? <Item id={activeId} /> : null}</DragOverlay>
-    </DndContext>
+  const handleSave = useCallback(
+    async (data: DndItem[]) => {
+      const dataFormatted = data.map((folder) => folder.folderName);
+      console.log(dataFormatted);
+      try {
+        const res = await fetch(`/api/users/${userName}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataFormatted),
+        });
+        if (res.ok) {
+          toast.success("Saved");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [userName],
   );
+
+  return (
+    <section>
+      <Title
+        title={"Folders order"}
+        variant={2}
+        description="Here you can create,edit,change order or delete your folders"
+      >
+        <div className="flex">
+          <ButtonBase
+            text="Create new"
+            onClick={(e) => {
+              e.preventDefault();
+              setCreateNew(true);
+              // createNewFolder();
+            }}
+          />
+          <ButtonBase
+            text="Save changes"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSave(items);
+            }}
+          />
+        </div>
+      </Title>
+      <DndContext
+        sensors={sensors}
+        modifiers={[restrictToVerticalAxis]}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          items={items.map((item) => item.folderName)}
+          strategy={verticalListSortingStrategy}
+        >
+          <ul className="flex flex-col gap-2">
+            {createNew && <input></input>}
+            {items.map((item) => (
+              <SortableItem key={item.folderName} id={item.folderName}>
+                <FolderItem folder={item} />
+              </SortableItem>
+            ))}
+          </ul>
+        </SortableContext>
+      </DndContext>
+    </section>
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over) return;
+    if (active.id !== over.id) {
+      setItems((items) => {
+        const oldIndex = items.findIndex(
+          (item) => item.folderName === active.id,
+        );
+        const newIndex = items.findIndex((item) => item.folderName === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  }
 };
 
 export default DnDList;
+
+type DndItem = { folderName: string; count: number };

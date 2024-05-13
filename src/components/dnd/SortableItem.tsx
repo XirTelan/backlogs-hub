@@ -12,7 +12,7 @@ export function SortableItem({ children, ...props }) {
     transition,
   };
   return (
-    <div className="flex" ref={setNodeRef} style={style}>
+    <li className="flex" ref={setNodeRef} style={style}>
       <button
         className=" touch-none   items-center  border-y border-l border-neutral-700  bg-neutral-800 p-2  hover:cursor-grab"
         {...attributes}
@@ -22,6 +22,6 @@ export function SortableItem({ children, ...props }) {
       </button>
       {children}
       {/* <Item id={props.id} /> */}
-    </div>
+    </li>
   );
 }

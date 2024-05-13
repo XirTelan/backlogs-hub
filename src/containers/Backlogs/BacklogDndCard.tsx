@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { MdDragIndicator, MdEdit } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { MdRemove } from "react-icons/md";
 
 import ActionButton from "@/components/ActionButton";
@@ -11,12 +11,12 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  editAction: () => void;
+  // editAction: () => void;
   // deleteAction: (id: string) => void;
-  item: BacklogDTO;
+  backlog: BacklogDTO;
 }
 
-const BacklogDndCard = ({ editAction, item }: Props) => {
+const BacklogDndCard = ({ backlog }: Props) => {
   const router = useRouter();
   async function onDelete(id: string) {
     const res = await fetch(`/api/backlogs/${id}`, {
@@ -29,21 +29,17 @@ const BacklogDndCard = ({ editAction, item }: Props) => {
 
   return (
     <div className=" flex w-full items-center  border border-neutral-700 bg-neutral-800  p-2">
-      {/* <MdDragIndicator
-        className=" me-2 text-neutral-600 hover:cursor-grab "
-        size={24}
-      /> */}
-      <span>{item.backlogTitle}</span>
+      <span>{backlog.backlogTitle}</span>
       <div className=" ms-auto flex gap-2 ">
         <ButtonBase
-          onClick={() => router.push(`/backlog/edit/${item._id}`)}
+          onClick={() => router.push(`/backlog/edit/${backlog._id}`)}
           size="small"
           variant="ghost"
         >
           <MdEdit />
         </ButtonBase>
         <ButtonBase
-          onClick={() => router.push(`/backlog/edit/${item._id}`)}
+          onClick={() => router.push(`/backlog/edit/${backlog._id}`)}
           size="small"
           variant="dangerGhost"
         >
@@ -53,7 +49,7 @@ const BacklogDndCard = ({ editAction, item }: Props) => {
         <ActionButton
           title="Delete"
           variant="danger"
-          onClick={() => onDelete(item._id)}
+          onClick={() => onDelete(backlog._id)}
         >
           <MdRemove size={20} />
         </ActionButton>

@@ -14,6 +14,30 @@ type CreateUser =
       data: UserDTO;
     };
 
+export async function getUserFolders(username: string) {
+  try {
+    await dbConnect();
+    const user = (await User.findOne({ username: username })
+      .select(["folders", "-_id"])
+      .lean()) as { folders: string[] };
+    return user.folders || [];
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+}
+export async function getUserVisibility(username: string) {
+  try {
+    await dbConnect();
+    const visibility = (await User.findOne({ username: username })
+      .select(["profileVisibility", "-_id"])
+      .lean()) as { profileVisibility: string };
+    return visibility?.profileVisibility;
+  } catch (error) {
+    return NextResponse.json({ error: error }, { status: 400 });
+  }
+}
+
+//PUT/PATCH
 export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
   try {
     await dbConnect();
@@ -42,7 +66,16 @@ export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
     };
   }
 }
-
+export const updateUserFolders = async (username: string, data: string[]) => {
+  try {
+    await dbConnect();
+    const user = await User.findOne({ username: username });
+    user.folders = data
+    await user.save()
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
 export async function updateUser(data: UserDTO) {
   await dbConnect();
   const user = await User.findOne({ email: data.email });
@@ -52,7 +85,7 @@ export async function updateUser(data: UserDTO) {
       { status: 409 },
     );
 }
-
+//DELETE
 export async function deleteUser(id: string) {
   try {
     await dbConnect();
@@ -61,17 +94,4 @@ export async function deleteUser(id: string) {
     return NextResponse.json({ error: error }, { status: 400 });
   }
   return NextResponse.json(null, { status: 200 });
-}
-
-export async function getUserVisibility(username: string) {
-  try {
-    await dbConnect();
-    const visibility = await User.findOne({ username: username }).select([
-      "profileVisibility",
-      "-_id",
-    ]);
-    return visibility.profileVisibility;
-  } catch (error) {
-    return NextResponse.json({ error: error }, { status: 400 });
-  }
 }

@@ -5,6 +5,7 @@ import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import { BacklogCreationDTO } from "@/types";
 import { BacklogDTO } from "@/zodTypes";
+import { getUserFolders } from "./user";
 
 //GET SECTION
 export const getBacklogById = async (id: string): Promise<BacklogDTO> => {
@@ -38,12 +39,15 @@ export const getBacklogsBaseInfoByUserName = async (
   }
 };
 export const getBacklogsByFolder = async (userName: string) => {
-  const data = await getBacklogsBaseInfoByUserName(userName);
+  // const data = await getBacklogsBaseInfoByUserName(userName);
+  const [folders, data] = await Promise.all([
+    getUserFolders(userName),
+    getBacklogsBaseInfoByUserName(userName),
+  ]);
+  console.log(folders);
   const hashMap: { [key: string]: BacklogDTO[] } = {};
+  folders.forEach((folder) => (hashMap[folder] = []));
   for (const backlog of data) {
-    if (!Object.prototype.hasOwnProperty.call(hashMap, backlog.folder)) {
-      hashMap[backlog.folder] = [];
-    }
     backlog._id = backlog._id.toString();
     hashMap[backlog.folder].push(backlog);
   }
@@ -102,9 +106,16 @@ export const createBacklog = async (data: BacklogCreationDTO) => {
 export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
   try {
     await dbConnect();
+    const updates: Promise<unknown>[] = [];
     data.forEach(async (backlog) => {
-      await Backlog.findByIdAndUpdate(backlog._id, { order: backlog.order });
+      updates.push(
+        Backlog.findByIdAndUpdate(backlog._id, {
+          order: backlog.order,
+          folder: backlog.folder,
+        }),
+      );
     });
+    await Promise.all(updates);
   } catch (error) {
     throw new Error(`${error}`);
   }

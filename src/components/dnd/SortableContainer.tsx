@@ -1,7 +1,6 @@
 "use client";
 import {
   SortableContext,
-  horizontalListSortingStrategy,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import React from "react";
@@ -9,7 +8,7 @@ import { SortableItem } from "./SortableItem";
 import { useDroppable } from "@dnd-kit/core";
 import BacklogDndCard from "@/containers/Backlogs/BacklogDndCard";
 import Title from "../Common/Title";
-import { Item } from "./Item";
+import { BacklogDTO } from "@/zodTypes";
 
 const SortableContainer = ({
   id,
@@ -17,7 +16,7 @@ const SortableContainer = ({
   sizes = { width: 100, heigth: 100 },
 }: {
   id: string;
-  items: { id: string | number; title: string }[];
+  items: BacklogDTO[];
   sizes?: { width: number; heigth: number };
 }) => {
   const { setNodeRef } = useDroppable({ id });
@@ -29,21 +28,23 @@ const SortableContainer = ({
       items={items.map((item) => item._id)}
     >
       <div
-        className=" m-2 flex flex-col "
+        className=" m-2 flex  flex-col "
         style={{ minHeight: sizes.heigth, minWidth: sizes.width }}
         ref={setNodeRef}
       >
         <Title title={id} variant={3} />
-        <div className="  content-center text-center ">
+        <ul className="  flex flex-col content-center gap-2 text-center ">
           {items.length == 0 && (
-            <div className=" m-auto content-center">Empty</div>
+            <div className="  h-12 content-center bg-layer-1 text-secondary-text">
+              This folder is empty
+            </div>
           )}
           {items.map((item) => (
             <SortableItem key={item._id} id={item._id}>
-              <BacklogDndCard item={item} />
+              <BacklogDndCard backlog={item} />
             </SortableItem>
           ))}
-        </div>
+        </ul>
       </div>
     </SortableContext>
   );

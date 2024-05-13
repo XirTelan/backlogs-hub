@@ -51,3 +51,5 @@ export const BacklogDTOSchema = z.intersection(
   }),
   BacklogFormSchema,
 );
+
+export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());

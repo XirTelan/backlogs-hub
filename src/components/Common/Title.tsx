@@ -1,6 +1,6 @@
 import React from "react";
 
-const Title = ({ title, variant = 1, children }: TitleProps) => {
+const Title = ({ title, variant = 1, description, children }: TitleProps) => {
   const fonts = {
     1: "text-3xl font-semibold",
     2: "text-2xl",
@@ -21,13 +21,17 @@ const Title = ({ title, variant = 1, children }: TitleProps) => {
   const Tag: keyof JSX.IntrinsicElements = `h${variant}`;
   return (
     <div className={`${sizes[variant]} flex w-full items-center  `}>
-      <Tag className={`${fonts[variant]} flex  ps-4`}>{title}</Tag>
+      <div>
+        <Tag className={`${fonts[variant]} flex`}>{title}</Tag>
+        {description && <p className=" text-secondary-text ">{description}</p>}
+      </div>
       <div className="ms-auto">{children}</div>
     </div>
   );
 };
 type TitleProps = {
   title: string;
+  description?: string;
   variant?: 1 | 2 | 3 | 4 | 5 | 6;
   children?: React.ReactElement | null;
 };

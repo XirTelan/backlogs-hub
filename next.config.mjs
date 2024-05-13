@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
-    removeConsole: {
-      exclude: ["error"],
-    },
+    removeConsole: !process.env.NODE_ENV === "development",
   },
   experimental: {
     esmExternals: "loose",

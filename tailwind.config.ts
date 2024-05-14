@@ -63,6 +63,12 @@ const config: Config = {
             active: "#393939",
           },
         },
+        danger: {
+          btn: {
+            DEFAULT: "#FA4D56",
+            hover: "#B81922",
+          },
+        },
         tertiary: {
           btn: {
             DEFAULT: "#ffffff",

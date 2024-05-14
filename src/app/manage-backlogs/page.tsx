@@ -4,7 +4,7 @@ import { getBacklogsByFolder } from "@/services/backlogs";
 
 export const dynamic = 'force-dynamic'
 
-const ManageBacklogs = async () => {
+const Page = async () => {
   const user = await getCurrentUserInfo();
   if (!user) return null;
 
@@ -18,4 +18,4 @@ const ManageBacklogs = async () => {
   );
 };
 
-export default ManageBacklogs;
+export default Page;

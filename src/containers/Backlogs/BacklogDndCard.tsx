@@ -9,6 +9,7 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { MdOutlineDriveFileMove } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { MdDeleteForever } from "react-icons/md";
 
 interface Props {
   // editAction: () => void;
@@ -36,23 +37,16 @@ const BacklogDndCard = ({ backlog }: Props) => {
           size="small"
           variant="ghost"
         >
-          <MdEdit />
+          <MdEdit size={20}/>
         </ButtonBase>
         <ButtonBase
-          onClick={() => router.push(`/backlog/edit/${backlog._id}`)}
+          title="Delete"
           size="small"
           variant="dangerGhost"
-        >
-          <MdOutlineDriveFileMove />
-        </ButtonBase>
-
-        <ActionButton
-          title="Delete"
-          variant="danger"
           onClick={() => onDelete(backlog._id)}
         >
-          <MdRemove size={20} />
-        </ActionButton>
+          <MdDeleteForever size={20} />
+        </ButtonBase>
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ const BacklogHandler = async ({
   return (
     <>
       <Title title={data.backlogTitle} />
-      <section className="m-auto flex  justify-center rounded p-4 lg:m-0 lg:justify-start">
+      <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
         <Suspense fallback={<p>Loading backlog...</p>}>
           <FilterBlock
             backlogSlug={data.slug}
@@ -32,7 +32,7 @@ const BacklogHandler = async ({
           />
         </Suspense>
       </section>
-      <section className="m-auto flex w-[calc(100%-2rem)] flex-col p-4 lg:m-0">
+      <section className="me-auto flex w-[calc(100%-2rem)] flex-col py-4 lg:m-0">
         <Suspense fallback={<SkeletonDataTable />}>
           <Backloglist
             search={search}

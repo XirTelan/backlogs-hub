@@ -21,14 +21,14 @@ const ButtonBase = ({
     ghost: "text-primary-link hover:bg-subtle-3/15",
     dangerPrimary: "",
     dangerTertiary: "",
-    dangerGhost: "",
+    dangerGhost: "text-danger-btn hover:bg-danger-btn-hover hover:text-white",
   };
 
   return (
     <>
       <button
         {...props}
-        className={`${variants[variant]} ${sizes[size]} relative  flex w-full min-w-fit items-center text-nowrap   ${text && "lg:ps-4"} disabled:bg-layer-3 disabled:text-white/25 `}
+        className={`${variants[variant]} ${sizes[size]}  relative flex w-full min-w-10 items-center text-nowrap   ${text && "lg:ps-4"} disabled:bg-layer-3 disabled:text-white/25 `}
       >
         {text}
         <div

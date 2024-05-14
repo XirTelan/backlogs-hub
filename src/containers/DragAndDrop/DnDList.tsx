@@ -92,11 +92,11 @@ const DnDList = ({ data, userName }: { data: DndItem[]; userName: string }) => {
         >
           <ul className="flex flex-col gap-2">
             {createNew && <input></input>}
-            {items.map((item) => (
-              <SortableItem key={item.folderName} id={item.folderName}>
-                <FolderItem folder={item} />
-              </SortableItem>
-            ))}
+              {items.map((item) => (
+                <SortableItem key={item.folderName} id={item.folderName}>
+                  <FolderItem folder={item} />
+                </SortableItem>
+              ))}
           </ul>
         </SortableContext>
       </DndContext>

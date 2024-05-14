@@ -1,17 +1,12 @@
-import { getBacklogsBaseInfoByUserName } from "@/services/backlogs";
+import { getBacklogsByFolder } from "@/services/backlogs";
 import React from "react";
-import BacklogCard from "@/components/Backlog/BacklogCard";
+import BacklogFolder from "../Backlogs/BacklogFolder";
+import { BacklogDTO } from "@/zodTypes";
 
 const UserBacklogs = async ({ userName }: { userName: string }) => {
-  const data = await getBacklogsBaseInfoByUserName(userName);
-  const backlogItems = data.map((backlog) => (
-    <BacklogCard
-      href={`/user/${userName}/backlogs/${backlog.slug}`}
-      key={backlog._id}
-    >
-      {backlog.backlogTitle}
-    </BacklogCard>
-  ));
+  const data: [string, BacklogDTO[]][] = Object.entries(
+    await getBacklogsByFolder(userName),
+  );
 
   const listIsEmpty = (
     <>
@@ -33,7 +28,16 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
     <>
       {data?.length > 0 ? (
         <div className="  flex w-full items-center justify-between rounded ">
-          <div className="flex flex-wrap gap-4">{backlogItems}</div>
+          <div className="flex flex-col flex-wrap gap-4">
+            {data.map(([folderName, backlogs]) => (
+              <BacklogFolder
+                key={folderName}
+                userName={userName}
+                folderName={folderName}
+                backlogs={backlogs}
+              />
+            ))}
+          </div>
         </div>
       ) : (
         listIsEmpty

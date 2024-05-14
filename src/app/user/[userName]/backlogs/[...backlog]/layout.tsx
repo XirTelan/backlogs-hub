@@ -28,7 +28,7 @@ export default async function Layout({
           />
         </aside>
       )}
-      <main>{children}</main>
+      <main className="ps-4">{children}</main>
     </div>
   );
 }

@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(resultData, { status: 200 });
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) { //todoMark task:AUTH1
   const data: BacklogFormData = await request.json();
   const user = await getCurrentUserInfo();
   if (!user) return sendMsg.error("", 401);
@@ -72,10 +72,13 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PATCH(request: NextRequest) {
+export async function PATCH(request: NextRequest) {  //todoMark task:AUTH1
   const data: BacklogDTO[] = await request.json();
+  const user = await getCurrentUserInfo();
+  if (!user) return sendMsg.error("", 401);
   try {
     await updateBacklogsOrderById(data);
+    revalidatePath(`/user/${user.username}/backlogs`);
     return sendMsg.success(`Created`, 201);
   } catch (error) {
     throw new Error(`${error}`);

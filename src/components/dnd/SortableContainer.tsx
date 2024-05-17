@@ -14,10 +14,12 @@ const SortableContainer = ({
   id,
   items,
   sizes = { width: 100, heigth: 100 },
+  children,
 }: {
   id: string;
-  items: BacklogDTO[];
+  items: { _id: string; [key: string]: unknown }[];
   sizes?: { width: number; heigth: number };
+  children?: React.ReactNode;
 }) => {
   const { setNodeRef } = useDroppable({ id });
 
@@ -32,19 +34,7 @@ const SortableContainer = ({
         style={{ minHeight: sizes.heigth, minWidth: sizes.width }}
         ref={setNodeRef}
       >
-        <Title title={id} variant={3} />
-        <ul className="  flex flex-col content-center gap-2 text-center ">
-          {items.length == 0 && (
-            <div className="  h-12 content-center bg-layer-1 text-secondary-text">
-              This folder is empty
-            </div>
-          )}
-          {items.map((item) => (
-            <SortableItem key={item._id} id={item._id}>
-              <BacklogDndCard backlog={item} />
-            </SortableItem>
-          ))}
-        </ul>
+        {children}
       </div>
     </SortableContext>
   );

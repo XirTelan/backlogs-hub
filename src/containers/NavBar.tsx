@@ -17,11 +17,7 @@ const NavBar = ({ userName }: { userName: string }) => {
     {
       title: "Templates",
       pathname: `/templates`,
-    },
-    {
-      title: "Options",
-      pathname: `/options`,
-    },
+    }
   ];
 
   const hamburgerMenu = (

@@ -25,7 +25,7 @@ import FolderItem from "@/components/FolderItem";
 
 const DnDList = ({ data, userName }: { data: DndItem[]; userName: string }) => {
   const [items, setItems] = useState(data);
-  const [createNew, setCreateNew] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -67,7 +67,7 @@ const DnDList = ({ data, userName }: { data: DndItem[]; userName: string }) => {
             text="Create new"
             onClick={(e) => {
               e.preventDefault();
-              setCreateNew(true);
+              setIsEditMode(true);
               // createNewFolder();
             }}
           />
@@ -91,12 +91,12 @@ const DnDList = ({ data, userName }: { data: DndItem[]; userName: string }) => {
           strategy={verticalListSortingStrategy}
         >
           <ul className="flex flex-col gap-2">
-            {createNew && <input></input>}
-              {items.map((item) => (
-                <SortableItem key={item.folderName} id={item.folderName}>
-                  <FolderItem folder={item} />
-                </SortableItem>
-              ))}
+            {/* {createNew && <input></input>} */}
+            {items.map((item) => (
+              <SortableItem key={item.folderName} id={item.folderName}>
+                <FolderItem folder={item} isEdit={isEditMode} />
+              </SortableItem>
+            ))}
           </ul>
         </SortableContext>
       </DndContext>

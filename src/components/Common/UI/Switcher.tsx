@@ -17,7 +17,6 @@ const Switcher = ({ options }: { options: Options }) => {
   const { changeParams, searchParams } = useChangeSearchParams();
 
   useEffect(() => {
-    console.log("trigger");
     const activeKey = searchParams.get(key);
     let indx = items.findIndex((item) => {
       item.value === activeKey;

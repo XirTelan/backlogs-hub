@@ -13,7 +13,7 @@ type DndProps<T> = {
 };
 
 const useDragAndDrop = (data) => {
-  const [activeId, setActiveId] = useState<unknown>(null);
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [items, setItems] = useState<DndData>(data);
 
   function handleDragOver(event: DragOverEvent) {
@@ -39,7 +39,7 @@ const useDragAndDrop = (data) => {
       // Find the indexes for the items
       const activeIndex = activeItems.findIndex((item) => item._id == id);
       const overIndex = overItems.findIndex((item) => item._id == overId);
-
+      recentlyMovedToNewContainer.current = true;
       const result = {
         ...prev,
         [activeContainer]: [
@@ -89,14 +89,7 @@ const useDragAndDrop = (data) => {
     }
     setActiveId(null);
   }
-  function findContainer(id: UniqueIdentifier) {
-    if (id in items) {
-      return id;
-    }
-    return Object.keys(items).find((key) =>
-      items[key].some((item) => item._id == id),
-    );
-  }
+
   function handleDragStart(event: DragStartEvent) {
     const { active } = event;
     const { id } = active;
@@ -114,8 +107,10 @@ const useDragAndDrop = (data) => {
   }
   return {
     activeId,
+    setActiveId,
     items,
     setItems,
+    findContainer,
     handleDragOver,
     handleDragStart,
     handleDragEnd,

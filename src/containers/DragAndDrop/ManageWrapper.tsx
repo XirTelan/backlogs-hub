@@ -8,6 +8,8 @@ import DnDMultList from "./DnDMultList";
 import InputField from "@/components/Common/UI/InputField";
 import { MdCheck, MdClose } from "react-icons/md";
 import toast from "react-hot-toast";
+import Switcher from "@/components/Common/UI/Switcher";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 const ManageWrapper = ({
   items,
@@ -16,8 +18,8 @@ const ManageWrapper = ({
   items: DndData;
   userName: string;
 }) => {
-  const [isFolderMode, setIsFolderMode] = useState<boolean>(false);
-  const [newFolder, setNewFolder] = useState("");
+  const [isFullView, setIsFullView] = useState<boolean>(true);
+
   const handleBacklogsSave = useCallback(
     async (data: { [key: string]: BacklogDTO[] }) => {
       const dataFormatted: BacklogDTO[] = [];
@@ -66,53 +68,36 @@ const ManageWrapper = ({
             />
           </div>
         </Title>
-        <ButtonBase variant="ghost" text="Test" size="small" />
-        <div className="flex items-center">
-          <InputField
-            variant="small"
-            value={newFolder}
-            onChange={(e) => setNewFolder(e.target.value)}
-          />
-          <div className="flex">
-            <ButtonBase
-              variant="ghost"
-              onClick={() => {
-                setItems((prev) => {
-                  return { ...prev, [newFolder]: [] };
-                });
-              }}
-              size="small"
-            >
-              <MdCheck size={24} />
-            </ButtonBase>
-            <ButtonBase variant="dangerGhost" size="small">
-              <MdClose size={24} />
-            </ButtonBase>
-          </div>
-        </div>
+
       </section>
       <Title title={"Manage"} variant={1}>
         <div className="flex">
-          <ButtonBase
-            variant="tertiary"
-            text={isFolderMode ? "Manage backlogs" : "Manage Folders"}
-            onClick={() => setIsFolderMode((prev) => !prev)}
+          <Switcher
+            options={{
+              key: "view",
+              callback: (value) => {
+                setIsFullView(value === "full");
+              },
+              items: [
+                {
+                  title: "1",
+                  value: "full",
+                },
+                {
+                  title: "2",
+                  value: "compact",
+                },
+              ],
+            }}
           />
         </div>
       </Title>
-      {isFolderMode ? (
-        <DnDList
-          userName={userName}
-          data={Object.keys(items).map((folder) => {
-            return {
-              folderName: folder,
-              count: items[folder].length || 0,
-            };
-          })}
-        />
-      ) : (
-        <DnDMultList data={items} setF={setIsFolderMode} />
-      )}
+
+      <DnDMultList
+        modifiers={[restrictToVerticalAxis]}
+        view={isFullView ? "full" : "compact"}
+        data={items}
+      />
     </>
   );
 };

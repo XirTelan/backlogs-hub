@@ -1,6 +1,7 @@
 import { FieldError } from "react-hook-form";
 import { BacklogCategory } from "./zodTypes";
 import { Field } from "./zodTypes";
+import React from "react";
 
 export type InputField = {
   label?: string;
@@ -105,6 +106,7 @@ export type ButtonBaseProps = {
   children?: React.ReactElement;
   text?: string;
   size?: "small" | "medium" | "large";
+  icon?: React.ReactElement;
   variant?:
     | "primary"
     | "secondary"

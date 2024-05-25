@@ -45,15 +45,15 @@ const InputField = React.forwardRef<HTMLInputElement, InputField>(
     };
 
     return (
-      <div className="h-30 group relative flex  w-full flex-col  ">
+      <div className="group relative flex  w-full flex-col  ">
         {!isSimple && (
           <label htmlFor={id} className="h-6 pb-2  text-secondary-text ">
             {label}
           </label>
-        )}
+        )} 
         <input
           type="input"
-          className={`${inputLayers[layer]} ${sizes[variant]} ${helperText?.type === "error" ? "outline-error-support outline-2 -outline-offset-2" : "border-b border-strong-1"}     text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white `}
+          className={`${inputLayers[layer]} ${sizes[variant]} ${helperText?.type === "error" ? "outline-2 -outline-offset-2 outline-error-support" : "border-b border-strong-1"}     text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white `}
           placeholder={placeholder}
           name={id}
           id={id}

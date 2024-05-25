@@ -12,13 +12,13 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchBar>(
 
     return (
       <div className="flex w-full items-center focus-within:outline  focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-white">
-        <div className="hover:bg-field-hover-1 group flex  grow bg-layer-1">
+        <div className="group flex grow  bg-layer-1 hover:bg-field-hover-1">
           <div className="p-4">
             <GoSearch />
           </div>
           <input
             type="input"
-            className={` ${sizes[variant]} group-hover:bg-field-hover-1 flex grow bg-layer-1 text-secondary-text  outline-none placeholder:text-strong-1   read-only:bg-transparent `}
+            className={` ${sizes[variant]} flex grow bg-layer-1 text-secondary-text outline-none  placeholder:text-strong-1 read-only:bg-transparent   group-hover:bg-field-hover-1 `}
             placeholder={placeholder}
             name={id}
             id={id}

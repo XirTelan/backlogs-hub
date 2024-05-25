@@ -3,7 +3,8 @@ import useChangeSearchParams from "@/hooks/useChangeParams";
 import { motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 
-const Switcher = ({ items }: { items: Item[] }) => {
+const Switcher = ({ options }: { options: Options }) => {
+  const { key, items, callback } = options;
   const [active, setActive] = useState<number>(0);
   const countMaxItem = useMemo(() => {
     let max = 0;
@@ -16,23 +17,25 @@ const Switcher = ({ items }: { items: Item[] }) => {
   const { changeParams, searchParams } = useChangeSearchParams();
 
   useEffect(() => {
-    const active = searchParams.get("filter");
-    items.forEach((item, index) => {
-      if (item.value === active) {
-        setActive(index);
-        return;
-      }
+    console.log("trigger");
+    const activeKey = searchParams.get(key);
+    let indx = items.findIndex((item) => {
+      item.value === activeKey;
     });
-  }, [items, searchParams]);
+    indx = indx === -1 ? 0 : indx;
+    setActive(indx);
+  }, []);
 
   return (
     <div className=" flex">
       {items.map((item, index) => (
         <button
           key={item.title}
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
+            if (options.callback) options.callback(item.value);
+            else changeParams(key, item.value);
             setActive(index);
-            changeParams(item.key, item.value);
           }}
           className={`${active === index ? "active " : ""}${index === active - 1 ? "preactive " : ""}  sw-btn group relative  border-b border-t first:rounded-s  
         first:border-l	last:rounded-e 
@@ -60,9 +63,12 @@ const Switcher = ({ items }: { items: Item[] }) => {
     </div>
   );
 };
-type Item = {
-  title: string;
+type Options = {
   key: string;
-  value: string;
+  callback?: (value: string) => void;
+  items: {
+    title: string;
+    value: string;
+  }[];
 };
 export default Switcher;

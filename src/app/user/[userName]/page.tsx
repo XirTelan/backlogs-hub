@@ -9,7 +9,10 @@ export default function Page() {
         <div className=" bg-on-primary  ">UserProfile</div>
         <div>
           <Switcher
-            items={[{ title: "Options", key: "tab", value: "Options" }]}
+            options={{
+              key: "tab",
+              items: [{ title: "Options", value: "Options" }],
+            }}
           />
         </div>
         <Link href={"/user/test/backlogs/"}>Backlogs</Link>

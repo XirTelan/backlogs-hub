@@ -6,12 +6,13 @@ const ButtonBase = ({
   text,
   size = "large",
   variant = "primary",
+  icon,
   ...props
 }: ButtonBaseProps) => {
   const sizes = {
-    small: "h-8  lg:pe-8",
-    medium: "h-10  lg:pe-10",
-    large: "h-12 lg:pe-12 ",
+    small: "h-8  ",
+    medium: "h-10  ",
+    large: "h-12  ",
   };
   const variants = {
     primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
@@ -29,14 +30,14 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${variants[variant]} ${sizes[size]} ${text ? "min-w-fit" : "min-w-10" } relative  flex w-full  items-center pe-6 text-nowrap   ${text && "md:ps-4"} disabled:bg-layer-3 disabled:text-white/25 `}
+        className={`${variants[variant]} ${sizes[size]} relative  flex  items-center text-nowrap   disabled:bg-layer-3 disabled:text-white/25 `}
       >
-        {text}
-        <div
-          className={`${text ? "right-[calc(0%+1rem)]" : "inset-0"} absolute   flex items-center justify-center bg-white bg-opacity-0 `}
-        >
-          {children}
-        </div>
+        {text && <div className="px-2">{text}</div>}
+        {icon && (
+          <div className="flex min-h-8 min-w-8 items-center justify-center p-1 ">
+            {icon}
+          </div>
+        )}
       </button>
     </>
   );

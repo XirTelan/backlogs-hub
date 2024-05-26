@@ -1,19 +1,24 @@
 import Title from "@/components/Common/Title";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
+import AddItem from "@/components/dnd/AddItem";
 import Handle from "@/components/dnd/Handle";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
-import { MdDragHandle, MdEdit } from "react-icons/md";
+import { useState } from "react";
+import { MdDeleteForever, MdDragHandle, MdEdit } from "react-icons/md";
 
 const DroppableContainer = ({
   children,
   disabled,
   id,
   items,
+  onRename,
+  onRemove,
+  containers,
   style,
-  actions,
+  showActions,
   ...props
 }: ContainerProps & {
   disabled?: boolean;
@@ -41,7 +46,16 @@ const DroppableContainer = ({
   //     ? (id === over.id && active?.data.current?.type !== "container") ||
   //       items.includes(over.id)
   //     : false;
+  const [isShow, setIsShow] = useState(false);
 
+  if (isShow)
+    return (
+      <AddItem
+        action={onRename}
+        close={() => setIsShow(false)}
+        disabled={(value) => Object.keys(containers).includes(value)}
+      />
+    );
   return (
     <div
       ref={disabled ? undefined : setNodeRef}
@@ -89,7 +103,29 @@ const DroppableContainer = ({
               </div>
             </div>
           </Handle>
-          {actions}
+          {showActions && (
+            <>
+              <ButtonBase
+                size="small"
+                variant="ghost"
+                style={{
+                  maxWidth: "40px",
+                }}
+                onClick={() => setIsShow(true)}
+                icon={<MdEdit size={20} />}
+              />
+              <ButtonBase
+                disabled={containers.length <= 1}
+                size="small"
+                style={{
+                  maxWidth: "40px",
+                }}
+                variant="dangerGhost"
+                onClick={onRemove}
+                icon={<MdDeleteForever size={20} />}
+              />
+            </>
+          )}
         </div>
         {/* <div>{id}</div> */}
       </div>

@@ -37,6 +37,10 @@ import InputField from "@/components/Common/UI/InputField";
 import { MdCheck, MdClose, MdDeleteForever, MdEdit } from "react-icons/md";
 import AddItem from "@/components/dnd/AddItem";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import Modal from "@/components/Common/Modal";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Title from "@/components/Common/Title";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -93,7 +97,7 @@ const DnDMultList = ({
 }: Props) => {
   const [items, setItems] = useState<DndData>(data);
   const [isAddNew, setIsAddNew] = useState(false);
-
+  const [isShowModal, setIsShowModal] = useState(undefined);
   const [containers, setContainers] = useState(
     Object.keys(items) as UniqueIdentifier[],
   );
@@ -102,6 +106,7 @@ const DnDMultList = ({
   const lastOverId = useRef<UniqueIdentifier | null>(null);
   const recentlyMovedToNewContainer = useRef(false);
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
+  const router = useRouter();
 
   /**
    * Custom collision detection strategy optimized for multiple containers
@@ -202,7 +207,24 @@ const DnDMultList = ({
     setClonedItems(null);
   };
 
-  useEffect(() => {
+  const showModal = () => {
+    return (
+      <Modal
+        showActions
+        setClose={function (): void {
+          setIsShowModal(undefined);
+        }}
+        action={isShowModal.action}
+      >
+        <div className=" bg-layer-1 p-4 text-white">
+          <Title title={isShowModal.caption} variant={2} />
+          <div className=" text-secondary-text  ">{isShowModal.text}</div>
+        </div>
+      </Modal>
+    );
+  };
+
+  const handleActions = useEffect(() => {
     console.log(containers);
     requestAnimationFrame(() => {
       recentlyMovedToNewContainer.current = false;
@@ -316,12 +338,6 @@ const DnDMultList = ({
               const overIndex = containers.indexOf(over.id);
               console.log("end", activeIndex, overIndex);
               console.log("before", containers);
-              const newContainers = arrayMove(
-                containers,
-                activeIndex,
-                overIndex,
-              );
-              console.log("after", newContainers);
               return arrayMove(containers, activeIndex, overIndex);
             });
           }
@@ -383,31 +399,39 @@ const DnDMultList = ({
                 key={containerId}
                 id={containerId}
                 columns={columns}
+                onRename={(newValue) => {
+                  setContainers((containers) => {
+                    return [
+                      ...containers.filter(
+                        (container) => container != containerId,
+                      ),
+                      newValue,
+                    ];
+                  });
+                  setItems((prev) => {
+                    const { [containerId]: items, ...rest } = prev;
+                    return { ...rest, [newValue]: items };
+                  });
+                }}
+                onRemove={() => {
+                  const tmp = items[containerId];
+                  const newContainers = containers.filter(
+                    (id) => id !== containerId,
+                  );
+                  setItems((prev) => {
+                    return {
+                      ...prev,
+                      [newContainers[0]]: [...items[newContainers[0]], ...tmp],
+                    };
+                  });
+                  // setItems()
+                  setContainers(newContainers);
+                }}
+                containers={containers}
                 items={items[containerId]}
                 scrollable={scrollable}
                 style={containerStyle}
-                actions={
-                  view === "compact" && (
-                    <>
-                      <ButtonBase
-                        size="small"
-                        variant="ghost"
-                        style={{
-                          maxWidth: "40px",
-                        }}
-                        icon={<MdEdit size={20} />}
-                      />
-                      <ButtonBase
-                        size="small"
-                        style={{
-                          maxWidth: "40px",
-                        }}
-                        variant="dangerGhost"
-                        icon={<MdDeleteForever size={20} />}
-                      />
-                    </>
-                  )
-                }
+                showActions={view === "compact"}
               >
                 {view === "full" && (
                   <SortableContext
@@ -428,18 +452,29 @@ const DnDMultList = ({
                           getIndex={getIndex}
                         >
                           <div className=" ms-auto flex ">
-                            <ButtonBase
-                              //   onClick={() => router.push(`/backlog/edit/${backlog._id}`)}
-                              size="small"
-                              variant="ghost"
-                              icon={<MdEdit size={20} />}
-                            ></ButtonBase>
+                            <Link href={`/backlog/edit/${value._id}`}>
+                              <ButtonBase
+                                size="small"
+                                variant="ghost"
+                                icon={<MdEdit size={20} />}
+                              />
+                            </Link>
                             <ButtonBase
                               title="Delete"
                               size="small"
                               variant="dangerGhost"
                               icon={<MdDeleteForever size={20} />}
-                              //   onClick={() => onDelete(backlog._id)}
+                              onClick={() => {
+                                setIsShowModal({
+                                  isShow: true,
+                                  caption: `Delete backlog "${value.backlogTitle}"`,
+                                  text: "Are you sure you want to delete the backlog?",
+                                  action: () => {
+                                    console.log("Hey");
+                                  },
+                                });
+                                // console.log(isShowModal);
+                              }}
                             ></ButtonBase>
                           </div>
                         </SortableItem>
@@ -451,6 +486,8 @@ const DnDMultList = ({
             ))}
           </SortableContext>
         </div>
+        {isShowModal?.isShow && showModal()}
+
         <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
           {activeId
             ? containers.includes(activeId)

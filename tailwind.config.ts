@@ -64,8 +64,11 @@ const config: Config = {
           },
         },
         danger: {
-          btn: {
+          text: {
             DEFAULT: "#FA4D56",
+          },
+          btn: {
+            DEFAULT: "#DA1E28",
             hover: "#B81922",
           },
         },

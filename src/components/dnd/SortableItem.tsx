@@ -4,18 +4,7 @@ import { useMountStatus } from "@/hooks/useMountStatus";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { Item } from "./Item";
-
-interface SortableItemProps {
-  containerId: UniqueIdentifier;
-  id: UniqueIdentifier;
-  index: number;
-  handle: boolean;
-  disabled?: boolean;
-  style(args: any): React.CSSProperties;
-  getIndex(id: UniqueIdentifier): number;
-  renderItem(): React.ReactElement;
-  wrapperStyle({ index }: { index: number }): React.CSSProperties;
-}
+import { SortableItemProps } from "@/types";
 
 const SortableItem = ({
   disabled,

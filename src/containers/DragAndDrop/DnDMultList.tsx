@@ -31,7 +31,7 @@ import { Item } from "@/components/dnd/Item";
 import DroppableContainer from "./DroppableContainer";
 import Switcher from "@/components/Common/UI/Switcher";
 import SortableItem from "@/components/dnd/SortableItem";
-import { DndData } from "@/zodTypes";
+import { BacklogDTO, DndData } from "@/zodTypes";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import InputField from "@/components/Common/UI/InputField";
 import { MdCheck, MdClose, MdDeleteForever, MdEdit } from "react-icons/md";
@@ -41,6 +41,7 @@ import Modal from "@/components/Common/Modal";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Title from "@/components/Common/Title";
+import toast from "react-hot-toast";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -97,7 +98,16 @@ const DnDMultList = ({
 }: Props) => {
   const [items, setItems] = useState<DndData>(data);
   const [isAddNew, setIsAddNew] = useState(false);
-  const [isShowModal, setIsShowModal] = useState(undefined);
+  const [overlayTitle, setOverlayTitle] = useState("");
+  const [modalData, setModalData] = useState<
+    | {
+        isShow: boolean;
+        caption: string;
+        text: string;
+        action: () => void | undefined;
+      }
+    | undefined
+  >();
   const [containers, setContainers] = useState(
     Object.keys(items) as UniqueIdentifier[],
   );
@@ -106,7 +116,39 @@ const DnDMultList = ({
   const lastOverId = useRef<UniqueIdentifier | null>(null);
   const recentlyMovedToNewContainer = useRef(false);
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
-  const router = useRouter();
+
+  const handleBacklogsSave = useCallback(
+    async (containers: string[], data: DndData) => {
+      const dataFormatted: { folders: string[]; backlogs: BacklogDTO[] } = {
+        folders: containers as string[],
+        backlogs: [],
+      };
+      Object.entries(data).forEach(([folder, backlogs]) => {
+        if (backlogs.length === 0) return;
+        backlogs.forEach((backlog, indx) => {
+          backlog.folder = folder;
+          backlog.order = indx;
+          dataFormatted.backlogs.push(backlog);
+        });
+      });
+      console.log("dataFormatted", dataFormatted);
+      try {
+        const res = await fetch(`/api/backlogs/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataFormatted),
+        });
+        if (res.ok) {
+          toast.success("Saved");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [],
+  );
 
   /**
    * Custom collision detection strategy optimized for multiple containers
@@ -212,20 +254,19 @@ const DnDMultList = ({
       <Modal
         showActions
         setClose={function (): void {
-          setIsShowModal(undefined);
+          setModalData(undefined);
         }}
-        action={isShowModal.action}
+        action={modalData.action}
       >
         <div className=" bg-layer-1 p-4 text-white">
-          <Title title={isShowModal.caption} variant={2} />
-          <div className=" text-secondary-text  ">{isShowModal.text}</div>
+          <Title title={modalData.caption} variant={2} />
+          <div className=" text-secondary-text  ">{modalData.text}</div>
         </div>
       </Modal>
     );
   };
 
-  const handleActions = useEffect(() => {
-    console.log(containers);
+  useEffect(() => {
     requestAnimationFrame(() => {
       recentlyMovedToNewContainer.current = false;
     });
@@ -233,277 +274,302 @@ const DnDMultList = ({
 
   return (
     <>
-      {isAddNew ? (
-        <AddItem
-          action={(newFolder) => {
-            setContainers((containers) => [...containers, newFolder]);
-            setItems((prev) => {
-              return { ...prev, [newFolder]: [] };
-            });
-          }}
-          close={() => setIsAddNew(false)}
-          disabled={(value) => containersSet.has(value)}
-        />
-      ) : (
-        <div className="group flex h-8 items-center justify-center">
-          <ButtonBase
-            variant="ghost"
-            text="Add new folder"
-            size="small"
-            onClick={() => setIsAddNew(true)}
-            icon={<IoMdAddCircleOutline />}
+      <section className={`my-4 ${!isAddNew && "ms-auto"}`}>
+        {isAddNew ? (
+          <AddItem
+            action={(newFolder) => {
+              setContainers((containers) => [...containers, newFolder]);
+              setItems((prev) => {
+                return { ...prev, [newFolder]: [] };
+              });
+            }}
+            close={() => setIsAddNew(false)}
+            disabled={(value) => containersSet.has(value)}
           />
-        </div>
-      )}
+        ) : (
+          <div className="group flex h-8 items-center">
+            <ButtonBase
+              variant="ghost"
+              text="Add new folder"
+              // size="small"
+              onClick={() => setIsAddNew(true)}
+              icon={<IoMdAddCircleOutline />}
+            />
+            <ButtonBase
+              text="Save changes"
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("?");
+                handleBacklogsSave(containers as string[], items);
+              }}
+            />
+          </div>
+        )}
+      </section>
+      <section>
+        <DndContext
+          id="manageBacklogs"
+          sensors={sensors}
+          collisionDetection={collisionDetectionStrategy}
+          measuring={{
+            droppable: {
+              strategy: MeasuringStrategy.Always,
+            },
+          }}
+          onDragStart={({ active }) => {
+            setOverlayTitle(active?.data?.current?.title || "");
+            setActiveId(active.id);
+            setClonedItems(items);
+          }}
+          onDragOver={({ active, over }) => {
+            const overId = over?.id;
 
-      <DndContext
-        id="manageBacklogs"
-        sensors={sensors}
-        collisionDetection={collisionDetectionStrategy}
-        measuring={{
-          droppable: {
-            strategy: MeasuringStrategy.Always,
-          },
-        }}
-        onDragStart={({ active }) => {
-          setActiveId(active.id);
-          setClonedItems(items);
-        }}
-        onDragOver={({ active, over }) => {
-          const overId = over?.id;
+            if (overId == null || active.id in items) {
+              return;
+            }
 
-          if (overId == null || active.id in items) {
-            return;
-          }
+            const overContainer = findContainer(overId);
+            const activeContainer = findContainer(active.id);
 
-          const overContainer = findContainer(overId);
-          const activeContainer = findContainer(active.id);
+            if (!overContainer || !activeContainer) {
+              return;
+            }
 
-          if (!overContainer || !activeContainer) {
-            return;
-          }
+            if (activeContainer !== overContainer) {
+              setItems((items) => {
+                const activeItems = items[activeContainer];
+                const overItems = items[overContainer];
+                const overIndex = overItems.findIndex(
+                  (items) => items._id === overId,
+                );
+                const activeIndex = activeItems.findIndex(
+                  (item) => item._id === active.id,
+                );
 
-          if (activeContainer !== overContainer) {
-            setItems((items) => {
-              const activeItems = items[activeContainer];
-              const overItems = items[overContainer];
-              const overIndex = overItems.findIndex(
-                (items) => items.id === overId,
-              );
-              const activeIndex = activeItems.findIndex(
+                let newIndex: number;
+
+                if (overId in items) {
+                  newIndex = overItems.length + 1;
+                } else {
+                  const isBelowOverItem =
+                    over &&
+                    active.rect.current.translated &&
+                    active.rect.current.translated.top >
+                      over.rect.top + over.rect.height;
+
+                  const modifier = isBelowOverItem ? 1 : 0;
+
+                  newIndex =
+                    overIndex >= 0
+                      ? overIndex + modifier
+                      : overItems.length + 1;
+                }
+
+                recentlyMovedToNewContainer.current = true;
+
+                return {
+                  ...items,
+                  [activeContainer]: items[activeContainer].filter(
+                    (item) => item._id !== active.id,
+                  ),
+                  [overContainer]: [
+                    ...items[overContainer].slice(0, newIndex),
+                    items[activeContainer][activeIndex],
+                    ...items[overContainer].slice(
+                      newIndex,
+                      items[overContainer].length,
+                    ),
+                  ],
+                };
+              });
+            }
+          }}
+          onDragEnd={({ active, over }) => {
+            console.log("end", active.id, over?.id);
+            if (active.id in items && over?.id) {
+              setContainers((containers) => {
+                const activeIndex = containers.indexOf(active.id);
+                const overIndex = containers.indexOf(over.id);
+                console.log("end", activeIndex, overIndex);
+                console.log("before", containers);
+                return arrayMove(containers, activeIndex, overIndex);
+              });
+            }
+
+            const activeContainer = findContainer(active.id);
+
+            if (!activeContainer) {
+              setActiveId(null);
+              return;
+            }
+
+            const overId = over?.id;
+
+            if (overId == null) {
+              setActiveId(null);
+              return;
+            }
+
+            const overContainer = findContainer(overId);
+
+            if (overContainer) {
+              const activeIndex = items[activeContainer].findIndex(
                 (item) => item._id === active.id,
               );
+              const overIndex = items[overContainer].findIndex(
+                (item) => item._id === overId,
+              );
 
-              let newIndex: number;
-
-              if (overId in items) {
-                newIndex = overItems.length + 1;
-              } else {
-                const isBelowOverItem =
-                  over &&
-                  active.rect.current.translated &&
-                  active.rect.current.translated.top >
-                    over.rect.top + over.rect.height;
-
-                const modifier = isBelowOverItem ? 1 : 0;
-
-                newIndex =
-                  overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
-              }
-
-              recentlyMovedToNewContainer.current = true;
-
-              return {
-                ...items,
-                [activeContainer]: items[activeContainer].filter(
-                  (item) => item._id !== active.id,
-                ),
-                [overContainer]: [
-                  ...items[overContainer].slice(0, newIndex),
-                  items[activeContainer][activeIndex],
-                  ...items[overContainer].slice(
-                    newIndex,
-                    items[overContainer].length,
+              if (activeIndex !== overIndex) {
+                setItems((items) => ({
+                  ...items,
+                  [overContainer]: arrayMove(
+                    items[overContainer],
+                    activeIndex,
+                    overIndex,
                   ),
-                ],
-              };
-            });
-          }
-        }}
-        onDragEnd={({ active, over }) => {
-          console.log("end", active.id, over?.id);
-          if (active.id in items && over?.id) {
-            setContainers((containers) => {
-              const activeIndex = containers.indexOf(active.id);
-              const overIndex = containers.indexOf(over.id);
-              console.log("end", activeIndex, overIndex);
-              console.log("before", containers);
-              return arrayMove(containers, activeIndex, overIndex);
-            });
-          }
-
-          const activeContainer = findContainer(active.id);
-
-          if (!activeContainer) {
-            setActiveId(null);
-            return;
-          }
-
-          const overId = over?.id;
-
-          if (overId == null) {
-            setActiveId(null);
-            return;
-          }
-
-          const overContainer = findContainer(overId);
-
-          if (overContainer) {
-            const activeIndex = items[activeContainer].findIndex(
-              (item) => item._id === active.id,
-            );
-            const overIndex = items[overContainer].findIndex(
-              (item) => item._id === overId,
-            );
-
-            if (activeIndex !== overIndex) {
-              setItems((items) => ({
-                ...items,
-                [overContainer]: arrayMove(
-                  items[overContainer],
-                  activeIndex,
-                  overIndex,
-                ),
-              }));
+                }));
+              }
             }
-          }
 
-          setActiveId(null);
-        }}
-        cancelDrop={cancelDrop}
-        onDragCancel={onDragCancel}
-        modifiers={modifiers}
-      >
-        <div className="flex flex-col">
-          <SortableContext
-            id="container_context"
-            items={containers}
-            strategy={
-              vertical
-                ? verticalListSortingStrategy
-                : horizontalListSortingStrategy
-            }
-          >
-            {containers.map((containerId) => (
-              <DroppableContainer
-                key={containerId}
-                id={containerId}
-                columns={columns}
-                onRename={(newValue) => {
-                  setContainers((containers) => {
-                    return [
-                      ...containers.filter(
-                        (container) => container != containerId,
-                      ),
-                      newValue,
-                    ];
-                  });
-                  setItems((prev) => {
-                    const { [containerId]: items, ...rest } = prev;
-                    return { ...rest, [newValue]: items };
-                  });
-                }}
-                onRemove={() => {
-                  const tmp = items[containerId];
-                  const newContainers = containers.filter(
-                    (id) => id !== containerId,
-                  );
-                  setItems((prev) => {
-                    return {
-                      ...prev,
-                      [newContainers[0]]: [...items[newContainers[0]], ...tmp],
-                    };
-                  });
-                  // setItems()
-                  setContainers(newContainers);
-                }}
-                containers={containers}
-                items={items[containerId]}
-                scrollable={scrollable}
-                style={containerStyle}
-                showActions={view === "compact"}
-              >
-                {view === "full" && (
-                  <SortableContext
-                    id={`${containerId}`}
-                    items={items[containerId].map((item) => item._id)}
-                    strategy={strategy}
-                  >
-                    {items[containerId].map((value, index) => {
-                      return (
-                        <SortableItem
-                          disabled={isSortingContainer}
-                          key={value._id}
-                          id={value._id}
-                          index={index}
-                          handle={handle}
-                          style={getItemStyles}
-                          containerId={containerId}
-                          getIndex={getIndex}
-                        >
-                          <div className=" ms-auto flex ">
-                            <Link href={`/backlog/edit/${value._id}`}>
-                              <ButtonBase
-                                size="small"
-                                variant="ghost"
-                                icon={<MdEdit size={20} />}
-                              />
-                            </Link>
-                            <ButtonBase
-                              title="Delete"
-                              size="small"
-                              variant="dangerGhost"
-                              icon={<MdDeleteForever size={20} />}
-                              onClick={() => {
-                                setIsShowModal({
-                                  isShow: true,
-                                  caption: `Delete backlog "${value.backlogTitle}"`,
-                                  text: "Are you sure you want to delete the backlog?",
-                                  action: () => {
-                                    console.log("Hey");
-                                  },
-                                });
-                                // console.log(isShowModal);
-                              }}
-                            ></ButtonBase>
-                          </div>
-                        </SortableItem>
+            setActiveId(null);
+          }}
+          cancelDrop={cancelDrop}
+          onDragCancel={onDragCancel}
+          modifiers={modifiers}
+        >
+          <div className="flex flex-col">
+            <SortableContext
+              id="container_context"
+              items={containers}
+              strategy={
+                vertical
+                  ? verticalListSortingStrategy
+                  : horizontalListSortingStrategy
+              }
+            >
+              {containers.map((containerId) => (
+                <DroppableContainer
+                  key={containerId}
+                  id={containerId}
+                  columns={columns}
+                  onRename={(newValue: string) => {
+                    console.log(containers, containerId);
+                    const indx = containers.indexOf(containerId);
+                    console.log("new indx", indx);
+                    setContainers((containers) => {
+                      return arrayMove(
+                        [
+                          ...containers.filter(
+                            (container) => container != containerId,
+                          ),
+                          newValue,
+                        ],
+                        containers.length - 1,
+                        indx,
                       );
-                    })}
-                  </SortableContext>
-                )}
-              </DroppableContainer>
-            ))}
-          </SortableContext>
-        </div>
-        {isShowModal?.isShow && showModal()}
+                    });
+                    setItems((prev) => {
+                      const { [containerId]: items, ...rest } = prev;
+                      return { ...rest, [newValue]: items };
+                    });
+                  }}
+                  onRemove={() => {
+                    const newContainers = containers.filter(
+                      (id) => id !== containerId,
+                    );
+                    setItems((prev) => {
+                      const { [containerId]: tmp, ...rest } = prev;
+                      return {
+                        ...rest,
+                        [newContainers[0]]: [
+                          ...items[newContainers[0]],
+                          ...tmp,
+                        ],
+                      };
+                    });
+                    // setItems()
+                    setContainers(newContainers);
+                  }}
+                  containers={containers}
+                  items={items[containerId]}
+                  scrollable={scrollable}
+                  style={containerStyle}
+                  showActions={view === "compact"}
+                >
+                  {view === "full" && (
+                    <SortableContext
+                      id={`${containerId}`}
+                      items={items[containerId].map((item) => item._id)}
+                      strategy={strategy}
+                    >
+                      {items[containerId].map((value, index) => {
+                        return (
+                          <SortableItem
+                            disabled={isSortingContainer}
+                            key={value._id}
+                            id={value._id}
+                            title={value.backlogTitle}
+                            index={index}
+                            handle={handle}
+                            style={getItemStyles}
+                            containerId={containerId}
+                            getIndex={getIndex}
+                          >
+                            <div className=" ms-auto flex ">
+                              <Link href={`/backlog/edit/${value._id}`}>
+                                <ButtonBase
+                                  size="small"
+                                  variant="ghost"
+                                  icon={<MdEdit size={20} />}
+                                />
+                              </Link>
+                              <ButtonBase
+                                title="Delete"
+                                size="small"
+                                variant="dangerGhost"
+                                icon={<MdDeleteForever size={20} />}
+                                onClick={() => {
+                                  setModalData({
+                                    isShow: true,
+                                    caption: `Delete backlog "${value.backlogTitle}"`,
+                                    text: "Are you sure you want to delete the backlog?",
+                                    action: () => {
+                                      console.log("Hey");
+                                    },
+                                  });
+                                  // console.log(isShowModal);
+                                }}
+                              ></ButtonBase>
+                            </div>
+                          </SortableItem>
+                        );
+                      })}
+                    </SortableContext>
+                  )}
+                </DroppableContainer>
+              ))}
+            </SortableContext>
+          </div>
+          {modalData?.isShow && showModal()}
 
-        <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
-          {activeId
-            ? containers.includes(activeId)
-              ? renderContainerDragOverlay(activeId)
-              : renderSortableItemDragOverlay(activeId)
-            : null}
-        </DragOverlay>
-      </DndContext>
+          <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
+            {activeId
+              ? containers.includes(activeId)
+                ? renderContainerDragOverlay(activeId)
+                : renderSortableItemDragOverlay()
+              : null}
+          </DragOverlay>
+        </DndContext>
+      </section>
     </>
   );
 
-  function renderSortableItemDragOverlay(id: UniqueIdentifier) {
+  function renderSortableItemDragOverlay() {
     return (
       <Item
         dragOverlay
-        value={id}
+        title={overlayTitle}
         handle={handle}
         transform={{
           x: 0,
@@ -518,7 +584,7 @@ const DnDMultList = ({
   function renderContainerDragOverlay(containerId: UniqueIdentifier) {
     return (
       <Item
-        value={containerId}
+        title={containerId}
         transform={{
           x: 0,
           y: 0,

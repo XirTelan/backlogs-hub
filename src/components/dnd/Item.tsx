@@ -1,12 +1,11 @@
-import React, { ComponentType, ReactElement, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import React, { ReactElement } from "react";
 import type { DraggableSyntheticListeners } from "@dnd-kit/core";
 import type { Transform } from "@dnd-kit/utilities";
 import { CSS } from "@dnd-kit/utilities";
 
 import Handle from "./Handle";
-import router from "next/router";
-import { MdEdit, MdDeleteForever, MdDragIndicator } from "react-icons/md";
-import ButtonBase from "../Common/UI/ButtonBase";
+import { MdDragIndicator } from "react-icons/md";
 
 export type Props = {
   dragOverlay?: boolean;
@@ -19,37 +18,27 @@ export type Props = {
   height?: number;
   index?: number;
   fadeIn?: boolean;
+  title: string;
   transform?: Transform | null;
   listeners?: DraggableSyntheticListeners;
   sorting?: boolean;
   style?: React.CSSProperties;
   transition?: string | null;
   wrapperStyle?: React.CSSProperties;
-  value: React.ReactNode;
 };
 
 export const Item = React.memo(
   React.forwardRef<HTMLLIElement, Props>(
     (
       {
-        color,
         children,
         dragOverlay,
         dragging,
-        disabled,
-        fadeIn,
         handle,
         handleProps,
-        height,
-        index,
         listeners,
-        onRemove,
-        sorting,
-        style,
-        transition,
+        title,
         transform,
-        value,
-        wrapperStyle,
         ...props
       },
       ref,
@@ -59,7 +48,7 @@ export const Item = React.memo(
           className="flex  touch-manipulation items-center"
           ref={ref}
           style={{
-            transform: CSS.Translate.toString(transform),
+            transform: CSS.Translate.toString(transform || null),
             scale: dragOverlay ? "0.95" : 1,
             opacity: dragging ? 0.5 : 1,
           }}
@@ -81,7 +70,7 @@ export const Item = React.memo(
             {...props}
             tabIndex={!handle ? 0 : undefined}
           >
-            <span>{value}</span>
+            <span className="ms-2">{title}</span>
             {children}
           </div>
         </li>

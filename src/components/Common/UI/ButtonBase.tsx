@@ -2,7 +2,6 @@ import { ButtonBaseProps } from "@/types";
 import React from "react";
 
 const ButtonBase = ({
-  children,
   text,
   size = "large",
   variant = "primary",

@@ -9,7 +9,7 @@ const Switcher = ({ options }: { options: Options }) => {
   const countMaxItem = useMemo(() => {
     let max = 0;
     items.forEach((item) => {
-      const length = item.title.length;
+      const length = typeof item.title==='string' ? item.title.length : 1;
       if (length > max) max = length;
     });
     return max;
@@ -29,10 +29,10 @@ const Switcher = ({ options }: { options: Options }) => {
     <div className=" flex">
       {items.map((item, index) => (
         <button
-          key={item.title}
+          key={index}
           onClick={(e) => {
             e.preventDefault();
-            if (options.callback) options.callback(item.value);
+            if (callback) callback(item.value);
             else changeParams(key, item.value);
             setActive(index);
           }}
@@ -66,7 +66,7 @@ type Options = {
   key: string;
   callback?: (value: string) => void;
   items: {
-    title: string;
+    title: React.ReactNode;
     value: string;
   }[];
 };

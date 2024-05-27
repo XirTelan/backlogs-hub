@@ -10,6 +10,8 @@ import { MdCheck, MdClose } from "react-icons/md";
 import toast from "react-hot-toast";
 import Switcher from "@/components/Common/UI/Switcher";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { GrTree } from "react-icons/gr";
+import { FaList } from "react-icons/fa";
 
 const ManageWrapper = ({
   items,
@@ -20,57 +22,19 @@ const ManageWrapper = ({
 }) => {
   const [isFullView, setIsFullView] = useState<boolean>(true);
 
-  const handleBacklogsSave = useCallback(
-    async (data: { [key: string]: BacklogDTO[] }) => {
-      const dataFormatted: BacklogDTO[] = [];
-      Object.entries(data).forEach(([folder, backlogs]) => {
-        if (backlogs.length === 0) return;
-        backlogs.forEach((backlog, indx) => {
-          backlog.folder = folder;
-          backlog.order = indx;
-          dataFormatted.push(backlog);
-        });
-      });
-      try {
-        const res = await fetch(`/api/backlogs/`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataFormatted),
-        });
-        if (res.ok) {
-          toast.success("Saved");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [],
-  );
+ 
 
   return (
     <>
       <section>
-        <Title
-          title={"Backlogs order"}
-          variant={2}
-          description="You can change the order of backlogs by moving them within their folder or moving them to another using a handler."
-        >
-          <div className="flex">
-            <ButtonBase
-              text="Save changes"
-              onClick={(e) => {
-                e.preventDefault();
-                console.log("?");
-                handleBacklogsSave(items);
-              }}
-            />
-          </div>
-        </Title>
+        <Title title={"Manage"} variant={1}/>
 
       </section>
-      <Title title={"Manage"} variant={1}>
+      <Title
+        title={"Backlogs order"}
+        variant={2}
+        description="You can change the order of backlogs by moving them within their folder or moving them to another using a handler."
+      >
         <div className="flex">
           <Switcher
             options={{
@@ -80,11 +44,12 @@ const ManageWrapper = ({
               },
               items: [
                 {
-                  title: "1",
+                  title: <GrTree />,
+
                   value: "full",
                 },
                 {
-                  title: "2",
+                  title: <FaList />,
                   value: "compact",
                 },
               ],

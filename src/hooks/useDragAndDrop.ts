@@ -7,104 +7,73 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import React, { useState } from "react";
-type DndProps<T> = {
-  items: T;
-  setItems: React.Dispatch<T>;
-};
 
 const useDragAndDrop = (data) => {
-  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-  const [items, setItems] = useState<DndData>(data);
+  /**
+   * Custom collision detection strategy optimized for multiple containers
+   *
+   * - First, find any droppable containers intersecting with the pointer.
+   * - If there are none, find intersecting containers with the active draggable.
+   * - If there are no intersecting containers, return the last matched intersection
+   *
+   */
+  const collisionDetectionStrategy: CollisionDetection = useCallback(
+    (args) => {
+      if (activeId && activeId in items) {
+        return closestCenter({
+          ...args,
+          droppableContainers: args.droppableContainers.filter(
+            (container) => container.id in items,
+          ),
+        });
+      }
 
-  function handleDragOver(event: DragOverEvent) {
-    console.log("Active", event.active);
-    const { active, over } = event;
-    const { id } = active;
-    if (!over) return;
-    const { id: overId } = over;
-    // Find the containers
-    const activeContainer = findContainer(id);
-    const overContainer = findContainer(overId);
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer === overContainer
-    ) {
-      return;
-    }
-    setItems((prev) => {
-      const activeItems = prev[activeContainer];
-      const overItems = prev[overContainer];
+      // Start by finding any intersecting droppable
+      const pointerIntersections = pointerWithin(args);
+      const intersections =
+        pointerIntersections.length > 0
+          ? // If there are droppables intersecting with the pointer, return those
+            pointerIntersections
+          : rectIntersection(args);
+      let overId = getFirstCollision(intersections, "id");
 
-      // Find the indexes for the items
-      const activeIndex = activeItems.findIndex((item) => item._id == id);
-      const overIndex = overItems.findIndex((item) => item._id == overId);
-      recentlyMovedToNewContainer.current = true;
-      const result = {
-        ...prev,
-        [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item._id !== active.id),
-        ],
-        [overContainer]: [
-          ...prev[overContainer].slice(0, overIndex),
-          items[activeContainer][activeIndex],
-          ...prev[overContainer].slice(overIndex, prev[overContainer].length),
-        ],
-      };
-      return result;
-    });
-  }
+      if (overId != null) {
+        if (overId in items) {
+          const containerItems = items[overId];
 
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    const { id } = active;
-    if (!over) return;
-    const { id: overId } = over;
+          // If a container is matched and it contains items (columns 'A', 'B', 'C')
+          if (containerItems.length > 0) {
+            // Return the closest droppable within that container
+            overId = closestCenter({
+              ...args,
+              droppableContainers: args.droppableContainers.filter(
+                (container) =>
+                  container.id !== overId &&
+                  containerItems.includes(container.id),
+              ),
+            })[0]?.id;
+          }
+        }
 
-    const activeContainer = findContainer(id);
-    const overContainer = findContainer(overId);
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer !== overContainer
-    ) {
-      return;
-    }
+        lastOverId.current = overId;
 
-    const activeIndex = items[activeContainer].findIndex(
-      (item) => item._id == active.id,
-    );
-    const overIndex = items[overContainer].findIndex(
-      (item) => item._id == overId,
-    );
-    if (activeIndex !== overIndex) {
-      setItems((items) => ({
-        ...items,
-        [overContainer]: arrayMove(
-          items[overContainer],
-          activeIndex,
-          overIndex,
-        ),
-      }));
-    }
-    setActiveId(null);
-  }
+        return [{ id: overId }];
+      }
 
-  function handleDragStart(event: DragStartEvent) {
-    const { active } = event;
-    const { id } = active;
-    if (id in items) {
-      setActiveId(id);
-      return;
-    }
-    const containerId: string = active.data?.current?.sortable.containerId;
-    console.log("ContainerId", containerId, id);
-    setActiveId(
-      containerId
-        ? items[containerId].find((item) => item._id === id)?.backlogTitle || id
-        : id,
-    );
-  }
+      // When a draggable item moves to a new container, the layout may shift
+      // and the `overId` may become `null`. We manually set the cached `lastOverId`
+      // to the id of the draggable item that was moved to the new container, otherwise
+      // the previous `overId` will be returned which can cause items to incorrectly shift positions
+      if (recentlyMovedToNewContainer.current) {
+        lastOverId.current = activeId;
+      }
+
+      // If no droppable is matched, return the last match
+      return lastOverId.current ? [{ id: lastOverId.current }] : [];
+    },
+    [activeId, items],
+  );
+
   return {
     activeId,
     setActiveId,

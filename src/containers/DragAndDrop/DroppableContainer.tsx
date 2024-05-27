@@ -53,9 +53,13 @@ const DroppableContainer = ({
       <AddItem
         action={onRename}
         close={() => setIsShow(false)}
-        disabled={(value) => Object.keys(containers).includes(value)}
+        disabled={(value) => {
+          return containers.includes(value);
+        }}
+        defaultValue={id}
       />
     );
+
   return (
     <div
       ref={disabled ? undefined : setNodeRef}
@@ -81,6 +85,7 @@ const DroppableContainer = ({
             style={{
               border: 0,
               padding: 0,
+              margin: "0 0 0 16px",
               maxHeight: 100,
               justifyContent: "center",
               display: "flex",

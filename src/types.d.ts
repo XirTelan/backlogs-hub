@@ -74,12 +74,14 @@ export type TemplateCreationDTO = {
   visibility: string;
 };
 export type SortableItemProps = {
+  children: React.ReactElement;
   containerId: UniqueIdentifier;
   id: UniqueIdentifier;
   index: number;
+  title: string;
   handle: boolean;
   disabled?: boolean;
-  style(args: any): React.CSSProperties;
+  style(args: unknown): React.CSSProperties;
   getIndex(id: UniqueIdentifier): number;
   renderItem?: () => React.ReactElement;
 };

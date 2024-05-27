@@ -1,7 +1,8 @@
-import { InputField } from "@/types";
+import { InputField as Props } from "@/types";
 import React from "react";
+import { FaCircleExclamation } from "react-icons/fa6";
 
-const InputField = React.forwardRef<HTMLInputElement, InputField>(
+const InputField = React.forwardRef<HTMLInputElement, Props>(
   (
     {
       id,
@@ -50,7 +51,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputField>(
           <label htmlFor={id} className="h-6 pb-2  text-secondary-text ">
             {label}
           </label>
-        )} 
+        )}
         <input
           type="input"
           className={`${inputLayers[layer]} ${sizes[variant]} ${helperText?.type === "error" ? "outline-2 -outline-offset-2 outline-error-support" : "border-b border-strong-1"}     text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white `}
@@ -60,6 +61,14 @@ const InputField = React.forwardRef<HTMLInputElement, InputField>(
           {...props}
           ref={ref}
         />
+        {helperText?.type === "error" && (
+          <div
+            className="absolute bottom-0 right-4 top-0 flex items-center text-error-text  "
+            title={"Error"}
+          >
+            <FaCircleExclamation />
+          </div>
+        )}
         {!isSimple && helperTextBlock()}
         {children}
       </div>

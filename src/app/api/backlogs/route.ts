@@ -8,6 +8,7 @@ import {
   updateBacklogsOrderById,
   isBacklogExist,
 } from "@/services/backlogs";
+import { updateUserFolders } from "@/services/user";
 import { BacklogCreationDTO, BacklogItemDTO } from "@/types";
 import { sendMsg } from "@/utils";
 import { BacklogDTO, BacklogFormData } from "@/zodTypes";
@@ -54,7 +55,8 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(resultData, { status: 200 });
 }
 
-export async function POST(request: NextRequest) { //todoMark task:AUTH1
+export async function POST(request: NextRequest) {
+  //todoMark task:AUTH1
   const data: BacklogFormData = await request.json();
   const user = await getCurrentUserInfo();
   if (!user) return sendMsg.error("", 401);
@@ -72,12 +74,17 @@ export async function POST(request: NextRequest) { //todoMark task:AUTH1
   }
 }
 
-export async function PATCH(request: NextRequest) {  //todoMark task:AUTH1
-  const data: BacklogDTO[] = await request.json();
+export async function PATCH(request: NextRequest) {
+  //todoMark task:AUTH1
+  const data: { folders: string[]; backlogs: BacklogDTO[] } =
+    await request.json();
   const user = await getCurrentUserInfo();
   if (!user) return sendMsg.error("", 401);
   try {
-    await updateBacklogsOrderById(data);
+    await Promise.all([
+      updateUserFolders(user.username, data.folders),
+      updateBacklogsOrderById(data.backlogs),
+    ]);
     revalidatePath(`/user/${user.username}/backlogs`);
     return sendMsg.success(`Created`, 201);
   } catch (error) {

@@ -1,20 +1,20 @@
 "use client";
 
 import { useMountStatus } from "@/hooks/useMountStatus";
-import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { Item } from "./Item";
 import { SortableItemProps } from "@/types";
 
 const SortableItem = ({
+  children,
+  containerId,
   disabled,
+  getIndex,
   id,
   index,
   handle,
-  children,
+  title,
   style,
-  containerId,
-  getIndex,
 }: SortableItemProps) => {
   const {
     setNodeRef,
@@ -28,6 +28,9 @@ const SortableItem = ({
     transition,
   } = useSortable({
     id,
+    data: {
+      title: title,
+    },
   });
   const mounted = useMountStatus();
   const mountedWhileDragging = isDragging && !mounted;
@@ -35,7 +38,7 @@ const SortableItem = ({
   return (
     <Item
       ref={disabled ? undefined : setNodeRef}
-      value={id}
+      title={title}
       dragging={isDragging}
       sorting={isSorting}
       handle={handle}

@@ -2,12 +2,26 @@ import Title from "@/components/Common/Title";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import AddItem from "@/components/dnd/AddItem";
 import Handle from "@/components/dnd/Handle";
+import { BacklogDTO } from "@/zodTypes";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { MdDeleteForever, MdDragHandle, MdEdit } from "react-icons/md";
+
+type Props = {
+  containers: UniqueIdentifier[];
+  showActions?: boolean;
+  children: React.ReactNode;
+  label?: string;
+  style?: React.CSSProperties;
+  horizontal?: boolean;
+  hover?: boolean;
+  handleProps?: React.HTMLAttributes<unknown>;
+  scrollable?: boolean;
+  onRename: (value: string) => void;
+  onRemove: () => void;
+};
 
 const DroppableContainer = ({
   children,
@@ -18,20 +32,18 @@ const DroppableContainer = ({
   onRemove,
   containers,
   style,
-  showActions,
+  showActions = false,
   ...props
-}: ContainerProps & {
+}: Props & {
   disabled?: boolean;
   id: UniqueIdentifier;
-  items: UniqueIdentifier[];
-  style?: React.CSSProperties;
+  items: BacklogDTO[];
 }) => {
   const {
     active,
     attributes,
     isDragging,
     listeners,
-    over,
     setNodeRef,
     transition,
     transform,
@@ -42,10 +54,6 @@ const DroppableContainer = ({
       children: items,
     },
   });
-  //   const isOverContainer = over
-  //     ? (id === over.id && active?.data.current?.type !== "container") ||
-  //       items.includes(over.id)
-  //     : false;
   const [isShow, setIsShow] = useState(false);
 
   if (isShow)
@@ -56,7 +64,7 @@ const DroppableContainer = ({
         disabled={(value) => {
           return containers.includes(value);
         }}
-        defaultValue={id}
+        defaultValue={id as string}
       />
     );
 
@@ -72,15 +80,12 @@ const DroppableContainer = ({
           active?.data.current && active?.data.current.type !== "container"
             ? "red"
             : "",
-        // background: active ? "red" : undefined,
       }}
       {...props}
     >
       <div className="flex items-center">
-        <Title width="fit-content" title={id} variant={3} />
-        {/* <h3>{id}</h3> */}
+        <Title width="fit-content" title={id as string} variant={3} />
         <div className="flex min-h-[2rem] w-full bg-transparent">
-          {/* <ButtonBase text="Test" variant="ghost"></ButtonBase> */}
           <Handle
             style={{
               border: 0,
@@ -97,8 +102,6 @@ const DroppableContainer = ({
           >
             <div className="group relative flex h-full w-full grow">
               <div
-                // initial={{ height: "1%" }}
-                // variants={variants}
                 style={{ maxHeight: "20px" }}
                 className="absolute inset-0 m-auto flex h-[1%] w-full grow items-center justify-center bg-layer-1 transition-all duration-500 ease-in-out group-hover:h-full "
               >
@@ -132,7 +135,6 @@ const DroppableContainer = ({
             </>
           )}
         </div>
-        {/* <div>{id}</div> */}
       </div>
       <ul className="flex w-full flex-col gap-2">{children}</ul>
     </div>

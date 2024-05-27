@@ -1,17 +1,16 @@
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import AddItem from "@/components/dnd/AddItem";
 import SortableItem from "@/components/dnd/SortableItem";
 import { SortableItemProps } from "@/types";
 import { BacklogDTO } from "@/zodTypes";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 
 const BacklogDndItem = ({
   backlog,
+  action,
   ...props
-}: SortableItemProps & { backlog: BacklogDTO }) => {
-
+}: SortableItemProps & { backlog: BacklogDTO; action: () => void }) => {
   return (
     <>
       <SortableItem {...props}>
@@ -28,18 +27,8 @@ const BacklogDndItem = ({
             size="small"
             variant="dangerGhost"
             icon={<MdDeleteForever size={20} />}
-            onClick={() => {
-              setIsShowModal({
-                isShow: true,
-                caption: `Delete backlog "${backlog.backlogTitle}"`,
-                text: "Are you sure you want to delete the backlog?",
-                action: () => {
-                  console.log("Hey");
-                },
-              });
-              // console.log(isShowModal);
-            }}
-          ></ButtonBase>
+            onClick={action}
+          />
         </div>
       </SortableItem>
     </>

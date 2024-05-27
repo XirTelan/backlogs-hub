@@ -1,6 +1,5 @@
 "use client";
 
-import { useMountStatus } from "@/hooks/useMountStatus";
 import { useSortable } from "@dnd-kit/sortable";
 import { Item } from "./Item";
 import { SortableItemProps } from "@/types";
@@ -32,15 +31,11 @@ const SortableItem = ({
       title: title,
     },
   });
-  const mounted = useMountStatus();
-  const mountedWhileDragging = isDragging && !mounted;
-  // console.log("Sortable", id);
   return (
     <Item
       ref={disabled ? undefined : setNodeRef}
       title={title}
       dragging={isDragging}
-      sorting={isSorting}
       handle={handle}
       handleProps={handle ? { ref: setActivatorNodeRef } : undefined}
       index={index}
@@ -54,7 +49,6 @@ const SortableItem = ({
       })}
       transition={transition}
       transform={transform}
-      fadeIn={mountedWhileDragging}
       listeners={listeners}
     >
       {children}

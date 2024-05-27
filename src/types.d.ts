@@ -74,7 +74,7 @@ export type TemplateCreationDTO = {
   visibility: string;
 };
 export type SortableItemProps = {
-  children: React.ReactElement;
+  children?: React.ReactElement;
   containerId: UniqueIdentifier;
   id: UniqueIdentifier;
   index: number;
@@ -131,3 +131,30 @@ export type ButtonBaseProps = {
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 >;
+
+export type DndListProps = {
+  data: DndData;
+  adjustScale?: boolean;
+  cancelDrop?: CancelDrop;
+  containerStyle?: React.CSSProperties;
+  coordinateGetter?: KeyboardCoordinateGetter;
+  getItemStyles?(args: {
+    value: UniqueIdentifier;
+    index: number;
+    overIndex: number;
+    isDragging: boolean;
+    containerId: UniqueIdentifier;
+    isSorting: boolean;
+    isDragOverlay: boolean;
+  }): React.CSSProperties;
+  itemCount?: number;
+  items?: Items;
+  view?: "full" | "compact";
+  handle?: boolean;
+  strategy?: SortingStrategy;
+  modifiers?: Modifiers;
+  minimal?: boolean;
+  trashable?: boolean;
+  scrollable?: boolean;
+  vertical?: boolean;
+};

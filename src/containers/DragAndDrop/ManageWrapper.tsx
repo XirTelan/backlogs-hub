@@ -1,34 +1,20 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Title from "@/components/Common/Title";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
-import { BacklogDTO, DndData } from "@/zodTypes";
-import DnDList from "./DnDList";
+import { DndData } from "@/zodTypes";
 import DnDMultList from "./DnDMultList";
-import InputField from "@/components/Common/UI/InputField";
-import { MdCheck, MdClose } from "react-icons/md";
-import toast from "react-hot-toast";
 import Switcher from "@/components/Common/UI/Switcher";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";
 
-const ManageWrapper = ({
-  items,
-  userName,
-}: {
-  items: DndData;
-  userName: string;
-}) => {
+const ManageWrapper = ({ items }: { items: DndData }) => {
   const [isFullView, setIsFullView] = useState<boolean>(true);
-
- 
 
   return (
     <>
       <section>
-        <Title title={"Manage"} variant={1}/>
-
+        <Title title={"Manage"} variant={1} />
       </section>
       <Title
         title={"Backlogs order"}

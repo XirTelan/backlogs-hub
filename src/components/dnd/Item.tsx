@@ -14,14 +14,13 @@ export type Props = {
   disabled?: boolean;
   dragging?: boolean;
   handle?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleProps?: any;
   height?: number;
   index?: number;
-  fadeIn?: boolean;
   title: string;
   transform?: Transform | null;
   listeners?: DraggableSyntheticListeners;
-  sorting?: boolean;
   style?: React.CSSProperties;
   transition?: string | null;
   wrapperStyle?: React.CSSProperties;

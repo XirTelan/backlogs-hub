@@ -39,12 +39,10 @@ export const getBacklogsBaseInfoByUserName = async (
   }
 };
 export const getBacklogsByFolder = async (userName: string) => {
-  // const data = await getBacklogsBaseInfoByUserName(userName);
   const [folders, data] = await Promise.all([
     getUserFolders(userName),
     getBacklogsBaseInfoByUserName(userName),
   ]);
-  console.log(folders);
   const hashMap: { [key: string]: BacklogDTO[] } = {};
   folders.forEach((folder) => (hashMap[folder] = []));
   for (const backlog of data) {

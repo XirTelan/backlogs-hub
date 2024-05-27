@@ -35,7 +35,11 @@ const Modal = ({
               style={{ width: "100%" }}
               variant="dangerPrimary"
               text="Confirm"
-              onClick={action}
+              onClick={() => {
+                if (!action) return;
+                action();
+                setClose();
+              }}
             />
           </div>
         )}

@@ -20,7 +20,9 @@ const NavLink = ({ href, label, children }: NavItemProps) => {
             {label}
           </div>
         )}
-        {children && <div className="h-12 w-12 p-[14px]">{children}</div>}
+        {children && (
+          <div className="ms-auto h-12 w-12 p-[14px]">{children}</div>
+        )}
       </Link>
     </li>
   );

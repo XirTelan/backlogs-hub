@@ -37,13 +37,11 @@ const Title = ({
             }
       }
     >
-      <div>
-        <Tag className={`${fonts[variant]} flex`}>{title}</Tag>
-        {description && (
-          <p className=" pe-2 text-secondary-text">{description}</p>
-        )}
-      </div>
-      <div className="ms-auto">{children}</div>
+      <Tag className={`${fonts[variant]} flex`}>{title}</Tag>
+      {description && (
+        <p className=" pe-2 text-secondary-text">{description}</p>
+      )}
+      {children && <div className="ms-auto">{children}</div>}
     </div>
   );
 };

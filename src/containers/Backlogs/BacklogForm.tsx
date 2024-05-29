@@ -62,8 +62,9 @@ const BacklogForm = <T extends BacklogFormData>({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitInternal)}>
-        <div className="field    w-full py-2  ">
+        <div className="field w-full grow py-2  ">
           <InputField
+            autoFocus
             helperText={
               errors.backlogTitle && {
                 message: errors.backlogTitle.message!,
@@ -88,7 +89,7 @@ const BacklogForm = <T extends BacklogFormData>({
           />
         </div>
         {errors.fields && <p>{errors.fields.message}</p>}
-        <div className="mt-4 flex w-1/4 flex-col gap-4">
+        <div className="mt-auto flex w-1/4 flex-col gap-4">
           <ButtonBase disabled={!isValid} text="Create backlog" />
           <ButtonBase
             disabled={!isValid}

@@ -11,7 +11,7 @@ const TableBase = ({
 }: TableBaseProps) => {
   return (
     <>
-      <div className=" flex min-h-80 w-full flex-col bg-layer-1">
+      <div className=" flex  w-full flex-col bg-layer-1">
         {title && (
           <div className="px-4 pb-6  pt-4">
             <div className=" text-xl">{title}</div>
@@ -30,18 +30,20 @@ const TableBase = ({
             </div>
           </section>
         )}
-        <table>
-          <thead>
-            <tr className=" h-12   bg-layer-accent-1">
-              {headers.map((header) => (
-                <th key={header} className="p-4 text-start text-primary-text">
-                  {header}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className=" divide-y divide-subtle-1">{children}</tbody>
-        </table>
+        <div className=" max-h-[calc(100vh-40rem)] overflow-auto">
+          <table className="w-full table-fixed ">
+            <thead>
+              <tr className=" h-12 bg-layer-accent-1">
+                {headers.map((header) => (
+                  <th key={header} className="p-4 text-start text-primary-text">
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className=" divide-y divide-subtle-1">{children}</tbody>
+          </table>
+        </div>
       </div>
     </>
   );

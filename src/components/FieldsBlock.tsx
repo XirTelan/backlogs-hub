@@ -4,27 +4,27 @@ import ButtonBase from "./Common/UI/ButtonBase";
 
 const FieldsBlock = (props: FieldsBlockProps) => {
   return (
-    <div className={`   bg-layer-1`}>
+    <section className=" flex flex-col">
       {props.title && (
         <div className="border-b border-subtle-1">
-          <Title variant={2} title={props.title}>
+          <Title variant={3} title={props.title}>
             {props.status == "active" ? (
               <ButtonBase
                 text="Add field"
                 type="button"
-                variant="secondary"
+                variant="tertiary"
                 onClick={() => props.append()}
               />
             ) : null}
           </Title>
         </div>
       )}
-      <div className="mb-4 flex-wrap rounded  p-4">
-        <ul className=" grid max-h-[calc(100vh-40rem)] flex-col gap-1  ">
+      <div className="flex-wrap  rounded bg-layer-1 p-4">
+        <ul className=" grid max-h-[calc(100vh-40rem)] flex-col gap-1 overflow-auto ">
           {props.children}
         </ul>
       </div>
-    </div>
+    </section>
   );
 };
 

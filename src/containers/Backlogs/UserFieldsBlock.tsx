@@ -5,6 +5,7 @@ import { RiDeleteBack2Line } from "react-icons/ri";
 import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import TableBase from "@/components/Common/UI/TableBase";
+import Select from "@/components/Common/UI/Select";
 
 const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
   const fieldsArray = useFieldArray({
@@ -62,15 +63,11 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
                 />
               </td>
               <td className="px-4 text-center">
-                <select
-                  className="rounded bg-neutral-800 p-2"
+                <Select
                   {...register(`fields.${index}.type`)}
-                >
-                  <option value="text">Text</option>
-                  <option value="timer">Timer</option>
-                  <option value="number">Number</option>
-                  <option value="date">Date</option>
-                </select>
+                  options={["Text", "Timer", "Number", "Date"]}
+                />
+
               </td>
               <td className="px-4 text-center">
                 <button onClick={() => fieldsArray.remove(index)}>

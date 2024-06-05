@@ -1,24 +1,19 @@
 "use client";
-import Select from "@/components/Common/UI/Select";
-import { useSearchParams } from "next/navigation";
+
 import React from "react";
+import Privacy from "./Settings/Privacy";
+import Account from "./Settings/Account";
+import Preferences from "./Settings/Preferences";
 
 const TABS = {
-  account: <div>Acoount settings</div>,
-  privacy: (
-    <div>
-      <div>
-        <span>Profile visability:</span>
-        <Select options={["Public", "Private"]} />
-      </div>
-    </div>
-  ),
+  account: <Account />,
+  privacy: <Privacy />,
+  preferences: <Preferences />,
 };
 type TabsType = keyof typeof TABS;
 
-const UserSettings = () => {
-  const activeBar = (useSearchParams().get("tab") || "account") as TabsType;
-  return <div>{TABS[activeBar]}</div>;
+const UserSettings = ({ tab }: { tab: TabsType }) => {
+  return <div>{TABS[tab]}</div>;
 };
 
 export default UserSettings;

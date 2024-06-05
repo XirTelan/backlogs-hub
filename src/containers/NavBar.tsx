@@ -2,6 +2,7 @@ import HomeLink from "@/components/HomeLink";
 import NavLink from "@/components/NavLink";
 import SidePanel from "@/components/SidePanel";
 import React from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const NavBar = ({ userName }: { userName: string }) => {
   const BASE = `/user/${userName}`;
@@ -17,19 +18,9 @@ const NavBar = ({ userName }: { userName: string }) => {
     {
       title: "Templates",
       pathname: `/templates`,
-    }
+    },
   ];
 
-  const hamburgerMenu = (
-    <>
-      <div className="flex h-5 flex-col justify-center gap-0.5 ">
-        <div className=" h-[3px] w-full bg-red-600"></div>
-        <div className=" h-[3px] w-full bg-red-600"></div>
-        <div className=" h-[3px] w-full bg-red-600"></div>
-        <div className=" h-[3px] w-full bg-red-600"></div>
-      </div>
-    </>
-  );
   const navList = (
     <ul className="flex flex-col md:flex-row">
       {links.map((link) => {
@@ -46,7 +37,7 @@ const NavBar = ({ userName }: { userName: string }) => {
   return (
     <nav className="flex items-center">
       <span className=" flex md:hidden">
-        <SidePanel position="left" icon={hamburgerMenu}>
+        <SidePanel position="left" icon={<GiHamburgerMenu />}>
           {navList}
         </SidePanel>
         <HomeLink />

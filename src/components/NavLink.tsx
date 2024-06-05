@@ -3,16 +3,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const NavLink = ({ href, label, children }: NavItemProps) => {
+const NavLink = ({ href, label, variant = "line", children }: NavItemProps) => {
   const pathname = usePathname();
   const isActive = pathname === href;
-  const style = isActive
-    ? "border-l-[3px] md:border-b-[3px] md:border-0 border-borderinteractive"
-    : "md:border-b border-subtle-1";
+  const style = {
+    line: {
+      default: "md:border-b border-subtle-1",
+      active:
+        "border-l-[3px] md:border-b-[3px] md:border-0 border-borderinteractive",
+    },
+    contained: {
+      default: "bg-layer-accent-1",
+      active: "bg-layer-1 shadow-[inset_0_3px_0px_0_rgba(69,137,255,1)]",
+    },
+  };
 
   return (
     <li
-      className={`${style} bg-border-interactive relative h-12  list-none     after:w-full hover:bg-subtle-3/15   `}
+      className={`${style[variant][isActive ? "active" : "default"]} relative h-12 list-none outline-offset-4 after:w-full hover:bg-subtle-3/15`}
     >
       <Link href={href} className="flex  items-center text-primary-text">
         {label && (
@@ -33,5 +41,6 @@ export default NavLink;
 interface NavItemProps {
   href: string;
   label: string;
+  variant?: "line" | "contained";
   children?: React.ReactElement;
 }

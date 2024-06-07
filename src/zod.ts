@@ -51,5 +51,8 @@ export const BacklogDTOSchema = z.intersection(
   }),
   BacklogFormSchema,
 );
-
+export const ConfigSchema = z.object({
+  profileVisibility: z.enum(["public", "private"]),
+  showEmptyFolders: z.boolean(),
+});
 export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());

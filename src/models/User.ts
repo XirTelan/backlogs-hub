@@ -15,7 +15,10 @@ const UserSchema = new mongoose.Schema(
     },
     password: String,
     folders: [String],
-    profileVisibility: { type: String, default: "public" },
+    config: {
+      profileVisibility: { type: String, default: "public" },
+      showEmptyFolders: { type: Boolean, default: true },
+    },
   },
   {
     timestamps: true,

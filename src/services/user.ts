@@ -1,4 +1,5 @@
 "use server";
+import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { UserCreationDTO, UserDTO } from "@/types";
@@ -70,21 +71,13 @@ export const updateUserFolders = async (username: string, data: string[]) => {
   try {
     await dbConnect();
     const user = await User.findOne({ username: username });
-    user.folders = data
-    await user.save()
+    user.folders = data;
+    await user.save();
   } catch (error) {
     throw new Error(`${error}`);
   }
 };
-export async function updateUser(data: UserDTO) {
-  await dbConnect();
-  const user = await User.findOne({ email: data.email });
-  if (user)
-    return NextResponse.json(
-      { message: "User already exist" },
-      { status: 409 },
-    );
-}
+
 //DELETE
 export async function deleteUser(id: string) {
   try {
@@ -94,4 +87,33 @@ export async function deleteUser(id: string) {
     return NextResponse.json({ error: error }, { status: 400 });
   }
   return NextResponse.json(null, { status: 200 });
+}
+//utils
+export async function getConfigOptions() {
+  const user = await getCurrentUserInfo();
+  if (!user) return { status: "error", error: "Something goes wrong" };
+  try {
+    await dbConnect();
+    const userData = await User.findById(user.id).lean();
+    if (!userData) return { status: "error", error: "Something goes wrong" };
+    return { status: "ok", data: userData.config };
+  } catch (error) {
+    return { status: "error", error: error };
+  }
+}
+
+export async function updateConfigOption(option: string, value: unknown) {
+  const user = await getCurrentUserInfo();
+  if (!user) return { status: "error", message: "Something goes wrong" };
+  try {
+    await dbConnect();
+    const userData = await User.findById(user.id);
+
+    await User.findByIdAndUpdate(user.id, {
+      config: { ...userData.config, [option]: value },
+    });
+    return { message: "OK" };
+  } catch (error) {
+    return { error: error, status: 'error' };
+  }
 }

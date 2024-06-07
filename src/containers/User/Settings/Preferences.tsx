@@ -1,14 +1,21 @@
+"use client";
 import Toggle from "@/components/Common/UI/Toggle";
-import React, { useState } from "react";
+import React from "react";
+import Setting from "./Setting";
+import { updateConfigOption } from "@/services/user";
+import { ConfigType } from "@/zodTypes";
 
-const Preferences = () => {
-  const [isShow, setIsShow] = useState(false);
+const Preferences = ({ data }: { data: ConfigType }) => {
   return (
     <div>
-      Preferences
-      <div>
-        <Toggle state={isShow} setState={setIsShow} />
-      </div>
+      <Setting label={"Show empty folders in the backlogs"}>
+        <Toggle
+          defaultValue={data.showEmptyFolders || false}
+          action={(state) => {
+            updateConfigOption("showEmptyFolders", state);
+          }}
+        />
+      </Setting>
     </div>
   );
 };

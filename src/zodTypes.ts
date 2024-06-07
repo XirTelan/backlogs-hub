@@ -3,6 +3,7 @@ import {
   BacklogCategorySchema,
   BacklogDTOSchema,
   BacklogFormSchema,
+  ConfigSchema,
   DndDataSchema,
   FieldSchema,
 } from "./zod";
@@ -16,3 +17,4 @@ export type BacklogCategory = z.infer<typeof BacklogCategorySchema>;
 export type BacklogDTO = z.infer<typeof BacklogDTOSchema>;
 
 export type DndData = z.infer<typeof DndDataSchema>;
+export type ConfigType = z.infer<typeof ConfigSchema>;

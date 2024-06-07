@@ -33,7 +33,7 @@ const CategoriesFieldsBlock = ({
       >
         <>
           {categoriesArray.fields.map((item, index) => (
-            <li className="flex h-8 items-center gap-2 " key={item.id}>
+            <li className="relative flex h-8 items-center gap-2 " key={item.id}>
               <div className=" w-8 text-sm text-secondary-text">
                 {index + 1}
               </div>
@@ -53,7 +53,7 @@ const CategoriesFieldsBlock = ({
                 placeholder="Category name"
                 {...register(`categories.${index}.name`)}
               />
-              <div className="me-4 flex gap-2">
+              <div className="flex gap-2">
                 <Controller
                   control={control}
                   name={`categories.${index}.color`}

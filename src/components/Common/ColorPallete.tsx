@@ -32,32 +32,31 @@ const ColorPallete = ({
     setCurrentColor(value);
   }, [value]);
   return (
-    <div className="relative">
+    <div>
       <ButtonBase
         type="button"
         variant="secondary"
         size="small"
         style={{ backgroundColor: currentColor }}
         onClick={() => setIsOpen((prevValue) => !prevValue)}
-      >
-        <IoIosColorPalette />
-      </ButtonBase>
+        icon={<IoIosColorPalette />}
+      />
+
       {isOpen && (
-        <div
-          ref={ref}
-          className="absolute right-0 top-full z-10 flex h-auto gap-1  border border-subtle-1 bg-layer-1  p-2"
-        >
-          {defaultColors.map((color, index) => (
-            <div
-              key={index}
-              className="h-6 w-6 cursor-pointer rounded"
-              style={{ backgroundColor: `#${color}` }}
-              onClick={() => {
-                onChange(`#${color}`);
-                setIsOpen(false);
-              }}
-            ></div>
-          ))}
+        <div ref={ref} className="absolute inset-0 z-10 w-fit  flex">
+          <div className=" fixed  flex h-auto gap-1  border border-subtle-1 bg-layer-1  p-2">
+            {defaultColors.map((color, index) => (
+              <div
+                key={index}
+                className="z-40 h-6 w-6 cursor-pointer rounded "
+                style={{ backgroundColor: `#${color}` }}
+                onClick={() => {
+                  onChange(`#${color}`);
+                  setIsOpen(false);
+                }}
+              ></div>
+            ))}
+          </div>
         </div>
       )}
     </div>

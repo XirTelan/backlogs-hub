@@ -1,11 +1,11 @@
 import UserSettings from "@/containers/User/UserSettings";
 import React from "react";
 
-const Page = ({ params }: { params: { tab: string } }) => {
+const Page = ({ params }: { params: { tab: [string] } }) => {
+  const tab = params.tab ? params.tab[0] : "account";
   return (
     <main className=" container">
-      <div>{params.tab}</div>
-      <UserSettings tab={params.tab || "account"} />
+      <UserSettings tab={tab} />
     </main>
   );
 };

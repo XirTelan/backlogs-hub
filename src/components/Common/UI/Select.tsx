@@ -18,11 +18,14 @@ const Select = ({
   ...props
 }: SelectProps) => {
   return (
-    <div className={variants[variant]}>
+    <div className={`${variants[variant]} `}>
       {label && (
         <label className="h-6 pb-2  text-secondary-text ">{label}</label>
       )}
-      <select {...props} className={`${elevation[layer]} rounded p-2`}>
+      <select
+        {...props}
+        className={`${elevation[layer]} rounded p-2 hover:cursor-pointer `}
+      >
         {options.map((option, indx) => (
           <option key={indx} value={option.toLowerCase()}>
             {option}

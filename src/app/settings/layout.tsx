@@ -11,7 +11,7 @@ export default async function Layout({
     <div className="container">
       <Title style={{ marginLeft: "1rem" }} title={"Settings"} />
 
-      <div className="flex">
+      <ul className="flex">
         <NavLink
           href={"/settings/account"}
           variant="contained"
@@ -27,8 +27,8 @@ export default async function Layout({
           variant="contained"
           label={"Preferences"}
         />
-      </div>
-      <div className=" bg-layer-1 p-4">{children}</div>
+      </ul>
+      <div className=" max-w-3xl bg-layer-1 p-4">{children}</div>
     </div>
   );
 }

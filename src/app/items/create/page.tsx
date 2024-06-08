@@ -13,10 +13,7 @@ const CreateItem = async ({
   const user = await getCurrentUserInfo();
   if (!user || !user.username || !backlog) redirect("/");
 
-  const backlogInfo = await getUserBacklogBySlug(
-    user.username,
-    backlog as string,
-  );
+  const backlogInfo = await getUserBacklogBySlug(user.username, backlog);
   if (!backlogInfo) redirect("/");
 
   const defaultValues: BacklogItemCreationDTO = {

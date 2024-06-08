@@ -7,7 +7,7 @@ import { MdOutlineManageSearch } from "react-icons/md";
 
 import { IoAdd } from "react-icons/io5";
 import { getCurrentUserInfo } from "@/auth/utils";
-import { redirect } from "next/navigation";
+import { getUserVisibility } from "@/services/user";
 
 export default async function Backlogs({
   params,
@@ -15,25 +15,33 @@ export default async function Backlogs({
   params: { userName: string };
 }) {
   const user = await getCurrentUserInfo();
-  if (!user || user.username != params.userName) return redirect("/");
+  const profileVisibility = await getUserVisibility(params.userName);
+  const isOwner = user ? user.username === params.userName : false;
+  if (!isOwner && profileVisibility !== "public") {
+    return <div>Access denied?</div>;
+  }
 
   return (
     <>
       <main className="container flex w-full  flex-col items-center">
-        <Title title={"My backlogs"}>
-          <div className="flex">
-            <LinkButton
-              href={`/manage-backlogs`}
-              text="Manage backlogs"
-              button={{ variant: "ghost" }}
-            >
-              <MdOutlineManageSearch size={24} />
-            </LinkButton>
-            <LinkButton href={`/backlog/create`} text="Create new backlog">
-              <IoAdd />
-            </LinkButton>
-          </div>
-        </Title>
+        {isOwner ? (
+          <Title title={"My backlogs"}>
+            <div className="flex">
+              <LinkButton
+                href={`/manage-backlogs`}
+                text="Manage backlogs"
+                button={{ variant: "ghost" }}
+              >
+                <MdOutlineManageSearch size={24} />
+              </LinkButton>
+              <LinkButton href={`/backlog/create`} text="Create new backlog">
+                <IoAdd />
+              </LinkButton>
+            </div>
+          </Title>
+        ) : (
+          <Title title={`${params.userName} backlogs`} />
+        )}
         <UserBacklogs userName={params.userName} />
 
         <Feed />

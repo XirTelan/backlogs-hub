@@ -1,11 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getTokenData } from "./auth/utils";
-import { routesURL } from "./data";
+import { routesCategories } from "./data";
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value || "";
   const curPath = request.nextUrl.pathname;
-  const isProtected = routesURL.protectedRoutes.some((elem) =>
+  const isProtected = routesCategories.protectedRoutes.some((elem) =>
     curPath.includes(elem),
   );
 
@@ -23,9 +23,12 @@ export async function middleware(request: NextRequest) {
   if (!userData && isProtected)
     return NextResponse.redirect(new URL(`/`, request.nextUrl));
 
-  if (curPath === "/" && userData) {
+  if (
+    routesCategories.forNonUser.some((route) => route === curPath) &&
+    userData
+  ) {
     return NextResponse.redirect(
-      new URL(`/user/${userData.username}`, request.nextUrl),
+      new URL(`/user/${userData.username}/backlogs`, request.nextUrl),
     );
   }
 }

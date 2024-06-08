@@ -1,6 +1,7 @@
 import {
   deleteBacklogById,
   getBacklogById,
+  isAuthorizedBacklogOwner,
   updateBacklogById,
 } from "@/services/backlogs";
 import { cleanParamString, sendMsg } from "@/utils";
@@ -11,7 +12,10 @@ export async function GET(
   { params: { id } }: { params: { id: string } },
 ) {
   try {
-    const backlog = await getBacklogById(cleanParamString(id));
+    const backlogId = cleanParamString(id);
+    const isAuthorize = await isAuthorizedBacklogOwner(backlogId);
+    if (!isAuthorize) return sendMsg.error("Not authorized", 403);
+    const backlog = await getBacklogById(backlogId);
     if (backlog) {
       return NextResponse.json(backlog);
     } else {
@@ -25,6 +29,8 @@ export async function GET(
 export async function PUT(request: NextRequest) {
   const data = await request.json();
   try {
+    const isAuthorize = await isAuthorizedBacklogOwner(data._id);
+    if (!isAuthorize) return sendMsg.error("Not authorized", 403);
     await updateBacklogById(data);
     return NextResponse.json("Success");
   } catch (error) {
@@ -36,6 +42,8 @@ export async function DELETE(
   { params: { id } }: { params: { id: string } },
 ) {
   try {
+    const isAuthorize = await isAuthorizedBacklogOwner(id);
+    if (!isAuthorize) return sendMsg.error("Not authorized", 403);
     await deleteBacklogById(id);
     return NextResponse.json("Success");
   } catch (error) {

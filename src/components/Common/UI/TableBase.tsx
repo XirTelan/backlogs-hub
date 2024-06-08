@@ -35,8 +35,12 @@ const TableBase = ({
             <thead>
               <tr className=" h-12 bg-layer-accent-1">
                 {headers.map((header) => (
-                  <th key={header} className="p-4 text-start text-primary-text">
-                    {header}
+                  <th
+                    key={header.title}
+                    style={{ width: header.width || "auto" }}
+                    className="p-4 text-start text-primary-text"
+                  >
+                    {header.title}
                   </th>
                 ))}
               </tr>
@@ -54,7 +58,7 @@ export default TableBase;
 type TableBaseProps = {
   title: string;
   description: string;
-  headers: string[];
+  headers: { title: string; width?: string }[];
   search?: boolean;
   customButton?: React.ReactElement;
   children: React.ReactElement;

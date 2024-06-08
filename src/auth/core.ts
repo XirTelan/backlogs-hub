@@ -3,12 +3,12 @@
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { createUser } from "@/services/user";
-import { UserDTO } from "@/types";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { getTokenData, generateAccessToken, setTokenCookies } from "./utils";
 import { getUserData as getDiscordUser } from "@/auth/providers/discordProvirer";
 import { getUserData as getGoogleUser } from "@/auth/providers/googleProvider";
+import { UserDTO } from "@/zodTypes";
 
 export const handleSession = async (request: NextRequest) => {
   const token = request.cookies.get("access_token")?.value || "";
@@ -34,7 +34,7 @@ export const handleCallback = async (
   const code = searchParams.get("code");
   if (!code) return sendMsg.error("code not specified");
 
-  let userData: Omit<UserDTO, "id"> | undefined = undefined;
+  let userData: Partial<UserDTO> | undefined = undefined;
   switch (provider) {
     case "google":
       userData = await getGoogleUser(code);

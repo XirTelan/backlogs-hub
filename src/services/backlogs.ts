@@ -8,10 +8,14 @@ import { BacklogDTO } from "@/zodTypes";
 import { getUserFolders } from "./user";
 
 //GET SECTION
-export const getBacklogById = async (id: string): Promise<BacklogDTO> => {
+export const getBacklogById = async (
+  id: string,
+): Promise<BacklogDTO | null> => {
   try {
     await dbConnect();
-    const backlog = await Backlog.findById(id);
+    const backlog: BacklogDTO | null = await Backlog.findById(id).lean();
+    if (!backlog) return null;
+    backlog._id = backlog._id.toString();
     return backlog;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -24,15 +28,20 @@ export const getBacklogsBaseInfoByUserName = async (
   const user = await getCurrentUserInfo();
   try {
     await dbConnect();
-    let backlogs: BacklogDTO[] = [];
-    if (user && user.username === userName) {
-      backlogs = (await Backlog.find({ userName: userName })
-        .select(["slug", "backlogTitle", "folder", "order"])
-        .sort({
-          order: 1,
-        })
-        .lean()) as BacklogDTO[];
-    }
+    const options =
+      user && user.username === userName
+        ? { userName: userName }
+        : {
+            userName: userName,
+            visibility: "public",
+          };
+    const backlogs: BacklogDTO[] = (await Backlog.find(options)
+      .select(["slug", "backlogTitle", "folder", "order"])
+      .sort({
+        order: 1,
+      })
+      .lean()) as BacklogDTO[];
+
     return backlogs;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -150,4 +159,14 @@ export const isBacklogExist = async (userName: string, slug: string) => {
   } catch (error) {
     throw new Error(`${error}`);
   }
+};
+export const isAuthorizedBacklogOwner = async (
+  backlogId: string,
+  method: "read" | "edit" = "edit",
+) => {
+  const user = await getCurrentUserInfo();
+  const backlog = await getBacklogById(backlogId);
+  if (backlog?.visibility === "public" && method === "read") return true;
+  if (backlog?.userId !== user?.id) return false;
+  return true;
 };

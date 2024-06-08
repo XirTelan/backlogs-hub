@@ -56,3 +56,13 @@ export const ConfigSchema = z.object({
   showEmptyFolders: z.boolean(),
 });
 export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());
+
+export const UserSchema = z.object({
+  _id: z.string(),
+  username: z.string(),
+  password: z.string(),
+  folders: z.string().array(),
+  email: z.string(),
+  profileVisibility: z.string(),
+  config: ConfigSchema
+});

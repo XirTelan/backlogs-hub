@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export const sendMsg = {
-  success: (message: string, status: number = 200) => {
+  success: (message: string = "success", status: number = 200) => {
     return NextResponse.json({ message: message }, { status: status });
   },
   error: (error: unknown, status: number = 400) => {
@@ -68,3 +68,4 @@ export const generateSlug = (name: string): string => {
 
 export const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((res) => res.json());
+

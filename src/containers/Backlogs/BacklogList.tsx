@@ -9,6 +9,7 @@ const Backloglist = async ({
   categoriesMap,
   search,
 }: BackloglistProps) => {
+  //task AUTH3
   const data = await fetch(
     `${process.env.DOMAIN_URL}/api/backlogs/${id}/items${search}`,
     { next: { tags: [`backloglist${id}`] } },
@@ -21,7 +22,7 @@ const Backloglist = async ({
         title=""
         search
         description=""
-        headers={["Title", "Actions"]}
+        headers={[{ title: "Title" }, { title: "Actions", width: "100px" }]}
       >
         {data.length > 0 ? (
           data.map((item: BacklogItemDTO) => (

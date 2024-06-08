@@ -1,9 +1,11 @@
 "use client";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogItemDTO } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
+import { MdEdit, MdDeleteForever } from "react-icons/md";
 
 const BacklogItemTr = ({ item, color }: BacklogItemTrProps) => {
   const router = useRouter();
@@ -21,11 +23,21 @@ const BacklogItemTr = ({ item, color }: BacklogItemTrProps) => {
       <td className="p-4" style={{ color: color }}>
         {item.title}
       </td>
-      <td className="p-2">
-        <Link href={`/items/edit/${item._id}`}>Edit</Link>
-        <button onClick={() => onDelete(item._id, item.backlogId)}>
-          Delete
-        </button>
+      <td className="ms-auto flex p-2 ">
+        <Link href={`/items/edit/${item._id}`}>
+          <ButtonBase
+            size="small"
+            variant="ghost"
+            icon={<MdEdit size={20} />}
+          />
+        </Link>
+        <ButtonBase
+          title="Delete"
+          size="small"
+          variant="dangerGhost"
+          icon={<MdDeleteForever size={20} />}
+          onClick={() => onDelete(item._id, item.backlogId)}
+        />
       </td>
     </tr>
   );

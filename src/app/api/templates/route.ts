@@ -9,13 +9,19 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
+    const currentUser = await getCurrentUserInfo();
+    if (!currentUser) return sendMsg.error("", 401);
     const type = request.nextUrl.searchParams.get("filter");
     let resultData;
     switch (type) {
       case "my":
         {
-          const currentUser = await getCurrentUserInfo();
-          resultData = await getTemplatesByUsername(currentUser?.username);
+          resultData = await getTemplatesByUsername(currentUser.username);
+        }
+        break;
+      case "system":
+        {
+          resultData = await getTemplatesByUsername("system");
         }
         break;
       case "all":
@@ -30,6 +36,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const user = await getCurrentUserInfo();
+  if (!user) return sendMsg.error("", 401);
   const data = await request.json();
   try {
     const resultData = await createTemplate(data);

@@ -1,4 +1,3 @@
-import { getCurrentUserInfo } from "@/auth/utils";
 import ItemsEditForm from "@/containers/Items/ItemsEditForm";
 import { getBacklogItemById } from "@/services/backlogItem";
 import { cleanParamString } from "@/utils";
@@ -9,20 +8,15 @@ const EditItem = async ({
 }: {
   params: { itemId: string };
 }) => {
-  const user = await getCurrentUserInfo();
-  if (!user || !user.username || !itemId) redirect("/");
-
-  const itemData = await getBacklogItemById(itemId);
-  const backlogId = cleanParamString(itemData.backlogId);
-  const defaultValues = JSON.stringify(itemData);
   if (!itemId) redirect("/");
+
+  const res = await getBacklogItemById(itemId);
+  if (res.status === "error") redirect("/");
+  const backlogId = cleanParamString(res.data.backlogId);
 
   return (
     <div>
-      <ItemsEditForm
-        backlogId={backlogId}
-        defaultValues={JSON.parse(defaultValues)}
-      />
+      <ItemsEditForm backlogId={backlogId} defaultValues={res.data} />
     </div>
   );
 };

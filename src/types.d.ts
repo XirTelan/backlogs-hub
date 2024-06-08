@@ -101,13 +101,18 @@ export type FieldsBlockProps = {
   control: Control<BacklogFormData, any>;
   register: UseFormRegister<BacklogFormData>;
 };
-
-export type UserDTO = {
-  id: string;
-  username: string;
-  email: string;
-  profileVisibility: string;
-};
+export type ResponseData<T> = {
+  message?: string;
+} & (
+  | {
+      status: "ok";
+      data: T;
+    }
+  | {
+      status: "error";
+      errors?: unknown;
+    }
+);
 
 export type UserCreationDTO = {
   password?: string;

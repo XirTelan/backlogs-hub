@@ -1,8 +1,8 @@
-import UserSettings from "@/containers/User/UserSettings";
+import UserSettings, { TabsType } from "@/containers/User/UserSettings";
 import React from "react";
 
-const Page = ({ params }: { params: { tab: [string] } }) => {
-  const tab = params.tab ? params.tab[0] : "account";
+const Page = ({ params }: { params: { tab: [TabsType] } }) => {
+  const tab: TabsType = params.tab ? params.tab[0] : "account";
   return (
     <main className=" container">
       <UserSettings tab={tab} />

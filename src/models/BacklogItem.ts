@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
 
-const DataItemSchema = new mongoose.Schema({
-  name: {
-    type: String,
+const DataItemSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    value: {
+      type: String,
+    },
   },
-  value: {
-    type: String,
-  },
-});
+  { _id: false },
+);
 
 const BacklogItemSchema = new mongoose.Schema({
   backlogId: { type: String, require: true },

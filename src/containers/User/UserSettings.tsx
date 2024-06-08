@@ -10,7 +10,7 @@ const TABS = {
   privacy: Privacy,
   preferences: Preferences,
 };
-type TabsType = keyof typeof TABS;
+export type TabsType = keyof typeof TABS;
 
 type UserSettingsProps = {
   tab: TabsType;
@@ -26,8 +26,7 @@ const renderTab = (
 const UserSettings = async ({ tab }: UserSettingsProps) => {
   const data = await getConfigOptions();
   if (data.status === "error")
-    return <div>Something goes wrong: {JSON.stringify(data.error)}</div>;
-  console.log("data", data);
+    return <div>Something goes wrong: {JSON.stringify(data.message)}</div>;
   const TabComponent = TABS[tab];
   return <>{renderTab(TabComponent, data.data)}</>;
 };

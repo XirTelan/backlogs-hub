@@ -1,15 +1,20 @@
 import dbConnect from "@/lib/dbConnect";
 import BacklogItem from "@/models/BacklogItem";
-import { BacklogItemCreationDTO, BacklogItemDTO } from "@/types";
+import { BacklogItemCreationDTO, BacklogItemDTO, ResponseData } from "@/types";
 import { NextResponse } from "next/server";
+
 
 export const getBacklogItemById = async (
   itemId: string,
-): Promise<BacklogItemDTO> => {
+): Promise<ResponseData<BacklogItemDTO>> => {
   try {
     await dbConnect();
-    const backlogData = await BacklogItem.findById(itemId);
-    return backlogData;
+    const backlogData: BacklogItemDTO | null =
+      await BacklogItem.findById(itemId).lean();
+    if (!backlogData)
+      return { status: "error", message: "doesnt exist" };
+    backlogData._id = backlogData._id.toString();
+    return { status: "ok", data: backlogData };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }

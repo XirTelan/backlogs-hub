@@ -23,6 +23,7 @@ const isType = (value: unknown): value is Types => {
   return accessTypes.some((valid) => valid === value);
 };
 
+//AUTH3
 export async function GET(request: NextRequest) {
   let userName = request.nextUrl.searchParams
     .get("userName")
@@ -56,10 +57,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  //todoMark task:AUTH1
   const data: BacklogFormData = await request.json();
   const user = await getCurrentUserInfo();
-  if (!user) return sendMsg.error("", 401);
+  if (!user) return sendMsg.error("Not authorized", 401);
   const backlogData: BacklogCreationDTO = {
     ...data,
     userId: user.id,
@@ -75,11 +75,12 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  //todoMark task:AUTH1
   const data: { folders: string[]; backlogs: BacklogDTO[] } =
     await request.json();
   const user = await getCurrentUserInfo();
   if (!user) return sendMsg.error("", 401);
+  if (data.backlogs.some((backlog) => backlog.userId !== user.id))
+    return sendMsg.error("Validation error", 400);
   try {
     await Promise.all([
       updateUserFolders(user.username, data.folders),

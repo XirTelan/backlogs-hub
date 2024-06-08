@@ -8,6 +8,8 @@ import { sendMsg } from "@/utils";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
+
+//task AUTH3 
 export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } },
@@ -27,18 +29,17 @@ export async function GET(
     }
     if (backlogData) {
       return NextResponse.json(backlogData);
-    } else {
-      return NextResponse.json(
-        {
-          data: null,
-          error: {
-            message: "The requested objects were not found.",
-            details: "Please check your parameters and ensure they are correct",
-          },
-        },
-        { status: 404 },
-      );
     }
+    return NextResponse.json(
+      {
+        data: null,
+        error: {
+          message: "The requested objects were not found.",
+          details: "Please check your parameters and ensure they are correct",
+        },
+      },
+      { status: 404 },
+    );
   } catch (error) {
     sendMsg.error(error);
   }

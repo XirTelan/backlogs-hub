@@ -1,21 +1,20 @@
 import { Suspense } from "react";
 import FilterBlock from "../FilterBlock";
 import Backloglist from "./BacklogList";
-import { getUserBacklogBySlug } from "@/services/backlogs";
 import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
 import Title from "@/components/Common/Title";
+import Link from "next/link";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
+import { MdEdit } from "react-icons/md";
+import { BacklogDTO } from "@/zodTypes";
 
 const BacklogHandler = async ({
-  userName,
   search,
-  backlog,
+  data,
 }: {
-  userName: string;
   search: string;
-  backlog: string;
+  data: BacklogDTO;
 }) => {
-  const data = await getUserBacklogBySlug(userName, backlog);
-  if (!data) return <div>Try again later</div>;
   const categoriesMap = new Map();
   data.categories.forEach((category) => {
     categoriesMap.set(category.name.toLowerCase(), category.color);
@@ -23,7 +22,15 @@ const BacklogHandler = async ({
 
   return (
     <>
-      <Title title={data.backlogTitle} />
+      <Title title={data.backlogTitle}>
+        <Link href={`/backlog/edit/${data._id}`}>
+          <ButtonBase
+            variant="tertiary"
+            text="Edit backlog"
+            icon={<MdEdit />}
+          ></ButtonBase>
+        </Link>
+      </Title>
       <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
         <Suspense fallback={<p>Loading backlog...</p>}>
           <FilterBlock
@@ -32,7 +39,7 @@ const BacklogHandler = async ({
           />
         </Suspense>
       </section>
-      <section className="me-auto flex w-[calc(100%-2rem)] flex-col py-4 lg:m-0">
+      <section className="me-auto flex flex-col py-4 lg:m-0">
         <Suspense fallback={<SkeletonDataTable />}>
           <Backloglist
             search={search}

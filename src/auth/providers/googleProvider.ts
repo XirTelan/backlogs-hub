@@ -1,6 +1,6 @@
 "use server";
 
-import { UserDTO } from "@/types";
+import { UserDTO } from "@/zodTypes";
 import { JWTPayload, decodeJwt } from "jose";
 
 const TOKEN_URL = "https://oauth2.googleapis.com/token";

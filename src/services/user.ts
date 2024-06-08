@@ -2,7 +2,8 @@
 import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
-import { UserCreationDTO, UserDTO } from "@/types";
+import { ResponseData, UserCreationDTO } from "@/types";
+import { ConfigType, UserDTO } from "@/zodTypes";
 import { NextResponse } from "next/server";
 
 type CreateUser =
@@ -30,9 +31,9 @@ export async function getUserVisibility(username: string) {
   try {
     await dbConnect();
     const visibility = (await User.findOne({ username: username })
-      .select(["profileVisibility", "-_id"])
-      .lean()) as { profileVisibility: string };
-    return visibility?.profileVisibility;
+      .select(["config.profileVisibility", "-_id"])
+      .lean()) as { config: { profileVisibility: string } };
+    return visibility.config.profileVisibility;
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 400 });
   }
@@ -89,16 +90,16 @@ export async function deleteUser(id: string) {
   return NextResponse.json(null, { status: 200 });
 }
 //utils
-export async function getConfigOptions() {
+export async function getConfigOptions(): Promise<ResponseData<ConfigType>> {
   const user = await getCurrentUserInfo();
-  if (!user) return { status: "error", error: "Something goes wrong" };
+  if (!user) return { status: "error", message: "Something goes wrong" };
   try {
     await dbConnect();
-    const userData = await User.findById(user.id).lean();
-    if (!userData) return { status: "error", error: "Something goes wrong" };
+    const userData: UserDTO | null = await User.findById(user.id).lean();
+    if (!userData) return { status: "error", message: "Something goes wrong" };
     return { status: "ok", data: userData.config };
   } catch (error) {
-    return { status: "error", error: error };
+    return { status: "error", message: JSON.stringify(error) };
   }
 }
 
@@ -114,6 +115,6 @@ export async function updateConfigOption(option: string, value: unknown) {
     });
     return { message: "OK" };
   } catch (error) {
-    return { error: error, status: 'error' };
+    return { error: error, status: "error" };
   }
 }

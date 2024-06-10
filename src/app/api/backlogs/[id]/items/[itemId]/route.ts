@@ -9,8 +9,8 @@ export async function DELETE(
   { params: { id, itemId } }: { params: { id: string; itemId: string } },
 ) {
   try {
-    const isAuthorize = await isAuthorizedBacklogOwner(id);
-    if (isAuthorize) return sendMsg.error("Not authorized", 401);
+    const isAuthorize = await isAuthorizedBacklogOwner(id, "edit");
+    if (!isAuthorize) return sendMsg.error("Not authorized", 401);
     await deleteBacklogItem(itemId);
     revalidateTag(`backloglist${id}`);
     return sendMsg.success("Deleted", 202);
@@ -25,8 +25,8 @@ export async function PUT(
 ) {
   const data = await request.json();
   try {
-    const isAuthorize = await isAuthorizedBacklogOwner(id);
-    if (isAuthorize) return sendMsg.error("Not authorized", 401);
+    const isAuthorize = await isAuthorizedBacklogOwner(id, "edit");
+    if (!isAuthorize) return sendMsg.error("Not authorized", 401);
     await putBacklogItem(data);
     return sendMsg.success();
   } catch (error) {

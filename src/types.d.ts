@@ -107,9 +107,11 @@ export type ResponseData<T> = {
   | {
       status: "ok";
       data: T;
+      errors?: null;
     }
   | {
       status: "error";
+      data?: null;
       errors?: unknown;
     }
 );

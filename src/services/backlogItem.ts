@@ -3,7 +3,6 @@ import BacklogItem from "@/models/BacklogItem";
 import { BacklogItemCreationDTO, BacklogItemDTO, ResponseData } from "@/types";
 import { NextResponse } from "next/server";
 
-
 export const getBacklogItemById = async (
   itemId: string,
 ): Promise<ResponseData<BacklogItemDTO>> => {
@@ -11,8 +10,7 @@ export const getBacklogItemById = async (
     await dbConnect();
     const backlogData: BacklogItemDTO | null =
       await BacklogItem.findById(itemId).lean();
-    if (!backlogData)
-      return { status: "error", message: "doesnt exist" };
+    if (!backlogData) return { status: "error", message: "doesnt exist" };
     backlogData._id = backlogData._id.toString();
     return { status: "ok", data: backlogData };
   } catch (error) {
@@ -26,10 +24,18 @@ export const getBacklogItemsByBacklogId = async (
   if (!backlogId) return;
   try {
     await dbConnect();
-    const backlogData: BacklogItemDTO[] = await BacklogItem.find({
-      backlogId: backlogId,
-    }).lean();
-    return backlogData;
+    const backlogData: BacklogItemDTO[] = await BacklogItem.find(
+      {
+        backlogId: backlogId,
+      },
+      {
+        userFields: 0,
+      },
+    ).lean();
+    return backlogData.map((backlog) => ({
+      ...backlog,
+      _id: backlog._id.toString(),
+    }));
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -44,14 +50,29 @@ export const getBacklogItemsByQuery = async ({
   categories: string[] | null | undefined;
   search: string | null;
 }) => {
-  await dbConnect();
-  const stage = BacklogItem.aggregate();
-  stage.match({ backlogId: backlogId });
-  if (categories && categories.length > 0)
-    stage.match({ category: { $in: categories } });
-  if (search) stage.match({ title: new RegExp(search) });
-  const result = await stage.exec();
-  return result;
+  try {
+    await dbConnect();
+    const stage = BacklogItem.aggregate([{ $unset: ["userFields"] }]);
+    stage.match({ backlogId: backlogId });
+    if (categories && categories.length > 0)
+      stage.match({ category: { $in: categories } });
+    if (search) {
+      const regex = new RegExp(
+        search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+        "i",
+      );
+      stage.match({ title: regex });
+    }
+    const result = await stage.exec();
+
+    return result.map((item) => ({
+      ...item,
+      _id: item._id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error fetching backlog items:", error);
+    throw error;
+  }
 };
 
 export const addBacklogItem = async (data: BacklogItemCreationDTO) => {
@@ -81,5 +102,37 @@ export const deleteBacklogItem = async (id: string) => {
     return deleteResult;
   } catch (error) {
     throw new Error(`Error: ${error}`);
+  }
+};
+
+export const getBacklogItemsData = async (
+  categories: string[] | null | undefined,
+  search: string | null | undefined,
+  backlogId: string,
+): Promise<ResponseData<BacklogItemDTO[]>> => {
+  let backlogData;
+  try {
+    if (search || (categories && categories.length > 0)) {
+      backlogData = await getBacklogItemsByQuery({
+        backlogId: backlogId,
+        categories: categories,
+        search: search ? search : null,
+      });
+    } else {
+      backlogData = await getBacklogItemsByBacklogId(backlogId);
+    }
+    if (backlogData) {
+      return { status: "ok", data: backlogData };
+    }
+    return {
+      status: "error",
+      data: null,
+      errors: {
+        message: "The requested objects were not found.",
+        details: "Please check your parameters and ensure they are correct",
+      },
+    };
+  } catch (error) {
+    throw new Error(`${error}`);
   }
 };

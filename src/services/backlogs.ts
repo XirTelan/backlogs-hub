@@ -64,16 +64,24 @@ export const getBacklogsByFolder = async (userName: string) => {
 export const getUserBacklogBySlug = async (
   userName: string,
   backlogSlug: string,
+  isOwner: boolean,
 ): Promise<BacklogDTO | null> => {
   try {
     await dbConnect();
-    const backlog: BacklogDTO | null = await Backlog.findOne(
-      {
-        userName: userName,
-        slug: backlogSlug,
-      },
-      { "categories._id": 0, "fields._id": 0 },
-    ).lean();
+    const options: Partial<BacklogDTO> = isOwner
+      ? {
+          userName: userName,
+          slug: backlogSlug,
+        }
+      : {
+          userName: userName,
+          visibility: "public",
+          slug: backlogSlug,
+        };
+    const backlog: BacklogDTO | null = await Backlog.findOne(options, {
+      "categories._id": 0,
+      "fields._id": 0,
+    }).lean();
     return backlog;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -82,10 +90,19 @@ export const getUserBacklogBySlug = async (
 
 export const getBacklogsByUserName = async (
   userName: string,
+  isOwner: boolean,
 ): Promise<BacklogDTO[]> => {
   try {
     await dbConnect();
-    const backlogs = await Backlog.find({ userName: userName }).sort({
+    const options: Partial<BacklogDTO> = isOwner
+      ? {
+          userName: userName,
+        }
+      : {
+          userName: userName,
+          visibility: "public",
+        };
+    const backlogs = await Backlog.find(options).sort({
       order: 1,
     });
     return backlogs;

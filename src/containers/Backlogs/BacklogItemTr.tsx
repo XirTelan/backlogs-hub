@@ -17,9 +17,8 @@ const BacklogItemTr = ({ item, color }: BacklogItemTrProps) => {
     toast.success(`Deleted`);
     router.refresh();
   };
-
   return (
-    <tr key={item._id}>
+    <tr>
       <td className="p-4" style={{ color: color }}>
         {item.title}
       </td>

@@ -61,5 +61,5 @@ type TableBaseProps = {
   headers: { title: string; width?: string }[];
   search?: boolean;
   customButton?: React.ReactElement;
-  children: React.ReactElement;
+  children: React.ReactNode;
 };

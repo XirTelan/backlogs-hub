@@ -1,35 +1,41 @@
 import { getCurrentUserInfo } from "@/auth/utils";
-import BacklogHandler from "@/containers/Backlogs/BacklogHandler";
+import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
+import Title from "@/components/Common/Title";
+import ButtonBase from "@/components/Common/UI/ButtonBase";
+
+import Backloglist from "@/containers/Backlogs/BacklogList";
+import FilterBlock from "@/containers/FilterBlock";
 import UserBacklogsSideNav from "@/containers/User/UserBacklogsSideNav";
 import { getUserBacklogBySlug } from "@/services/backlogs";
-import { redirect } from "next/navigation";
-import React from "react";
+import Link from "next/link";
+import React, { Suspense } from "react";
+import { MdEdit } from "react-icons/md";
 
 export default async function Backlog({
   params: { userName, backlog },
   searchParams,
 }: {
   params: { userName: string; backlog: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { categories: string | undefined; search: string | undefined };
 }) {
   const user = await getCurrentUserInfo();
-  const data = await getUserBacklogBySlug(userName, backlog);
-  if (!data) return <div>Try again later</div>;
   const isOwner = user?.username == userName;
-  if (data.visibility !== "public" && !isOwner) redirect("/");
+  const data = await getUserBacklogBySlug(userName, backlog, isOwner);
+  if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
 
-  let query = "";
-  if (Object.keys(searchParams).length != 0) {
-    query += "?";
-    for (const [key, value] of Object.entries(searchParams)) {
-      query += `${key}=${value}&`;
-    }
-    query = query.slice(0, -1);
-  }
+  const selectedCategories = searchParams.categories?.split("-") || [];
+  const search = searchParams.search || "";
+
+  const categoriesMap = new Map(
+    data.categories.map((category) => [
+      category.name.toLowerCase(),
+      category.color,
+    ]),
+  );
 
   return (
     <div
-      className={`grid w-full  ${isOwner ? "md:grid-cols-[16rem_calc(100%-16rem)]" : ""} `}
+      className={`grid w-full  ${isOwner && "md:grid-cols-[16rem_calc(100%-16rem)]"} `}
     >
       {user && (
         <aside className=" hidden h-full w-64 pt-4 md:block ">
@@ -37,7 +43,36 @@ export default async function Backlog({
         </aside>
       )}
       <main className="container px-4">
-        {<BacklogHandler search={query} data={data} />}
+        <>
+          <Title title={data.backlogTitle}>
+            <Link href={`/backlog/edit/${data._id}`}>
+              <ButtonBase
+                variant="tertiary"
+                text="Edit backlog"
+                icon={<MdEdit />}
+              ></ButtonBase>
+            </Link>
+          </Title>
+          <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
+            <Suspense fallback={<p>Loading backlog...</p>}>
+              <FilterBlock
+                backlogSlug={data.slug}
+                backlogCategories={data.categories}
+              />
+            </Suspense>
+          </section>
+          <section className="me-auto flex flex-col py-4 lg:m-0">
+            <Suspense fallback={<SkeletonDataTable />}>
+              <Backloglist
+                search={search}
+                selectedCategories={selectedCategories}
+                backlogSlug={data.slug}
+                categoriesMap={categoriesMap}
+                id={data._id.toString()}
+              />
+            </Suspense>
+          </section>
+        </>
       </main>
     </div>
   );

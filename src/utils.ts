@@ -68,4 +68,3 @@ export const generateSlug = (name: string): string => {
 
 export const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((res) => res.json());
-

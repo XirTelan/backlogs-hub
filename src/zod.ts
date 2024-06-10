@@ -44,7 +44,7 @@ export const BacklogDTOSchema = z.intersection(
   z.object({
     userId: z.string(),
     userName: z.string(),
-    visibility: z.string(),
+    visibility: z.enum(["public", "private"]).default("private"),
     _id: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),
@@ -64,5 +64,5 @@ export const UserSchema = z.object({
   folders: z.string().array(),
   email: z.string(),
   profileVisibility: z.string(),
-  config: ConfigSchema
+  config: ConfigSchema,
 });

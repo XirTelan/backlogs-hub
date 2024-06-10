@@ -25,33 +25,36 @@ const isType = (value: unknown): value is Types => {
 
 //AUTH3
 export async function GET(request: NextRequest) {
-  let userName = request.nextUrl.searchParams
+  const user = await getCurrentUserInfo();
+  const userNameParam = request.nextUrl.searchParams
     .get("userName")
     ?.trim()
     .toLocaleLowerCase();
+  const isOwner = user ? userNameParam === user.username : false;
+
+  const userName = userNameParam ? userNameParam : user?.username;
+  if (!userName) return sendMsg.error(`Params not provided`);
+
   const backlogSlug = request.nextUrl.searchParams
     .get("backlog")
     ?.trim()
     ?.toLowerCase();
   const queryType: unknown = request.nextUrl.searchParams.get("type");
 
-  if (!userName) {
-    const user = await getCurrentUserInfo();
-    if (!user || !user.username) {
-      return sendMsg.error(`Params not provided`);
-    }
-    userName = user.username;
-  }
   const resultData: GetResult = {
     backlog: undefined,
     backlogData: undefined,
   };
   if (isType(queryType)) {
-    await handleTypeGet(queryType, resultData, userName, backlogSlug);
+    await handleTypeGet(queryType, resultData, userName, backlogSlug, isOwner);
   } else if (!backlogSlug) {
-    resultData.backlog = await getBacklogsByUserName(userName);
+    resultData.backlog = await getBacklogsByUserName(userName, isOwner);
   } else {
-    resultData.backlog = await getUserBacklogBySlug(userName, backlogSlug);
+    resultData.backlog = await getUserBacklogBySlug(
+      userName,
+      backlogSlug,
+      isOwner,
+    );
   }
   return NextResponse.json(resultData, { status: 200 });
 }
@@ -98,11 +101,16 @@ const handleTypeGet = async (
   resultData: GetResult,
   userName: string,
   backlogSlug: string | undefined,
+  isOwner: boolean,
 ) => {
   switch (queryType) {
     case "withData": {
       if (!backlogSlug) return sendMsg.error("Wrong parameters");
-      resultData.backlog = await getUserBacklogBySlug(userName, backlogSlug);
+      resultData.backlog = await getUserBacklogBySlug(
+        userName,
+        backlogSlug,
+        isOwner,
+      );
       resultData.backlogData = await getBacklogItemsByBacklogId(
         resultData?.backlog?._id,
       );

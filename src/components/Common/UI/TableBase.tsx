@@ -6,6 +6,7 @@ const TableBase = ({
   description,
   headers,
   children,
+  showButton = true,
   customButton,
   search = false,
 }: TableBaseProps) => {
@@ -26,7 +27,7 @@ const TableBase = ({
             <div className="absolute hidden">1</div>
             <div className="flex w-full">
               {search && <SearchBar />}
-              <div className="ms-auto">{customButton}</div>
+              {showButton && <div className="ms-auto">{customButton}</div>}
             </div>
           </section>
         )}
@@ -60,6 +61,7 @@ type TableBaseProps = {
   description: string;
   headers: { title: string; width?: string }[];
   search?: boolean;
+  showButton?: boolean;
   customButton?: React.ReactElement;
   children: React.ReactNode;
 };

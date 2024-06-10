@@ -179,7 +179,7 @@ export const isBacklogExist = async (userName: string, slug: string) => {
 };
 export const isAuthorizedBacklogOwner = async (
   backlogId: string,
-  method: "read" | "edit" = "edit",
+  method: "read" | "edit",
 ) => {
   const user = await getCurrentUserInfo();
   const backlog = await getBacklogById(backlogId);

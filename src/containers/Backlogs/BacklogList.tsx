@@ -34,21 +34,24 @@ const Backloglist = async ({
   selectedCategories,
   categoriesMap,
   search,
+  isOwner,
 }: BackloglistProps) => {
   const data =
     (await getBacklogItemsData(selectedCategories, search, id)).data || [];
   return (
     <>
       <TableBase
+        showButton={isOwner}
         customButton={<BacklogListAdd backlog={backlogSlug} />}
         title=""
         search
         description=""
-        headers={[{ title: "Title" }, { title: "Actions", width: "100px" }]}
+        headers={[{ title: "Title" }, { title: "Actions", width: "112px" }]}
       >
         {data.length > 0
           ? data.map((item: BacklogItemDTO, indx) => (
               <BacklogItemTr
+                showActions={isOwner}
                 key={indx}
                 item={item}
                 color={categoriesMap.get(item.category) || "#fff"}
@@ -67,6 +70,7 @@ interface BackloglistProps {
   id: string;
   search: string;
   backlogSlug: string;
+  isOwner: boolean;
   selectedCategories: string[];
   categoriesMap: Map<string, string>;
 }

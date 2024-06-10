@@ -64,6 +64,7 @@ export default async function Backlog({
           <section className="me-auto flex flex-col py-4 lg:m-0">
             <Suspense fallback={<SkeletonDataTable />}>
               <Backloglist
+                isOwner={isOwner}
                 search={search}
                 selectedCategories={selectedCategories}
                 backlogSlug={data.slug}

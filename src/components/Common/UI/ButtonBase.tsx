@@ -2,14 +2,16 @@ import { ButtonBaseProps } from "@/types";
 import React from "react";
 
 const sizes = {
-  small: "h-8  ",
-  medium: "h-10  ",
-  large: "h-12  ",
+  small: "h-8",
+  medium: "h-10",
+  large: "h-12",
+  elarge: "h-16",
 };
 const buttonSize = {
-  small: "w-8  ",
-  medium: "w-10  ",
-  large: "w-12  ",
+  small: "w-8",
+  medium: "w-10",
+  large: "w-12",
+  elarge: "w-12",
 };
 const variants = {
   primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",

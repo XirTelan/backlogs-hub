@@ -45,13 +45,17 @@ export default async function Backlog({
       <main className="container px-4">
         <>
           <Title title={data.backlogTitle}>
-            <Link href={`/backlog/edit/${data._id}`}>
-              <ButtonBase
-                variant="tertiary"
-                text="Edit backlog"
-                icon={<MdEdit />}
-              ></ButtonBase>
-            </Link>
+            <>
+              {isOwner && (
+                <Link href={`/backlog/edit/${data._id}`}>
+                  <ButtonBase
+                    variant="tertiary"
+                    text="Edit backlog"
+                    icon={<MdEdit />}
+                  ></ButtonBase>
+                </Link>
+              )}
+            </>
           </Title>
           <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
             <Suspense fallback={<p>Loading backlog...</p>}>

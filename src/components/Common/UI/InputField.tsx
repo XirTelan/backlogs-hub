@@ -1,4 +1,4 @@
-import { InputField as Props } from "@/types";
+import { InputFieldProps as Props } from "@/types";
 import React from "react";
 import { FaCircleExclamation } from "react-icons/fa6";
 

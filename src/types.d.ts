@@ -3,7 +3,7 @@ import { BacklogCategory } from "./zodTypes";
 import { Field } from "./zodTypes";
 import React from "react";
 
-export type InputField = {
+export type InputFieldProps = {
   label?: string;
   layer?: 1 | 2 | 3;
   error?: string;
@@ -37,7 +37,7 @@ export type BacklogNavProps = {
 
 export type ListItemInput = {
   onDelete: () => void;
-} & InputField;
+} & InputFieldProps;
 
 export type BacklogCreationDTO = Omit<
   BacklogDTO,
@@ -124,7 +124,7 @@ export type UserCreationDTO = {
 export type ButtonBaseProps = {
   children?: React.ReactElement;
   text?: string;
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "elarge";
   icon?: React.ReactElement;
   variant?:
     | "primary"

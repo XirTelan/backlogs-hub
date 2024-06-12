@@ -20,7 +20,7 @@ const BacklogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    folder: String,
+    folder: { type: String, required: true, default: "Default" },
     description: {
       type: String,
     },

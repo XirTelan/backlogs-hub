@@ -1,6 +1,6 @@
 import Title from "@/components/Common/Title";
 import TemplateLegend from "@/components/Template/TemplateLegend";
-import BacklogTemplate from "@/containers/Backlogs/BacklogTemplate";
+import TemplateList from "@/containers/Backlogs/TemplateList";
 import TemplateSwitcher from "@/containers/Templates/TemplateSwitcher";
 
 const Templates = ({
@@ -11,9 +11,10 @@ const Templates = ({
   const query = filter ? `?filter=${filter}` : "";
   return (
     <main className="container">
-      <Title title={"Templates"} />
-      <TemplateSwitcher />
-      <BacklogTemplate search={query} />
+      <Title title={"Templates"}>
+        <TemplateSwitcher />
+      </Title>
+      <TemplateList search={query} />
       <TemplateLegend />
     </main>
   );

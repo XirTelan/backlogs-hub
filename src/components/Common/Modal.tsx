@@ -1,13 +1,17 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import ButtonBase from "./UI/ButtonBase";
+import { ButtonBaseProps } from "@/types";
 
 const Modal = ({
   action,
-  showActions = false,
+  confirmOptions,
+  showActions,
   setClose,
   children,
 }: {
+  confirmOptions?: ButtonBaseProps;
+
   action?: () => void;
   showActions?: boolean;
   setClose: () => void;
@@ -16,13 +20,13 @@ const Modal = ({
   return createPortal(
     <div
       onClick={setClose}
-      className="absolute inset-0 flex items-center justify-center bg-neutral-900/90"
+      className="absolute inset-0 z-50 flex items-center justify-center bg-neutral-900/90"
     >
       <div
         className="flex flex-col justify-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <div>{children}</div>
+        <>{children}</>
         {showActions && (
           <div className="flex w-full">
             <ButtonBase
@@ -35,6 +39,7 @@ const Modal = ({
               style={{ width: "100%" }}
               variant="dangerPrimary"
               text="Confirm"
+              {...confirmOptions}
               onClick={() => {
                 if (!action) return;
                 action();

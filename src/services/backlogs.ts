@@ -56,6 +56,8 @@ export const getBacklogsByFolder = async (userName: string) => {
   folders.forEach((folder) => (hashMap[folder] = []));
   for (const backlog of data) {
     backlog._id = backlog._id.toString();
+    if (backlog.folder === undefined)
+      await updateBacklogById({ _id: backlog._id, folder: folders[0] });
     hashMap[backlog.folder].push(backlog);
   }
   return hashMap;
@@ -145,7 +147,7 @@ export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
   }
 };
 
-export const updateBacklogById = async (data: BacklogDTO) => {
+export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
   try {
     await dbConnect();
     await Backlog.updateOne({ _id: data._id }, { ...data });

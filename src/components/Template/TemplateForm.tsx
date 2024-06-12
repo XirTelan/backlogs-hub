@@ -1,18 +1,64 @@
 import useDebounce from "@/hooks/useDebounce";
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import InputField from "../Common/UI/InputField";
+import InputWithLoader from "../Common/UI/InputWithLoader";
+import ButtonBase from "../Common/UI/ButtonBase";
+import { TemplateDTO } from "@/types";
+import { generateSlug } from "@/utils";
+import toast from "react-hot-toast";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Title from "../Common/Title";
 
 const TemplateForm = ({
-  defaultValue,
-  handleSubmit,
+  selectedTemplate,
+  handleCancel,
 }: {
-  defaultValue: string;
-  handleSubmit: (backlogTitle: string) => void;
+  selectedTemplate: TemplateDTO;
+  handleCancel: () => void;
 }) => {
-  const [backlogTitle, setBacklogTitle] = useState<string>(defaultValue);
+  const { register, handleSubmit, watch } = useForm({
+    defaultValues: {
+      title: selectedTemplate.templateTitle,
+    },
+  });
+  const backlogTitle = watch("title", "wrf");
+  const onSubmit: SubmitHandler<{ title: string }> = async (data) => {
+
+    const backlog = mapTemplateToBacklog({
+      ...selectedTemplate,
+      templateTitle: data.title,
+    });
+    backlog.slug = generateSlug(backlog.backlogTitle);
+    try {
+      const res = await fetch("/api/backlogs/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(backlog),
+      });
+      if (res.ok) {
+        toast.success("Success");
+        handleCancel();
+      }
+    } catch (error) {
+      console.error("error", error);
+    }
+  };
+  const mapTemplateToBacklog = (data: TemplateDTO) => {
+    return {
+      categories: data.categories,
+      backlogTitle: data.templateTitle,
+      fields: data.fields,
+      order: 99,
+      slug: "",
+      visibility: "public",
+    };
+  };
+
   const [isAvailable, setIsAvailable] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(isAvailable, isLoading);
+
   const debouncedValue = useDebounce(backlogTitle);
 
   useEffect(() => {
@@ -24,65 +70,60 @@ const TemplateForm = ({
           `/api/backlogs?backlog=${debouncedValue}&type=exist`,
         );
         const data = await res.json();
-        if (data) setIsAvailable(false);
+        setIsAvailable(data.backlog ? false : true);
       } catch (error) {
         console.error(error);
       } finally {
         setIsLoading(false);
       }
     };
+    console.log("debouncedValue:", debouncedValue);
+    if (!debouncedValue) return;
     isAvailableTitle();
-  }, [debouncedValue]);
+  }, [debouncedValue, setIsAvailable, setIsLoading]);
 
-  const onSubmit = () => {
-    handleSubmit(debouncedValue);
-  };
   return (
-    <form className="flex h-full grow flex-col p-2" onSubmit={onSubmit}>
-      <div className="p-2">
-        <InputField
-          value={backlogTitle}
-          onChange={(e) => setBacklogTitle(e.target.value)}
-          placeholder="Text"
-          label="Backlog Title"
-          type="text"
-        >
-          {isLoading && (
-            <div className="absolute bottom-0 right-0 top-0 flex   items-center    ">
-              <div className=" h-6 w-6 animate-spin rounded-full border-4 border-neutral-500 border-t-cyan-500 "></div>
-            </div>
-          )}
-          {!isAvailable && (
-            <div className="absolute bottom-0 right-0 top-0 flex items-center     ">
-              <motion.p
-                animate={{
-                  scale: [1, 1.1, 1.2, 1.1, 1],
-                }}
-                className="bg-danger rounded p-1"
-              >
-                Already exist
-              </motion.p>
-            </div>
-          )}
-        </InputField>
-      </div>
-      <p className="px-2 pb-2">
-        You can change the title if you are not satisfied with the standard one
-        or if one already exists
-      </p>
-      <div className="flex gap-2">
-        <button className="bg-danger mt-auto w-full rounded-xl p-2 disabled:bg-neutral-500">
-          Cancel
-        </button>
-        <button
-          disabled={!isAvailable || isLoading}
-          className="mt-auto w-full rounded-xl bg-cyan-500 p-2 disabled:bg-neutral-500"
-          type="submit"
-        >
-          Save
-        </button>
-      </div>
-    </form>
+    <div className=" w-[80vw] " style={{ background: "#161616" }}>
+      <Title
+        title={`Create backlog from template`}
+        variant={2}
+        style={{ color: "#fff", paddingLeft: "1rem" }}
+      />
+      <form
+        className="flex h-full grow flex-col "
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="px-4">
+          <InputWithLoader
+            isLoading={isLoading}
+            isAvailable={isAvailable}
+            {...register("title")}
+            placeholder="Text"
+            label="Backlog Title"
+            type="text"
+          />
+        </div>
+
+        <div className="mt-2 flex w-full">
+          <ButtonBase
+            style={{ width: "100%" }}
+            variant="secondary"
+            size="large"
+            type="button"
+            text="Cancel"
+            onClick={handleCancel}
+          />
+          <ButtonBase
+            disabled={!isAvailable || isLoading}
+            style={{ width: "100%" }}
+            variant="primary"
+            size="large"
+            type="submit"
+            text="Confirm"
+          />
+        </div>
+      </form>
+    </div>
   );
 };
 

@@ -17,7 +17,7 @@ const Header = async () => {
           <div className="flex w-full items-center justify-between">
             <NavBar userName={user.username!} />
             <div>
-              <UserPanel />
+              <UserPanel  userName={user.username!}  />
             </div>
           </div>
         ) : (

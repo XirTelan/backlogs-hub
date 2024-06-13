@@ -1,13 +1,17 @@
 export const routesList = {
   backlogCreate: "/backlog/create",
   backlogEdit: "/backlog/edit",
-  templates: "/templates",
   itemsCreate: "/items/create",
   itemsEdit: "/items/edit",
+  manageBacklogs: "/manage-backlogs",
+  templates: "/templates",
   settings: "/settings",
   register: "/register",
 };
-
+export const apiRoutesList = {
+  signIn: "/api/auth/signIn",
+  register: "/api/auth/register",
+};
 export const routesCategories = {
   protectedRoutes: [
     routesList.backlogCreate,

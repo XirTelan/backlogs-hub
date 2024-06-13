@@ -2,6 +2,7 @@
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import InputField from "@/components/Common/UI/InputField";
 import LinkBase from "@/components/Common/UI/LinkBase";
+import { apiRoutesList } from "@/data";
 import { SignInSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -18,7 +19,7 @@ const UserLoginForm = () => {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      username: "",
+      login: "",
       password: "",
     },
     mode: "onBlur",
@@ -28,7 +29,7 @@ const UserLoginForm = () => {
   const router = useRouter();
 
   const onSubmit = async (data: FormData) => {
-    const res = await fetch("/api/auth/signIn", {
+    const res = await fetch(apiRoutesList.signIn, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,14 +43,14 @@ const UserLoginForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputField
         helperText={
-          errors.username && {
-            message: errors.username.message!,
+          errors.login && {
+            message: errors.login.message!,
             type: "error",
           }
         }
         placeholder="mail@example.com"
         label="Continue with email"
-        {...register("username")}
+        {...register("login")}
       />
       <InputField
         type="password"
@@ -66,9 +67,11 @@ const UserLoginForm = () => {
         Don&apos;t have an account?&nbsp;
         <LinkBase href={"/register"}>Create</LinkBase>
       </span>
-      <ButtonBase text="Continue">
-        <FaArrowRight size={16} />
-      </ButtonBase>
+      <ButtonBase
+        style={{ width: "100%" }}
+        text="Continue"
+        icon={<FaArrowRight size={16} />}
+      />
     </form>
   );
 };

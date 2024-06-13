@@ -22,10 +22,13 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
   const data: [string, BacklogDTO[]][] = Object.entries(
     await getBacklogsByFolder(userName),
   );
+  const isListEmpty = data.every(([, backlogs]) => backlogs.length === 0);
   const config = await getConfigOptions();
   return (
     <>
-      {data?.length > 0 ? (
+      {isListEmpty ? (
+        listIsEmpty
+      ) : (
         <div className="  flex w-full items-center justify-between rounded ">
           <div className="flex flex-col flex-wrap gap-4">
             {data.map(([folderName, backlogs]) => {
@@ -46,8 +49,6 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
             })}
           </div>
         </div>
-      ) : (
-        listIsEmpty
       )}
     </>
   );

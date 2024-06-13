@@ -5,7 +5,7 @@ import UserLoginForm from "./UserLoginForm";
 
 const SignInForm = () => {
   return (
-    <div className="h-full pt-10 lg:ms-4  lg:w-80">
+    <div className="h-full pt-10 lg:mx-4 lg:mb-4 lg:w-80">
       <h1 className=" font-semibol mb-2 text-3xl text-primary-text">
         Sign in to BacklogsHub
       </h1>

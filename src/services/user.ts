@@ -38,7 +38,15 @@ export async function getUserVisibility(username: string) {
     return NextResponse.json({ error: error }, { status: 400 });
   }
 }
-
+export async function isUserNameExist(username: string) {
+  try {
+    await dbConnect();
+    const user = await User.exists({ username: username }).lean();
+    return !!user?._id;
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+}
 //PUT/PATCH
 export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
   try {
@@ -52,7 +60,7 @@ export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
         message: "User already exist",
       };
     }
-    data.folders = ["Uncategorized"];
+    data.folders = ["Default"];
     const newUser = new User(data);
     await newUser.save();
     newUser.password = undefined;

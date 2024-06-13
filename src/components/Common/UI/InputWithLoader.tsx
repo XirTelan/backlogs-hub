@@ -11,7 +11,7 @@ type InputWithLoaderProps = {
 const InputWithLoader = React.forwardRef<
   HTMLInputElement,
   InputFieldProps & InputWithLoaderProps
->(({ isLoading, isAvailable, ...props }, ref) => {
+>(({ isLoading, isAvailable, helperText, ...props }, ref) => {
   return (
     <InputField
       {...props}
@@ -19,10 +19,10 @@ const InputWithLoader = React.forwardRef<
         isLoading
           ? undefined
           : isAvailable
-            ? undefined
+            ? helperText
             : {
                 type: "error",
-                message: "Backlog with this name already exist",
+                message: "This name is already taken",
               }
       }
       ref={ref}

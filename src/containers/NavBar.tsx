@@ -1,6 +1,7 @@
 import HomeLink from "@/components/HomeLink";
 import NavLink from "@/components/NavLink";
 import SidePanel from "@/components/SidePanel";
+import { routesList } from "@/data";
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
@@ -8,16 +9,12 @@ const NavBar = ({ userName }: { userName: string }) => {
   const BASE = `/user/${userName}`;
   const links = [
     {
-      title: "Profile",
-      pathname: "/",
-    },
-    {
       title: "Backlogs",
       pathname: `${BASE}/backlogs`,
     },
     {
       title: "Templates",
-      pathname: `/templates`,
+      pathname: routesList.templates,
     },
   ];
 

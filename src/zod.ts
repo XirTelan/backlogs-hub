@@ -8,13 +8,20 @@ export const RegistrationSchema = z.object({
       message: `Username can only contain letters, numbers, "-", and "_"`,
     }),
   email: z.string().email("Email is required"),
+  folders: z.string().array().default(["Default"]),
   password: z
     .string()
     .min(6, { message: "Password must have at least 6 characters" }),
 });
 
-export const SignInSchema = RegistrationSchema.omit({ email: true });
-
+export const SignInSchema = z
+  .object({
+    login: z.string().trim().min(1),
+    password: z
+      .string()
+      .min(6, { message: "Password must have at least 6 characters" }),
+  })
+  .required();
 export const FieldSchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),
@@ -66,3 +73,5 @@ export const UserSchema = z.object({
   profileVisibility: z.string(),
   config: ConfigSchema,
 });
+
+export const isEmailSchema = z.string().email();

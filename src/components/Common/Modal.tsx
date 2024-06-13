@@ -20,7 +20,7 @@ const Modal = ({
   return createPortal(
     <div
       onClick={setClose}
-      className="absolute inset-0 z-50 flex items-center justify-center bg-neutral-900/90"
+      className="absolute inset-0 z-50 flex items-center justify-center bg-black/60"
     >
       <div
         className="flex flex-col justify-center"

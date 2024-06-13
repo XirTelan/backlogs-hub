@@ -1,5 +1,4 @@
-import useDebounce from "@/hooks/useDebounce";
-import { useState, useEffect } from "react";
+import { useCallback } from "react";
 import InputWithLoader from "../Common/UI/InputWithLoader";
 import ButtonBase from "../Common/UI/ButtonBase";
 import { TemplateDTO } from "@/types";
@@ -7,6 +6,7 @@ import { generateSlug } from "@/utils";
 import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Common/Title";
+import useLoaderValue from "@/hooks/useLoaderValue";
 
 const TemplateForm = ({
   selectedTemplate,
@@ -20,9 +20,8 @@ const TemplateForm = ({
       title: selectedTemplate.templateTitle,
     },
   });
-  const backlogTitle = watch("title", "wrf");
+  const backlogTitle = watch("title", selectedTemplate.templateTitle);
   const onSubmit: SubmitHandler<{ title: string }> = async (data) => {
-
     const backlog = mapTemplateToBacklog({
       ...selectedTemplate,
       templateTitle: data.title,
@@ -55,32 +54,17 @@ const TemplateForm = ({
     };
   };
 
-  const [isAvailable, setIsAvailable] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log(isAvailable, isLoading);
+  const backlogIsExist = useCallback(async (value: string) => {
+    const data = await fetch(`/api/backlogs?backlog=${value}&type=exist`).then(
+      (res) => res.json(),
+    );
+    return !data.backlog;
+  }, []);
 
-  const debouncedValue = useDebounce(backlogTitle);
-
-  useEffect(() => {
-    const isAvailableTitle = async () => {
-      try {
-        setIsLoading(true);
-        setIsAvailable(true);
-        const res = await fetch(
-          `/api/backlogs?backlog=${debouncedValue}&type=exist`,
-        );
-        const data = await res.json();
-        setIsAvailable(data.backlog ? false : true);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    console.log("debouncedValue:", debouncedValue);
-    if (!debouncedValue) return;
-    isAvailableTitle();
-  }, [debouncedValue, setIsAvailable, setIsLoading]);
+  const { isAvailable, isLoading } = useLoaderValue(
+    backlogTitle,
+    backlogIsExist,
+  );
 
   return (
     <div className=" w-[80vw] " style={{ background: "#161616" }}>

@@ -7,6 +7,7 @@ import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import { FaFolder } from "react-icons/fa6";
 import { MdDeleteForever, MdDragHandle, MdEdit } from "react-icons/md";
 
 type Props = {
@@ -84,6 +85,7 @@ const DroppableContainer = ({
       {...props}
     >
       <div className="flex items-center">
+        <FaFolder className="mx-2" />
         <Title width="fit-content" title={id as string} variant={3} />
         <div className="flex min-h-[2rem] w-full bg-transparent">
           <Handle

@@ -1,11 +1,10 @@
-import { handleCallback, handleSession } from "@/auth/core";
+import { handleCallback, handleSession, signInWithLogin } from "@/auth/core";
 import { getRedirectOauthLink } from "@/auth/providers/discordProvirer";
-import { generateAccessToken, setTokenCookies } from "@/auth/utils";
-import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
+import { setTokenCookies } from "@/auth/utils";
+
 import { createUser } from "@/services/user";
 import { sendMsg } from "@/utils";
-import { RegistrationSchema, SignInSchema } from "@/zod";
+import { RegistrationSchema } from "@/zod";
 import bcrypt from "bcrypt";
 
 import { revalidatePath } from "next/cache";
@@ -65,21 +64,9 @@ export async function POST(
   }
   if (type === "signIn") {
     const data = await request.json();
-    const parsedCredentials = SignInSchema.safeParse(data);
-    if (!parsedCredentials.success)
-      return sendMsg.error("Username or password is incorrect");
-    await dbConnect();
-    const user = await User.findOne({ username: data.username });
-    if (!user.password)
-      return sendMsg.error("Username or password is incorrect");
-    const passwordMatch = await bcrypt.compare(
-      parsedCredentials.data.password,
-      user.password,
-    );
-    if (!passwordMatch)
-      return sendMsg.error("Username or password is incorrect");
-    const access_token = await generateAccessToken(user);
-    return setTokenCookies(access_token, request.url);
+    const response = await signInWithLogin(data);
+    if (response.status === "error") return sendMsg.error(response.message);
+    return setTokenCookies(response.data, request.url);
   }
 
   return NextResponse.json(null);

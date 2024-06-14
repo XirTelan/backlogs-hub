@@ -64,7 +64,6 @@ const UserRegisterForm = () => {
     const data = await fetch(`/api/users/${value}`, {
       method: "GET",
     }).then((res) => res.json());
-    console.log("datares", data);
     return !data;
   }, []);
   const userName = watch("username", "");

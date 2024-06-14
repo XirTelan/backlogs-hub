@@ -4,6 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { ResponseData, UserCreationDTO } from "@/types";
 import { ConfigType, UserDTO } from "@/zodTypes";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 type CreateUser =
@@ -117,11 +118,11 @@ export async function updateConfigOption(option: string, value: unknown) {
   try {
     await dbConnect();
     const userData = await User.findById(user.id);
-
     await User.findByIdAndUpdate(user.id, {
       config: { ...userData.config, [option]: value },
-    });
-    return { message: "OK" };
+      });
+    revalidatePath("/");
+    return { status: "ok" };
   } catch (error) {
     return { error: error, status: "error" };
   }

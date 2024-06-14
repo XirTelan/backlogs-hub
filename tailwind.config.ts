@@ -6,6 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/containers/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -13,6 +14,9 @@ const config: Config = {
         around: "0 0 15px 5px rgba(0, 0, 0, 0.3)",
       },
       colors: {
+        background: {
+          DEFAULT: "#161616",
+        },
         strong: {
           1: "#6F6F6F",
           2: "#8d8d8d",
@@ -26,8 +30,12 @@ const config: Config = {
         support: {
           info: "#4589FF",
           success: "#42BE65",
+          error: "#FA4D56",
         },
-        borderinteractive: "#4589FF",
+        border: {
+          DEFAULT: "#333333",
+          interactive: "#4589FF",
+        },
         field: {
           1: "#262626",
           2: "#393939",

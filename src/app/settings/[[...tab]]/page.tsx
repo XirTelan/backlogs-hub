@@ -1,11 +1,13 @@
 import UserSettings, { TabsType } from "@/containers/User/UserSettings";
+import { routesList } from "@/data";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const Page = ({ params }: { params: { tab: [TabsType] } }) => {
-  const tab: TabsType = params.tab ? params.tab[0] : "account";
+  if (!params.tab || !params.tab[0]) redirect(`${routesList.settings}/account`);
   return (
     <main className=" container">
-      <UserSettings tab={tab} />
+      <UserSettings tab={params.tab[0]} />
     </main>
   );
 };

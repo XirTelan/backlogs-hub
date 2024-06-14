@@ -8,7 +8,6 @@ export async function GET(
   request: NextRequest,
   { params: { username } }: { params: { username: string } },
 ) {
-  console.log("username", username);
   try {
     const res = await isUserNameExist(username);
     return NextResponse.json(res, { status: 200 });

@@ -17,9 +17,7 @@ const SignOutButton = () => {
         router.refresh();
       }}
     >
-      <div className="mx-4  text-[18px] leading-[18px] text-primary-text">
-        SignOut
-      </div>
+      <div className="mx-4 text-secondary-text">SignOut</div>
       <GrLogout size={18} className="me-3" />
     </button>
   );

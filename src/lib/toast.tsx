@@ -16,7 +16,7 @@ const toastStyle = {
     text: "text-support-success",
   },
   error: {
-    border: "border-s-support-error/30 border-support-error/30",
+    border: "border-s-support-error border-support-error/30",
     text: " text-support-error ",
   },
 };
@@ -30,7 +30,7 @@ const renderToastContent =
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 300, opacity: 0 }}
-          className={`flex h-12 items-center    gap-4 border border-s-4 border-s-support-success ${toastStyle[type].border}  border-s-support-success bg-layer-1`}
+          className={`flex h-12 items-center gap-4 border border-s-4 border-s-support-success ${toastStyle[type].border}  border-s-support-success bg-layer-1`}
         >
           <div className={`ms-4 ${toastStyle[type].text} `}>
             {toastIcons[type]}

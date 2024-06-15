@@ -70,6 +70,8 @@ export async function POST(request: NextRequest) {
   };
   try {
     const backlog = await createBacklog(backlogData);
+    if (backlog.status === "error")
+      return sendMsg.error(backlog.errors || backlog.message, 400);
     revalidatePath(`/user/${user.username}/backlogs`);
     return NextResponse.json(backlog);
   } catch (error) {

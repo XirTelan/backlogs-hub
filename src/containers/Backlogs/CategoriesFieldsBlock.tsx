@@ -26,7 +26,7 @@ const CategoriesFieldsBlock = ({
         append={() =>
           categoriesArray.append({
             name: "",
-            color: "#11380B",
+            color: "#0043CE",
             protected: false,
           })
         }
@@ -62,10 +62,12 @@ const CategoriesFieldsBlock = ({
                   )}
                 />
                 <ButtonBase
+                  disabled={categoriesArray.fields.length === 1}
                   variant="secondary"
                   size="small"
                   onClick={() => {
-                    categoriesArray.remove(index);
+                    if (categoriesArray.fields.length > 1)
+                      categoriesArray.remove(index);
                   }}
                   icon={<IoClose />}
                 />

@@ -57,8 +57,8 @@ const TableBase = ({
 export default TableBase;
 
 type TableBaseProps = {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   headers: { title: string; width?: string }[];
   search?: boolean;
   showButton?: boolean;

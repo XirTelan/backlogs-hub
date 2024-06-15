@@ -10,7 +10,8 @@ const FieldsBlock = (props: FieldsBlockProps) => {
           <Title variant={3} title={props.title}>
             {props.status == "active" ? (
               <ButtonBase
-                text="Add field"
+                style={{ width: "8rem" }}
+                text="Add category"
                 type="button"
                 variant="tertiary"
                 onClick={() => props.append()}

@@ -6,6 +6,7 @@ import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import TableBase from "@/components/Common/UI/TableBase";
 import Select from "@/components/Common/UI/Select";
+import Title from "@/components/Common/Title";
 
 const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
   const fieldsArray = useFieldArray({
@@ -14,26 +15,30 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
     rules: {},
   });
 
-  const addButton = (
-    <ButtonBase
-      type="button"
-      text="Add field"
-      onClick={() =>
-        fieldsArray.append({
-          name: "",
-          type: "text",
-          protected: false,
-        })
-      }
-    />
-  );
-
   return (
-    <>
+    <section>
+      <Title variant={3} title={"Fields"}>
+        <ButtonBase
+          variant="tertiary"
+          style={{ width: "8rem" }}
+          type="button"
+          text="Add field"
+          onClick={() =>
+            fieldsArray.append({
+              name: "",
+              type: "text",
+              protected: false,
+            })
+          }
+        />
+      </Title>
       <TableBase
-        headers={["№", "Name", "Type", "Actions"]}
-        title={"Fields"}
-        customButton={addButton}
+        headers={[
+          { title: "#", width: "1rem" },
+          { title: "Name", width: "auto" },
+          { title: "Type" },
+          { title: "Actions", width: "112px" },
+        ]}
         description={""}
       >
         <>
@@ -42,7 +47,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
               <InputField value={"Title"} variant="small" layer={2} readOnly />
             </td>
             <td className="text-center text-secondary-text" colSpan={2}>
-              Is field is required and cant be deleted
+              This field is required and cannot be deleted
             </td>
           </tr>
           {fieldsArray.fields.map((field, index) => (
@@ -65,9 +70,8 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
               <td className="px-4 text-center">
                 <Select
                   {...register(`fields.${index}.type`)}
-                  options={["Text", "Timer", "Number", "Date"]}
+                  options={["text", "timer", "number", "date"]}
                 />
-
               </td>
               <td className="px-4 text-center">
                 <button onClick={() => fieldsArray.remove(index)}>
@@ -78,7 +82,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
           ))}
         </>
       </TableBase>
-    </>
+    </section>
   );
 };
 

@@ -1,22 +1,17 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
 import { BacklogDTO } from "@/zodTypes";
+import useSWR from "swr";
+import { fetcher } from "@/utils";
+import Title from "@/components/Common/Title";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
-  const [data, setData] = useState<BacklogDTO>();
+  const backlogData = useSWR(`/api/backlogs/${id}`, fetcher);
+  const userFolders = useSWR(`/api/users/`, fetcher);
   const router = useRouter();
-
-  useEffect(() => {
-    const loadData = async () => {
-      const res = await fetch(`/api/backlogs/${id}`);
-      const data: BacklogDTO = await res.json();
-      setData(data);
-    };
-    loadData();
-  }, [id]);
 
   const onSubmit: SubmitHandler<BacklogDTO> = async (data) => {
     if (data._id) {
@@ -33,11 +28,15 @@ const BacklogEditForm = ({ id }: { id: string }) => {
     if (res.ok) router.push("/");
   };
 
-  if (!data) return <div>Loading</div>;
+  if (backlogData.isLoading || userFolders.isLoading) return <div>Loading</div>;
   return (
     <div>
-      <h1>Editing backlog &quot;{data.backlogTitle}&quot;</h1>
-      <BacklogForm defaultValues={data} onSubmit={onSubmit} />
+      <Title title={`Editing backlog "${backlogData.data.backlogTitle}"`} />
+      <BacklogForm
+        defaultValues={backlogData.data}
+        userFolders={userFolders.data}
+        onSubmit={onSubmit}
+      />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import { FieldError } from "react-hook-form";
-import { BacklogCategory } from "./zodTypes";
-import { Field } from "./zodTypes";
+import { BacklogCategory, Field } from "./zodTypes";
 import React from "react";
 
 export type InputFieldProps = {
@@ -38,11 +37,6 @@ export type BacklogNavProps = {
 export type ListItemInput = {
   onDelete: () => void;
 } & InputFieldProps;
-
-export type BacklogCreationDTO = Omit<
-  BacklogDTO,
-  "_id" | "updatedAt" | "createdAt"
->;
 
 type ItemField = {
   name: string;

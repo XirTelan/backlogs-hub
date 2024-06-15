@@ -10,32 +10,29 @@ const elevation = {
   2: "bg-layer-2",
   3: "bg-layer-3",
 };
-const Select = ({
-  label,
-  options,
-  layer = 1,
-  variant = "default",
-  ...props
-}: SelectProps) => {
-  return (
-    <div className={`${variants[variant]} `}>
-      {label && (
-        <label className="h-6 pb-2  text-secondary-text ">{label}</label>
-      )}
-      <select
-        {...props}
-        className={`${elevation[layer]} rounded p-2 hover:cursor-pointer `}
-      >
-        {options.map((option, indx) => (
-          <option key={indx} value={option.toLowerCase()}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
-
+const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+  ({ label, options, layer = 1, variant = "default", ...props }, ref) => {
+    return (
+      <div className={`${variants[variant]}  `}>
+        {label && (
+          <label className="me-2 h-6  pb-2 text-secondary-text">{label}</label>
+        )}
+        <select
+          {...props}
+          ref={ref}
+          className={`${elevation[layer]} rounded p-2 hover:cursor-pointer `}
+        >
+          {options.map((option, indx) => (
+            <option key={indx} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  },
+);
+Select.displayName = "SelectInput";
 export default Select;
 
 type Variants = keyof typeof variants;

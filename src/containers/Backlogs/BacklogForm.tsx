@@ -11,12 +11,15 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogFormData } from "@/zodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
+import Select from "@/components/Common/UI/Select";
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
+  userFolders,
   onSubmit,
 }: {
   defaultValues: T;
+  userFolders: string[];
   onSubmit: SubmitHandler<T>;
 }) => {
   const [showTemplate, setShowTemplate] = useState(false);
@@ -76,6 +79,18 @@ const BacklogForm = <T extends BacklogFormData>({
             {...register(`backlogTitle`, { required: true })}
           />
         </div>
+        <div className="flex gap-2">
+          <Select
+            label="Folder"
+            options={userFolders}
+            {...register("folder")}
+          />
+          <Select
+            label="Visibility"
+            options={["public", "private"]}
+            {...register("visibility")}
+          />
+        </div>
         <div className="flex flex-col lg:flex-row lg:gap-4 ">
           <CategoriesFieldsBlock
             errors={errors.categories}
@@ -89,7 +104,7 @@ const BacklogForm = <T extends BacklogFormData>({
           />
         </div>
         {errors.fields && <p>{errors.fields.message}</p>}
-        <div className="mt-auto flex w-1/4 flex-col gap-4">
+        <div className=" mt-4 flex w-full flex-col gap-4 md:w-1/4">
           <ButtonBase disabled={!isValid} text="Create backlog" />
           <ButtonBase
             disabled={!isValid}

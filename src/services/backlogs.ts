@@ -3,9 +3,10 @@ import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
-import { BacklogCreationDTO } from "@/types";
-import { BacklogDTO } from "@/zodTypes";
+import { BacklogDTO, BacklogCreationDTO } from "@/zodTypes";
 import { getUserFolders } from "./user";
+import { BacklogCreationSchema, BacklogDTOSchema } from "@/zod";
+import { z } from "zod";
 
 //GET SECTION
 export const getBacklogById = async (
@@ -114,16 +115,19 @@ export const getBacklogsByUserName = async (
 };
 
 //POST SECTION
-export const createBacklog = async (data: BacklogCreationDTO) => {
+export const createBacklog = async (backlog: BacklogCreationDTO) => {
   try {
     await dbConnect();
+    const { success, data, error } = BacklogCreationSchema.safeParse(backlog);
+    if (!success)
+      return { status: "error", message: "Validation error", errors: error };
     const isExist = await isBacklogExist(data.userName, data.slug);
     if (isExist) {
-      return Promise.reject(new Error("Already exist"));
+      return { status: "error", message: "Already exist" };
     }
-    const backlog = new Backlog(data);
-    await backlog.save();
-    return backlog;
+    const newBacklog = new Backlog(data);
+    await newBacklog.save();
+    return { status: "ok", data: newBacklog };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -132,8 +136,10 @@ export const createBacklog = async (data: BacklogCreationDTO) => {
 export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
   try {
     await dbConnect();
+    const backlogs = z.array(BacklogDTOSchema).safeParse(data);
+    if (!backlogs.success) return { status: "error", errors: backlogs.error };
     const updates: Promise<unknown>[] = [];
-    data.forEach(async (backlog) => {
+    backlogs.data.forEach(async (backlog) => {
       updates.push(
         Backlog.findByIdAndUpdate(backlog._id, {
           order: backlog.order,
@@ -142,6 +148,7 @@ export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
       );
     });
     await Promise.all(updates);
+    return { status: "ok" };
   } catch (error) {
     throw new Error(`${error}`);
   }

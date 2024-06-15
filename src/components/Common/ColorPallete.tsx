@@ -4,16 +4,14 @@ import ButtonBase from "./UI/ButtonBase";
 import useOutsideClickReg from "@/hooks/useOutsideClickReg";
 
 const defaultColors = [
-  "FF6900",
-  "FCB900",
-  "7BDCB5",
-  "00D084",
-  "8ED1FC",
-  "0693E3",
-  "ABB8C3",
-  "EB144C",
-  "F78DA7",
-  "9900EF",
+  "0043CE",
+  "6929C4",
+  "4D5358",
+  "0E6027",
+  "00539A",
+  "A2191F",
+  "005D5D",
+  "9F1853",
 ];
 
 const ColorPallete = ({
@@ -43,7 +41,7 @@ const ColorPallete = ({
       />
 
       {isOpen && (
-        <div ref={ref} className="absolute inset-0 z-10 w-fit  flex">
+        <div ref={ref} className="absolute inset-0 z-10 flex  w-fit">
           <div className=" fixed  flex h-auto gap-1  border border-subtle-1 bg-layer-1  p-2">
             {defaultColors.map((color, index) => (
               <div

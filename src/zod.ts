@@ -39,15 +39,15 @@ export const BacklogCategorySchema = z
 
 export const BacklogFormSchema = z.object({
   order: z.number().default(99),
-  categories: BacklogCategorySchema.array(),
-  folder: z.string().default("uncategorized"),
+  categories: BacklogCategorySchema.array().min(1),
+  folder: z.string().default("Default"),
   fields: FieldSchema.array(),
   slug: z.string(),
   backlogTitle: z.string().trim().min(1, "This field cannot be empty"),
   visibility: z.string(),
 });
 
-export const BacklogDTOSchema = z.intersection(
+export const BacklogDTOSchema = BacklogFormSchema.merge(
   z.object({
     userId: z.string(),
     userName: z.string(),
@@ -56,8 +56,13 @@ export const BacklogDTOSchema = z.intersection(
     createdAt: z.date(),
     updatedAt: z.date(),
   }),
-  BacklogFormSchema,
 );
+
+export const BacklogCreationSchema = BacklogDTOSchema.omit({
+  _id: true,
+  updatedAt: true,
+  createdAt: true,
+});
 export const ConfigSchema = z.object({
   profileVisibility: z.enum(["public", "private"]),
   showEmptyFolders: z.boolean(),

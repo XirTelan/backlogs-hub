@@ -39,7 +39,8 @@ const NavBar = ({ userName }: { userName: string }) => {
         </SidePanel>
         <HomeLink />
       </span>
-      <span className=" hidden md:flex">
+      <span className=" hidden md:flex md:items-center">
+        <HomeLink />
         <div className="flex py-3 pe-4">
           <div className="h-6  w-[1px] grow bg-subtle-1 "></div>
         </div>

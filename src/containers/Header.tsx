@@ -10,20 +10,20 @@ const Header = async () => {
   return (
     <>
       <header className="relative   flex h-12 w-full items-center border-b border-subtle-1 ">
-        <span className="hidden md:inline">
-          <HomeLink />
-        </span>
         {user ? (
           <div className="flex w-full items-center justify-between">
             <NavBar userName={user.username!} />
             <div>
-              <UserPanel  userName={user.username!}  />
+              <UserPanel userName={user.username!} />
             </div>
           </div>
         ) : (
-          <div className="ms-auto">
-            <SignInButton />
-          </div>
+          <>
+            <HomeLink />
+            <div className="ms-auto">
+              <SignInButton />
+            </div>
+          </>
         )}
       </header>
     </>

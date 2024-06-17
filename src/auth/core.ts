@@ -59,7 +59,9 @@ export const handleCallback = async (
   return await setTokenCookies(access_token, request.url);
 };
 
-export const signInWithLogin = async (data: unknown): Promise<ResponseData<string>> => {
+export const signInWithLogin = async (
+  data: unknown,
+): Promise<ResponseData<string>> => {
   const error: ResponseData<string> = {
     status: "error",
     message: "Username or password is incorrect",
@@ -75,7 +77,7 @@ export const signInWithLogin = async (data: unknown): Promise<ResponseData<strin
       };
   await dbConnect();
   const user = await User.findOne(options);
-  if (!user.password) return error;
+  if (!user || !user.password) return error;
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) return error;
   const access_token = await generateAccessToken(user);

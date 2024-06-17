@@ -1,6 +1,6 @@
 import ItemsEditForm from "@/containers/Items/ItemsEditForm";
 import { getBacklogItemById } from "@/services/backlogItem";
-import { cleanParamString } from "@/utils";
+import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { redirect } from "next/navigation";
 
 const EditItem = async ({
@@ -12,12 +12,15 @@ const EditItem = async ({
 
   const res = await getBacklogItemById(itemId);
   if (res.status === "error") redirect("/");
-  const backlogId = cleanParamString(res.data.backlogId);
-
+  const isAuthorize = await isAuthorizedBacklogOwner(
+    res.data.backlogId,
+    "edit",
+  );
+  if (!isAuthorize) redirect("/");
   return (
-    <div>
-      <ItemsEditForm backlogId={backlogId} defaultValues={res.data} />
-    </div>
+    <main className=" container">
+      <ItemsEditForm defaultValues={res.data} />
+    </main>
   );
 };
 

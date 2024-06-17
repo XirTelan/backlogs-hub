@@ -4,12 +4,12 @@ import InputField from "@/components/Common/UI/InputField";
 import InputWithLoader from "@/components/Common/UI/InputWithLoader";
 import { apiRoutesList } from "@/data";
 import useLoaderValue from "@/hooks/useLoaderValue";
+import { toastCustom } from "@/lib/toast";
 import { RegistrationSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { FaArrowRight } from "react-icons/fa6";
 import { z } from "zod";
 
@@ -52,7 +52,7 @@ const UserRegisterForm = () => {
         if (signInRes.ok) router.refresh();
       }
       if (res.status === 400) {
-        toast.error(body.message);
+        toastCustom.error(body.message);
       }
     } catch (error) {
       console.error("Error during registration:", error);

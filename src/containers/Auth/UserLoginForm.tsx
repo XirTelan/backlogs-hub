@@ -3,6 +3,7 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import InputField from "@/components/Common/UI/InputField";
 import LinkBase from "@/components/Common/UI/LinkBase";
 import { apiRoutesList } from "@/data";
+import { toastCustom } from "@/lib/toast";
 import { SignInSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -37,6 +38,10 @@ const UserLoginForm = () => {
       body: JSON.stringify(data),
     });
     if (res.ok) router.refresh();
+    else {
+      const error = await res.json();
+      toastCustom.error(error.message);
+    }
   };
 
   return (

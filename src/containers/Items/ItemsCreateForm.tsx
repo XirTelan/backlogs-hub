@@ -2,8 +2,9 @@
 
 import { BacklogItemCreationDTO } from "@/types";
 import ItemsForm from "./ItemsForm";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Title from "@/components/Common/Title";
+import { toastCustom } from "@/lib/toast";
 
 const ItemsCreateForm = ({
   backlogId,
@@ -22,9 +23,13 @@ const ItemsCreateForm = ({
         },
         body: JSON.stringify(data),
       });
-      if (res.ok) toast.success("Created");
-      
-      router.refresh();
+      if (res.ok) {
+        toastCustom.success("Created");
+        router.back();
+      } else {
+        const error = await res.json();
+        toastCustom.error(error.message);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -32,6 +37,7 @@ const ItemsCreateForm = ({
 
   return (
     <>
+      <Title style={{ marginLeft: "1rem" }} title={"Add new item to "} />
       <ItemsForm
         backlogId={backlogId}
         defaultValues={defaultValues}

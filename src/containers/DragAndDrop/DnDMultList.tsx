@@ -24,10 +24,10 @@ import AddItem from "@/components/dnd/AddItem";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Modal from "@/components/Common/Modal";
 import Title from "@/components/Common/Title";
-import toast from "react-hot-toast";
 import useDragAndDrop from "@/hooks/useDragAndDrop";
 import BacklogDndItem from "../Backlogs/BacklogDndItem";
 import { DndListProps } from "@/types";
+import { toastCustom } from "@/lib/toast";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -106,7 +106,7 @@ const DnDMultList = ({
           body: JSON.stringify(dataFormatted),
         });
         if (res.ok) {
-          toast.success("Saved");
+          toastCustom.success("Saved");
         }
       } catch (error) {
         console.error(error);
@@ -119,7 +119,7 @@ const DnDMultList = ({
       const res = await fetch(`/api/backlogs/${id}`, {
         method: "DELETE",
       });
-      if (res.ok) toast.success("Deleted");
+      if (res.ok) toastCustom.success("Deleted");
     } catch (error) {
       console.error(error);
     }

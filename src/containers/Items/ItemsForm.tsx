@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { BacklogDTO } from "@/zodTypes";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { CgSpinner } from "react-icons/cg";
+import Select from "@/components/Common/UI/Select";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlogId,
@@ -21,7 +22,12 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   const router = useRouter();
   const [backlog, setBacklog] = useState<BacklogDTO>();
   const [fieldsTypeMap, setFieldsTypeMap] = useState<Map<string, string>>();
-  const { handleSubmit, control, register } = useForm<BacklogItemCreationDTO>({
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { isValid, isSubmitting },
+  } = useForm<BacklogItemCreationDTO>({
     defaultValues,
     mode: "onBlur",
   });
@@ -57,12 +63,11 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
     onSubmit({ ...defaultValues, ...data });
-    router.back();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitInternal)}>
-      <div className="field group  relative mt-2 w-1/2 px-0 py-4  ">
+    <form className="px-4" onSubmit={handleSubmit(onSubmitInternal)}>
+      <div className="field group  relative mt-2 px-0 py-4 md:w-1/2  ">
         <InputField
           id="title"
           placeholder="Title"
@@ -71,21 +76,13 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         />
       </div>
       <div>
-        {backlog.categories.map((category) => (
-          <div key={category.name}>
-            <label htmlFor={`radio_${category.name}`}>
-              <input
-                id={`radio_${category.name}`}
-                type="radio"
-                value={category.name.toLowerCase()}
-                {...register("category")}
-              />
-              {category.name}
-            </label>
-          </div>
-        ))}
+        <Select
+          label="Category"
+          options={backlog.categories.map((category) => category.name)}
+          {...register("category")}
+        />
       </div>
-      <FieldsBlock status="disabled">
+      <FieldsBlock title="Fields" status="disabled">
         <>
           {fieldsArray.fields.map((field, index) => (
             <li
@@ -105,8 +102,12 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         </>
       </FieldsBlock>
 
-      <div className="flex w-1/4 flex-col gap-4 ">
-        <ButtonBase text="Create" type="submit" />
+      <div className="flex w-1/4 flex-col gap-4 md:mt-4 ">
+        <ButtonBase
+          disabled={!isValid || isSubmitting}
+          text="Create"
+          type="submit"
+        />
         <ButtonBase
           text="Cancel"
           variant="secondary"

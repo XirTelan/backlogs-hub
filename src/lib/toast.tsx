@@ -30,7 +30,7 @@ const renderToastContent =
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 300, opacity: 0 }}
-          className={`flex h-12 items-center gap-4 border border-s-4 border-s-support-success ${toastStyle[type].border}  border-s-support-success bg-layer-1`}
+          className={`flex h-12 items-center gap-4 border border-s-4 ${toastStyle[type].border}  bg-layer-1`}
         >
           <div className={`ms-4 ${toastStyle[type].text} `}>
             {toastIcons[type]}
@@ -51,7 +51,10 @@ export const toastCustom = {
   success: (text: string, options?: toastProps) =>
     toast.custom(renderToastContent(text, "success"), options),
   error: (text: string, options?: toastProps) =>
-    toast.custom(renderToastContent(text, "error"), options),
+    toast.custom(
+      renderToastContent(text || "Something goes wrong", "error"),
+      options,
+    ),
 };
 
 type toastProps =

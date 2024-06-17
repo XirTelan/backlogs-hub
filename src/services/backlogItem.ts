@@ -8,11 +8,11 @@ export const getBacklogItemById = async (
 ): Promise<ResponseData<BacklogItemDTO>> => {
   try {
     await dbConnect();
-    const backlogData: BacklogItemDTO | null =
+    const backlogItem: BacklogItemDTO | null =
       await BacklogItem.findById(itemId).lean();
-    if (!backlogData) return { status: "error", message: "doesnt exist" };
-    backlogData._id = backlogData._id.toString();
-    return { status: "ok", data: backlogData };
+    if (!backlogItem) return { status: "error", message: "doesnt exist" };
+    backlogItem._id = backlogItem._id.toString();
+    return { status: "ok", data: backlogItem };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }

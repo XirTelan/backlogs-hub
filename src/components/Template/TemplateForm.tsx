@@ -3,10 +3,10 @@ import InputWithLoader from "../Common/UI/InputWithLoader";
 import ButtonBase from "../Common/UI/ButtonBase";
 import { TemplateDTO } from "@/types";
 import { generateSlug } from "@/utils";
-import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Common/Title";
 import useLoaderValue from "@/hooks/useLoaderValue";
+import { toastCustom } from "@/lib/toast";
 
 const TemplateForm = ({
   selectedTemplate,
@@ -36,7 +36,7 @@ const TemplateForm = ({
         body: JSON.stringify(backlog),
       });
       if (res.ok) {
-        toast.success("Success");
+        toastCustom.success("Success");
         handleCancel();
       }
     } catch (error) {

@@ -44,14 +44,13 @@ export const BacklogFormSchema = z.object({
   fields: FieldSchema.array(),
   slug: z.string(),
   backlogTitle: z.string().trim().min(1, "This field cannot be empty"),
-  visibility: z.string(),
+  visibility: z.enum(["public", "private"]).default("private"),
 });
 
 export const BacklogDTOSchema = BacklogFormSchema.merge(
   z.object({
     userId: z.string(),
     userName: z.string(),
-    visibility: z.enum(["public", "private"]).default("private"),
     _id: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),

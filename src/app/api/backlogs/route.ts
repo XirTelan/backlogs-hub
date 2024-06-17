@@ -9,9 +9,9 @@ import {
   isBacklogExist,
 } from "@/services/backlogs";
 import { updateUserFolders } from "@/services/user";
-import { BacklogCreationDTO, BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/types";
 import { sendMsg } from "@/utils";
-import { BacklogDTO, BacklogFormData } from "@/zodTypes";
+import { BacklogCreationDTO, BacklogDTO, BacklogFormData } from "@/zodTypes";
 import { Types } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";

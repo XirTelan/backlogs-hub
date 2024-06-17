@@ -2,28 +2,29 @@
 
 import { BacklogItemDTO } from "@/types";
 import ItemsForm from "./ItemsForm";
-import toast from "react-hot-toast";
+import { toastCustom } from "@/lib/toast";
 
 const ItemsEditForm = ({
-  backlogId,
   defaultValues,
 }: {
-  backlogId: string;
   defaultValues: BacklogItemDTO;
 }) => {
   const onSubmit = async (data: BacklogItemDTO) => {
     try {
-      const res = await fetch(`/api/backlogs/${backlogId}/items/${data._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `/api/backlogs/${defaultValues.backlogId}/items/${data._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
+      );
       if (res.ok) {
-        toast.success("Saved");
+        toastCustom.success("Saved");
       } else {
-        toast.error(res.statusText);
+        toastCustom.error(res.statusText);
       }
     } catch (error) {
       console.error(error);
@@ -33,7 +34,7 @@ const ItemsEditForm = ({
   return (
     <div>
       <ItemsForm
-        backlogId={backlogId}
+        backlogId={defaultValues.backlogId}
         defaultValues={defaultValues}
         onSubmit={onSubmit}
       />

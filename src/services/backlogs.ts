@@ -190,8 +190,11 @@ export const isAuthorizedBacklogOwner = async (
   backlogId: string,
   method: "read" | "edit",
 ) => {
-  const user = await getCurrentUserInfo();
-  const backlog = await getBacklogById(backlogId);
+  const [user, backlog] = await Promise.all([
+    getCurrentUserInfo(),
+    getBacklogById(backlogId),
+  ]);
+
   if (backlog?.visibility === "public" && method === "read") return true;
   if (backlog?.userId !== user?.id) return false;
   return true;

@@ -4,9 +4,9 @@ import { BacklogItemDTO } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-import toast from "react-hot-toast";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
+import { toastCustom } from "@/lib/toast";
 
 const BacklogItemTr = ({ item, color, showActions }: BacklogItemTrProps) => {
   const router = useRouter();
@@ -15,10 +15,10 @@ const BacklogItemTr = ({ item, color, showActions }: BacklogItemTrProps) => {
       method: "DELETE",
     });
 
-    if (res.status === 200) toast.success(`Deleted`);
+    if (res.status === 200) toastCustom.success(`Deleted`);
     else {
       const { message } = await res.json();
-      toast.error(message);
+      toastCustom.error(message);
     }
     router.refresh();
   };

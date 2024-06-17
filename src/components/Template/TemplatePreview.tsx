@@ -4,8 +4,8 @@ import TemplateCard from "./TemplateCard";
 import {  TemplateDTO } from "@/types";
 import InputField from "../Common/UI/InputField";
 import TextArea from "../Common/TextArea";
-import toast from "react-hot-toast";
 import { BacklogFormData } from "@/zodTypes";
+import { toastCustom } from "@/lib/toast";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
   const [data, setData] = useState<Partial<TemplateDTO>>();
   const [description, setDescription] = useState<string>("");
@@ -33,7 +33,7 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
         body: JSON.stringify(data),
       });
       if (res.ok) {
-        toast.success("Template saved");
+        toastCustom.success("Template saved");
         onClose();
       }
     } catch (error) {

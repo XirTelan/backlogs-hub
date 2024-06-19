@@ -58,12 +58,10 @@ export default async function Backlog({
             </>
           </Title>
           <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
-            <Suspense fallback={<p>Loading backlog...</p>}>
-              <FilterBlock
-                backlogSlug={data.slug}
-                backlogCategories={data.categories}
-              />
-            </Suspense>
+            <FilterBlock
+              backlogSlug={data.slug}
+              backlogCategories={data.categories}
+            />
           </section>
           <section className="me-auto flex flex-col py-4 lg:m-0">
             <Suspense fallback={<SkeletonDataTable />}>

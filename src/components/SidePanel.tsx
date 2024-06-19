@@ -20,7 +20,7 @@ const SidePanel = ({
     position === "left" ? "left-0 border-r" : "right-0 border-l";
   const styleButtonPos = position === "left" ? "border-e" : "border-s";
   const styleButton = isOpen
-    ? ` ${styleButtonPos} border-subtle-1 border-b border-b-layer-1`
+    ? ` ${styleButtonPos} border-subtle-1 border-b border-b-background`
     : "border-b border-subtle-1 border-s border-s-transparent";
   return (
     <div
@@ -31,13 +31,13 @@ const SidePanel = ({
       className="relative"
     >
       <button
-        className={`${styleButton}  h-12 w-12  p-[14px] hover:bg-subtle-3/15`}
+        className={`${styleButton}  h-[49px] w-12   p-[14px] hover:bg-subtle-3/15`}
       >
         {icon}
       </button>
       {isOpen && (
         <div
-          className={`${styleDropDownPos} bg-background absolute top-full z-50  w-64  border-b border-subtle-1   `}
+          className={`${styleDropDownPos} absolute top-full z-50 w-64  border-b  border-subtle-1 bg-background   `}
         >
           {children}
         </div>

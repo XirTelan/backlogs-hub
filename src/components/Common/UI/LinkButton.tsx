@@ -10,12 +10,11 @@ const LinkButton = ({
   children,
   button,
   link,
+  ...props
 }: LinkButtonProps) => {
   return (
-    <Link {...link} href={href}>
-      <ButtonBase {...button} type="button" text={text}>
-        {children}
-      </ButtonBase>
+    <Link {...link} {...props} href={href}>
+      <ButtonBase {...button} type="button" text={text} icon={children} />
     </Link>
   );
 };
@@ -27,4 +26,7 @@ type LinkButtonProps = {
   children?: React.ReactElement;
   button?: ButtonBaseProps;
   link?: LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>;
-};
+} & React.DetailedHTMLProps<
+  React.LinkHTMLAttributes<HTMLAnchorElement>,
+  HTMLAnchorElement
+>;

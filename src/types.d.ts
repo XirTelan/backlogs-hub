@@ -118,6 +118,7 @@ export type UserCreationDTO = {
 export type ButtonBaseProps = {
   children?: React.ReactElement;
   text?: string;
+  hideText?: boolean;
   size?: "small" | "medium" | "large" | "elarge";
   icon?: React.ReactElement;
   variant?:

@@ -2,7 +2,8 @@ import BacklogCard from "@/components/Backlog/BacklogCard";
 import { BacklogDTO } from "@/zodTypes";
 import React from "react";
 import Title from "@/components/Common/Title";
-
+import { FaFolder } from "react-icons/fa6";
+import Accordion from "@/components/Common/UI/Accordion";
 const BacklogFolder = ({
   folderName,
   userName,
@@ -14,17 +15,26 @@ const BacklogFolder = ({
 }) => {
   return (
     <section>
-      <Title title={folderName} variant={2} />
-      <div className=" flex gap-2">
-        {backlogs.map((backlog) => (
-          <BacklogCard
-            href={`/user/${userName}/backlogs/${backlog.slug}`}
-            key={backlog._id}
-          >
-            {backlog.backlogTitle}
-          </BacklogCard>
-        ))}
-      </div>
+      <Accordion
+        defaultState={true}
+        title={
+          <div className="ms-4 flex items-center">
+            <FaFolder className="me-2" />
+            <Title title={folderName} variant={3} />
+          </div>
+        }
+      >
+        <div className=" overflow flex gap-2 ">
+          {backlogs.map((backlog) => (
+            <BacklogCard
+              href={`/user/${userName}/backlogs/${backlog.slug}`}
+              key={backlog._id}
+            >
+              {backlog.backlogTitle}
+            </BacklogCard>
+          ))}
+        </div>
+      </Accordion>
     </section>
   );
 };

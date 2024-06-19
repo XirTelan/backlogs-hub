@@ -32,13 +32,11 @@ const ItemsEditForm = ({
   };
 
   return (
-    <div>
-      <ItemsForm
-        backlogId={defaultValues.backlogId}
-        defaultValues={defaultValues}
-        onSubmit={onSubmit}
-      />
-    </div>
+    <ItemsForm
+      backlogId={defaultValues.backlogId}
+      defaultValues={defaultValues}
+      onSubmit={onSubmit}
+    />
   );
 };
 

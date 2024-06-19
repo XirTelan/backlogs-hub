@@ -66,7 +66,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   };
 
   return (
-    <form className="px-4" onSubmit={handleSubmit(onSubmitInternal)}>
+    <form onSubmit={handleSubmit(onSubmitInternal)}>
       <div className="field group  relative mt-2 px-0 py-4 md:w-1/2  ">
         <InputField
           id="title"

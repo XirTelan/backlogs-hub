@@ -8,10 +8,10 @@ const sizes = {
   elarge: "h-16",
 };
 const buttonSize = {
-  small: "w-8",
-  medium: "w-10",
-  large: "w-12",
-  elarge: "w-12",
+  small: "w-8  min-w-8",
+  medium: "w-10  min-w-10",
+  large: "w-12 min-w-12",
+  elarge: "w-12 min-w-12",
 };
 const variants = {
   primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
@@ -28,6 +28,7 @@ const variants = {
 
 const ButtonBase = ({
   text,
+  hideText = false,
   size = "large",
   variant = "primary",
   icon,
@@ -37,12 +38,16 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${variants[variant]} ${sizes[size]}  relative flex  items-center  text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
+        className={`${variants[variant]} ${sizes[size]}  relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
       >
-        {text && <div className="px-2">{text}</div>}
+        {text && (
+          <div className={` px-2  ${hideText && "hidden md:block"}`}>
+            {text}
+          </div>
+        )}
         {icon && (
           <div
-            className={`${!text && `${buttonSize[size]}`} ms-auto flex min-h-8 min-w-8 items-center justify-center p-1 `}
+            className={`${buttonSize[size]} ms-auto flex min-h-8 items-center justify-center p-1 `}
           >
             {icon}
           </div>

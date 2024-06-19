@@ -30,7 +30,7 @@ const UserBacklogs = async ({ userName }: { userName: string }) => {
         listIsEmpty
       ) : (
         <div className="  flex w-full items-center justify-between rounded ">
-          <div className="flex flex-col flex-wrap gap-4">
+          <div className="flex grow flex-col flex-wrap">
             {data.map(([folderName, backlogs]) => {
               if (
                 config.status === "ok" &&

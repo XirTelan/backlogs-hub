@@ -1,3 +1,4 @@
+import Title from "@/components/Common/Title";
 import ItemsEditForm from "@/containers/Items/ItemsEditForm";
 import { getBacklogItemById } from "@/services/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
@@ -19,6 +20,7 @@ const EditItem = async ({
   if (!isAuthorize) redirect("/");
   return (
     <main className=" container">
+      <Title title="Edit" />
       <ItemsEditForm defaultValues={res.data} />
     </main>
   );

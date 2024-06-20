@@ -13,7 +13,7 @@ export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } },
 ) {
-  const isAuthorized = await isAuthorizedBacklogOwner(id, "read");
+  const { status: isAuthorized } = await isAuthorizedBacklogOwner(id, "read");
   if (!isAuthorized) return sendMsg.error("Doesnt have permission", 401);
   const categories = request.nextUrl.searchParams.get("categories")?.split("-");
   const search = request.nextUrl.searchParams.get("search");
@@ -46,16 +46,12 @@ export async function GET(
   }
 }
 
-export async function POST(
-  request: NextRequest,
-  { params: { id } }: { params: { id: string } },
-) {
+export async function POST(request: NextRequest) {
   const data: BacklogItemDTO = await request.json();
-  data.backlogId = id;
   data.category = data.category.toLowerCase();
   try {
     const res = await addBacklogItem(data);
-    revalidateTag(`backloglist${id}`);
+    revalidateTag(`backloglist${data.backlogId}`);
     return NextResponse.json({ message: "created", res }, { status: 201 });
   } catch (error) {
     return sendMsg.error(error);

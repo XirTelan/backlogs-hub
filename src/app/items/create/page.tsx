@@ -1,8 +1,8 @@
 import { getCurrentUserInfo } from "@/auth/utils";
+import Title from "@/components/Common/Title";
 import ItemsCreateForm from "@/containers/Items/ItemsCreateForm";
 import { getUserBacklogBySlug } from "@/services/backlogs";
 import { BacklogItemCreationDTO } from "@/types";
-import { cleanParamString } from "@/utils";
 import { redirect } from "next/navigation";
 
 const CreateItem = async ({
@@ -11,12 +11,13 @@ const CreateItem = async ({
   searchParams: { backlog: string };
 }) => {
   const user = await getCurrentUserInfo();
-  if (!user || !user.username || !backlog) redirect("/");
+  if (!user || !backlog) redirect("/");
 
   const backlogInfo = await getUserBacklogBySlug(user.username, backlog, true);
   if (!backlogInfo) redirect("/");
 
   const defaultValues: BacklogItemCreationDTO = {
+    backlogId: backlogInfo._id,
     title: "",
     category: backlogInfo.categories[0].name.toLowerCase() || "",
     userFields: backlogInfo.fields.map((field) => ({
@@ -24,10 +25,17 @@ const CreateItem = async ({
       value: "",
     })),
   };
-  const id = cleanParamString(JSON.stringify(backlogInfo._id));
+
   return (
-    <main className="container">
-      <ItemsCreateForm backlogId={id} defaultValues={defaultValues} />
+    <main className="container px-4">
+      <Title title={`Add new item`} />
+      <ItemsCreateForm
+        backlog={{
+          fields: backlogInfo.fields,
+          categories: backlogInfo.categories,
+        }}
+        defaultValues={defaultValues}
+      />
     </main>
   );
 };

@@ -4,6 +4,7 @@ import {
   putBacklogItem,
 } from "@/services/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
+import { BacklogItemDTO } from "@/types";
 import { sendMsg } from "@/utils";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,16 +14,13 @@ export async function GET(
   { params: { itemId } }: { params: { itemId: string } },
 ) {
   try {
-    console.log("well 1");
     const res = await getBacklogItemById(itemId);
     if (res.status === "error") return sendMsg.error(res.errors, 400);
-    console.log("well 2");
-    const isAuthorize = await isAuthorizedBacklogOwner(
+    const { status: isAuthorize } = await isAuthorizedBacklogOwner(
       res.data.backlogId,
       "read",
     );
     if (!isAuthorize) return sendMsg.error("Not authorized", 401);
-    console.log("well 3");
     return NextResponse.json({ status: "success", data: res.data });
   } catch (error) {
     sendMsg.error(error);
@@ -31,14 +29,16 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params: { id, itemId } }: { params: { id: string; itemId: string } },
+  { params: { itemId } }: { params: { itemId: string } },
 ) {
   try {
-    const isAuthorize = await isAuthorizedBacklogOwner(id, "edit");
-    if (!isAuthorize) return sendMsg.error("Not authorized", 401);
-    await deleteBacklogItem(itemId);
-    revalidateTag(`backloglist${id}`);
-    return sendMsg.success("Deleted", 202);
+    const res = await authorizeAndProceed(itemId, () =>
+      deleteBacklogItem(itemId),
+    );
+    if (res.status === "error") return res.data;
+    const data = res.data as BacklogItemDTO;
+    revalidateTag(`backloglist${data._id}`);
+    return sendMsg.success(`Deleted ${data!.title}`, 202);
   } catch (error) {
     sendMsg.error(error);
   }
@@ -46,15 +46,31 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params: { id } }: { params: { id: string } },
+  { params: { itemId } }: { params: { itemId: string } },
 ) {
   const data = await request.json();
   try {
-    const isAuthorize = await isAuthorizedBacklogOwner(id, "edit");
-    if (!isAuthorize) return sendMsg.error("Not authorized", 401);
-    await putBacklogItem(data);
+    const res = await authorizeAndProceed(itemId, () => putBacklogItem(data));
+    if (res.status === "error") return res.data;
     return sendMsg.success();
   } catch (error) {
     sendMsg.error(error);
   }
 }
+
+const authorizeAndProceed = async (
+  itemId: string,
+  action: (...args: unknown[]) => Promise<unknown>,
+) => {
+  const res = await getBacklogItemById(itemId);
+  if (res.status === "error")
+    return { status: "error", data: sendMsg.error(res.errors, 400) };
+  const { status: isAuthorize } = await isAuthorizedBacklogOwner(
+    res.data.backlogId,
+    "edit",
+  );
+  if (!isAuthorize)
+    return { status: "error", data: sendMsg.error("Not authorized", 401) };
+  const data = await action();
+  return { status: "ok", data: data };
+};

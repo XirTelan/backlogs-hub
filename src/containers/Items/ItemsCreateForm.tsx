@@ -5,18 +5,19 @@ import ItemsForm from "./ItemsForm";
 import { useRouter } from "next/navigation";
 import Title from "@/components/Common/Title";
 import { toastCustom } from "@/lib/toast";
+import { BacklogCategory, Field } from "@/zodTypes";
 
 const ItemsCreateForm = ({
-  backlogId,
+  backlog,
   defaultValues,
 }: {
-  backlogId: string;
+  backlog: { fields: Field[]; categories: BacklogCategory[] };
   defaultValues: BacklogItemCreationDTO;
 }) => {
   const router = useRouter();
   const onSubmit = async (data: BacklogItemCreationDTO) => {
     try {
-      const res = await fetch(`/api/backlogs/${backlogId}/items`, {
+      const res = await fetch(`/api/items`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,9 +38,10 @@ const ItemsCreateForm = ({
 
   return (
     <>
-      <Title style={{ marginLeft: "1rem" }} title={"Add new item to "} />
+
       <ItemsForm
-        backlogId={backlogId}
+        categories={backlog.categories}
+        fields={backlog.fields}
         defaultValues={defaultValues}
         onSubmit={onSubmit}
       />

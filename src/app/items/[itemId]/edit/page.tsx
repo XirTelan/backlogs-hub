@@ -13,15 +13,19 @@ const EditItem = async ({
 
   const res = await getBacklogItemById(itemId);
   if (res.status === "error") redirect("/");
-  const isAuthorize = await isAuthorizedBacklogOwner(
+
+  const { status: isAuthorize, backlog } = await isAuthorizedBacklogOwner(
     res.data.backlogId,
     "edit",
   );
   if (!isAuthorize) redirect("/");
   return (
-    <main className=" container">
+    <main className=" container px-4">
       <Title title="Edit" />
-      <ItemsEditForm defaultValues={res.data} />
+      <ItemsEditForm
+        backlog={{ fields: backlog.fields, categories: backlog.categories }}
+        defaultValues={res.data}
+      />
     </main>
   );
 };

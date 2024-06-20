@@ -1,14 +1,12 @@
 import BacklogItem from "@/components/Backlog/BacklogItem";
-import Title from "@/components/Common/Title";
-import { getBacklogItemById } from "@/services/backlogItem";
-import { isAuthorizedBacklogOwner } from "@/services/backlogs";
-import { redirect } from "next/navigation";
-import React from "react";
 
-const Page = async ({ params: { itemId } }) => {
+const Page = async ({ params: { itemId } }: { params: { itemId: string } }) => {
+  const res = await fetch(`${process.env.DOMAIN_URL}/api/items/${itemId}`).then(
+    (res) => res.json(),
+  );
   return (
     <main className="container">
-      <BacklogItem itemId={itemId} />
+      <BacklogItem data={res.data} />
     </main>
   );
 };

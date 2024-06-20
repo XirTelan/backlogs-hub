@@ -41,7 +41,7 @@ const SkeletonDataTable = () => {
           <div className="absolute hidden">1</div>
           <div className="flex w-full">
             <div className="ms-auto">
-              <div className=" h-16 w-32  bg-secondary-btn-hover "></div>
+              <div className=" h-12 w-32 animate-pulse  bg-layer-2/50 "></div>
             </div>
           </div>
         </section>

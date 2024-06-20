@@ -1,8 +1,9 @@
 import TableBase from "@/components/Common/UI/TableBase";
-import { BacklogItemDTO } from "@/types";
-import BacklogItemTr from "./BacklogItemTr";
-import BacklogListAdd from "@/components/BacklogListAdd";
 import { getBacklogItemsData } from "@/services/backlogItem";
+import LinkButton from "@/components/Common/UI/LinkButton";
+import { IoAdd } from "react-icons/io5";
+
+import BacklogListData from "./BacklogListData";
 
 const itemsNotFound = (
   <>
@@ -42,24 +43,35 @@ const Backloglist = async ({
     <>
       <TableBase
         showButton={isOwner}
-        customButton={<BacklogListAdd backlog={backlogSlug} />}
+        customButton={
+          <LinkButton
+            href={`/items/create?backlog=${backlogSlug}`}
+            text={"Add item"}
+            button={{ hideText: true }}
+          >
+            <IoAdd />
+          </LinkButton>
+        }
         title=""
         search
         description=""
-        headers={[{ title: "Title" }, { title: "Actions", width: "112px" }]}
+        headers={[
+          { title: "", width: "32px" },
+          { title: "Title" },
+          { title: "Actions", width: "112px" },
+        ]}
       >
-        {data.length > 0
-          ? data.map((item: BacklogItemDTO, indx) => (
-              <BacklogItemTr
-                showActions={isOwner}
-                key={indx}
-                item={item}
-                color={categoriesMap.get(item.category) || "#fff"}
-              />
-            ))
-          : search
-            ? itemsNotFound
-            : itemsDoesntExist}
+        {data.length > 0 ? (
+          <BacklogListData
+            data={data}
+            categoriesMap={categoriesMap}
+            isOwner={isOwner}
+          />
+        ) : search ? (
+          itemsNotFound
+        ) : (
+          itemsDoesntExist
+        )}
       </TableBase>
     </>
   );

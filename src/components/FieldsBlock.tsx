@@ -21,7 +21,7 @@ const FieldsBlock = (props: FieldsBlockProps) => {
         </div>
       )}
       <div className="flex-wrap  rounded bg-layer-1 p-4">
-        <ul className=" grid max-h-[calc(100vh-40rem)] flex-col gap-1 overflow-auto ">
+        <ul className=" grid flex-col gap-1 overflow-auto ">
           {props.children}
         </ul>
       </div>

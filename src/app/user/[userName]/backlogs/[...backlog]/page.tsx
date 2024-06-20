@@ -3,9 +3,8 @@ import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
 import Title from "@/components/Common/Title";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 
-import Backloglist from "@/containers/Backlogs/BacklogList";
+import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
 import FilterBlock from "@/containers/FilterBlock";
-import UserBacklogsSideNav from "@/containers/User/UserBacklogsSideNav";
 import { getUserBacklogBySlug } from "@/services/backlogs";
 import Link from "next/link";
 import React, { Suspense } from "react";
@@ -34,49 +33,38 @@ export default async function Backlog({
   );
 
   return (
-    <div
-      className={`grid w-full  ${isOwner && "md:grid-cols-[16rem_calc(100%-16rem)]"} `}
-    >
-      {user && (
-        <aside className=" hidden h-full w-64 pt-4 md:block ">
-          <UserBacklogsSideNav activeBacklog={backlog[0]} userName={userName} />
-        </aside>
-      )}
-      <main className="container px-4">
+    <main className="container h-[calc(100svh-49px)] px-4">
+      <Title title={data.backlogTitle}>
         <>
-          <Title title={data.backlogTitle}>
-            <>
-              {isOwner && (
-                <Link href={`/backlog/edit/${data._id}`}>
-                  <ButtonBase
-                    variant="tertiary"
-                    text="Edit backlog"
-                    icon={<MdEdit />}
-                  ></ButtonBase>
-                </Link>
-              )}
-            </>
-          </Title>
-          <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
-            <FilterBlock
-              backlogSlug={data.slug}
-              backlogCategories={data.categories}
-            />
-          </section>
-          <section className="me-auto flex flex-col py-4 lg:m-0">
-            <Suspense fallback={<SkeletonDataTable />}>
-              <Backloglist
-                isOwner={isOwner}
-                search={search}
-                selectedCategories={selectedCategories}
-                backlogSlug={data.slug}
-                categoriesMap={categoriesMap}
-                id={data._id.toString()}
-              />
-            </Suspense>
-          </section>
+          {isOwner && (
+            <Link href={`/backlog/edit/${data._id}`}>
+              <ButtonBase
+                variant="tertiary"
+                text="Edit backlog"
+                icon={<MdEdit />}
+              ></ButtonBase>
+            </Link>
+          )}
         </>
-      </main>
-    </div>
+      </Title>
+      <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
+        <FilterBlock
+          backlogSlug={data.slug}
+          backlogCategories={data.categories}
+        />
+      </section>
+      <section className="me-auto flex flex-col py-4 lg:m-0">
+        <Suspense fallback={<SkeletonDataTable />}>
+          <Backloglist
+            isOwner={isOwner}
+            search={search}
+            selectedCategories={selectedCategories}
+            backlogSlug={data.slug}
+            categoriesMap={categoriesMap}
+            id={data._id.toString()}
+          />
+        </Suspense>
+      </section>
+    </main>
   );
 }

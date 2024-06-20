@@ -1,16 +1,18 @@
 "use client";
 import React from "react";
 import Title from "../Common/Title";
-import useSWR from "swr";
-import { fetcher } from "@/utils";
+import { BacklogItemDTO } from "@/types";
 
-const BacklogItem = ({ itemId }: { itemId: string }) => {
-  const res = useSWR(`/api/items/${itemId}`, fetcher);
-  if (res.isLoading) return <div>Is Loading</div>;
-  const { data } = res.data;
+const BacklogItem = ({
+  data,
+  hideTitle = false,
+}: {
+  data: BacklogItemDTO;
+  hideTitle?: boolean;
+}) => {
   return (
     <div>
-      <Title title={`Details "${data.title}"`} />
+      {!hideTitle && <Title title={`Details "${data.title}"`} />}
       <div className="flex">
         <div>Category:</div>
         <div>{data.category}</div>

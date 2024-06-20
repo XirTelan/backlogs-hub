@@ -29,7 +29,7 @@ export type TextArea = {
 >;
 
 export type BacklogNavProps = {
-  activeBacklog: string;
+  activeBacklog: boolean;
   backlogSlug: string;
 } & LinkProps &
   AnchorHTMLAttributes<HTMLAnchorElement>;
@@ -44,6 +44,7 @@ type ItemField = {
 };
 
 export type BacklogItemCreationDTO = {
+  backlogId: string;
   title: string;
   category: string;
   userFields: ItemField[];

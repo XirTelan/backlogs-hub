@@ -14,7 +14,10 @@ export const getBacklogById = async (
 ): Promise<BacklogDTO | null> => {
   try {
     await dbConnect();
-    const backlog: BacklogDTO | null = await Backlog.findById(id).lean();
+    const backlog: BacklogDTO | null = await Backlog.findById(id, {
+      "categories._id": 0,
+      "fields._id": 0,
+    }).lean();
     if (!backlog) return null;
     backlog._id = backlog._id.toString();
     return backlog;
@@ -85,6 +88,7 @@ export const getUserBacklogBySlug = async (
       "categories._id": 0,
       "fields._id": 0,
     }).lean();
+    if (backlog) backlog._id = backlog._id.toString();
     return backlog;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -189,13 +193,16 @@ export const isBacklogExist = async (userName: string, slug: string) => {
 export const isAuthorizedBacklogOwner = async (
   backlogId: string,
   method: "read" | "edit",
-) => {
+): Promise<
+  { status: true; backlog: BacklogDTO } | { status: false; backlog: null }
+> => {
   const [user, backlog] = await Promise.all([
     getCurrentUserInfo(),
     getBacklogById(backlogId),
   ]);
-
-  if (backlog?.visibility === "public" && method === "read") return true;
-  if (backlog?.userId !== user?.id) return false;
-  return true;
+  if (!backlog) return { status: false, backlog: null };
+  if (backlog.visibility === "public" && method === "read")
+    return { status: true, backlog: backlog };
+  if (backlog.userId !== user?.id) return { status: false, backlog: null };
+  return { status: true, backlog: backlog };
 };

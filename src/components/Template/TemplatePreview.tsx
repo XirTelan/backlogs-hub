@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import TemplateCard from "./TemplateCard";
-import {  TemplateDTO } from "@/types";
+import { TemplateDTO } from "@/types";
 import InputField from "../Common/UI/InputField";
 import TextArea from "../Common/TextArea";
 import { BacklogFormData } from "@/zodTypes";

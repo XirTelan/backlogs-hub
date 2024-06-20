@@ -12,7 +12,7 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchBar>(
 
     return (
       <div className="flex w-full items-center focus-within:outline  focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-white">
-        <div className="group flex grow  bg-layer-1 hover:bg-field-hover-1">
+        <div className="group flex grow bg-layer-1 hover:bg-field-hover-1">
           <div className="p-4">
             <GoSearch />
           </div>
@@ -24,6 +24,10 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchBar>(
             id={id}
             {...props}
             ref={ref}
+            style={{
+              minWidth: 0,
+              maxWidth: "calc(100vw - 128px)",
+            }}
           />
           {children}
         </div>

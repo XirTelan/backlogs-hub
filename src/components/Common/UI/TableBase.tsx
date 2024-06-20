@@ -20,18 +20,14 @@ const TableBase = ({
           </div>
         )}
         {customButton && (
-          <section
-            className="relative flex flex-col"
-            aria-label="data table  toolbar"
-          >
-            <div className="absolute hidden">1</div>
-            <div className="flex w-full">
+          <section aria-label="data table  toolbar">
+            <div className="flex max-w-full justify-between">
               {search && <SearchBar />}
-              {showButton && <div className="ms-auto">{customButton}</div>}
+              {showButton && <div>{customButton}</div>}
             </div>
           </section>
         )}
-        <div className=" max-h-[calc(100vh-40rem)] overflow-auto">
+        <div className=" max-h-[calc(100svh-20rem)] overflow-auto ">
           <table className="w-full table-fixed ">
             <thead>
               <tr className=" h-12 bg-layer-accent-1">
@@ -46,7 +42,7 @@ const TableBase = ({
                 ))}
               </tr>
             </thead>
-            <tbody className=" divide-y divide-subtle-1">{children}</tbody>
+            <tbody>{children}</tbody>
           </table>
         </div>
       </div>

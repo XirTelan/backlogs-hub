@@ -16,7 +16,7 @@ const PanelItem = ({
     <Link
       {...props}
       href={itemLink}
-      className={`${backlogSlug === activeBacklog ? "bg-subtle-3/25 after:absolute after:left-0 after:h-full after:w-[3px] after:bg-primary-btn" : ""} relative flex h-8 items-center px-4 text-sm  hover:bg-field-hover-1`}
+      className={`${activeBacklog ? "bg-subtle-3/25 after:absolute after:left-0 after:h-full after:w-[3px] after:bg-primary-btn" : ""} relative flex h-8 items-center px-4 text-sm  hover:bg-field-hover-1`}
     >
       <>{children}</>
     </Link>

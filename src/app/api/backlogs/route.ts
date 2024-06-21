@@ -10,7 +10,7 @@ import {
 } from "@/services/backlogs";
 import { updateUserFolders } from "@/services/user";
 import { BacklogItemDTO } from "@/types";
-import { sendMsg } from "@/utils";
+import { generateSlug, sendMsg } from "@/utils";
 import { BacklogCreationDTO, BacklogDTO, BacklogFormData } from "@/zodTypes";
 import { Types } from "mongoose";
 import { revalidatePath } from "next/cache";
@@ -67,11 +67,13 @@ export async function POST(request: NextRequest) {
     ...data,
     userId: user.id,
     userName: user.username,
+    slug: generateSlug(data.backlogTitle),
   };
   try {
+    console.log("bg", backlogData);
     const backlog = await createBacklog(backlogData);
     if (backlog.status === "error")
-      return sendMsg.error(backlog.errors || backlog.message, 400);
+      return sendMsg.error(backlog.message, 400, backlog.errors);
     revalidatePath(`/user/${user.username}/backlogs`);
     return NextResponse.json(backlog);
   } catch (error) {

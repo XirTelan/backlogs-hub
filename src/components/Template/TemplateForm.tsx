@@ -1,12 +1,13 @@
+"use client";
 import { useCallback } from "react";
 import InputWithLoader from "../Common/UI/InputWithLoader";
 import ButtonBase from "../Common/UI/ButtonBase";
-import { TemplateDTO } from "@/types";
-import { generateSlug } from "@/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Common/Title";
 import useLoaderValue from "@/hooks/useLoaderValue";
 import { toastCustom } from "@/lib/toast";
+import Select from "../Common/UI/Select";
+import { BacklogCreationDTO, TemplateDTO } from "@/zodTypes";
 
 const TemplateForm = ({
   selectedTemplate,
@@ -15,18 +16,24 @@ const TemplateForm = ({
   selectedTemplate: TemplateDTO;
   handleCancel: () => void;
 }) => {
-  const { register, handleSubmit, watch } = useForm({
-    defaultValues: {
-      title: selectedTemplate.templateTitle,
-    },
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isValid },
+  } = useForm({
+    defaultValues: selectedTemplate,
   });
-  const backlogTitle = watch("title", selectedTemplate.templateTitle);
-  const onSubmit: SubmitHandler<{ title: string }> = async (data) => {
-    const backlog = mapTemplateToBacklog({
+  const backlogTitle = watch("templateTitle", selectedTemplate.templateTitle);
+  const onSubmit: SubmitHandler<TemplateDTO> = async (data) => {
+    const backlog: BacklogCreationDTO = {
       ...selectedTemplate,
-      templateTitle: data.title,
-    });
-    backlog.slug = generateSlug(backlog.backlogTitle);
+      backlogTitle: data.templateTitle,
+      slug: "",
+      order: 99,
+      userId: "",
+      userName: "",
+    };
     try {
       const res = await fetch("/api/backlogs/", {
         method: "POST",
@@ -38,20 +45,14 @@ const TemplateForm = ({
       if (res.ok) {
         toastCustom.success("Success");
         handleCancel();
+      } else {
+        const error = await res.json();
+        console.log(error);
+        toastCustom.error(error.message);
       }
     } catch (error) {
       console.error("error", error);
     }
-  };
-  const mapTemplateToBacklog = (data: TemplateDTO) => {
-    return {
-      categories: data.categories,
-      backlogTitle: data.templateTitle,
-      fields: data.fields,
-      order: 99,
-      slug: "",
-      visibility: "public",
-    };
   };
 
   const backlogIsExist = useCallback(async (value: string) => {
@@ -81,10 +82,16 @@ const TemplateForm = ({
           <InputWithLoader
             isLoading={isLoading}
             isAvailable={isAvailable}
-            {...register("title")}
+            errorMsg="You already have backlog with this name"
+            {...register("templateTitle", { required: true })}
             placeholder="Text"
             label="Backlog Title"
             type="text"
+          />
+          <Select
+            label="Visibility"
+            options={["public", "private"]}
+            {...register("visibility")}
           />
         </div>
 
@@ -98,7 +105,7 @@ const TemplateForm = ({
             onClick={handleCancel}
           />
           <ButtonBase
-            disabled={!isAvailable || isLoading}
+            disabled={!isAvailable || isLoading || !isValid}
             style={{ width: "100%" }}
             variant="primary"
             size="large"

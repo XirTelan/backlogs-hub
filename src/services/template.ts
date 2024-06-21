@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import Template from "@/models/Template";
-import { TemplateDTO } from "@/types";
+import { TemplateDTO } from "@/zodTypes";
 
 export const getTemplateById = async (id: string) => {
   try {
@@ -12,10 +12,12 @@ export const getTemplateById = async (id: string) => {
   }
 };
 
-export const getTemplates = async () => {
+export const getTemplates = async (currentUserName: string) => {
   try {
     await dbConnect();
-    const templates = await Template.find().lean();
+    const templates = await Template.find()
+      .or([{ visibility: "public" }, { author: currentUserName }])
+      .lean();
     return templates;
   } catch (error) {
     throw new Error(`Error: ${error}`);

@@ -25,25 +25,27 @@ export const SignInSchema = z
 export const FieldSchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),
-    protected: z.boolean(),
-    type: z.enum(["text", "number"]),
+    protected: z.boolean().default(false),
+    type: z.enum(["text", "number", "date", "timer"]),
   })
   .required();
 export const BacklogCategorySchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),
     color: z.string().min(7).max(7).startsWith("#"),
-    protected: z.boolean(),
+    protected: z.boolean().default(false),
   })
   .required();
 
 export const BacklogFormSchema = z.object({
   order: z.number().default(99),
   categories: BacklogCategorySchema.array().min(1),
+  features: z.string().array().optional(),
   folder: z.string().default("Default"),
-  fields: FieldSchema.array(),
+  fields: FieldSchema.array().optional(),
   slug: z.string(),
   backlogTitle: z.string().trim().min(1, "This field cannot be empty"),
+  description: z.string().optional().default(""),
   visibility: z.enum(["public", "private"]).default("private"),
 });
 
@@ -79,3 +81,24 @@ export const UserSchema = z.object({
 });
 
 export const isEmailSchema = z.string().email();
+
+export const TemplateDTOSchema = BacklogFormSchema.omit({
+  backlogTitle: true,
+  order: true,
+  slug: true,
+}).merge(
+  z.object({
+    _id: z.string(),
+    templateTitle: z.string(),
+    author: z.string(),
+  }),
+);
+// z.object({
+//   templateTitle: z.string(),
+//   fields: FieldSchema.array(),
+//   description: z.string(),
+//   features: z.string(),
+//   categories: BacklogCategory[],
+//   author: z.string(),
+//   visibility: z.string(),
+// })

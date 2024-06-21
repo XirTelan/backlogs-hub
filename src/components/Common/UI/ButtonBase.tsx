@@ -15,8 +15,7 @@ const buttonSize = {
 };
 const variants = {
   primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
-  secondary:
-    "bg-secondary-btn hover:bg-secondary-btn-hover text-secondary-text",
+  secondary: "bg-secondary-btn hover:bg-secondary-btn-hover text-white",
   tertiary:
     "outline text-white  hover:text-inverse outline-1 -outline-offset-2 outline-white hover:bg-tertiary-btn-hover",
   ghost: "text-primary-link hover:bg-subtle-3/15",

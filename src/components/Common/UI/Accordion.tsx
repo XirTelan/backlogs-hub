@@ -21,14 +21,14 @@ const Accordion = ({
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex w-full"
       >
-        <div className="pe-4 flex w-full items-center justify-between py-2  hover:bg-field-hover-1">
+        <div className="flex w-full items-center justify-between py-2 pe-4  hover:bg-field-hover-1">
           <span>{title}</span>
           <div>{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</div>
         </div>
       </button>
       <div
         role="region"
-        className={`${isOpen ? " block" : " hidden"} sm: max-w-[90vw] overflow-auto  `}
+        className={`${isOpen ? " block" : " hidden"} sm: max-w-[90vw] overflow-auto text-secondary-text `}
         aria-labelledby={`accordionId_${title}`}
       >
         {children}

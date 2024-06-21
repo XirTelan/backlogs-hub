@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
         break;
       case "all":
       default:
-        resultData = await getTemplates();
+        resultData = await getTemplates(currentUser.username);
         break;
     }
     return NextResponse.json(resultData, { status: 200 });

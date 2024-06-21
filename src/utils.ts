@@ -4,14 +4,21 @@ export const sendMsg = {
   success: (message: string = "success", status: number = 200) => {
     return NextResponse.json({ message: message }, { status: status });
   },
-  error: (error: unknown, status: number = 400) => {
+  error: (
+    error: unknown,
+    status: number = 400,
+    data: unknown | undefined = undefined,
+  ) => {
     let message = "Unknown error";
     if (error instanceof Error) {
       message = error.message;
     } else if (typeof error === "string") {
       message = error;
     }
-    return NextResponse.json({ message: message }, { status: status });
+    return NextResponse.json(
+      { message: message, error: data },
+      { status: status },
+    );
   },
 };
 

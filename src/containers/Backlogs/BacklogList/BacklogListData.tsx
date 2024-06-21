@@ -43,7 +43,6 @@ const BacklogListData = ({
       ))}
       {isOpen && (
         <Modal
-          type="confirmMsg"
           showActions
           action={() => onDelete(isOpen)}
           setClose={() => setIsOpen(null)}

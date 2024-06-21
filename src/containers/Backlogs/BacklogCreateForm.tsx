@@ -26,6 +26,7 @@ const BacklogCreateForm = () => {
   const defaultValues: BacklogFormData = {
     order: 99,
     backlogTitle: "",
+    description: "",
     folder: userFolders.data[0],
     slug: "",
     visibility: "public",

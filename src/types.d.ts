@@ -55,19 +55,7 @@ export type BacklogItemDTO = {
   backlogId: string;
 } & BacklogItemCreationDTO;
 
-export type TemplateDTO = {
-  _id: string;
-} & TemplateCreationDTO;
 
-export type TemplateCreationDTO = {
-  templateTitle: string;
-  fields: Field[];
-  description: string;
-  features: string;
-  categories: BacklogCategory[];
-  author: string;
-  visibility: string;
-};
 export type SortableItemProps = {
   children?: React.ReactElement;
   containerId: UniqueIdentifier;

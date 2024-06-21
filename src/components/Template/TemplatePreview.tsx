@@ -1,32 +1,29 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TemplateCard from "./TemplateCard";
-import { TemplateDTO } from "@/types";
 import InputField from "../Common/UI/InputField";
 import TextArea from "../Common/TextArea";
-import { BacklogFormData } from "@/zodTypes";
+import { BacklogFormData, TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
+import Title from "../Common/Title";
+import ButtonBase from "../Common/UI/ButtonBase";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Select from "../Common/UI/Select";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
-  const [data, setData] = useState<Partial<TemplateDTO>>();
-  const [description, setDescription] = useState<string>("");
-  const [teamplateTitle, setTemplateTitle] = useState<string>("");
-
-  useEffect(() => {
-    const mapToTemplate = (data: BacklogFormData) => {
-      const template: Partial<TemplateDTO> = {
-        ...data,
-        templateTitle: teamplateTitle || "",
-        features: "",
-        description: description,
-        author: "",
-      };
-      setData(template);
-    };
-    mapToTemplate(backlogData);
-  }, [backlogData, teamplateTitle, description]);
-
-  const handleSubmit = async () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid, isSubmitting },
+  } = useForm<TemplateDTO>({
+    defaultValues: backlogData,
+  });
+  const data = watch();
+  const onSubmit: SubmitHandler<Omit<TemplateDTO, "_id">> = async (data) => {
     try {
+      if ("_id" in data) {
+        delete data._id;
+      }
       const res = await fetch("/api/templates", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,37 +39,61 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
   };
 
   return (
-    <div className="m-auto flex flex-col items-center gap-4 lg:flex-row">
-      <div>
-        <div className=" p-2 text-center text-xl font-bold">
-          Template Prewiev
-        </div>
-        {data && (
-          <div className=" rounded-xl border border-cyan-500">
+    <div className="min-w-sm m-auto   bg-background   p-4 text-white ">
+      <Title title="Creating Template" />
+      <div className="flex  flex-col  gap-4 md:flex-row">
+        <div className="min-w-[300px]">
+          <div className=" p-2 text-center text-xl font-bold">
+            Template Prewiev
+          </div>
+          {data && (
             <TemplateCard
               template={data as TemplateDTO}
-              toSubmit={() => console.log("HEy")}
+              onClick={() => {
+                return;
+              }}
+            />
+          )}
+        </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex min-w-80 flex-col   border-neutral-700 "
+        >
+          <div className="">
+            <InputField
+              label="Template Title (required)"
+              placeholder="Template Title"
+              helperText={
+                errors.templateTitle && {
+                  message: errors.templateTitle.message!,
+                  type: "error",
+                }
+              }
+              {...register("templateTitle", { required: true })}
+            />
+            <Select
+              label="Visibility"
+              options={["public", "private"]}
+              {...register("visibility")}
+            />
+            <TextArea
+              label="Description"
+              placeholder="Description"
+              style={{ height: "250px" }}
+              {...register("description")}
             />
           </div>
-        )}
-      </div>
-      <div className="flex min-w-80 flex-col rounded border border-neutral-700 bg-neutral-800 p-2">
-        <h2 className=" text-lg font-bold">Creating Template</h2>
-        <InputField
-          label="Template Title"
-          placeholder="Template Title"
-          value={teamplateTitle}
-          onChange={(e) => setTemplateTitle(e.target.value)}
-        />
-        <TextArea
-          label="Description"
-          placeholder="Description"
-          style={{ height: "250px" }}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <button onClick={onClose}>cancel</button>
-        <button onClick={handleSubmit}>Save</button>
+          <ButtonBase
+            disabled={!isValid || isSubmitting}
+            text="Create template"
+          />
+          <ButtonBase
+            variant="secondary"
+            type="button"
+            text="Cancel"
+            onClick={onClose}
+          />
+        </form>
       </div>
     </div>
   );

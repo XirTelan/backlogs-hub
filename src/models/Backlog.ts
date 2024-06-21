@@ -1,6 +1,7 @@
+import { BacklogDTO } from "@/zodTypes";
 import mongoose from "mongoose";
 
-const BacklogSchema = new mongoose.Schema(
+const BacklogSchema = new mongoose.Schema<BacklogDTO>(
   {
     userId: {
       type: String,
@@ -54,7 +55,8 @@ const BacklogSchema = new mongoose.Schema(
   },
 );
 BacklogSchema.index({ userName: 1, slug: 1 }, { unique: true });
-const Backlog =
-  mongoose.models.Backlog || mongoose.model("Backlog", BacklogSchema);
+const Backlog: mongoose.Model<BacklogDTO> =
+  mongoose.models.Backlog ||
+  mongoose.model<BacklogDTO>("Backlog", BacklogSchema);
 
 export default Backlog;

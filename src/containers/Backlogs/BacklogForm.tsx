@@ -39,16 +39,12 @@ const BacklogForm = <T extends BacklogFormData>({
   });
   const handleShowTemplate = () => {
     clearErrors();
-    const isCategoriesValid = Object.values(watchAllFields.categories).every(
-      (value) => {
-        return value.name.length > 0;
-      },
-    );
-    const isFieldsValid = Object.values(watchAllFields.fields).every(
-      (value) => {
-        return value.name.length > 0;
-      },
-    );
+    const isCategoriesValid = watchAllFields.categories.every((value) => {
+      return value.name.length > 0;
+    });
+    const isFieldsValid = watchAllFields.fields?.every((value) => {
+      return value.name.length > 0;
+    });
     if (isCategoriesValid && isFieldsValid) {
       setShowTemplate((prev) => !prev);
     } else {

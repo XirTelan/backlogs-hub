@@ -1,6 +1,5 @@
 "use client";
 import React, { useMemo } from "react";
-import { TemplateDTO } from "@/types";
 import { IoMdTimer } from "react-icons/io";
 import { IoText } from "react-icons/io5";
 import { AiOutlineFieldNumber } from "react-icons/ai";
@@ -10,6 +9,8 @@ import ButtonBase from "../Common/UI/ButtonBase";
 import Title from "../Common/Title";
 import Tag from "../Common/UI/Tag";
 import Accordion from "../Common/UI/Accordion";
+import { TemplateDTO } from "@/zodTypes";
+import { MdDelete } from "react-icons/md";
 
 const icons = {
   timer: <IoMdTimer />,
@@ -19,13 +20,13 @@ const icons = {
   lock: <FaLock size={16} />,
 };
 
-const TemplateCard = ({ template, onClick }: TemplateCardProps) => {
+const TemplateCard = ({ template, canDelete, onClick }: TemplateCardProps) => {
   const fields = useMemo(() => {
-    if (template.fields.length === 0)
+    if (template.fields && template.fields.length === 0)
       return <span className=" text-secondary-text">No additional fields</span>;
     return (
       <ul className="flex flex-wrap gap-2">
-        {template.fields.map((field) => (
+        {template.fields!.map((field) => (
           <li key={field.name}>
             <Tag title={field.name} icon={icons[field.type]} />
           </li>
@@ -33,6 +34,7 @@ const TemplateCard = ({ template, onClick }: TemplateCardProps) => {
       </ul>
     );
   }, [template.fields]);
+
   return (
     <div className="flex h-fit w-full flex-col bg-layer-1">
       <div className="relative flex  grow flex-col  ">
@@ -50,7 +52,7 @@ const TemplateCard = ({ template, onClick }: TemplateCardProps) => {
               <span>Features:</span> <div>{template.features}</div>
             </div>
             <div className="flex justify-between">
-              {template.fields.length > 2 ? (
+              {template.fields && template.fields.length > 2 ? (
                 <Accordion title={`Fields (${template.fields.length})`}>
                   {fields}
                 </Accordion>
@@ -82,9 +84,21 @@ const TemplateCard = ({ template, onClick }: TemplateCardProps) => {
         </div>
       </div>
       <div className="relative px-4 pt-2  ">
-        <Accordion title={"Description"}>{template.description}</Accordion>
+        <Accordion title={"Description"}>
+          {template.description
+            ? template.description
+            : "Description not provided"}
+        </Accordion>
       </div>
-      <div className=" p-2">
+      <div className="flex p-2">
+        {canDelete && (
+          <ButtonBase
+            variant="dangerPrimary"
+            onClick={onClick}
+            icon={<MdDelete />}
+            style={{ width: "auto" }}
+          />
+        )}
         <ButtonBase
           variant="secondary"
           text="Use template"
@@ -100,5 +114,6 @@ export default TemplateCard;
 
 type TemplateCardProps = {
   template: TemplateDTO;
+  canDelete?: boolean;
   onClick: () => void;
 };

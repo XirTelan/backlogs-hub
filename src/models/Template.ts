@@ -1,6 +1,7 @@
+import { TemplateDTO } from "@/zodTypes";
 import mongoose from "mongoose";
 
-const TemplateSchema = new mongoose.Schema(
+const TemplateSchema = new mongoose.Schema<TemplateDTO>(
   {
     templateTitle: {
       type: String,
@@ -33,7 +34,7 @@ const TemplateSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
-const Template =
+const Template: mongoose.Model<TemplateDTO> =
   mongoose.models.Template || mongoose.model("Template", TemplateSchema);
 
 export default Template;

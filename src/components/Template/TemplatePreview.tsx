@@ -9,14 +9,16 @@ import Title from "../Common/Title";
 import ButtonBase from "../Common/UI/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Select from "../Common/UI/Select";
+import { useSession } from "@/providers/sessionProvider";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
+  const { user } = useSession();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isValid, isSubmitting },
   } = useForm<TemplateDTO>({
-    defaultValues: backlogData,
+    defaultValues: { ...backlogData, author: user?.username },
   });
   const data = watch();
   const onSubmit: SubmitHandler<Omit<TemplateDTO, "_id">> = async (data) => {

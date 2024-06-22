@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className} `}>
-        <div id="app" className="bg-surface flex flex-col items-center ">
+        <div id="app" className="bg-surface flex flex-col ">
           <Toaster
             reverseOrder={false}
             toastOptions={{

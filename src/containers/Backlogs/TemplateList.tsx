@@ -6,6 +6,8 @@ import Modal from "@/components/Common/Modal";
 import TemplateForm from "@/components/Template/TemplateForm";
 import { useState } from "react";
 import { TemplateDTO } from "@/zodTypes";
+import { toastCustom } from "@/lib/toast";
+import { apiRoutesList } from "@/data";
 
 const TemplateList = ({
   userName,
@@ -21,6 +23,17 @@ const TemplateList = ({
   const { data, isLoading } = useSWR(`/api/templates${search}`, fetcher);
   if (isLoading) return <div>Loading</div>;
 
+  const onDelete = async (id: string) => {
+    try {
+      const res = await fetch(`${apiRoutesList.templates}/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) toastCustom.success("Deleted");
+    } catch (error) {
+      throw new Error(`Error: ${error}`);
+    }
+  };
+
   return (
     <div className="my-auto flex h-full grow flex-col">
       <div
@@ -35,6 +48,7 @@ const TemplateList = ({
               setIsShow(true);
               setSelectedTemplate(template);
             }}
+            onDelete={onDelete}
             template={template}
           />
         ))}

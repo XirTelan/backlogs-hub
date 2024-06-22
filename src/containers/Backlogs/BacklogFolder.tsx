@@ -24,16 +24,14 @@ const BacklogFolder = ({
           </div>
         }
       >
-        <div className=" overflow flex gap-2 ">
-          {backlogs.map((backlog) => (
-            <BacklogCard
-              href={`/user/${userName}/backlogs/${backlog.slug}`}
-              key={backlog._id}
-            >
-              {backlog.backlogTitle}
-            </BacklogCard>
-          ))}
-        </div>
+        {backlogs.map((backlog) => (
+          <BacklogCard
+            href={`/user/${userName}/backlogs/${backlog.slug}`}
+            key={backlog._id}
+          >
+            {backlog.backlogTitle}
+          </BacklogCard>
+        ))}
       </Accordion>
     </section>
   );

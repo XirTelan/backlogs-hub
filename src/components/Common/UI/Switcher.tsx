@@ -23,6 +23,7 @@ const Switcher = ({ options }: { options: Options }) => {
     });
     indx = indx === -1 ? 0 : indx;
     setActive(indx);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

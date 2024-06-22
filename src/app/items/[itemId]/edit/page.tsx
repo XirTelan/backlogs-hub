@@ -23,7 +23,10 @@ const EditItem = async ({
     <main className=" container px-4">
       <Title title="Edit" />
       <ItemsEditForm
-        backlog={{ fields: backlog.fields, categories: backlog.categories }}
+        backlog={{
+          fields: backlog.fields || [],
+          categories: backlog.categories,
+        }}
         defaultValues={res.data}
       />
     </main>

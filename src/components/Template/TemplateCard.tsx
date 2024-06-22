@@ -20,7 +20,12 @@ const icons = {
   lock: <FaLock size={16} />,
 };
 
-const TemplateCard = ({ template, canDelete, onClick }: TemplateCardProps) => {
+const TemplateCard = ({
+  template,
+  canDelete,
+  onDelete,
+  onClick,
+}: TemplateCardProps) => {
   const fields = useMemo(() => {
     if (template.fields && template.fields.length === 0)
       return <span className=" text-secondary-text">No additional fields</span>;
@@ -94,7 +99,7 @@ const TemplateCard = ({ template, canDelete, onClick }: TemplateCardProps) => {
         {canDelete && (
           <ButtonBase
             variant="dangerPrimary"
-            onClick={onClick}
+            onClick={() => onDelete(template._id)}
             icon={<MdDelete />}
             style={{ width: "auto" }}
           />
@@ -115,5 +120,6 @@ export default TemplateCard;
 type TemplateCardProps = {
   template: TemplateDTO;
   canDelete?: boolean;
+  onDelete: (id: string) => void;
   onClick: () => void;
 };

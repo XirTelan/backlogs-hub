@@ -20,10 +20,12 @@ const CreateItem = async ({
     backlogId: backlogInfo._id,
     title: "",
     category: backlogInfo.categories[0].name.toLowerCase() || "",
-    userFields: backlogInfo.fields.map((field) => ({
-      name: field.name,
-      value: "",
-    })),
+    userFields: !backlogInfo.fields
+      ? []
+      : backlogInfo.fields.map((field) => ({
+          name: field.name,
+          value: "",
+        })),
   };
 
   return (
@@ -31,7 +33,7 @@ const CreateItem = async ({
       <Title title={`Add new item`} />
       <ItemsCreateForm
         backlog={{
-          fields: backlogInfo.fields,
+          fields: backlogInfo.fields || [],
           categories: backlogInfo.categories,
         }}
         defaultValues={defaultValues}

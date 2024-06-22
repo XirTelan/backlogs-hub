@@ -17,13 +17,14 @@ export default async function Backlogs({
   const user = await getCurrentUserInfo();
   const profileVisibility = await getUserVisibility(params.userName);
   const isOwner = user ? user.username === params.userName : false;
+  console.log("asdasd", profileVisibility);
   if (!isOwner && profileVisibility !== "public") {
     return <div>Access denied?</div>;
   }
 
   return (
     <>
-      <main className="container flex w-full  flex-col items-center">
+      <main className="container flex w-full  flex-col">
         <div className="w-full px-4">
           {isOwner ? (
             <Title title={"My backlogs"}>

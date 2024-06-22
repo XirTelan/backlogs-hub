@@ -1,7 +1,7 @@
 import { TextArea } from "@/types";
 import React from "react";
 
-const TextArea = React.forwardRef<HTMLTextAreaElement, TextArea>(
+const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextArea>(
   ({ id, label, placeholder, children, ...props }, ref) => {
     const isLabel = label
       ? " placeholder:text-transparent"
@@ -30,5 +30,5 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextArea>(
     );
   },
 );
-TextArea.displayName = "TextArea";
-export default TextArea;
+TextAreaInput.displayName = "TextArea";
+export default TextAreaInput;

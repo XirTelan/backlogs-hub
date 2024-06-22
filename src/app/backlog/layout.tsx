@@ -1,6 +1,4 @@
 import { getCurrentUserInfo } from "@/auth/utils";
-import Title from "@/components/Common/Title";
-import NavLink from "@/components/NavLink";
 import { Session } from "@/providers/sessionProvider";
 import { redirect } from "next/navigation";
 import React from "react";

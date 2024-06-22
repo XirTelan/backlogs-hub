@@ -5,6 +5,7 @@ import {
   getTemplatesByUsername,
 } from "@/services/template";
 import { sendMsg } from "@/utils";
+import { TemplateDTOSchema } from "@/zod";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
         break;
       case "all":
       default:
-        resultData = await getTemplates(currentUser.username);
+        resultData = await getTemplates(currentUser.username, true);
         break;
     }
     return NextResponse.json(resultData, { status: 200 });
@@ -39,8 +40,16 @@ export async function POST(request: NextRequest) {
   const user = await getCurrentUserInfo();
   if (!user) return sendMsg.error("", 401);
   const data = await request.json();
+  const templateData = TemplateDTOSchema.safeParse(data);
+  if (!templateData.success) return sendMsg.error(templateData.error, 400);
+  if (
+    !templateData.data?.author ||
+    templateData.data?.author !== user.username
+  ) {
+    templateData.data.author = user.username;
+  }
   try {
-    const resultData = await createTemplate(data);
+    const resultData = await createTemplate(templateData.data);
     return NextResponse.json(resultData, { status: 200 });
   } catch (error) {
     return sendMsg.error(error);

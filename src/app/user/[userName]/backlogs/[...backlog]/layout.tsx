@@ -9,7 +9,7 @@ export default async function Layout({
   params: { userName: string; backlog: string };
 }) {
   return (
-    <div className=" grid  w-screen grid-cols-[auto_1fr]">
+    <div className=" grid   grid-cols-[auto_1fr]">
       <aside className=" hidden h-full w-64 pt-4 md:block ">
         <UserBacklogsSideNav userName={userName} />
       </aside>

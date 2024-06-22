@@ -6,8 +6,8 @@ const useOutsideClickReg = (
   handleClick: () => void,
 ) => {
   useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (ref.current && !ref.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         handleClick();
       }
     }

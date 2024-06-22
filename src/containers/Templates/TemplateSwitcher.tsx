@@ -17,10 +17,6 @@ const TemplateSwitcher = () => {
         title: "System",
         value: "system",
       },
-      {
-        title: "Other",
-        value: "other",
-      },
     ],
   };
   return <Switcher options={items} />;

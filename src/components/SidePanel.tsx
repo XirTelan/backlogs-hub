@@ -31,6 +31,7 @@ const SidePanel = ({
       className="relative"
     >
       <button
+        aria-label="User Panel"
         className={`${styleButton}  h-[49px] w-12   p-[14px] hover:bg-subtle-3/15`}
       >
         {icon}

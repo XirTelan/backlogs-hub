@@ -18,7 +18,7 @@ export function Session({
   userData: typeof defaultValue;
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState(userData);
+  const [user] = useState(userData);
 
   return (
     <SessionContext.Provider value={user}>{children}</SessionContext.Provider>

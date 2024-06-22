@@ -28,7 +28,7 @@ const Accordion = ({
       </button>
       <div
         role="region"
-        className={`${isOpen ? " block" : " hidden"} sm: max-w-[90vw] overflow-auto text-secondary-text `}
+        className={`${isOpen ? " block" : " hidden"} flex max-w-[90vw] gap-4 overflow-auto text-secondary-text md:max-w-[calc(100vw-288px)] md:flex-wrap `}
         aria-labelledby={`accordionId_${title}`}
       >
         {children}

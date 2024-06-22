@@ -47,7 +47,6 @@ const TemplateForm = ({
         handleCancel();
       } else {
         const error = await res.json();
-        console.log(error);
         toastCustom.error(error.message);
       }
     } catch (error) {

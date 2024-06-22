@@ -35,12 +35,12 @@ export async function DELETE(
     const res = await authorizeAndProceed(itemId, () =>
       deleteBacklogItem(itemId),
     );
-    if (res.status === "error") return res.data;
+    if (res.status === "error") return sendMsg.error(res.data);
     const data = res.data as BacklogItemDTO;
     revalidateTag(`backloglist${data._id}`);
     return sendMsg.success(`Deleted ${data!.title}`, 202);
   } catch (error) {
-    sendMsg.error(error);
+    return sendMsg.error(error);
   }
 }
 
@@ -51,10 +51,10 @@ export async function PUT(
   const data = await request.json();
   try {
     const res = await authorizeAndProceed(itemId, () => putBacklogItem(data));
-    if (res.status === "error") return res.data;
+    if (res.status === "error") return sendMsg.error(res.data);
     return sendMsg.success();
   } catch (error) {
-    sendMsg.error(error);
+    return sendMsg.error(error);
   }
 }
 

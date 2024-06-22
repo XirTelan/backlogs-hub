@@ -11,6 +11,7 @@ export const routesList = {
 export const apiRoutesList = {
   signIn: "/api/auth/signIn",
   register: "/api/auth/register",
+  templates: '/api/templates'
 };
 export const routesCategories = {
   protectedRoutes: [

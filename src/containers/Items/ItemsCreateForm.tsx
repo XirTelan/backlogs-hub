@@ -3,7 +3,6 @@
 import { BacklogItemCreationDTO } from "@/types";
 import ItemsForm from "./ItemsForm";
 import { useRouter } from "next/navigation";
-import Title from "@/components/Common/Title";
 import { toastCustom } from "@/lib/toast";
 import { BacklogCategory, Field } from "@/zodTypes";
 

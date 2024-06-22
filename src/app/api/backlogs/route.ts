@@ -70,7 +70,6 @@ export async function POST(request: NextRequest) {
     slug: generateSlug(data.backlogTitle),
   };
   try {
-    console.log("bg", backlogData);
     const backlog = await createBacklog(backlogData);
     if (backlog.status === "error")
       return sendMsg.error(backlog.message, 400, backlog.errors);

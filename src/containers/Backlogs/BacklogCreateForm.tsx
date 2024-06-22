@@ -4,19 +4,15 @@ import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
 import { fetcher, generateSlug } from "@/utils";
 import Title from "@/components/Common/Title";
-import useSession from "@/hooks/useSession";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import useSWR from "swr";
 
 const BacklogCreateForm = () => {
   const router = useRouter();
-  const { user, isLoading } = useSession();
   const userFolders = useSWR(`/api/users/`, fetcher);
-  if (isLoading || userFolders.isLoading) return <div>Loading</div>;
-  if (!user) {
-    router.push("/");
-  }
+  if (userFolders.isLoading) return <div>Loading</div>;
+
   const defaultCategories: BacklogCategory[] = [
     { name: "Completed", color: "#0043CE", protected: false },
     { name: "Playing", color: "#6929C4", protected: false },

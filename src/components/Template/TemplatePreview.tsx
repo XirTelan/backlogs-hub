@@ -2,7 +2,7 @@
 import React from "react";
 import TemplateCard from "./TemplateCard";
 import InputField from "../Common/UI/InputField";
-import TextArea from "../Common/TextArea";
+import TextAreaInput from "../Common/TextAreaInput";
 import { BacklogFormData, TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import Title from "../Common/Title";
@@ -54,6 +54,9 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
               onClick={() => {
                 return;
               }}
+              onDelete={() => {
+                return;
+              }}
             />
           )}
         </div>
@@ -78,7 +81,7 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
               options={["public", "private"]}
               {...register("visibility")}
             />
-            <TextArea
+            <TextAreaInput
               label="Description"
               placeholder="Description"
               style={{ height: "250px" }}

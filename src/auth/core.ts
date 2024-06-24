@@ -63,7 +63,7 @@ export const signInWithLogin = async (
   data: unknown,
 ): Promise<ResponseData<string>> => {
   const error: ResponseData<string> = {
-    status: "error",
+    isSuccess: false,
     message: "Username or password is incorrect",
   };
   const parsedCredentials = SignInSchema.safeParse(data);
@@ -81,5 +81,5 @@ export const signInWithLogin = async (
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) return error;
   const access_token = await generateAccessToken(user);
-  return { status: "ok", data: access_token };
+  return { isSuccess: true, data: access_token };
 };

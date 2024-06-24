@@ -38,24 +38,6 @@ export type ListItemInput = {
   onDelete: () => void;
 } & InputFieldProps;
 
-type ItemField = {
-  name: string;
-  value: string;
-};
-
-export type BacklogItemCreationDTO = {
-  backlogId: string;
-  title: string;
-  category: string;
-  userFields: ItemField[];
-};
-
-export type BacklogItemDTO = {
-  _id: string;
-  backlogId: string;
-} & BacklogItemCreationDTO;
-
-
 export type SortableItemProps = {
   children?: React.ReactElement;
   containerId: UniqueIdentifier;
@@ -88,12 +70,12 @@ export type ResponseData<T> = {
   message?: string;
 } & (
   | {
-      status: "ok";
+      isSuccess: true;
       data: T;
       errors?: null;
     }
   | {
-      status: "error";
+      isSuccess: false;
       data?: null;
       errors?: unknown;
     }

@@ -1,6 +1,8 @@
 import dbConnect from "@/lib/dbConnect";
+import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
-import { BacklogItemCreationDTO, BacklogItemDTO, ResponseData } from "@/types";
+import { ResponseData } from "@/types";
+import { BacklogItemCreationDTO, BacklogItemDTO } from "@/zodTypes";
 import { NextResponse } from "next/server";
 
 export const getBacklogItemById = async (
@@ -10,9 +12,9 @@ export const getBacklogItemById = async (
     await dbConnect();
     const backlogItem: BacklogItemDTO | null =
       await BacklogItem.findById(itemId).lean();
-    if (!backlogItem) return { status: "error", message: "doesnt exist" };
+    if (!backlogItem) return { isSuccess: false, message: "doesnt exist" };
     backlogItem._id = backlogItem._id.toString();
-    return { status: "ok", data: backlogItem };
+    return { isSuccess: true, data: backlogItem };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -78,8 +80,11 @@ export const getBacklogItemsByQuery = async ({
 export const addBacklogItem = async (data: BacklogItemCreationDTO) => {
   try {
     await dbConnect();
-    const backlogItem = new BacklogItem(data);
-    await backlogItem.save();
+    const backlogItem = await BacklogItem.create(data);
+    console.log("addBacklogItem", backlogItem);
+    await Backlog.findByIdAndUpdate(backlogItem.backlogId, {
+      $inc: { totalCount: 1 },
+    });
     return backlogItem;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -98,7 +103,11 @@ export const putBacklogItem = async (data: BacklogItemDTO) => {
 export const deleteBacklogItem = async (id: string) => {
   try {
     await dbConnect();
-    const deleteResult = await BacklogItem.deleteOne({ _id: id });
+    const backlogItem = await BacklogItem.findById(id);
+    await Backlog.findByIdAndUpdate(backlogItem?.backlogId, {
+      $inc: { totalCount: -1 },
+    });
+    const deleteResult = await backlogItem?.deleteOne();
     return deleteResult;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -122,10 +131,10 @@ export const getBacklogItemsData = async (
       backlogData = await getBacklogItemsByBacklogId(backlogId);
     }
     if (backlogData) {
-      return { status: "ok", data: backlogData };
+      return { isSuccess: true, data: backlogData };
     }
     return {
-      status: "error",
+      isSuccess: false,
       data: null,
       errors: {
         message: "The requested objects were not found.",

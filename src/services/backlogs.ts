@@ -7,6 +7,7 @@ import { BacklogDTO, BacklogCreationDTO } from "@/zodTypes";
 import { getUserFolders } from "./user";
 import { BacklogCreationSchema, BacklogDTOSchema } from "@/zod";
 import { z } from "zod";
+import { ResponseData } from "@/types";
 
 //GET SECTION
 export const getBacklogById = async (
@@ -124,14 +125,14 @@ export const createBacklog = async (backlog: BacklogCreationDTO) => {
     await dbConnect();
     const { success, data, error } = BacklogCreationSchema.safeParse(backlog);
     if (!success)
-      return { status: "error", message: "Validation error", errors: error };
+      return { isSuccess: false, message: "Validation error", errors: error };
     const isExist = await isBacklogExist(data.userName, data.slug);
     if (isExist) {
-      return { status: "error", message: "Already exist" };
+      return { isSuccess: false, message: "Already exist" };
     }
     const newBacklog = new Backlog(data);
     await newBacklog.save();
-    return { status: "ok", data: newBacklog };
+    return { isSuccess: true, data: newBacklog };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -141,7 +142,7 @@ export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
   try {
     await dbConnect();
     const backlogs = z.array(BacklogDTOSchema).safeParse(data);
-    if (!backlogs.success) return { status: "error", errors: backlogs.error };
+    if (!backlogs.success) return { isSuccess: false, errors: backlogs.error };
     const updates: Promise<unknown>[] = [];
     backlogs.data.forEach(async (backlog) => {
       updates.push(
@@ -152,7 +153,7 @@ export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
       );
     });
     await Promise.all(updates);
-    return { status: "ok" };
+    return { isSuccess: true };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -170,8 +171,8 @@ export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
 export const deleteBacklogById = async (id: string) => {
   try {
     await dbConnect();
-    await Backlog.deleteOne({ _id: id });
-    await BacklogItem.deleteMany({ backlogId: id });
+    const res = await Backlog.deleteOne({ _id: id });
+    if (res.deletedCount > 0) await BacklogItem.deleteMany({ backlogId: id });
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -193,16 +194,15 @@ export const isBacklogExist = async (userName: string, slug: string) => {
 export const isAuthorizedBacklogOwner = async (
   backlogId: string,
   method: "read" | "edit",
-): Promise<
-  { status: true; backlog: BacklogDTO } | { status: false; backlog: null }
-> => {
+): Promise<ResponseData<BacklogDTO>> => {
   const [user, backlog] = await Promise.all([
     getCurrentUserInfo(),
     getBacklogById(backlogId),
   ]);
-  if (!backlog) return { status: false, backlog: null };
+  if (!backlog)
+    return { isSuccess: false, data: null, message: "Backlog doesnt exist" };
   if (backlog.visibility === "public" && method === "read")
-    return { status: true, backlog: backlog };
-  if (backlog.userId !== user?.id) return { status: false, backlog: null };
-  return { status: true, backlog: backlog };
+    return { isSuccess: true, data: backlog };
+  if (backlog.userId !== user?.id) return { isSuccess: false, data: null };
+  return { isSuccess: true, data: backlog };
 };

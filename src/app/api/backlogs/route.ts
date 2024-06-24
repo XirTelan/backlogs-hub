@@ -9,9 +9,13 @@ import {
   isBacklogExist,
 } from "@/services/backlogs";
 import { updateUserFolders } from "@/services/user";
-import { BacklogItemDTO } from "@/types";
 import { generateSlug, sendMsg } from "@/utils";
-import { BacklogCreationDTO, BacklogDTO, BacklogFormData } from "@/zodTypes";
+import {
+  BacklogCreationDTO,
+  BacklogDTO,
+  BacklogFormData,
+  BacklogItemDTO,
+} from "@/zodTypes";
 import { Types } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -23,7 +27,6 @@ const isType = (value: unknown): value is Types => {
   return accessTypes.some((valid) => valid === value);
 };
 
-//AUTH3
 export async function GET(request: NextRequest) {
   const user = await getCurrentUserInfo();
   const userNameParam = request.nextUrl.searchParams
@@ -68,10 +71,11 @@ export async function POST(request: NextRequest) {
     userId: user.id,
     userName: user.username,
     slug: generateSlug(data.backlogTitle),
+    totalCount: 0,
   };
   try {
     const backlog = await createBacklog(backlogData);
-    if (backlog.status === "error")
+    if (!backlog.isSuccess)
       return sendMsg.error(backlog.message, 400, backlog.errors);
     revalidatePath(`/user/${user.username}/backlogs`);
     return NextResponse.json(backlog);

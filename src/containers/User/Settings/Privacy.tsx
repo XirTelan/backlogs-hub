@@ -5,7 +5,6 @@ import { ConfigType } from "@/zodTypes";
 import React from "react";
 
 const Privacy = ({ data }: { data: ConfigType }) => {
-  console.log("asdasd", data);
   return (
     <div>
       <div className=" flex items-center justify-between">

@@ -9,7 +9,7 @@ import { NextResponse } from "next/server";
 
 type CreateUser =
   | {
-      status: "error";
+      isSuccess: false;
       message: string;
     }
   | {
@@ -57,7 +57,7 @@ export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
     });
     if (user) {
       return {
-        status: "error",
+        isSuccess: false,
         message: "User already exist",
       };
     }
@@ -72,7 +72,7 @@ export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
   } catch (error) {
     console.error(error);
     return {
-      status: "error",
+      isSuccess: false,
       message: "Unexpected error",
     };
   }
@@ -101,29 +101,29 @@ export async function deleteUser(id: string) {
 //utils
 export async function getConfigOptions(): Promise<ResponseData<ConfigType>> {
   const user = await getCurrentUserInfo();
-  if (!user) return { status: "error", message: "Something goes wrong" };
+  if (!user) return { isSuccess: false, message: "Something goes wrong" };
   try {
     await dbConnect();
     const userData: UserDTO | null = await User.findById(user.id).lean();
-    if (!userData) return { status: "error", message: "Something goes wrong" };
-    return { status: "ok", data: userData.config };
+    if (!userData) return { isSuccess: false, message: "Something goes wrong" };
+    return { isSuccess: true, data: userData.config };
   } catch (error) {
-    return { status: "error", message: JSON.stringify(error) };
+    return { isSuccess: false, message: JSON.stringify(error) };
   }
 }
 
 export async function updateConfigOption(option: string, value: unknown) {
   const user = await getCurrentUserInfo();
-  if (!user) return { status: "error", message: "Something goes wrong" };
+  if (!user) return { isSuccess: false, message: "Something goes wrong" };
   try {
     await dbConnect();
     const userData = await User.findById(user.id);
     await User.findByIdAndUpdate(user.id, {
       config: { ...userData.config, [option]: value },
-      });
+    });
     revalidatePath("/");
-    return { status: "ok" };
+    return { isSuccess: true };
   } catch (error) {
-    return { error: error, status: "error" };
+    return { error: error, isSuccess: false };
   }
 }

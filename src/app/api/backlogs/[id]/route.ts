@@ -1,9 +1,11 @@
+import { routesList } from "@/data";
 import {
   deleteBacklogById,
   isAuthorizedBacklogOwner,
   updateBacklogById,
 } from "@/services/backlogs";
 import { cleanParamString, sendMsg } from "@/utils";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -12,11 +14,11 @@ export async function GET(
 ) {
   try {
     const backlogId = cleanParamString(id);
-    const { status: isAuthorize, backlog } = await isAuthorizedBacklogOwner(
+    const { isSuccess, data: backlog } = await isAuthorizedBacklogOwner(
       backlogId,
       "read",
     );
-    if (!isAuthorize) return sendMsg.error("Not authorized", 403);
+    if (!isSuccess) return sendMsg.error("Not authorized", 403);
     if (backlog) {
       return NextResponse.json(backlog);
     } else {
@@ -30,11 +32,8 @@ export async function GET(
 export async function PUT(request: NextRequest) {
   const data = await request.json();
   try {
-    const { status: isAuthorize } = await isAuthorizedBacklogOwner(
-      data._id,
-      "edit",
-    );
-    if (!isAuthorize) return sendMsg.error("Not authorized", 403);
+    const { isSuccess } = await isAuthorizedBacklogOwner(data._id, "edit");
+    if (!isSuccess) return sendMsg.error("Not authorized", 403);
     await updateBacklogById(data);
     return NextResponse.json("Success");
   } catch (error) {
@@ -46,9 +45,10 @@ export async function DELETE(
   { params: { id } }: { params: { id: string } },
 ) {
   try {
-    const { status: isAuthorize } = await isAuthorizedBacklogOwner(id, "edit");
-    if (!isAuthorize) return sendMsg.error("Not authorized", 403);
+    const { isSuccess, message } = await isAuthorizedBacklogOwner(id, "edit");
+    if (!isSuccess) return sendMsg.error(message || "Not authorized", 403);
     await deleteBacklogById(id);
+    revalidatePath(routesList.manageBacklogs);
     return NextResponse.json("Success");
   } catch (error) {
     throw new Error(`${error}`);

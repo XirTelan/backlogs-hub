@@ -17,7 +17,6 @@ export default async function Backlogs({
   const user = await getCurrentUserInfo();
   const profileVisibility = await getUserVisibility(params.userName);
   const isOwner = user ? user.username === params.userName : false;
-  console.log("asdasd", profileVisibility);
   if (!isOwner && profileVisibility !== "public") {
     return <div>Access denied?</div>;
   }

@@ -1,6 +1,7 @@
+import { BacklogItemDTO } from "@/zodTypes";
 import mongoose from "mongoose";
 
-const DataItemSchema = new mongoose.Schema(
+const DataItemSchema = new mongoose.Schema<{ name: string; value: string }>(
   {
     name: {
       type: String,
@@ -12,7 +13,7 @@ const DataItemSchema = new mongoose.Schema(
   { _id: false },
 );
 
-const BacklogItemSchema = new mongoose.Schema({
+const BacklogItemSchema = new mongoose.Schema<BacklogItemDTO>({
   backlogId: { type: String, require: true },
   title: {
     type: String,
@@ -27,7 +28,7 @@ const BacklogItemSchema = new mongoose.Schema({
 
 BacklogItemSchema.index({ backlogId: 1, title: 1 }, { unique: true });
 
-const BacklogItem =
+const BacklogItem: mongoose.Model<BacklogItemDTO> =
   mongoose.models.BacklogItem ||
   mongoose.model("BacklogItem", BacklogItemSchema);
 

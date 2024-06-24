@@ -56,6 +56,7 @@ export const BacklogDTOSchema = BacklogFormSchema.merge(
     _id: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),
+    totalCount: z.number().default(0),
   }),
 );
 
@@ -64,11 +65,30 @@ export const BacklogCreationSchema = BacklogDTOSchema.omit({
   updatedAt: true,
   createdAt: true,
 });
+
+export const BacklogItemCreationSchema = z.object({
+  backlogId: z.string(),
+  title: z.string().trim(),
+  category: z.string(),
+  userFields: z
+    .object({
+      name: z.string(),
+      value: z.string(),
+    })
+    .array(),
+});
+export const BacklogItemSchema = BacklogItemCreationSchema.merge(
+  z.object({
+    _id: z.string(),
+  }),
+);
+
+export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());
+
 export const ConfigSchema = z.object({
   profileVisibility: z.enum(["public", "private"]),
   showEmptyFolders: z.boolean(),
 });
-export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());
 
 export const UserSchema = z.object({
   _id: z.string(),

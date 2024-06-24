@@ -80,7 +80,6 @@ const DnDMultList = ({
     collisionDetectionStrategy,
   } = useDragAndDrop(data);
   const containersSet = new Set(containers);
-
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
 
   const handleBacklogsSave = useCallback(
@@ -107,6 +106,8 @@ const DnDMultList = ({
         });
         if (res.ok) {
           toastCustom.success("Saved");
+        } else {
+          toastCustom.error(await res.json());
         }
       } catch (error) {
         console.error(error);
@@ -119,14 +120,16 @@ const DnDMultList = ({
       const res = await fetch(`/api/backlogs/${id}`, {
         method: "DELETE",
       });
-      if (res.ok) toastCustom.success("Deleted");
+      if (res.ok) {
+        toastCustom.success("Deleted");
+      } else toastCustom.error((await res.json()).message);
     } catch (error) {
       console.error(error);
     }
   };
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
-  const showModal = () => {
+  const showModal = useCallback(() => {
     if (!modalData) return;
     return (
       <Modal
@@ -142,7 +145,7 @@ const DnDMultList = ({
         </div>
       </Modal>
     );
-  };
+  }, [modalData]);
 
   return (
     <>

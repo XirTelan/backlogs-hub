@@ -49,6 +49,10 @@ const BacklogSchema = new mongoose.Schema<BacklogDTO>(
       type: String,
       default: "public",
     },
+    totalCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

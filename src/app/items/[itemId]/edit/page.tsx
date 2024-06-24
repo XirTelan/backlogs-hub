@@ -12,13 +12,13 @@ const EditItem = async ({
   if (!itemId) redirect("/");
 
   const res = await getBacklogItemById(itemId);
-  if (res.status === "error") redirect("/");
+  if (!res.isSuccess) redirect("/");
 
-  const { status: isAuthorize, backlog } = await isAuthorizedBacklogOwner(
+  const { isSuccess, data: backlog } = await isAuthorizedBacklogOwner(
     res.data.backlogId,
     "edit",
   );
-  if (!isAuthorize) redirect("/");
+  if (!isSuccess) redirect("/");
   return (
     <main className=" container px-4">
       <Title title="Edit" />

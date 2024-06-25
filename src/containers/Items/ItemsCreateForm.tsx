@@ -1,10 +1,9 @@
 "use client";
 
-import { BacklogItemCreationDTO } from "@/types";
 import ItemsForm from "./ItemsForm";
 import { useRouter } from "next/navigation";
 import { toastCustom } from "@/lib/toast";
-import { BacklogCategory, Field } from "@/zodTypes";
+import { BacklogCategory, BacklogItemCreationDTO, Field } from "@/zodTypes";
 
 const ItemsCreateForm = ({
   backlog,

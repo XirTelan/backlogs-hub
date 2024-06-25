@@ -2,7 +2,7 @@ import { getCurrentUserInfo } from "@/auth/utils";
 import Title from "@/components/Common/Title";
 import ItemsCreateForm from "@/containers/Items/ItemsCreateForm";
 import { getUserBacklogBySlug } from "@/services/backlogs";
-import { BacklogItemCreationDTO } from "@/types";
+import { BacklogItemCreationDTO } from "@/zodTypes";
 import { redirect } from "next/navigation";
 
 const CreateItem = async ({
@@ -19,7 +19,7 @@ const CreateItem = async ({
   const defaultValues: BacklogItemCreationDTO = {
     backlogId: backlogInfo._id,
     title: "",
-    category: backlogInfo.categories[0].name.toLowerCase() || "",
+    category: backlogInfo.categories[0].name || "",
     userFields: !backlogInfo.fields
       ? []
       : backlogInfo.fields.map((field) => ({

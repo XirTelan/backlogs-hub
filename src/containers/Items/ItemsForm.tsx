@@ -1,12 +1,11 @@
 "use client";
 import InputField from "@/components/Common/UI/InputField";
-import { BacklogItemCreationDTO } from "@/types";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Select from "@/components/Common/UI/Select";
-import { BacklogCategory, Field } from "@/zodTypes";
+import { BacklogCategory, BacklogItemCreationDTO, Field } from "@/zodTypes";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   categories,
@@ -29,7 +28,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     defaultValues,
     mode: "onBlur",
   });
-  const fieldsArray = useFieldArray({
+  const { fields: userFields } = useFieldArray({
     name: "userFields",
     control,
     rules: {},
@@ -65,7 +64,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       </div>
       <FieldsBlock title="Fields" status="disabled">
         <>
-          {fieldsArray.fields.map((field, index) => (
+          {userFields.map((field, index) => (
             <li
               className={`${inputTypes[mapFields.get(field.name) || "text"]}  w-auto`}
               key={index}

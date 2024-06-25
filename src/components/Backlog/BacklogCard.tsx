@@ -8,10 +8,10 @@ const BacklogCard = ({
   return (
     <a
       {...props}
-      className="flex h-40 w-28 flex-shrink-0 flex-col justify-between bg-layer-1 p-4 hover:bg-field-hover-1"
+      className="flex h-52 w-40 flex-shrink-0 flex-col  bg-layer-1 p-4 hover:bg-field-hover-1"
     >
       <>{children}</>
-      <FaArrowRight className=" self-end text-primary-link" />
+      <FaArrowRight className="mt-auto self-end text-primary-link" />
     </a>
   );
 };

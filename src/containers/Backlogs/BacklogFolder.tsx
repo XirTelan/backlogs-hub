@@ -20,7 +20,7 @@ const BacklogFolder = ({
         title={
           <div className="ms-4 flex items-center">
             <FaFolder className="me-2" />
-            <Title title={folderName} variant={3} />
+            <Title title={folderName} variant={2} />
           </div>
         }
       >
@@ -29,7 +29,21 @@ const BacklogFolder = ({
             href={`/user/${userName}/backlogs/${backlog.slug}`}
             key={backlog._id}
           >
-            {backlog.backlogTitle}
+            <>
+              <Title variant={3} title={backlog.backlogTitle} />
+              <div className="text-sm font-light text-secondary-text	 ">
+                {backlog.totalCount > 0 ? (
+                  <div className="flex items-center justify-between">
+                    <span>In the backlog:</span>
+                    <span className=" text-primary-link">
+                      {backlog.totalCount}
+                    </span>
+                  </div>
+                ) : (
+                  "Empty backlog"
+                )}
+              </div>
+            </>
           </BacklogCard>
         ))}
       </Accordion>

@@ -42,7 +42,27 @@ export const BacklogFormSchema = z.object({
   categories: BacklogCategorySchema.array().min(1),
   features: z.string().array().optional(),
   folder: z.string().default("Default"),
-  fields: FieldSchema.array().optional(),
+  fields: FieldSchema.array()
+    .superRefine((val, ctx) => {
+      const set = new Map();
+      const n = val.length;
+      for (let i = 0; i < n; i++) {
+        if (set.has(val[i].name)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `No duplicates allowed.`,
+            path: [i, "name"],
+          });
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `No duplicates allowed.`,
+            path: [set.get(val[i].name), "name"],
+          });
+        }
+        set.set(val[i].name,i);
+      }
+    })
+    .optional(),
   slug: z.string(),
   backlogTitle: z.string().trim().min(1, "This field cannot be empty"),
   description: z.string().optional().default(""),

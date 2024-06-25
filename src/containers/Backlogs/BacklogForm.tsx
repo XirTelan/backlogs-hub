@@ -99,7 +99,6 @@ const BacklogForm = <T extends BacklogFormData>({
             register={register}
           />
         </div>
-        {errors.fields && <p>{errors.fields.message}</p>}
         <div className=" mt-4 flex w-full flex-col gap-4 md:w-1/4">
           <ButtonBase disabled={!isValid} text="Create backlog" />
           <ButtonBase

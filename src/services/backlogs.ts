@@ -41,7 +41,14 @@ export const getBacklogsBaseInfoByUserName = async (
             visibility: "public",
           };
     const backlogs: BacklogDTO[] = (await Backlog.find(options)
-      .select(["slug", "userId", "backlogTitle", "folder", "order"])
+      .select([
+        "slug",
+        "userId",
+        "backlogTitle",
+        "folder",
+        "order",
+        "totalCount",
+      ])
       .sort({
         order: 1,
       })

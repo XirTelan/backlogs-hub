@@ -4,7 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import { BacklogDTO, BacklogCreationDTO } from "@/zodTypes";
-import { getUserFolders } from "./user";
+import { getUserData } from "./user";
 import { BacklogCreationSchema, BacklogDTOSchema } from "@/zod";
 import { z } from "zod";
 import { ResponseData } from "@/types";
@@ -60,16 +60,18 @@ export const getBacklogsBaseInfoByUserName = async (
   }
 };
 export const getBacklogsByFolder = async (userName: string) => {
-  const [folders, data] = await Promise.all([
-    getUserFolders(userName),
+  const [{ data: user }, data] = await Promise.all([
+    getUserData(userName, "folders"),
     getBacklogsBaseInfoByUserName(userName),
   ]);
   const hashMap: { [key: string]: BacklogDTO[] } = {};
-  folders.forEach((folder) => (hashMap[folder] = []));
+  if (!user || !user.folders) return hashMap;
+
+  user.folders.forEach((folder) => (hashMap[folder] = []));
   for (const backlog of data) {
     backlog._id = backlog._id.toString();
     if (backlog.folder === undefined)
-      await updateBacklogById({ _id: backlog._id, folder: folders[0] });
+      await updateBacklogById({ _id: backlog._id, folder: user.folders[0] });
     hashMap[backlog.folder].push(backlog);
   }
   return hashMap;

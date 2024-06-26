@@ -8,19 +8,24 @@ export default async function Layout({
   children: React.ReactElement;
 }) {
   return (
-    <div className="container">
+    <div className="container md:ms-4">
       <Title style={{ marginLeft: "1rem" }} title={"Settings"} />
 
       <ul className="flex">
         <NavLink
           href={"/settings/account"}
           variant="contained"
-          label={" Account"}
+          label={"Account"}
+        />
+        <NavLink
+          href={"/settings/profile"}
+          variant="contained"
+          label={"Profile"}
         />
         <NavLink
           href={"/settings/privacy"}
           variant="contained"
-          label={" Privacy"}
+          label={"Privacy"}
         />
         <NavLink
           href={"/settings/preferences"}

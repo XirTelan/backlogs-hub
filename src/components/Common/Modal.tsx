@@ -5,6 +5,7 @@ import { ButtonBaseProps } from "@/types";
 
 const Modal = ({
   action,
+  actionType = "primary",
   confirmOptions,
   showActions,
   setClose,
@@ -12,6 +13,14 @@ const Modal = ({
 }: {
   confirmOptions?: ButtonBaseProps;
   action?: () => void;
+  actionType?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "ghost"
+    | "dangerPrimary"
+    | "dangerTertiary"
+    | "dangerGhost";
   showActions?: boolean;
   setClose: () => void;
   children: React.ReactElement;
@@ -36,7 +45,7 @@ const Modal = ({
             />
             <ButtonBase
               style={{ width: "100%" }}
-              variant="dangerPrimary"
+              variant={actionType}
               text="Confirm"
               {...confirmOptions}
               onClick={() => {

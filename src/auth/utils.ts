@@ -22,11 +22,7 @@ export const getCurrentUserInfo = async (): Promise<TokenData | null> => {
   const token = cookies().get("access_token")?.value || "";
   const { payload } = await getTokenData(token);
   if (!payload) return null;
-  return {
-    id: payload.id,
-    username: payload.username,
-    role: payload.role,
-  };
+  return payload;
 };
 
 export const generateAccessToken = async (user: {

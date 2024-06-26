@@ -7,36 +7,38 @@ import { ConfigType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
-type CreateUser =
-  | {
-      isSuccess: false;
-      message: string;
-    }
-  | {
-      status: "success";
-      data: UserDTO;
-    };
+const userDataTypes = {
+  folders: ["folders", "-_id"],
+  visibility: ["config.profileVisibility", "-_id"],
+  all: ["-password", "-_id"],
+};
+type UserDataTypes = keyof typeof userDataTypes;
 
-export async function getUserFolders(username: string) {
+export async function getUserData(
+  username: string,
+  select: UserDataTypes,
+): Promise<ResponseData<Partial<UserDTO>>> {
   try {
     await dbConnect();
-    const user = (await User.findOne({ username: username })
-      .select(["folders", "-_id"])
-      .lean()) as { folders: string[] };
-    return user.folders || [];
+    const user = await User.findOne({ username: username })
+      .select(userDataTypes[select])
+      .lean();
+    if (!user) return { isSuccess: false };
+    return { isSuccess: true, data: user };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
 }
-export async function getUserVisibility(username: string) {
+
+export async function getCurrentUserData(): Promise<
+  ResponseData<Partial<UserDTO>>
+> {
   try {
-    await dbConnect();
-    const visibility = (await User.findOne({ username: username })
-      .select(["config.profileVisibility", "-_id"])
-      .lean()) as { config: { profileVisibility: string } };
-    return visibility.config.profileVisibility;
+    const user = await getCurrentUserInfo();
+    if (!user) return { isSuccess: false };
+    return await getUserData(user?.username, "all");
   } catch (error) {
-    return NextResponse.json({ error: error }, { status: 400 });
+    throw new Error(`Error: ${error}`);
   }
 }
 export async function isUserNameExist(username: string) {
@@ -49,7 +51,9 @@ export async function isUserNameExist(username: string) {
   }
 }
 //PUT/PATCH
-export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
+export async function createUser(
+  data: UserCreationDTO,
+): Promise<ResponseData<Omit<UserDTO, "password">>> {
   try {
     await dbConnect();
     const user = await User.findOne({
@@ -62,11 +66,10 @@ export async function createUser(data: UserCreationDTO): Promise<CreateUser> {
       };
     }
     data.folders = ["Default"];
-    const newUser = new User(data);
-    await newUser.save();
-    newUser.password = undefined;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...newUser } = await User.create(data);
     return {
-      status: "success",
+      isSuccess: true,
       data: newUser,
     };
   } catch (error) {
@@ -81,8 +84,10 @@ export const updateUserFolders = async (username: string, data: string[]) => {
   try {
     await dbConnect();
     const user = await User.findOne({ username: username });
+    if (!user) return { isSuccess: false, message: "User doesnt exist" };
     user.folders = data;
     await user.save();
+    return { isSuccess: true };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -104,7 +109,7 @@ export async function getConfigOptions(): Promise<ResponseData<ConfigType>> {
   if (!user) return { isSuccess: false, message: "Something goes wrong" };
   try {
     await dbConnect();
-    const userData: UserDTO | null = await User.findById(user.id).lean();
+    const userData = await User.findById(user.id).lean();
     if (!userData) return { isSuccess: false, message: "Something goes wrong" };
     return { isSuccess: true, data: userData.config };
   } catch (error) {
@@ -112,15 +117,34 @@ export async function getConfigOptions(): Promise<ResponseData<ConfigType>> {
   }
 }
 
-export async function updateConfigOption(option: string, value: unknown) {
+export async function updateUserInfo(
+  option: string,
+  value: unknown,
+  type: "general" | "config" = "config",
+) {
+  console.log("trugg");
   const user = await getCurrentUserInfo();
   if (!user) return { isSuccess: false, message: "Something goes wrong" };
   try {
     await dbConnect();
     const userData = await User.findById(user.id);
-    await User.findByIdAndUpdate(user.id, {
-      config: { ...userData.config, [option]: value },
-    });
+    if (!userData) return { isSuccess: false, message: "User doesnt exist" };
+
+    let update;
+    switch (type) {
+      case "general":
+        update = {
+          [option]: value,
+        };
+        break;
+      case "config":
+        update = {
+          config: { ...userData.config, [option]: value },
+        };
+        break;
+    }
+    console.log("update", update);
+    await userData.updateOne(update);
     revalidatePath("/");
     return { isSuccess: true };
   } catch (error) {

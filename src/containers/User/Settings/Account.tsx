@@ -4,15 +4,31 @@ import InputField from "@/components/Common/UI/InputField";
 import Title from "@/components/Common/Title";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { FaChevronRight } from "react-icons/fa";
+import { UserDTO } from "@/zodTypes";
+import { ModalProps } from "../UserSettings";
 
-const Account = () => {
+const Account = ({
+  data,
+  setModal,
+}: {
+  data: Partial<UserDTO>;
+  setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
+}) => {
   return (
     <>
       <section>
         <Title title={"General"} variant={2} />
         <div>
-          <Setting label={"Email"}>
-            <InputField isSimple variant="small" readOnly />
+          <Setting
+            action={() => {
+              return;
+            }}
+            label={"Email"}
+          >
+            <div className="flex items-center">
+              <span>{data.email}</span>
+              <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
+            </div>
           </Setting>
           <Setting label={"Password"}>
             <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
@@ -26,10 +42,18 @@ const Account = () => {
         <Title title={"Account authorization"} variant={2} />
         <div>
           <Setting label={"Google"}>
-            <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
+            <ButtonBase
+              text="Connect"
+              variant="tertiary"
+              icon={<FaChevronRight size={18} />}
+            />
           </Setting>
           <Setting label={"Discord"}>
-            <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
+            <ButtonBase
+              text="Connect"
+              variant="tertiary"
+              icon={<FaChevronRight size={18} />}
+            />
           </Setting>
         </div>
       </section>

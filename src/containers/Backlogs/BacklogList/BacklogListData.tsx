@@ -1,6 +1,6 @@
 "use client";
 import { toastCustom } from "@/lib/toast";
-import { BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/zodTypes";
 import { useRouter } from "next/navigation";
 import BacklogItemTr from "./BacklogItemTr";
 import { useState } from "react";
@@ -44,6 +44,7 @@ const BacklogListData = ({
       {isOpen && (
         <Modal
           showActions
+          actionType="dangerPrimary"
           action={() => onDelete(isOpen)}
           setClose={() => setIsOpen(null)}
         >

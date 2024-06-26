@@ -1,23 +1,25 @@
 "use client";
 import Toggle from "@/components/Common/UI/Toggle";
 import React from "react";
-import Setting from "./Setting";
-import { updateConfigOption } from "@/services/user";
-import { ConfigType } from "@/zodTypes";
+import { updateUserInfo } from "@/services/user";
 import { toastCustom } from "@/lib/toast";
+import { UserDTO } from "@/zodTypes";
 
-const Preferences = ({ data }: { data: ConfigType }) => {
+const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
+  const { config } = data;
+  if (!config) return <div>Error</div>;
   return (
     <div>
-      <Setting label={"Show empty folders in the backlogs"}>
+      <div className="flex justify-between">
+        <span>Show empty folders in the backlogs:</span>
         <Toggle
-          defaultValue={data.showEmptyFolders || false}
+          defaultValue={config.showEmptyFolders || false}
           action={async (state) => {
-            const res = await updateConfigOption("showEmptyFolders", state);
-            if (res.status === "ok") toastCustom.success("Option changed");
+            const res = await updateUserInfo("showEmptyFolders", state);
+            if (res.isSuccess) toastCustom.success("Option changed");
           }}
         />
-      </Setting>
+      </div>
     </div>
   );
 };

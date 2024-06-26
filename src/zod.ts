@@ -59,7 +59,7 @@ export const BacklogFormSchema = z.object({
             path: [set.get(val[i].name), "name"],
           });
         }
-        set.set(val[i].name,i);
+        set.set(val[i].name, i);
       }
     })
     .optional(),
@@ -108,15 +108,18 @@ export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());
 export const ConfigSchema = z.object({
   profileVisibility: z.enum(["public", "private"]),
   showEmptyFolders: z.boolean(),
+  canChangeUserName: z.boolean().default(false),
 });
 
 export const UserSchema = z.object({
   _id: z.string(),
   username: z.string(),
+  displayName: z.string(),
+  description: z.string(),
+  prodvider: z.enum(["credentials", "google", "discord"]),
   password: z.string(),
   folders: z.string().array(),
-  email: z.string(),
-  profileVisibility: z.string(),
+  email: z.string().email(),
   config: ConfigSchema,
 });
 

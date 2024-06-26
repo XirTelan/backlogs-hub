@@ -7,7 +7,7 @@ import { MdOutlineManageSearch } from "react-icons/md";
 
 import { IoAdd } from "react-icons/io5";
 import { getCurrentUserInfo } from "@/auth/utils";
-import { getUserVisibility } from "@/services/user";
+import { getUserData } from "@/services/user";
 
 export default async function Backlogs({
   params,
@@ -15,9 +15,9 @@ export default async function Backlogs({
   params: { userName: string };
 }) {
   const user = await getCurrentUserInfo();
-  const profileVisibility = await getUserVisibility(params.userName);
+  const { data } = await getUserData(params.userName, "visibility");
   const isOwner = user ? user.username === params.userName : false;
-  if (!isOwner && profileVisibility !== "public") {
+  if (!isOwner && data?.config?.profileVisibility !== "public") {
     return <div>Access denied?</div>;
   }
 

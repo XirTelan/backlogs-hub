@@ -1,6 +1,7 @@
+import { UserDTO } from "@/zodTypes";
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema<UserDTO>(
   {
     username: {
       type: String,
@@ -8,6 +9,9 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       maxlength: 60,
     },
+    displayName: String,
+    description: String,
+    prodvider: String,
     email: {
       type: String,
       required: true,
@@ -18,12 +22,14 @@ const UserSchema = new mongoose.Schema(
     config: {
       profileVisibility: { type: String, default: "public" },
       showEmptyFolders: { type: Boolean, default: true },
+      canChangeUserName: { type: Boolean, default: false },
     },
   },
   {
     timestamps: true,
   },
 );
-const User = mongoose.models.User || mongoose.model("User", UserSchema);
+const User: mongoose.Model<UserDTO> =
+  mongoose.models.User || mongoose.model("User", UserSchema);
 
 export default User;

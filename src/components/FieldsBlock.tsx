@@ -20,7 +20,7 @@ const FieldsBlock = (props: FieldsBlockProps) => {
           </Title>
         </div>
       )}
-      <div className="flex-wrap  rounded bg-layer-1 p-4">
+      <div className="flex-wrap  rounded  py-4">
         <ul className=" grid flex-col gap-1 overflow-auto ">
           {props.children}
         </ul>

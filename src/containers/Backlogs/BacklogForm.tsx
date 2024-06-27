@@ -55,8 +55,9 @@ const BacklogForm = <T extends BacklogFormData>({
       });
     }
   };
-  const onSubmitInternal = (data: BacklogFormData) =>
+  const onSubmitInternal = (data: BacklogFormData) => {
     onSubmit({ ...defaultValues, ...data });
+  };
   const watchAllFields = watch();
   return (
     <>

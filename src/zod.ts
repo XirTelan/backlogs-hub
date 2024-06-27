@@ -26,9 +26,19 @@ export const FieldSchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),
     protected: z.boolean().default(false),
-    type: z.enum(["text", "number", "date", "timer"]),
   })
-  .required();
+  .required()
+  .and(
+    z.discriminatedUnion("type", [
+      z.object({
+        type: z.enum(["text", "number", "date", "timer"]),
+      }),
+      z.object({
+        type: z.literal("select"),
+        data: z.string().array(),
+      }),
+    ]),
+  );
 export const BacklogCategorySchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),

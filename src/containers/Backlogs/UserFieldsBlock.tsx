@@ -1,12 +1,12 @@
 import InputField from "@/components/Common/UI/InputField";
 import React from "react";
-import { useFieldArray } from "react-hook-form";
-import { RiDeleteBack2Line } from "react-icons/ri";
+import { useFieldArray, useWatch } from "react-hook-form";
 import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import TableBase from "@/components/Common/UI/TableBase";
-import Select from "@/components/Common/UI/Select";
 import Title from "@/components/Common/Title";
+import FieldsArrayItem from "./FieldsArrayItem";
+import { Field } from "@/zodTypes";
 
 const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
   const fieldsArray = useFieldArray({
@@ -14,7 +14,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
     control,
     rules: {},
   });
-
+  const fields: Field[] = useWatch({ name: "fields", control });
   return (
     <section>
       <Title variant={3} title={"Fields"}>
@@ -50,35 +50,31 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
               This field is required and cannot be deleted
             </td>
           </tr>
-          {fieldsArray.fields.map((field, index) => (
-            <tr key={field.id} className=" border-b border-subtle-1">
-              <td className="text-center">{index + 1}</td>
-              <td className="px-4">
-                <InputField
-                  helperText={
-                    errors &&
-                    errors[index] && {
-                      message: errors[index].name.message,
-                      type: "error",
-                    }
-                  }
-                  variant="small"
-                  layer={2}
-                  {...register(`fields.${index}.name`)}
-                />
-              </td>
-              <td className="px-4 text-center">
-                <Select
-                  {...register(`fields.${index}.type`)}
-                  options={["text", "timer", "number", "date"]}
-                />
-              </td>
-              <td className="px-4 text-center">
-                <button onClick={() => fieldsArray.remove(index)}>
-                  <RiDeleteBack2Line size={24} />
-                </button>
-              </td>
-            </tr>
+          {fields.map((field, index) => (
+            <FieldsArrayItem
+              key={index}
+              index={index}
+              register={register}
+              field={field}
+              error={errors && errors[index]}
+              remove={fieldsArray.remove}
+              customAction={{
+                update: () => {
+                  if (field.type !== "select") return;
+                  fieldsArray.update(index, {
+                    ...field,
+                    data: field.data ? [...field.data, ""] : [""],
+                  });
+                },
+                remove: () => {
+                  if (field.type !== "select") return;
+                  fieldsArray.update(index, {
+                    ...field,
+                    data: [...field.data.slice(0, -1)],
+                  });
+                },
+              }}
+            />
           ))}
         </>
       </TableBase>

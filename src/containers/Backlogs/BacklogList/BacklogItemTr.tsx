@@ -1,6 +1,6 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import { BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/zodTypes";
 import Link from "next/link";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
@@ -20,10 +20,10 @@ const BacklogItemTr = ({
   const res = useSWR(isOpen ? `/api/items/${item._id}` : null, fetcher);
   return (
     <>
-      <tr aria-expanded={isOpen} className="   border-b border-field-2 ">
-        <td>
+      <tr aria-expanded={isOpen} className="border-b border-field-2 ">
+        <td className={isOpen ? " [&_div]:m-auto " : ``}>
           <ButtonBase
-            size="small"
+            size="medium"
             variant="ghost"
             icon={
               isOpen ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />
@@ -31,10 +31,10 @@ const BacklogItemTr = ({
             onClick={() => setIsOpen((prev) => !prev)}
           />
         </td>
-        <td className="p-4" style={{ color: color }}>
+        <td className={`p-2`} style={{ color: color }}>
           {item.title}
         </td>
-        <td className="ms-auto flex p-2 ">
+        <td className={`ms-auto flex p-2 `}>
           <Link href={`/items/${item._id}`}>
             <ButtonBase
               title="Details"

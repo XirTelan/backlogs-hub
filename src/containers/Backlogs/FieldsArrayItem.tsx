@@ -50,36 +50,38 @@ const FieldsArrayItem = ({
             {...register(`fields.${index}.name`)}
           />
         </td>
-        <td className="px-4 text-center">
+        <td className="px-2 ">
           <Select
             {...register(`fields.${index}.type`)}
             options={["text", "timer", "number", "date", "select"]}
           />
         </td>
         <td className="px-4 text-center">
-          <button onClick={() => remove(index)}>
-            <RiDeleteBack2Line size={24} />
-          </button>
+          <ButtonBase
+            variant="ghost"
+            icon={<RiDeleteBack2Line size={24} />}
+            onClick={() => remove(index)}
+          ></ButtonBase>
         </td>
       </tr>
       {field.type === "select" && (
         <>
           <tr>
             <td colSpan={2}></td>
-            <td className=" text-center">
-              <div>Options: {field.data?.length}</div>
+            <td>
+              <div className="px-4">Options: {field.data?.length}</div>
             </td>
             <td>
               <div className="flex items-center justify-between">
                 <ButtonBase
                   type="button"
-                  variant="secondary"
+                  variant="ghost"
                   onClick={customAction.remove}
                   icon={<FaMinus />}
                 />
                 <ButtonBase
                   type="button"
-                  variant="secondary"
+                  variant="ghost"
                   onClick={customAction.update}
                   icon={<FaPlus />}
                 />

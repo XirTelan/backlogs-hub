@@ -95,21 +95,21 @@ export const BacklogCreationSchema = BacklogDTOSchema.omit({
   updatedAt: true,
   createdAt: true,
 });
+export const BacklogItemUserFieldSchema = z.object({
+  name: z.string(),
+  value: z.string(),
+});
 
 export const BacklogItemCreationSchema = z.object({
   backlogId: z.string(),
   title: z.string().trim(),
   category: z.string(),
-  userFields: z
-    .object({
-      name: z.string(),
-      value: z.string(),
-    })
-    .array(),
+  userFields: BacklogItemUserFieldSchema.array(),
 });
 export const BacklogItemSchema = BacklogItemCreationSchema.merge(
   z.object({
     _id: z.string(),
+    lowerCategory: z.string().toLowerCase(),
   }),
 );
 

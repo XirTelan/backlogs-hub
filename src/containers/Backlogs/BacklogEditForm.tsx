@@ -30,14 +30,14 @@ const BacklogEditForm = ({ id }: { id: string }) => {
 
   if (backlogData.isLoading || userFolders.isLoading) return <div>Loading</div>;
   return (
-    <div>
+    <>
       <Title title={`Editing backlog "${backlogData.data.backlogTitle}"`} />
       <BacklogForm
         defaultValues={backlogData.data}
         userFolders={userFolders.data}
         onSubmit={onSubmit}
       />
-    </div>
+    </>
   );
 };
 

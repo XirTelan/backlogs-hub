@@ -1,6 +1,6 @@
 "use client";
 
-import { BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/zodTypes";
 import ItemsForm from "./ItemsForm";
 import { toastCustom } from "@/lib/toast";
 import { BacklogCategory, Field } from "@/zodTypes";
@@ -33,7 +33,6 @@ const ItemsEditForm = ({
       console.error(error);
     }
   };
-
   return (
     <>
       <ItemsForm

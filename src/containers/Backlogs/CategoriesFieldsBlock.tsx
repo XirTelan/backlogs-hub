@@ -49,7 +49,6 @@ const CategoriesFieldsBlock = ({
                 }
                 isSimple
                 variant="small"
-                layer={2}
                 placeholder="Category name"
                 {...register(`categories.${index}.name`)}
               />

@@ -1,5 +1,5 @@
 import { BacklogDTO } from "@/zodTypes";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const BacklogSchema = new mongoose.Schema<BacklogDTO>(
   {
@@ -35,6 +35,7 @@ const BacklogSchema = new mongoose.Schema<BacklogDTO>(
       {
         name: { type: String, required: true },
         type: { type: String, required: true },
+        data: Schema.Types.Mixed,
         protected: Boolean,
       },
     ],

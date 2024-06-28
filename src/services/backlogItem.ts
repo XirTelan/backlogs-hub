@@ -56,8 +56,11 @@ export const getBacklogItemsByQuery = async ({
     await dbConnect();
     const stage = BacklogItem.aggregate([{ $unset: ["userFields"] }]);
     stage.match({ backlogId: backlogId });
-    if (categories && categories.length > 0)
-      stage.match({ category: { $in: categories } });
+    let optRegexp;
+    if (categories && categories.length > 0) {
+      optRegexp = categories.map((value) => new RegExp("^" + value + "$", "i"));
+      stage.match({ category: { $in: optRegexp } });
+    }
     if (search) {
       const regex = new RegExp(
         search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),

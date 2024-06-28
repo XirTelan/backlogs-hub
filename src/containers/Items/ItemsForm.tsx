@@ -5,7 +5,13 @@ import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Select from "@/components/Common/UI/Select";
-import { BacklogCategory, BacklogItemCreationDTO, Field } from "@/zodTypes";
+import {
+  BacklogCategory,
+  BacklogItemCreationDTO,
+  BacklogItemUserField,
+  Field,
+} from "@/zodTypes";
+import { useCallback, useMemo } from "react";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   categories,
@@ -19,6 +25,15 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   onSubmit: SubmitHandler<T>;
 }) => {
   const router = useRouter();
+  const mapFields: Map<string, Field> = useMemo(
+    () =>
+      fields.reduce((mapAccumulator, obj) => {
+        mapAccumulator.set(obj.name, obj);
+        return mapAccumulator;
+      }, new Map()),
+    [fields],
+  );
+
   const {
     handleSubmit,
     control,
@@ -33,50 +48,73 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     control,
     rules: {},
   });
-  const mapFields: Map<string, inputs> = fields.reduce(
-    (mapAccumulator, obj) => {
-      mapAccumulator.set(obj.name, obj.type);
-      return mapAccumulator;
-    },
-    new Map(),
-  );
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
     onSubmit({ ...defaultValues, ...data });
   };
 
+  const getFieldInput = useCallback(
+    (field: BacklogItemUserField, index: number) => {
+      console.log("field", field);
+      const backlogField = mapFields?.get(field.name);
+      if (!backlogField) return <div>Error</div>;
+      switch (backlogField.type) {
+        case "text":
+        case "number":
+        case "date":
+        default:
+          return (
+            <InputField
+              label={field.name}
+              placeholder={field.name}
+              type={backlogField.type}
+              {...register(`userFields.${index}.value`, {
+                required: false,
+              })}
+            />
+          );
+        case "select":
+          return (
+            <Select
+              label={field.name}
+              options={backlogField.data || []}
+              {...register(`userFields.${index}.value`, {
+                required: false,
+              })}
+            />
+          );
+      }
+    },
+    [mapFields, register],
+  );
+
   return (
     <form onSubmit={handleSubmit(onSubmitInternal)}>
-      <div className="field group  relative mt-2 px-0 py-4 md:w-1/2  ">
-        <InputField
-          id="title"
-          placeholder="Title"
-          label="Title"
-          {...register("title", { required: true })}
-        />
-      </div>
-      <div>
-        <Select
-          label="Category"
-          options={categories.map((category) => category.name)}
-          {...register("category")}
-        />
+      <div className="flex flex-col md:flex-row md:items-center md:gap-4 ">
+        <div className="field group  relative mt-2 px-0 py-4 md:w-1/2  ">
+          <InputField
+            id="title"
+            placeholder="Title"
+            label="Title"
+            {...register("title", { required: true })}
+          />
+        </div>
+        <div>
+          <Select
+            label="Category"
+            options={categories.map((category) => category.name)}
+            {...register("category")}
+          />
+        </div>
       </div>
       <FieldsBlock title="Fields" status="disabled">
         <>
           {userFields.map((field, index) => (
             <li
-              className={`${inputTypes[mapFields.get(field.name) || "text"]}  w-auto`}
+              className={`${inputTypes[mapFields.get(field.name)?.type || "text"]}  w-auto`}
               key={index}
             >
-              <InputField
-                label={field.name}
-                placeholder={field.name}
-                type={mapFields?.get(field.name)}
-                {...register(`userFields.${index}.value`, {
-                  required: false,
-                })}
-              />
+              {getFieldInput(field, index)}
             </li>
           ))}
         </>
@@ -106,6 +144,5 @@ const inputTypes = {
   date: "",
   number: "col-span-2",
   timer: "col-span-4",
+  select: "",
 };
-
-type inputs = keyof typeof inputTypes;

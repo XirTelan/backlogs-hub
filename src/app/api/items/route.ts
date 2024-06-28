@@ -4,7 +4,7 @@ import {
   getBacklogItemsByQuery,
 } from "@/services/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
-import { BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/zodTypes";
 import { sendMsg } from "@/utils";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,8 +13,8 @@ export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } },
 ) {
-  const { status: isAuthorized } = await isAuthorizedBacklogOwner(id, "read");
-  if (!isAuthorized) return sendMsg.error("Doesnt have permission", 401);
+  const { isSuccess } = await isAuthorizedBacklogOwner(id, "read");
+  if (!isSuccess) return sendMsg.error("Doesnt have permission", 401);
   const categories = request.nextUrl.searchParams.get("categories")?.split("-");
   const search = request.nextUrl.searchParams.get("search");
   let backlogData;
@@ -48,7 +48,6 @@ export async function GET(
 
 export async function POST(request: NextRequest) {
   const data: BacklogItemDTO = await request.json();
-  data.category = data.category.toLowerCase();
   try {
     const res = await addBacklogItem(data);
     revalidateTag(`backloglist${data.backlogId}`);

@@ -33,10 +33,8 @@ const ItemsCreateForm = ({
       console.error(error);
     }
   };
-
   return (
     <>
-
       <ItemsForm
         categories={backlog.categories}
         fields={backlog.fields}

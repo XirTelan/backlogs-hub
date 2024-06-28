@@ -6,6 +6,7 @@ import {
   BacklogFormSchema,
   BacklogItemCreationSchema,
   BacklogItemSchema,
+  BacklogItemUserFieldSchema,
   ConfigSchema,
   DndDataSchema,
   FieldSchema,
@@ -21,6 +22,7 @@ export type BacklogCreationDTO = z.infer<typeof BacklogCreationSchema>;
 export type BacklogCategory = z.infer<typeof BacklogCategorySchema>;
 
 export type BacklogItemDTO = z.infer<typeof BacklogItemSchema>;
+export type BacklogItemUserField = z.infer<typeof BacklogItemUserFieldSchema>;
 export type BacklogItemCreationDTO = z.infer<typeof BacklogItemCreationSchema>;
 
 export type TemplateDTO = z.infer<typeof TemplateDTOSchema>;

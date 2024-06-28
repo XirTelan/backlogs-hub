@@ -62,32 +62,35 @@ const BacklogForm = <T extends BacklogFormData>({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitInternal)}>
-        <div className="field w-full grow py-2  ">
-          <InputField
-            autoFocus
-            helperText={
-              errors.backlogTitle && {
-                message: errors.backlogTitle.message!,
-                type: "error",
+        <div className="flex flex-col md:flex-row   md:items-center md:gap-8">
+          <div className="field w-full grow py-2  ">
+            <InputField
+              autoFocus
+              helperText={
+                errors.backlogTitle && {
+                  message: errors.backlogTitle.message!,
+                  type: "error",
+                }
               }
-            }
-            id="backlogTitle"
-            label="Title (required)"
-            {...register(`backlogTitle`, { required: true })}
-          />
+              id="backlogTitle"
+              label="Title (required)"
+              {...register(`backlogTitle`, { required: true })}
+            />
+          </div>
+          <div className="flex gap-2">
+            <Select
+              label="Folder"
+              options={userFolders}
+              {...register("folder")}
+            />
+            <Select
+              label="Visibility"
+              options={["public", "private"]}
+              {...register("visibility")}
+            />
+          </div>
         </div>
-        <div className="flex gap-2">
-          <Select
-            label="Folder"
-            options={userFolders}
-            {...register("folder")}
-          />
-          <Select
-            label="Visibility"
-            options={["public", "private"]}
-            {...register("visibility")}
-          />
-        </div>
+
         <div className="flex flex-col lg:flex-row lg:gap-4 ">
           <CategoriesFieldsBlock
             errors={errors.categories}

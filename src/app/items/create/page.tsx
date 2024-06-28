@@ -24,13 +24,13 @@ const CreateItem = async ({
       ? []
       : backlogInfo.fields.map((field) => ({
           name: field.name,
-          value: "",
+          value: field.type === "select" ? field.data[0] : "",
         })),
   };
 
   return (
     <main className="container px-4">
-      <Title title={`Add new item`} />
+      <Title title={`Add new item to "${backlogInfo.backlogTitle}"`} />
       <ItemsCreateForm
         backlog={{
           fields: backlogInfo.fields || [],

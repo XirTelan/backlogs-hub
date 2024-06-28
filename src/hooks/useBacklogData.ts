@@ -1,4 +1,4 @@
-import { BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/zodTypes";
 import { BacklogDTO } from "@/zodTypes";
 import { useEffect, useState } from "react";
 

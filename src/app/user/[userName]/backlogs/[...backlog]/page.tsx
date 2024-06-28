@@ -27,7 +27,7 @@ export default async function Backlog({
 
   const categoriesMap = new Map(
     data.categories.map((category) => [
-      category.name.toLowerCase(),
+      category.name,
       category.color,
     ]),
   );

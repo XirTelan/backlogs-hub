@@ -46,7 +46,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
             <td colSpan={2} className="px-4">
               <InputField value={"Title"} variant="small" layer={2} readOnly />
             </td>
-            <td className="text-center text-secondary-text" colSpan={2}>
+            <td className="px-4 text-secondary-text" colSpan={2}>
               This field is required and cannot be deleted
             </td>
           </tr>

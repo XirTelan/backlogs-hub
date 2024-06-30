@@ -13,7 +13,7 @@ const elevation = {
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, options, layer = 1, variant = "default", ...props }, ref) => {
     return (
-      <div className={`${variants[variant]}  `}>
+      <div className={`${variants[variant]} flex  justify-between `}>
         {label && <label className="me-2 h-6  pb-2 text-white ">{label}</label>}
         <select
           {...props}

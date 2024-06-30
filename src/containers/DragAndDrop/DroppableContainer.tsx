@@ -41,7 +41,6 @@ const DroppableContainer = ({
   items: BacklogDTO[];
 }) => {
   const {
-    active,
     attributes,
     isDragging,
     listeners,
@@ -77,14 +76,10 @@ const DroppableContainer = ({
         transition,
         transform: CSS.Translate.toString(transform),
         opacity: isDragging ? 0.5 : undefined,
-        background:
-          active?.data.current && active?.data.current.type !== "container"
-            ? "red"
-            : "",
       }}
       {...props}
     >
-      <div className="flex items-center">
+      <div className="flex items-center ">
         <FaFolder className="mx-2" />
         <Title width="fit-content" title={id as string} variant={3} />
         <div className="flex min-h-[2rem] w-full bg-transparent">

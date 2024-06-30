@@ -12,6 +12,7 @@ import {
   Field,
 } from "@/zodTypes";
 import { useCallback, useMemo } from "react";
+import ProgressTimer from "@/components/Common/UI/ProgressTimer";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   categories,
@@ -38,6 +39,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     handleSubmit,
     control,
     register,
+    setValue,
     formState: { isValid, isSubmitting },
   } = useForm<BacklogItemCreationDTO>({
     defaultValues,
@@ -50,6 +52,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   });
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
+    console.log("res", data);
     onSubmit({ ...defaultValues, ...data });
   };
 
@@ -59,6 +62,18 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       const backlogField = mapFields?.get(field.name);
       if (!backlogField) return <div>Error</div>;
       switch (backlogField.type) {
+        case "timer":
+          return (
+            <ProgressTimer
+              label={field.name}
+              defaultValue={field.value}
+              setValue={setValue as (name: string, val: string) => void}
+              {...register(`userFields.${index}.value`, {
+                required: false,
+              })}
+            />
+          );
+          break;
         case "text":
         case "number":
         case "date":
@@ -85,9 +100,8 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           );
       }
     },
-    [mapFields, register],
+    [mapFields, register, setValue],
   );
-
   return (
     <form onSubmit={handleSubmit(onSubmitInternal)}>
       <div className="flex flex-col md:flex-row md:items-center md:gap-4 ">
@@ -143,6 +157,6 @@ const inputTypes = {
   textArea: "col-span-4",
   date: "",
   number: "col-span-2",
-  timer: "col-span-4",
-  select: "",
+  timer: "col-span-2 md:col-span-4",
+  select: "col-span-2 ",
 };

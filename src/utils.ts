@@ -22,6 +22,16 @@ export const sendMsg = {
   },
 };
 
+export const parseToSeconds = (h: number, m: number, s: number) => {
+  return h * 60 * 60 + m * 60 + s;
+};
+export const parseSeconds = (seconds: number) => {
+  const ss = seconds % 60;
+  const min = (seconds / 60) | 0;
+  const mm = min % 60;
+  const hh = (min / 60) | 0;
+  return { hh, mm, ss };
+};
 export const cleanParamString = (str: string) => {
   return str.replace(/["\\]/g, "");
 };

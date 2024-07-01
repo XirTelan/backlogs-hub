@@ -49,7 +49,6 @@ export default async function Backlogs({
           )}
           <UserBacklogs userName={params.userName} />
         </div>
-        <Feed />
       </main>
     </>
   );

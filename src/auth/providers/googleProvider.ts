@@ -1,5 +1,6 @@
 "use server";
 
+import { UserCreationDTO } from "@/types";
 import { UserDTO } from "@/zodTypes";
 import { JWTPayload, decodeJwt } from "jose";
 
@@ -27,12 +28,12 @@ export const getGoogleToken = async (code: string) => {
 
 export const getRedirectOauthLink = async () => {};
 
-export const getUserData = async (code: string) => {
+export const getUserData = async (code: string): Promise<UserCreationDTO> => {
   const token = await getGoogleToken(code);
   const userData: Partial<UserDTO> & JWTPayload = decodeJwt(token.id_token);
   return {
     username: `user_G${userData.sub}`,
     email: userData.email || "",
-    profileVisibility: "public",
+    provider: "google",
   };
 };

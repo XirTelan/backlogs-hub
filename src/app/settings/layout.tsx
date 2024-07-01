@@ -11,7 +11,7 @@ export default async function Layout({
     <div className="container md:ms-4">
       <Title style={{ marginLeft: "1rem" }} title={"Settings"} />
 
-      <ul className="flex">
+      <ul role="tablist" className="flex">
         <NavLink
           href={"/settings/account"}
           variant="contained"

@@ -1,18 +1,30 @@
 import { z } from "zod";
 
-export const RegistrationSchema = z.object({
-  username: z
-    .string()
-    .min(4)
-    .regex(new RegExp(/^[a-zA-Z0-9_=]+$/), {
-      message: `Username can only contain letters, numbers, "-", and "_"`,
-    }),
-  email: z.string().email("Email is required"),
-  folders: z.string().array().default(["Default"]),
-  password: z
-    .string()
-    .min(6, { message: "Password must have at least 6 characters" }),
-});
+export const RegistrationSchema = z
+  .object({
+    username: z
+      .string()
+      .min(4)
+      .regex(new RegExp(/^[a-zA-Z0-9_=]+$/), {
+        message: `Username can only contain letters, numbers, "-", and "_"`,
+      }),
+    email: z.string().email("Email is required"),
+    folders: z.string().array().default(["Default"]),
+    password: z
+      .string()
+      .min(6, { message: "Password must have at least 6 characters" }),
+    passwordConfirm: z
+      .string()
+      .min(6, { message: "Password must have at least 6 characters" }),
+  })
+  .superRefine(({ password, passwordConfirm }, ctx) => {
+    if (password !== passwordConfirm)
+      ctx.addIssue({
+        code: "custom",
+        message: "The passwords did not match",
+        path: ["passwordConfirm"],
+      });
+  });
 
 export const SignInSchema = z
   .object({
@@ -22,6 +34,7 @@ export const SignInSchema = z
       .min(6, { message: "Password must have at least 6 characters" }),
   })
   .required();
+
 export const FieldSchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),
@@ -126,13 +139,14 @@ export const UserSchema = z.object({
   username: z.string(),
   displayName: z.string(),
   description: z.string(),
-  prodvider: z.enum(["credentials", "google", "discord"]),
+  provider: z.enum(["credentials", "google", "discord"]),
   password: z.string(),
   folders: z.string().array(),
   email: z.string().email(),
   config: ConfigSchema,
 });
 
+export const rawPasswordSchema = z.string().min(6);
 export const isEmailSchema = z.string().email();
 
 export const TemplateDTOSchema = BacklogFormSchema.omit({

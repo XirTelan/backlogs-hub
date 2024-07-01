@@ -1,5 +1,5 @@
 import { FieldError } from "react-hook-form";
-import { BacklogCategory, Field } from "./zodTypes";
+import { BacklogCategory, Field, UserDTO } from "./zodTypes";
 import React from "react";
 
 export type InputFieldProps = {
@@ -81,10 +81,7 @@ export type ResponseData<T> = {
     }
 );
 
-export type UserCreationDTO = {
-  password?: string;
-  folders?: string[];
-} & Omit<UserDTO, "id">;
+export type UserCreationDTO = Pick<UserDTO, "username" | "email" | "provider">;
 
 export type ButtonBaseProps = {
   children?: React.ReactElement;

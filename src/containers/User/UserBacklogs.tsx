@@ -3,10 +3,12 @@ import React from "react";
 import BacklogFolder from "../Backlogs/BacklogFolder";
 import { BacklogDTO } from "@/zodTypes";
 import { getConfigOptions } from "@/services/user";
+import { FaRegFolderOpen } from "react-icons/fa6";
 
 const listIsEmpty = (
   <>
     <div className="flex h-80 w-full flex-col justify-center     bg-layer-1 p-4">
+      <FaRegFolderOpen className=" my-4 text-secondary-text" size={80} />
       <p className="mb-4 text-xl">You don&apos;t have any backlogs here yet</p>
       <p className=" text-secondary-text">
         No backlogs? No problem! <br />

@@ -53,12 +53,13 @@ const UserLoginForm = () => {
             type: "error",
           }
         }
-        placeholder="mail@example.com"
-        label="Continue with email"
+        placeholder="Email or username"
+        label="Continue with email/username"
         {...register("login")}
       />
       <InputField
         type="password"
+        placeholder="Password"
         helperText={
           errors.password && {
             message: errors.password.message!,

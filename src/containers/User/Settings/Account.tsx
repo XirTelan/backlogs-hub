@@ -30,12 +30,11 @@ const Account = ({
               <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
             </div>
           </Setting>
-          <Setting label={"Password"}>
-            <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
-          </Setting>
-          <Setting label={"Gender"}>
-            <InputField isSimple variant="small" readOnly />
-          </Setting>
+          {data.provider === "credentials" && (
+            <Setting label={"Password"}>
+              <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
+            </Setting>
+          )}
         </div>
       </section>
       <section>

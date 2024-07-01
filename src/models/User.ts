@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema<UserDTO>(
     },
     displayName: String,
     description: String,
-    prodvider: String,
+    provider: String,
     email: {
       type: String,
       required: true,

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Privacy from "./Settings/Privacy";
 import Account from "./Settings/Account";
 import Preferences from "./Settings/Preferences";
-import {  UserDTO } from "@/zodTypes";
+import { UserDTO } from "@/zodTypes";
 import Profile from "./Settings/Profile";
 import Modal from "@/components/Common/Modal";
 import { updateUserInfo } from "@/services/user";
@@ -61,6 +61,7 @@ const modalTypes = {
       <InputField
         defaultValue={defaultValue}
         isSimple
+        layer={2}
         onChange={(e) => setValue(e.target.value)}
       />
     );

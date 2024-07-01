@@ -1,17 +1,21 @@
-
-import Link from "next/link";
+import UserProfile from "@/containers/User/UserProfile";
+import {  getUserData } from "@/services/user";
 import React from "react";
 
-export default function Page() {
+const Page = async ({
+  params: { userName },
+}: {
+  params: { userName: string; backlog: string };
+}) => {
+  const user = await getUserData(userName, "all");
+  if (!user.isSuccess) return <div>Error</div>;
   return (
     <>
       <main className="container ">
-        <div className=" bg-on-primary  ">UserProfile</div>
-        <div>
-
-        </div>
-        <Link href={"/user/test/backlogs/"}>Backlogs</Link>
+          <UserProfile data={user.data} />
       </main>
     </>
   );
-}
+};
+
+export default Page;

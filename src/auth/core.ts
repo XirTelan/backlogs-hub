@@ -37,7 +37,8 @@ export const handleCallback = async (
   const code = searchParams.get("code");
   if (!code) return sendMsg.error("code not specified");
 
-  let userData: Partial<UserDTO> | undefined = undefined;
+  let userData: Pick<UserDTO, "username" | "email" | "provider"> | undefined =
+    undefined;
   switch (provider) {
     case "google":
       userData = await getGoogleUser(code);
@@ -48,13 +49,16 @@ export const handleCallback = async (
   }
   if (!userData) return sendMsg.error("Try again later");
   await dbConnect();
-  let user = await User.findOne({ email: userData.email });
-  if (!user) {
-    user = await createUser(userData);
-  }
+  let user: Omit<UserDTO, "password"> | null = await User.findOne({
+    email: userData.email,
+  }).lean();
 
-  if (user.status === "error")
-    return NextResponse.json({ message: user.message }, { status: 500 });
+  if (!user) {
+    const res = await createUser(userData);
+    if (!res.isSuccess)
+      return NextResponse.json({ message: res.message }, { status: 500 });
+    user = res.data;
+  }
   const access_token = await generateAccessToken(user);
   return await setTokenCookies(access_token, request.url);
 };
@@ -83,3 +87,5 @@ export const signInWithLogin = async (
   const access_token = await generateAccessToken(user);
   return { isSuccess: true, data: access_token };
 };
+
+export const updatePassword = async () => {};

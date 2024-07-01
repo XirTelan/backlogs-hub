@@ -2,15 +2,21 @@
 import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
-import { ResponseData, UserCreationDTO } from "@/types";
+import { ResponseData } from "@/types";
 import { ConfigType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
 const userDataTypes = {
   folders: ["folders", "-_id"],
   visibility: ["config.profileVisibility", "-_id"],
   all: ["-password", "-_id"],
+};
+const DEFAULT_CONFIG: ConfigType = {
+  profileVisibility: "public",
+  showEmptyFolders: true,
+  canChangeUserName: false,
 };
 type UserDataTypes = keyof typeof userDataTypes;
 
@@ -52,7 +58,7 @@ export async function isUserNameExist(username: string) {
 }
 //PUT/PATCH
 export async function createUser(
-  data: UserCreationDTO,
+  data: Partial<UserDTO>,
 ): Promise<ResponseData<Omit<UserDTO, "password">>> {
   try {
     await dbConnect();
@@ -66,8 +72,16 @@ export async function createUser(
       };
     }
     data.folders = ["Default"];
+    data.displayName = data.username;
+    data.config =
+      data.provider === "credentials"
+        ? {
+            ...DEFAULT_CONFIG,
+            canChangeUserName: true,
+          }
+        : DEFAULT_CONFIG;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...newUser } = await User.create(data);
+    const { password, ...newUser } = (await User.create(data)).toObject();
     return {
       isSuccess: true,
       data: newUser,
@@ -122,7 +136,6 @@ export async function updateUserInfo(
   value: unknown,
   type: "general" | "config" = "config",
 ) {
-  console.log("trugg");
   const user = await getCurrentUserInfo();
   if (!user) return { isSuccess: false, message: "Something goes wrong" };
   try {
@@ -133,6 +146,9 @@ export async function updateUserInfo(
     let update;
     switch (type) {
       case "general":
+        if (option === "password") {
+          value = await bcrypt.hash(String(value), 12);
+        }
         update = {
           [option]: value,
         };
@@ -143,7 +159,6 @@ export async function updateUserInfo(
         };
         break;
     }
-    console.log("update", update);
     await userData.updateOne(update);
     revalidatePath("/");
     return { isSuccess: true };

@@ -1,4 +1,7 @@
 "use server";
+
+import { UserCreationDTO } from "@/types";
+
 const TOKEN_URL = "https://discord.com/api/oauth2/token	";
 const AUTH_URL = "https://discord.com/oauth2/authorize";
 
@@ -40,12 +43,12 @@ export const getRedirectOauthLink = async () => {
   const searchParams = new URLSearchParams(params);
   return `${AUTH_URL}?${searchParams}`;
 };
-export const getUserData = async (code: string) => {
+export const getUserData = async (code: string): Promise<UserCreationDTO> => {
   const token = await getDiscordToken(code);
   const userData = await getAuthInformation(token.access_token);
   return {
-    username: userData.username,
+    username: `user_D${userData.username}`,
     email: userData.email,
-    profileVisibility: "public",
+    provider: "discord",
   };
 };

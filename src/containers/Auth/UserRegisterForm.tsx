@@ -108,7 +108,17 @@ const UserRegisterForm = () => {
             label="Password"
             {...register("password")}
           />
-
+          <InputField
+            type="password"
+            helperText={
+              errors.passwordConfirm && {
+                message: errors.passwordConfirm.message!,
+                type: "error",
+              }
+            }
+            label="Password confirm"
+            {...register("passwordConfirm")}
+          />
           <ButtonBase
             disabled={!isValid || isSubmitted || !isAvailable || isLoading}
             text="Continue"

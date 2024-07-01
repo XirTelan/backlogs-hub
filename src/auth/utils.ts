@@ -28,10 +28,9 @@ export const getCurrentUserInfo = async (): Promise<TokenData | null> => {
 export const generateAccessToken = async (user: {
   _id: string;
   username: string;
-  role: string;
 }) => {
   const secret = new TextEncoder().encode(process.env.AUTH_SECRET!);
-  const tokenData = { id: user._id, username: user.username, role: "user" };
+  const tokenData = { id: user._id, username: user.username };
   const access_token = await new SignJWT(tokenData)
     .setProtectedHeader({
       alg: "HS256",

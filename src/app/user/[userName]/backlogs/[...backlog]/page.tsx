@@ -18,6 +18,7 @@ export default async function Backlog({
   searchParams: { categories: string | undefined; search: string | undefined };
 }) {
   const user = await getCurrentUserInfo();
+    //Task BHUB40
   const isOwner = user?.username == userName;
   const data = await getUserBacklogBySlug(userName, backlog, isOwner);
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;

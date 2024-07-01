@@ -45,18 +45,21 @@ export async function POST(
     const parsedCredentials = RegistrationSchema.safeParse(data);
     if (!parsedCredentials.success)
       return sendMsg.error("Unexpected error. Try again later");
-
+    const { data: userData } = parsedCredentials;
+    if (userData.password !== userData.passwordConfirm)
+      return sendMsg.error("The passwords did not match");
     const passwordHashed = await bcrypt.hash(
       parsedCredentials.data.password,
       12,
     );
     const result = await createUser({
-      username: parsedCredentials.data.username,
-      email: parsedCredentials.data.email,
+      username: userData.username,
+      email: userData.email,
       password: passwordHashed,
-      profileVisibility: "public",
+      provider: "credentials",
     });
-    if (result.status === "error") return sendMsg.error(result.message);
+    console.log("result", result);
+    if (!result.isSuccess) return sendMsg.error(result.message);
     return NextResponse.json(
       { message: "Created", data: result.data },
       { status: 201 },
@@ -65,7 +68,7 @@ export async function POST(
   if (type === "signIn") {
     const data = await request.json();
     const response = await signInWithLogin(data);
-    if (response.status === "error") return sendMsg.error(response.message);
+    if (!response.isSuccess) return sendMsg.error(response.message);
     return setTokenCookies(response.data, request.url);
   }
 

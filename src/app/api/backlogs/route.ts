@@ -7,6 +7,7 @@ import {
   getUserBacklogBySlug,
   updateBacklogsOrderById,
   isBacklogExist,
+  isPrivateProfile,
 } from "@/services/backlogs";
 import { updateUserFolders } from "@/services/user";
 import { generateSlug, sendMsg } from "@/utils";
@@ -29,15 +30,14 @@ const isType = (value: unknown): value is Types => {
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUserInfo();
-  const userNameParam = request.nextUrl.searchParams
-    .get("userName")
-    ?.trim()
-    .toLocaleLowerCase();
+  const userNameParam = request.nextUrl.searchParams.get("userName")?.trim();
   const isOwner = user ? userNameParam === user.username : false;
-
   const userName = userNameParam ? userNameParam : user?.username;
   if (!userName) return sendMsg.error(`Params not provided`);
-
+  console.log("check 1!");
+  if (await isPrivateProfile(userName, isOwner))
+    return sendMsg.error(`Params not provided`, 403);
+  console.log("check 12!");
   const backlogSlug = request.nextUrl.searchParams
     .get("backlog")
     ?.trim()
@@ -124,7 +124,10 @@ const handleTypeGet = async (
       break;
     }
     case "baseInfo": {
-      resultData.backlog = await getBacklogsBaseInfoByUserName(userName);
+      resultData.backlog = await getBacklogsBaseInfoByUserName(
+        userName,
+        isOwner,
+      );
       break;
     }
     case "exist": {

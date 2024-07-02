@@ -9,12 +9,13 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
 const userDataTypes = {
-  folders: ["folders", "-_id"],
-  visibility: ["config.profileVisibility", "-_id"],
-  all: ["-password", "-_id"],
+  folders: { folders: 1, config: 1, _id: 0 },
+  config: { config: 1, _id: 0 },
+  all: { _id: 0, password: 0 },
 };
 const DEFAULT_CONFIG: ConfigType = {
   profileVisibility: "public",
+  hideFolderNames: false,
   showEmptyFolders: true,
   canChangeUserName: false,
 };
@@ -26,9 +27,10 @@ export async function getUserData(
 ): Promise<ResponseData<Partial<UserDTO>>> {
   try {
     await dbConnect();
-    const user = await User.findOne({ username: username })
-      .select(userDataTypes[select])
-      .lean();
+    const user = await User.findOne(
+      { username: username },
+      userDataTypes[select],
+    ).lean();
     if (!user) return { isSuccess: false };
     return { isSuccess: true, data: user };
   } catch (error) {
@@ -155,10 +157,11 @@ export async function updateUserInfo(
         break;
       case "config":
         update = {
-          config: { ...userData.config, [option]: value },
+          config: { ...userData.toObject().config, [option]: value },
         };
         break;
     }
+    console.log(update);
     await userData.updateOne(update);
     revalidatePath("/");
     return { isSuccess: true };

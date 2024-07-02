@@ -4,7 +4,6 @@ import React from "react";
 
 const UserBacklogsSideNav = async ({ userName }: { userName: string }) => {
   const data = await getBacklogsByFolder(userName);
-
   return (
     <nav>
       {Object.entries(data).map(([folder, backlogs]) => {

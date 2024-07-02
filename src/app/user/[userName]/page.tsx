@@ -1,5 +1,6 @@
+import { getCurrentUserInfo } from "@/auth/utils";
 import UserProfile from "@/containers/User/UserProfile";
-import {  getUserData } from "@/services/user";
+import { getUserData } from "@/services/user";
 import React from "react";
 
 const Page = async ({
@@ -7,12 +8,21 @@ const Page = async ({
 }: {
   params: { userName: string; backlog: string };
 }) => {
-  const user = await getUserData(userName, "all");
+  const [curerntUser, user] = await Promise.all([
+    getCurrentUserInfo(),
+    getUserData(userName, "all"),
+  ]);
   if (!user.isSuccess) return <div>Error</div>;
+  if (
+    curerntUser?.username !== userName &&
+    user.data.config?.profileVisibility === "private"
+  )
+    return <div>Error</div>;
+
   return (
     <>
       <main className="container ">
-          <UserProfile data={user.data} />
+        <UserProfile data={user.data} />
       </main>
     </>
   );

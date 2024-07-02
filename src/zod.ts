@@ -130,6 +130,7 @@ export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());
 
 export const ConfigSchema = z.object({
   profileVisibility: z.enum(["public", "private"]),
+  hideFolderNames: z.boolean().default(false),
   showEmptyFolders: z.boolean(),
   canChangeUserName: z.boolean().default(false),
 });

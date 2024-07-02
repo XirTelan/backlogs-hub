@@ -14,11 +14,13 @@ export async function GET(
 ) {
   try {
     const backlogId = cleanParamString(id);
-    const { isSuccess, data: backlog } = await isAuthorizedBacklogOwner(
-      backlogId,
-      "read",
-    );
-    if (!isSuccess) return sendMsg.error("Not authorized", 403);
+    const {
+      isSuccess,
+      data: backlog,
+      ...rest
+    } = await isAuthorizedBacklogOwner(backlogId, "read");
+    if (!isSuccess) return sendMsg.error(rest.message, 403);
+
     if (backlog) {
       return NextResponse.json(backlog);
     } else {

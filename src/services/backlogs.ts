@@ -28,18 +28,18 @@ export const getBacklogById = async (
 };
 
 export const getBacklogsBaseInfoByUserName = async (
+  //task bhub40
   userName: string,
+  isOwner: boolean,
 ): Promise<BacklogDTO[]> => {
-  const user = await getCurrentUserInfo();
   try {
     await dbConnect();
-    const options =
-      user && user.username === userName
-        ? { userName: userName }
-        : {
-            userName: userName,
-            visibility: "public",
-          };
+    const options = isOwner
+      ? { userName: userName }
+      : {
+          userName: userName,
+          visibility: "public",
+        };
     const backlogs: BacklogDTO[] = (await Backlog.find(options)
       .select([
         "slug",
@@ -60,22 +60,59 @@ export const getBacklogsBaseInfoByUserName = async (
   }
 };
 export const getBacklogsByFolder = async (userName: string) => {
-  //Task BHUB40
-  const [{ data: user }, data] = await Promise.all([
-    getUserData(userName, "folders"),
-    getBacklogsBaseInfoByUserName(userName),
-  ]);
-  const hashMap: { [key: string]: BacklogDTO[] } = {};
-  if (!user || !user.folders) return hashMap;
+  try {
+    const [currentUser, { data: user }] = await Promise.all([
+      getCurrentUserInfo(),
+      getUserData(userName, "folders"),
+    ]);
+    const isOwner = currentUser != null && currentUser.username === userName;
+    const hashMap: { [key: string]: BacklogDTO[] } = {};
 
-  user.folders.forEach((folder) => (hashMap[folder] = []));
-  for (const backlog of data) {
-    backlog._id = backlog._id.toString();
-    if (backlog.folder === undefined)
-      await updateBacklogById({ _id: backlog._id, folder: user.folders[0] });
-    hashMap[backlog.folder].push(backlog);
+    if (!user || !user.folders) return hashMap;
+    if (!isOwner && user.config?.profileVisibility === "private")
+      return hashMap;
+
+    const isHideFoldersName = !isOwner && user.config?.hideFolderNames;
+
+    user.folders.forEach(
+      (folder, indx) =>
+        (hashMap[isHideFoldersName ? `Folder ${indx}` : folder] = []),
+    );
+
+    const updatePromises = [];
+    const data = await getBacklogsBaseInfoByUserName(userName, isOwner);
+
+    for (const backlog of data) {
+      backlog._id = backlog._id.toString();
+      if (isHideFoldersName)
+        backlog.folder = `Folder ${user.folders.indexOf(backlog.folder)}`;
+      if (backlog.folder === undefined) {
+        backlog.folder = user.folders[0];
+        if (isOwner) {
+          updatePromises.push(
+            updateBacklogById({ _id: backlog._id, folder: user.folders[0] }),
+          );
+        }
+      }
+      hashMap[backlog.folder].push(backlog);
+    }
+
+    await Promise.all(updatePromises);
+
+    return hashMap;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
   }
-  return hashMap;
+};
+
+export const isPrivateProfile = async (userName: string, isOwner: boolean) => {
+  const config = await getUserData(userName, "config");
+  console.log("isPrivateProfiel", isOwner, userName);
+  return (
+    !isOwner &&
+    (!config.isSuccess || config.data.config?.profileVisibility === "private")
+  );
 };
 
 export const getUserBacklogBySlug = async (
@@ -85,6 +122,8 @@ export const getUserBacklogBySlug = async (
 ): Promise<BacklogDTO | null> => {
   try {
     await dbConnect();
+    if (await isPrivateProfile(userName, isOwner)) return null;
+
     const options: Partial<BacklogDTO> = isOwner
       ? {
           userName: userName,
@@ -112,6 +151,8 @@ export const getBacklogsByUserName = async (
 ): Promise<BacklogDTO[]> => {
   try {
     await dbConnect();
+    if (await isPrivateProfile(userName, isOwner)) return [];
+
     const options: Partial<BacklogDTO> = isOwner
       ? {
           userName: userName,
@@ -209,10 +250,14 @@ export const isAuthorizedBacklogOwner = async (
     getCurrentUserInfo(),
     getBacklogById(backlogId),
   ]);
+  const isOwner = !!user && user.username === backlog?.userName;
   if (!backlog)
     return { isSuccess: false, data: null, message: "Backlog doesnt exist" };
+  if (await isPrivateProfile(backlog.userName, isOwner))
+    return { isSuccess: false };
   if (backlog.visibility === "public" && method === "read")
     return { isSuccess: true, data: backlog };
   if (backlog.userId !== user?.id) return { isSuccess: false, data: null };
+  console.log("check3");
   return { isSuccess: true, data: backlog };
 };

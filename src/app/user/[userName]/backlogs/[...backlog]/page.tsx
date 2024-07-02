@@ -18,7 +18,6 @@ export default async function Backlog({
   searchParams: { categories: string | undefined; search: string | undefined };
 }) {
   const user = await getCurrentUserInfo();
-    //Task BHUB40
   const isOwner = user?.username == userName;
   const data = await getUserBacklogBySlug(userName, backlog, isOwner);
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
@@ -27,10 +26,7 @@ export default async function Backlog({
   const search = searchParams.search || "";
 
   const categoriesMap = new Map(
-    data.categories.map((category) => [
-      category.name,
-      category.color,
-    ]),
+    data.categories.map((category) => [category.name, category.color]),
   );
 
   return (

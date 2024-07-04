@@ -1,6 +1,6 @@
 import { ConfigType, UserDTO } from "@/zodTypes";
-import mongoose from "mongoose";
-
+import mongoose, { Schema } from "mongoose";
+import Account from "./Account";
 const userConfigSchema = new mongoose.Schema<ConfigType>(
   {
     profileVisibility: { type: String, default: "public" },
@@ -27,6 +27,12 @@ const UserSchema = new mongoose.Schema<UserDTO>(
       required: true,
       unique: true,
     },
+    accounts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: Account.modelName,
+      },
+    ],
     password: String,
     folders: [String],
     config: {

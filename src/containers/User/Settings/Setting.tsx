@@ -2,21 +2,26 @@ import React from "react";
 
 const Setting = ({
   label,
+  description,
+  value,
   children,
-  action,
 }: {
   label: string;
+  description?: string;
+  value?: string;
   children: React.ReactNode;
-  action: () => void | Promise<void>;
 }) => {
   return (
-    <div
-      onClick={action}
-      className="group relative flex w-full  items-center justify-between"
-    >
+    <div className="group relative flex w-full  items-center justify-between">
       <div className=" flex w-full  items-center justify-between">
-        <div className=" text-secondary-text">{label}</div>
-        <div className="group-hover:bg-field-hover-1 ">{children}</div>
+        <div className=" text-secondary-text">
+          <div>{label}</div>
+          <div>{description}</div>
+        </div>
+        <div className="flex items-center">
+          {value && <div className="">{value}</div>}
+          <span>{children}</span>
+        </div>
       </div>
     </div>
   );

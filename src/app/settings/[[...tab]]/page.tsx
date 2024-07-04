@@ -9,6 +9,11 @@ const Page = async ({ params }: { params: { tab: [TabsType] } }) => {
   const res = await getCurrentUserData();
   if (!res.isSuccess)
     return <div>Something goes wrong: {JSON.stringify(res.message)}</div>;
+  if (res.data.accounts)
+    res.data.accounts = res.data.accounts.map((item) => {
+      item._id = item._id.toString();
+      return item;
+    });
   return (
     <main className=" container">
       <UserSettings data={res.data} tab={params.tab[0]} />

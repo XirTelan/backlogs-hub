@@ -134,14 +134,20 @@ export const ConfigSchema = z.object({
   showEmptyFolders: z.boolean(),
   canChangeUserName: z.boolean().default(false),
 });
-
+export const OauthSchema = z.object({
+  username: z.string(),
+  email: z.string().email(),
+  provider: z.string(),
+});
+export const AccountSchema = OauthSchema.omit({ username: true });
 export const UserSchema = z.object({
   _id: z.string(),
   username: z.string(),
   displayName: z.string(),
   description: z.string(),
-  provider: z.enum(["credentials", "google", "discord"]),
+  provider: z.enum(["credentials", "oauth"]),
   password: z.string(),
+  accounts: z.string().array(),
   folders: z.string().array(),
   email: z.string().email(),
   config: ConfigSchema,
@@ -161,6 +167,7 @@ export const TemplateDTOSchema = BacklogFormSchema.omit({
     author: z.string(),
   }),
 );
+
 // z.object({
 //   templateTitle: z.string(),
 //   fields: FieldSchema.array(),

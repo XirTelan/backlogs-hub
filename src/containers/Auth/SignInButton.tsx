@@ -14,7 +14,7 @@ const SignInButton = () => {
       <ButtonBase onClick={() => setShowForm(true)} text="Sign In" />
       {showForm ? (
         <Modal setClose={() => setShowForm(false)}>
-          <div style={{ background: "#161616" }}>
+          <div className="px-4 pb-4" style={{ background: "#161616" }}>
             <SignInForm />
           </div>
         </Modal>

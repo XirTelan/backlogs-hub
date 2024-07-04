@@ -16,35 +16,37 @@ const Profile = ({
   console.log(data);
   return (
     <div>
-      <Setting
-        action={() =>
-          setModal({
-            isOpen: true,
-            title: "Change display name",
-            option: "displayName",
-            optionType: "general",
-            value: data.displayName || "",
-            type: "text",
-          })
-        }
-        label={"Display Name"}
-      >
-        <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
+      <Setting label={"Display Name"}>
+        <ButtonBase
+          onClick={() =>
+            setModal({
+              isOpen: true,
+              title: "Change display name",
+              option: "displayName",
+              optionType: "general",
+              value: data.displayName || "",
+              type: "text",
+            })
+          }
+          variant="ghost"
+          icon={<FaChevronRight size={18} />}
+        />
       </Setting>
-      <Setting
-        action={() =>
-          setModal({
-            isOpen: true,
-            title: "About me",
-            option: "description",
-            optionType: "general",
-            value: data.description || "",
-            type: "textArea",
-          })
-        }
-        label={"About description"}
-      >
-        <ButtonBase variant="ghost" icon={<FaChevronRight size={18} />} />
+      <Setting label={"About description"}>
+        <ButtonBase
+          onClick={() =>
+            setModal({
+              isOpen: true,
+              title: "About me",
+              option: "description",
+              optionType: "general",
+              value: data.description || "",
+              type: "textArea",
+            })
+          }
+          variant="ghost"
+          icon={<FaChevronRight size={18} />}
+        />
       </Setting>
     </div>
   );

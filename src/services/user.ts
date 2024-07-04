@@ -30,7 +30,9 @@ export async function getUserData(
     const user = await User.findOne(
       { username: username },
       userDataTypes[select],
-    ).lean();
+    )
+      .populate({ path: "accounts", select: "provider email " })
+      .lean();
     if (!user) return { isSuccess: false };
     return { isSuccess: true, data: user };
   } catch (error) {
@@ -76,7 +78,7 @@ export async function createUser(
     data.folders = ["Default"];
     data.displayName = data.username;
     data.config =
-      data.provider === "credentials"
+      data.provider === "oauth"
         ? {
             ...DEFAULT_CONFIG,
             canChangeUserName: true,

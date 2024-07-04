@@ -1,7 +1,6 @@
 "use server";
 
-import { UserCreationDTO } from "@/types";
-import { UserDTO } from "@/zodTypes";
+import { OAuthProps, UserDTO } from "@/zodTypes";
 import { JWTPayload, decodeJwt } from "jose";
 
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -28,7 +27,7 @@ export const getGoogleToken = async (code: string) => {
 
 export const getRedirectOauthLink = async () => {};
 
-export const getUserData = async (code: string): Promise<UserCreationDTO> => {
+export const getUserData = async (code: string): Promise<OAuthProps> => {
   const token = await getGoogleToken(code);
   const userData: Partial<UserDTO> & JWTPayload = decodeJwt(token.id_token);
   return {

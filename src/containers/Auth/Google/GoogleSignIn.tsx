@@ -3,7 +3,9 @@ import styles from "./GoogleSignIn.module.css";
 import Link from "next/link";
 
 export const GoogleSignIn = () => {
-  const path = process.env.NEXT_PUBLIC_GOOGLEOAUTH || "";
+  const path = process.env.NEXT_PUBLIC_GOOGLEOAUTH
+    ? `${process.env.NEXT_PUBLIC_GOOGLEOAUTH}&type=signIn`
+    : "";
 
   return (
     <>

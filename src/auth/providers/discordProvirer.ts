@@ -1,9 +1,8 @@
 "use server";
 
-import { UserCreationDTO } from "@/types";
+import { OAuthProps } from "@/zodTypes";
 
 const TOKEN_URL = "https://discord.com/api/oauth2/token	";
-const AUTH_URL = "https://discord.com/oauth2/authorize";
 
 export const getDiscordToken = async (code: string) => {
   const params = {
@@ -33,19 +32,11 @@ export const getAuthInformation = async (token: string) => {
   });
   return (await res).json();
 };
-export const getRedirectOauthLink = async () => {
-  const params = {
-    client_id: process.env.DISCORD_ID!,
-    scope: "identify email",
-    redirect_uri: `${process.env.DOMAIN_URL!}/api/auth/callback/discord`,
-    response_type: "code",
-  };
-  const searchParams = new URLSearchParams(params);
-  return `${AUTH_URL}?${searchParams}`;
-};
-export const getUserData = async (code: string): Promise<UserCreationDTO> => {
+
+export const getUserData = async (code: string): Promise<OAuthProps> => {
   const token = await getDiscordToken(code);
   const userData = await getAuthInformation(token.access_token);
+  console.log("getUserData", userData);
   return {
     username: `user_D${userData.username}`,
     email: userData.email,

@@ -11,6 +11,7 @@ import InputField from "@/components/Common/UI/InputField";
 import { toastCustom } from "@/lib/toast";
 import Title from "@/components/Common/Title";
 import TextAreaInput from "@/components/Common/TextAreaInput";
+import { ButtonBaseProps } from "@/types";
 
 const TABS = {
   account: Account,
@@ -27,14 +28,25 @@ type UserSettingsProps = {
 
 export type ModalProps =
   | { isOpen: false }
-  | {
-      isOpen: true;
-      type: "text" | "textArea";
-      title: string;
-      option: string;
-      optionType: "general" | "config";
-      value: string;
-    };
+  | ({ isOpen: true; title: string } & (
+      | {
+          type: "text" | "textArea";
+          value: string;
+          option: {
+            name: string;
+            optionType?: "general" | "config";
+          };
+        }
+      | {
+          type: "confirm";
+          action: () => void;
+          actionType: ButtonBaseProps["variant"];
+        }
+      | {
+          type: "custom";
+          component: React.ComponentType;
+        }
+    ));
 type TabProps = {
   data: Partial<UserDTO>;
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
@@ -53,6 +65,9 @@ const defaultValue: ModalProps = {
 };
 
 const modalTypes = {
+  confirm: () => {
+    return <div> Are you sure ?</div>;
+  },
   text: (
     defaultValue: string,
     setValue: React.Dispatch<React.SetStateAction<string>>,
@@ -61,6 +76,7 @@ const modalTypes = {
       <InputField
         defaultValue={defaultValue}
         isSimple
+        variant="small"
         layer={2}
         onChange={(e) => setValue(e.target.value)}
       />
@@ -78,16 +94,16 @@ const modalTypes = {
     );
   },
 };
+
 const UserSettings = ({ data, tab }: UserSettingsProps) => {
   const [modalData, setModalData] = useState<ModalProps>(defaultValue);
   const [value, setValue] = useState("");
-
   const handleUpdate = async () => {
-    if (!modalData.isOpen) return;
+    if (!modalData.isOpen || modalData.type !== "text") return;
     const res = await updateUserInfo(
-      modalData.option,
+      modalData.option.name,
       value,
-      modalData.optionType,
+      modalData.option.optionType,
     );
     if (res.isSuccess) toastCustom.success("Changed");
     else toastCustom.error("Nope");
@@ -97,16 +113,30 @@ const UserSettings = ({ data, tab }: UserSettingsProps) => {
       {renderTab(TABS[tab], data, setModalData)}
       {modalData.isOpen && (
         <div>
-          <Modal
-            showActions
-            action={handleUpdate}
-            setClose={() => setModalData(defaultValue)}
-          >
-            <div className=" bg-layer-1 px-4 py-8 text-white">
-              <Title variant={3} title={modalData.title} />
-              {modalTypes[modalData.type](modalData.value, setValue)}
-            </div>
-          </Modal>
+          {modalData.type === "custom" ? (
+            <Modal setClose={() => setModalData(defaultValue)}>
+              {<modalData.component />}
+            </Modal>
+          ) : (
+            <Modal
+              showActions
+              action={
+                modalData.type === "confirm" ? modalData.action : handleUpdate
+              }
+              actionType={
+                (modalData.type === "confirm" && modalData.actionType) ||
+                undefined
+              }
+              setClose={() => setModalData(defaultValue)}
+            >
+              <div className=" max-w-sm bg-background p-4 text-white md:max-w-xl">
+                <Title variant={3} title={modalData.title} />
+                {modalData.type === "confirm"
+                  ? modalTypes[modalData.type]()
+                  : modalTypes[modalData.type](modalData.value, setValue)}
+              </div>
+            </Modal>
+          )}
         </div>
       )}
     </>

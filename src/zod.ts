@@ -134,24 +134,34 @@ export const ConfigSchema = z.object({
   showEmptyFolders: z.boolean(),
   canChangeUserName: z.boolean().default(false),
 });
+
 export const OauthSchema = z.object({
   username: z.string(),
   email: z.string().email(),
   provider: z.string(),
 });
-export const AccountSchema = OauthSchema.omit({ username: true });
-export const UserSchema = z.object({
+
+export const AccountSchema = z
+  .object({ _id: z.string() })
+  .merge(OauthSchema.omit({ username: true }));
+
+export const UserBase = z.object({
   _id: z.string(),
   username: z.string(),
-  displayName: z.string(),
-  description: z.string(),
-  provider: z.enum(["credentials", "oauth"]),
-  password: z.string(),
-  accounts: z.string().array(),
-  folders: z.string().array(),
-  email: z.string().email(),
-  config: ConfigSchema,
 });
+
+export const UserSchema = UserBase.merge(
+  z.object({
+    displayName: z.string(),
+    description: z.string(),
+    provider: z.enum(["credentials", "oauth"]),
+    password: z.string(),
+    accounts: z.union([z.string().array(), AccountSchema.array()]),
+    folders: z.string().array(),
+    email: z.string().email(),
+    config: ConfigSchema,
+  }),
+);
 
 export const rawPasswordSchema = z.string().min(6);
 export const isEmailSchema = z.string().email();

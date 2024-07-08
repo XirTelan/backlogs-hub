@@ -5,7 +5,6 @@ const defaultValue: {
   user: {
     id: string;
     username: string;
-    role: string;
   } | null;
 } = { user: null };
 

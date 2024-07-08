@@ -1,12 +1,12 @@
 import { handleCallback, handleSession, signInWithLogin } from "@/auth/core";
-import { setTokenCookies } from "@/auth/utils";
+import { clearCookiesToken, setTokenCookies } from "@/auth/utils";
 
 import { createUser } from "@/services/user";
 import { sendMsg } from "@/utils";
 import { RegistrationSchema } from "@/zod";
 import bcrypt from "bcrypt";
 
-import { revalidatePath } from "next/cache";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -37,18 +37,11 @@ export async function POST(
       return handleRegister(request);
     }
     case "signOut": {
-      return handleSignOut(request);
+      return clearCookiesToken(request);
     }
   }
   return NextResponse.json(null);
 }
-
-const handleSignOut = (request: NextRequest) => {
-  const response = NextResponse.redirect(new URL("/", request.url));
-  response.cookies.delete("access_token");
-  revalidatePath("/");
-  return response;
-};
 
 const handleRegister = async (request: NextRequest) => {
   const data = await request.json();

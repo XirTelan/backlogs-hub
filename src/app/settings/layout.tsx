@@ -8,7 +8,7 @@ export default async function Layout({
   children: React.ReactElement;
 }) {
   return (
-    <div className="container md:ms-4">
+    <main className="container self-center">
       <Title style={{ marginLeft: "1rem" }} title={"Settings"} />
 
       <ul role="tablist" className="flex">
@@ -34,6 +34,6 @@ export default async function Layout({
         />
       </ul>
       <div className=" max-w-3xl bg-layer-1 p-4">{children}</div>
-    </div>
+    </main>
   );
 }

@@ -1,8 +1,9 @@
 "use server";
 
 import { JWTPayload, JWTVerifyResult, SignJWT, jwtVerify } from "jose";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const EXPIRATION_TIME = "7d";
 
@@ -40,10 +41,9 @@ export const generateAccessToken = async (user: {
   return access_token;
 };
 
-type TokenData = {
+export type TokenData = {
   id: string;
   username: string;
-  role: string;
 };
 
 export const setTokenCookies = async (token: string, url: string) => {
@@ -52,5 +52,12 @@ export const setTokenCookies = async (token: string, url: string) => {
     httpOnly: true,
     maxAge: 604800,
   });
+  return response;
+};
+
+export const clearCookiesToken = (request: NextRequest) => {
+  const response = NextResponse.redirect(new URL("/", request.url));
+  response.cookies.delete("access_token");
+  revalidatePath("/");
   return response;
 };

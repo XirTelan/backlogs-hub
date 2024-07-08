@@ -7,11 +7,14 @@ import { ConfigType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import Backlog from "@/models/Backlog";
+import BacklogItem from "@/models/BacklogItem";
+import Account from "@/models/Account";
 
 const userDataTypes = {
-  folders: { folders: 1, config: 1, _id: 0 },
-  config: { config: 1, _id: 0 },
-  all: { _id: 0, password: 0 },
+  folders: { folders: 1, config: 1 },
+  config: { config: 1 },
+  all: { password: 0 },
 };
 const DEFAULT_CONFIG: ConfigType = {
   profileVisibility: "public",
@@ -34,6 +37,7 @@ export async function getUserData(
       .populate({ path: "accounts", select: "provider email " })
       .lean();
     if (!user) return { isSuccess: false };
+    user._id = user._id.toString();
     return { isSuccess: true, data: user };
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -46,7 +50,7 @@ export async function getCurrentUserData(): Promise<
   try {
     const user = await getCurrentUserInfo();
     if (!user) return { isSuccess: false };
-    return await getUserData(user?.username, "all");
+    return await getUserData(user.username, "all");
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -115,7 +119,17 @@ export const updateUserFolders = async (username: string, data: string[]) => {
 export async function deleteUser(id: string) {
   try {
     await dbConnect();
-    await User.deleteOne({ _id: id });
+    const backlogs = await Backlog.find({ userId: id });
+    const itemsToDelete: Promise<unknown>[] = [];
+    backlogs.forEach(async (backlog) => {
+      itemsToDelete.push(BacklogItem.deleteMany({ backlogId: backlog._id }));
+      itemsToDelete.push(backlog.deleteOne());
+    });
+    await Promise.all([
+      ...itemsToDelete,
+      Account.deleteMany({ userId: id }),
+      User.deleteOne({ _id: id }),
+    ]);
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 400 });
   }

@@ -12,7 +12,7 @@ const Modal = ({
   children,
 }: {
   confirmOptions?: ButtonBaseProps;
-  action?: () => void;
+  action?: () => unknown;
   actionType?:
     | "primary"
     | "secondary"
@@ -23,7 +23,7 @@ const Modal = ({
     | "dangerGhost";
   showActions?: boolean;
   setClose: () => void;
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
 }) => {
   return createPortal(
     <div
@@ -31,7 +31,7 @@ const Modal = ({
       className="absolute inset-0 z-50 flex items-center justify-center bg-black/60"
     >
       <div
-        className="flex flex-col justify-center"
+        className="absolute   top-1/4 flex flex-col justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <>{children}</>
@@ -48,7 +48,7 @@ const Modal = ({
               variant={actionType}
               text="Confirm"
               {...confirmOptions}
-              onClick={() => {
+              onClick={async () => {
                 if (!action) return;
                 action();
                 setClose();

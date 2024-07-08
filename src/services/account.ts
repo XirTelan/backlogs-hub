@@ -11,10 +11,10 @@ export const deleteAccount = async (
     const res = await Account.findByIdAndDelete(id);
     const user = await User.findById(res?.userId);
     if (!user) return { isSuccess: false };
-    console.log(user.accounts);
     user.accounts = [
       ...user.accounts.filter((account) => account.toString() !== id),
-    ];
+    ] as string[];
+
     await user.save();
     return { isSuccess: true, data: null };
   } catch (error) {

@@ -13,6 +13,7 @@ import {
   FieldSchema,
   OauthSchema,
   TemplateDTOSchema,
+  UserBase,
   UserSchema,
 } from "./zod";
 import { Types } from "mongoose";
@@ -36,6 +37,6 @@ export type OAuthProps = z.infer<typeof OauthSchema>;
 export type TemplateDTO = z.infer<typeof TemplateDTOSchema>;
 
 export type DndData = z.infer<typeof DndDataSchema>;
-
+export type UserBase = z.infer<typeof UserBase>;
 export type UserDTO = z.infer<typeof UserSchema>;
 export type ConfigType = z.infer<typeof ConfigSchema>;

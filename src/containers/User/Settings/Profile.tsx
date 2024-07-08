@@ -22,8 +22,10 @@ const Profile = ({
             setModal({
               isOpen: true,
               title: "Change display name",
-              option: "displayName",
-              optionType: "general",
+              option: {
+                name: "displayName",
+                optionType: "general",
+              },
               value: data.displayName || "",
               type: "text",
             })
@@ -38,8 +40,10 @@ const Profile = ({
             setModal({
               isOpen: true,
               title: "About me",
-              option: "description",
-              optionType: "general",
+              option: {
+                name: "description",
+                optionType: "general",
+              },
               value: data.description || "",
               type: "textArea",
             })

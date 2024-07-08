@@ -30,11 +30,10 @@ export const handleSession = async (request: NextRequest) => {
   });
 };
 
-const createAccountAndUser = async (oauthData: OAuthProps) => {
+const createAccountAndUser = async (oauthData: OAuthProps, url: string) => {
   const res = await createUser({ ...oauthData, provider: "oauth" });
   if (!res.isSuccess) return undefined;
-  const newAccount = new Account({ ...oauthData, userId: res.data._id });
-  await newAccount.save();
+  await createAndLinkAccount(oauthData, res.data._id, url);
   return res.data;
 };
 
@@ -51,9 +50,9 @@ const createAndLinkAccount = async (
   const newAccount = new Account({ ...oauthData, userId: user._id });
   const savedAccount = await newAccount.save();
   user.provider = "oauth";
-  user.accounts = [...user.accounts, savedAccount._id.toString()];
+  user.accounts = [...user.accounts, savedAccount._id.toString()] as string[];
   await user.save();
-  return NextResponse.redirect(new URL("/", url));
+  return NextResponse.redirect(new URL("/settings/account", url));
 };
 
 export const handleCallback = async (
@@ -80,7 +79,6 @@ export const handleCallback = async (
       break;
   }
 
-  console.log("check 2", oauthData);
   if (!oauthData || !oauthData.email || !oauthData.username)
     return sendMsg.error("Try again later");
   await dbConnect();
@@ -122,7 +120,7 @@ export const handleCallback = async (
     } else {
       //else it's new acc and new user
       console.log("check 4.1.2");
-      user = await createAccountAndUser(oauthData);
+      user = await createAccountAndUser(oauthData, request.url);
     }
   } else {
     console.log("check 4.2", account.userId);

@@ -12,6 +12,7 @@ const BacklogCreateForm = () => {
   const router = useRouter();
   const userFolders = useSWR(`/api/users/`, fetcher);
   if (userFolders.isLoading) return <div>Loading</div>;
+  if (!userFolders.data[0]) return <div>Error</div>;
 
   const defaultCategories: BacklogCategory[] = [
     { name: "Completed", color: "#0043CE", protected: false },

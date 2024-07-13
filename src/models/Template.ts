@@ -1,7 +1,7 @@
 import { TemplateDTO } from "@/zodTypes";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const TemplateSchema = new mongoose.Schema<TemplateDTO>(
+const TemplateSchema = new mongoose.Schema(
   {
     templateTitle: {
       type: String,
@@ -28,6 +28,7 @@ const TemplateSchema = new mongoose.Schema<TemplateDTO>(
       },
     ],
     author: String,
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     visibility: String,
   },
   {

@@ -7,7 +7,7 @@ const FieldsBlock = (props: FieldsBlockProps) => {
     <section className=" flex flex-col">
       {props.title && (
         <div className="border-b border-subtle-1">
-          <Title variant={3} title={props.title}>
+          <Title variant={3} style={{ margin: ".5rem 0" }} title={props.title}>
             {props.status == "active" ? (
               <ButtonBase
                 style={{ width: "8rem" }}
@@ -21,9 +21,7 @@ const FieldsBlock = (props: FieldsBlockProps) => {
         </div>
       )}
       <div className="flex-wrap  rounded  py-4">
-        <ul className=" xs:grid-cols-4 grid grid-cols-1 gap-4 overflow-auto md:grid-cols-8 lg:grid-cols-12 ">
-          {props.children}
-        </ul>
+        <ul className="grid  gap-4 overflow-auto">{props.children}</ul>
       </div>
     </section>
   );

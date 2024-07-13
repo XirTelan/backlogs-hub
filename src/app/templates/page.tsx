@@ -12,9 +12,9 @@ const Templates = async ({
   const user = await getCurrentUserInfo();
   const query = filter ? `?filter=${filter}` : "";
   return (
-    <main className="container">
-      <Title title={"Templates"} />
-      <div className="mb-4">
+    <main className="container self-center">
+      <Title style={{ marginLeft: "1rem" }} title={"Templates"} />
+      <div className="mb-4 ms-4">
         <TemplateSwitcher />
       </div>
       <TemplateList userName={user?.username || ""} search={query} />

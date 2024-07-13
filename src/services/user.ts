@@ -1,5 +1,7 @@
 "use server";
-import { getCurrentUserInfo } from "@/auth/utils";
+import {
+  getCurrentUserInfo,
+} from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { ResponseData } from "@/types";
@@ -10,6 +12,7 @@ import bcrypt from "bcrypt";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import Account from "@/models/Account";
+import Template from "@/models/Template";
 
 const userDataTypes = {
   folders: { folders: 1, config: 1 },
@@ -34,6 +37,7 @@ export async function getUserData(
       { username: username },
       userDataTypes[select],
     )
+      .collation({ locale: "en", strength: 2 })
       .populate({ path: "accounts", select: "provider email " })
       .lean();
     if (!user) return { isSuccess: false };
@@ -58,7 +62,9 @@ export async function getCurrentUserData(): Promise<
 export async function isUserNameExist(username: string) {
   try {
     await dbConnect();
-    const user = await User.exists({ username: username }).lean();
+    const user = await User.exists({ username: username })
+      .collation({ locale: "en", strength: 2 })
+      .lean();
     return !!user?._id;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -127,6 +133,7 @@ export async function deleteUser(id: string) {
     });
     await Promise.all([
       ...itemsToDelete,
+      Template.deleteMany({ userId: id }),
       Account.deleteMany({ userId: id }),
       User.deleteOne({ _id: id }),
     ]);
@@ -154,9 +161,9 @@ export async function updateUserInfo(
   value: unknown,
   type: "general" | "config" = "config",
 ) {
-  const user = await getCurrentUserInfo();
-  if (!user) return { isSuccess: false, message: "Something goes wrong" };
   try {
+    const user = await getCurrentUserInfo();
+    if (!user) return { isSuccess: false, message: "Something goes wrong" };
     await dbConnect();
     const userData = await User.findById(user.id);
     if (!userData) return { isSuccess: false, message: "User doesnt exist" };
@@ -177,11 +184,42 @@ export async function updateUserInfo(
         };
         break;
     }
-    console.log(update);
     await userData.updateOne(update);
     revalidatePath("/");
     return { isSuccess: true };
   } catch (error) {
     return { error: error, isSuccess: false };
+  }
+}
+
+export async function changeUserName(username: string) {
+  if (typeof username !== "string") return { isSuccess: false };
+  const regEx = new RegExp(/^[a-zA-Z0-9_=]+$/);
+  const valid = regEx.test(username);
+  if (!valid) return { isSuccess: false };
+  try {
+    const user = await getCurrentUserInfo();
+    if (!user) return { isSuccess: false, message: "Something goes wrong" };
+    await dbConnect();
+    const userData = await User.findById(user.id).lean();
+    if (!userData) return { isSuccess: false, message: "User doesnt exist" };
+
+    const updatedOne = await User.findByIdAndUpdate(
+      userData._id,
+      {
+        username: username,
+        config: { ...userData.config, canChangeUserName: false },
+      },
+      { returnDocument: "after" },
+    ).lean();
+    await Backlog.updateMany(
+      { userId: userData._id },
+      { userName: updatedOne?.username },
+    );
+
+    return { isSuccess: true };
+  } catch (error) {
+    console.error(error);
+    return { error: "Error ", isSuccess: false };
   }
 }

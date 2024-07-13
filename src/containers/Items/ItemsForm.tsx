@@ -52,13 +52,11 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   });
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
-    console.log("res", data);
     onSubmit({ ...defaultValues, ...data });
   };
 
   const getFieldInput = useCallback(
     (field: BacklogItemUserField, index: number) => {
-      console.log("field", field);
       const backlogField = mapFields?.get(field.name);
       if (!backlogField) return <div>Error</div>;
       switch (backlogField.type) {

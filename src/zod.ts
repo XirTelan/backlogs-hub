@@ -62,7 +62,9 @@ export const BacklogCategorySchema = z
 
 export const BacklogFormSchema = z.object({
   order: z.number().default(99),
-  categories: BacklogCategorySchema.array().min(1).superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name)),
+  categories: BacklogCategorySchema.array()
+    .min(1)
+    .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name)),
   features: z.string().array().optional(),
   folder: z.string().default("Default"),
   fields: FieldSchema.array()
@@ -160,6 +162,7 @@ export const TemplateDTOSchema = BacklogFormSchema.omit({
     userId: z.string(),
   }),
 );
+export const TemplateCreateSchema = TemplateDTOSchema.omit({ _id: true });
 
 const uniqueArray = <T>(
   items: T[],

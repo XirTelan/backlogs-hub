@@ -9,9 +9,10 @@ export const routesList = {
   register: "/register",
 };
 export const apiRoutesList = {
+  auth: "/api/auth",
   signIn: "/api/auth/signIn",
   register: "/api/auth/register",
-  templates: '/api/templates'
+  templates: "/api/templates",
 };
 export const routesCategories = {
   protectedRoutes: [

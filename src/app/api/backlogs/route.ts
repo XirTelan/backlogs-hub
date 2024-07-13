@@ -34,10 +34,8 @@ export async function GET(request: NextRequest) {
   const isOwner = user ? userNameParam === user.username : false;
   const userName = userNameParam ? userNameParam : user?.username;
   if (!userName) return sendMsg.error(`Params not provided`);
-  console.log("check 1!");
   if (await isPrivateProfile(userName, isOwner))
     return sendMsg.error(`Params not provided`, 403);
-  console.log("check 12!");
   const backlogSlug = request.nextUrl.searchParams
     .get("backlog")
     ?.trim()

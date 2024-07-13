@@ -34,7 +34,7 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
       if (res.ok) {
         toastCustom.success("Template saved");
         onClose();
-      }
+      } else toastCustom.error("Cant create template.");
     } catch (error) {
       console.error(error);
     }

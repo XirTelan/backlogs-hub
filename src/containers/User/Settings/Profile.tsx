@@ -5,6 +5,7 @@ import { UserDTO } from "@/zodTypes";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { FaChevronRight } from "react-icons/fa6";
 import { ModalProps } from "../UserSettings";
+import ChangeUserName from "./ChangeUserName";
 
 const Profile = ({
   data,
@@ -13,9 +14,9 @@ const Profile = ({
   data: Partial<UserDTO>;
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
 }) => {
-  console.log(data);
   return (
     <div>
+      {data.config?.canChangeUserName && <ChangeUserName id={data._id} />}
       <Setting label={"Display Name"}>
         <ButtonBase
           onClick={() =>

@@ -17,7 +17,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
   const fields: Field[] = useWatch({ name: "fields", control });
   return (
     <section>
-      <Title variant={3} title={"Fields"}>
+      <Title variant={3} style={{ margin: ".5rem 0" }} title={"Fields"}>
         <ButtonBase
           variant="tertiary"
           style={{ width: "8rem" }}

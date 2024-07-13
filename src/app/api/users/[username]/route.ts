@@ -1,4 +1,8 @@
-import { clearCookiesToken, getCurrentUserInfo, TokenData } from "@/auth/utils";
+import {
+  clearCookiesToken,
+  getCurrentUserInfo,
+  TokenData,
+} from "@/auth/utils";
 import {
   deleteUser,
   isUserNameExist,
@@ -49,8 +53,8 @@ export async function DELETE(
 
     if (!authCheck.userToken.id) return sendMsg.error("");
     const user = await User.findById(authCheck.userToken?.id);
+    
     if (!user) return sendMsg.error("Cant perform action", 400);
-
     await deleteUser(authCheck.userToken.id);
     return clearCookiesToken(request);
   } catch (error) {

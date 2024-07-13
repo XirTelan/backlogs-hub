@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema<UserDTO>(
       required: true,
       unique: true,
       maxlength: 60,
+      index: { collation: { locale: "en", strength: 2 } },
     },
     displayName: String,
     description: String,

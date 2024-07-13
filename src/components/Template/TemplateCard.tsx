@@ -11,6 +11,7 @@ import Tag from "../Common/UI/Tag";
 import Accordion from "../Common/UI/Accordion";
 import { TemplateDTO } from "@/zodTypes";
 import { MdDelete } from "react-icons/md";
+import { GoMultiSelect } from "react-icons/go";
 
 const icons = {
   timer: <IoMdTimer />,
@@ -18,6 +19,7 @@ const icons = {
   number: <AiOutlineFieldNumber />,
   date: <FaCalendarCheck />,
   lock: <FaLock size={16} />,
+  select: <GoMultiSelect />,
 };
 
 const TemplateCard = ({

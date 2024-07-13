@@ -36,7 +36,6 @@ export const getAuthInformation = async (token: string) => {
 export const getUserData = async (code: string): Promise<OAuthProps> => {
   const token = await getDiscordToken(code);
   const userData = await getAuthInformation(token.access_token);
-  console.log("getUserData", userData);
   return {
     username: `user_D${userData.username}`,
     email: userData.email,

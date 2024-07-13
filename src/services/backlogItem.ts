@@ -84,7 +84,6 @@ export const addBacklogItem = async (data: BacklogItemCreationDTO) => {
   try {
     await dbConnect();
     const backlogItem = await BacklogItem.create(data);
-    console.log("addBacklogItem", backlogItem);
     await Backlog.findByIdAndUpdate(backlogItem.backlogId, {
       $inc: { totalCount: 1 },
     });

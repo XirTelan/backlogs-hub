@@ -1,11 +1,16 @@
 import { handleCallback, handleSession, signInWithLogin } from "@/auth/core";
-import { clearCookiesToken, setTokenCookies } from "@/auth/utils";
+import {
+  clearCookiesToken,
+  generateAccessToken,
+  getCurrentUserInfo,
+  setTokenCookies,
+} from "@/auth/utils";
+import User from "@/models/User";
 
 import { createUser } from "@/services/user";
 import { sendMsg } from "@/utils";
 import { RegistrationSchema } from "@/zod";
 import bcrypt from "bcrypt";
-
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -38,6 +43,13 @@ export async function POST(
     }
     case "signOut": {
       return clearCookiesToken(request);
+    }
+    case "refresh": {
+      const tokenData = await getCurrentUserInfo();
+      const user = await User.findById(tokenData?.id).select("username").lean();
+      if (!user) return NextResponse.json(null);
+      const access_token = await generateAccessToken(user);
+      return await setTokenCookies(access_token, request.url);
     }
   }
   return NextResponse.json(null);

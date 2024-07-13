@@ -60,12 +60,14 @@ const UserRegisterForm = () => {
       reset();
     }
   };
+  
   const isUserExist = useCallback(async (value: string) => {
     const data = await fetch(`/api/users/${value}`, {
       method: "GET",
     }).then((res) => res.json());
     return !data;
   }, []);
+
   const userName = watch("username", "");
   const { isAvailable, isLoading } = useLoaderValue(userName, isUserExist);
 

@@ -33,17 +33,21 @@ export const getTemplates = async (currentUserName: string, except = false) => {
   }
 };
 
-export const getTemplatesByUsername = async (username: string) => {
+export const getTemplatesByUser = async (
+  user: string,
+  type: "username" | "userid" = "username",
+) => {
   try {
     await dbConnect();
-    const templates = await Template.find({ author: username }).lean();
+    const options = type === "userid" ? { userId: user } : { author: user };
+    const templates = await Template.find(options).lean();
     return templates;
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
 };
 
-export const createTemplate = async (data: TemplateDTO) => {
+export const createTemplate = async (data: Omit<TemplateDTO, "_id">) => {
   try {
     await dbConnect();
     const template = new Template(data);

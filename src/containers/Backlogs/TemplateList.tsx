@@ -9,6 +9,8 @@ import { TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import { apiRoutesList } from "@/data";
 
+const isEmpty = <div>Its empty</div>;
+
 const TemplateList = ({
   userName,
   search,
@@ -22,6 +24,7 @@ const TemplateList = ({
   );
   const { data, isLoading } = useSWR(`/api/templates${search}`, fetcher);
   if (isLoading) return <div>Loading</div>;
+  if (data?.length === 0) return isEmpty;
 
   const onDelete = async (id: string) => {
     try {

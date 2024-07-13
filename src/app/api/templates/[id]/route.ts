@@ -10,8 +10,11 @@ export async function DELETE(
   try {
     const user = await getCurrentUserInfo();
     const result = await deleteTemplate(id, user?.username);
-    if (result.status === "ok") return sendMsg.success("Template deleted");
-    else return sendMsg.error(result.message, 400, result.errors);
+    
+    if (!result.isSuccess)
+      return sendMsg.error(result.message, 400, result.errors);
+
+    return sendMsg.success("Template deleted");
   } catch (error) {
     return sendMsg.error(error);
   }

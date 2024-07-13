@@ -1,4 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
+import NotFound from "@/components/Common/NotFound";
 import UserProfile from "@/containers/User/UserProfile";
 import { getUserData } from "@/services/user";
 import React from "react";
@@ -12,7 +13,7 @@ const Page = async ({
     getCurrentUserInfo(),
     getUserData(userName, "all"),
   ]);
-  if (!user.isSuccess) return <div>Error</div>;
+  if (!user.isSuccess) return <NotFound />;
   if (
     curerntUser?.username !== userName &&
     user.data.config?.profileVisibility === "private"

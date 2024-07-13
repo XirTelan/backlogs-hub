@@ -68,7 +68,6 @@ export const handleCallback = async (
   const code = searchParams.get("code");
 
   if (!code) return sendMsg.error("code not specified");
-  console.log("check 1", code);
   let oauthData: OAuthProps | undefined = undefined;
   switch (provider) {
     case "google":
@@ -89,11 +88,9 @@ export const handleCallback = async (
     provider: provider,
   }).lean();
   const currentUser = await getCurrentUserInfo();
-  console.log("check 3", account);
   //if user already signIn ->it's link req
   if (currentUser) {
     //if acc exist,
-    console.log("check 3.1");
     if (account) {
       return NextResponse.json(
         { message: "Already linked to another user" },
@@ -103,9 +100,7 @@ export const handleCallback = async (
     return await createAndLinkAccount(oauthData, currentUser.id, request.url);
   }
   let user;
-  console.log("check 4");
   if (!account) {
-    console.log("check 4.1");
     //we need create acc.
     const userWithSameEmail = await User.findOne({
       email: oauthData.email,
@@ -113,21 +108,17 @@ export const handleCallback = async (
       .populate({ path: "accounts", select: "provider email " })
       .lean();
     if (userWithSameEmail) {
-      console.log("check 4.1.1", userWithSameEmail);
       await createAndLinkAccount(oauthData, userWithSameEmail._id, request.url);
       user = userWithSameEmail;
       //we have user with same email as new Oauth Account
     } else {
       //else it's new acc and new user
-      console.log("check 4.1.2");
       user = await createAccountAndUser(oauthData, request.url);
     }
   } else {
-    console.log("check 4.2", account.userId);
     user = await User.findById(account.userId).lean();
     //its signIn for exist user
   }
-  console.log("res user", user);
   if (!user) return sendMsg.error("Unkonw");
 
   const access_token = await generateAccessToken({

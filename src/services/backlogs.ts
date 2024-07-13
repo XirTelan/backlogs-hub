@@ -108,7 +108,6 @@ export const getBacklogsByFolder = async (userName: string) => {
 
 export const isPrivateProfile = async (userName: string, isOwner: boolean) => {
   const config = await getUserData(userName, "config");
-  console.log("isPrivateProfiel", isOwner, userName);
   return (
     !isOwner &&
     (!config.isSuccess || config.data.config?.profileVisibility === "private")
@@ -258,6 +257,5 @@ export const isAuthorizedBacklogOwner = async (
   if (backlog.visibility === "public" && method === "read")
     return { isSuccess: true, data: backlog };
   if (backlog.userId !== user?.id) return { isSuccess: false, data: null };
-  console.log("check3");
   return { isSuccess: true, data: backlog };
 };

@@ -46,7 +46,7 @@ export default async function Backlogs({
           ) : (
             <Title title={`${params.userName} backlogs`} />
           )}
-          <UserBacklogs userName={params.userName} />
+          <UserBacklogs user={{ name: params.userName, isOwner }} />
         </div>
       </main>
     </>

@@ -62,29 +62,11 @@ export const BacklogCategorySchema = z
 
 export const BacklogFormSchema = z.object({
   order: z.number().default(99),
-  categories: BacklogCategorySchema.array().min(1),
+  categories: BacklogCategorySchema.array().min(1).superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name)),
   features: z.string().array().optional(),
   folder: z.string().default("Default"),
   fields: FieldSchema.array()
-    .superRefine((val, ctx) => {
-      const set = new Map();
-      const n = val.length;
-      for (let i = 0; i < n; i++) {
-        if (set.has(val[i].name)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: `No duplicates allowed.`,
-            path: [i, "name"],
-          });
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: `No duplicates allowed.`,
-            path: [set.get(val[i].name), "name"],
-          });
-        }
-        set.set(val[i].name, i);
-      }
-    })
+    .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name))
     .optional(),
   slug: z.string(),
   backlogTitle: z.string().trim().min(1, "This field cannot be empty"),
@@ -175,15 +157,29 @@ export const TemplateDTOSchema = BacklogFormSchema.omit({
     _id: z.string(),
     templateTitle: z.string(),
     author: z.string(),
+    userId: z.string(),
   }),
 );
 
-// z.object({
-//   templateTitle: z.string(),
-//   fields: FieldSchema.array(),
-//   description: z.string(),
-//   features: z.string(),
-//   categories: BacklogCategory[],
-//   author: z.string(),
-//   visibility: z.string(),
-// })
+const uniqueArray = <T>(
+  items: T[],
+  ctx: z.RefinementCtx,
+  getter: (val: T) => string,
+) => {
+  const set = new Map();
+  items.forEach((item, indx) => {
+    if (set.has(getter(item))) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `No duplicates allowed.`,
+        path: [indx, "name"],
+      });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `No duplicates allowed.`,
+        path: [set.get(getter(item)), "name"],
+      });
+    }
+    set.set(getter(item), indx);
+  });
+};

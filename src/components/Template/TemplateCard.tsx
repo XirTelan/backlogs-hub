@@ -60,7 +60,10 @@ const TemplateCard = ({
             </div>
             <div className="flex justify-between">
               {template.fields && template.fields.length > 2 ? (
-                <Accordion title={`Fields (${template.fields.length})`}>
+                <Accordion
+                  id="fields"
+                  title={`Fields (${template.fields.length})`}
+                >
                   {fields}
                 </Accordion>
               ) : (
@@ -91,7 +94,7 @@ const TemplateCard = ({
         </div>
       </div>
       <div className="relative px-4 pt-2  ">
-        <Accordion title={"Description"}>
+        <Accordion id="description" title={"Description"}>
           {template.description
             ? template.description
             : "Description not provided"}

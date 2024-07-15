@@ -43,7 +43,7 @@ const UserBacklogs = async ({
       {isListEmpty ? (
         listIsEmpty(user.isOwner)
       ) : (
-        <div className="  flex w-full items-center justify-between rounded ">
+        <div className="  flex w-full items-center justify-between  ">
           <div className="flex grow flex-col flex-wrap">
             {data.map(([folderName, backlogs]) => {
               if (

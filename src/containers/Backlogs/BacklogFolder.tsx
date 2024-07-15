@@ -16,6 +16,7 @@ const BacklogFolder = ({
   return (
     <section>
       <Accordion
+        id={folderName}
         defaultState={true}
         title={
           <div className="ms-4 flex items-center">

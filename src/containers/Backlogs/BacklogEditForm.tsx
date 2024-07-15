@@ -6,7 +6,7 @@ import BacklogForm from "./BacklogForm";
 import { BacklogDTO } from "@/zodTypes";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import Title from "@/components/Common/Title";
+import TopTitle from "@/components/Common/UI/TopTitle";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const backlogData = useSWR(`/api/backlogs/${id}`, fetcher);
@@ -31,12 +31,14 @@ const BacklogEditForm = ({ id }: { id: string }) => {
   if (backlogData.isLoading || userFolders.isLoading) return <div>Loading</div>;
   return (
     <>
-      <Title title={`Editing backlog "${backlogData.data.backlogTitle}"`} />
-      <BacklogForm
-        defaultValues={backlogData.data}
-        userFolders={userFolders.data}
-        onSubmit={onSubmit}
-      />
+      <TopTitle title={`Editing backlog "${backlogData.data.backlogTitle}"`} />
+      <main className="container self-center px-4">
+        <BacklogForm
+          defaultValues={backlogData.data}
+          userFolders={userFolders.data}
+          onSubmit={onSubmit}
+        />
+      </main>
     </>
   );
 };

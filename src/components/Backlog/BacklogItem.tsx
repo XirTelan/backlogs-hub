@@ -1,18 +1,10 @@
 "use client";
 import React from "react";
-import Title from "../Common/Title";
-import { BacklogItemDTO } from "@/types";
+import { BacklogItemDTO } from "@/zodTypes";
 
-const BacklogItem = ({
-  data,
-  hideTitle = false,
-}: {
-  data: BacklogItemDTO;
-  hideTitle?: boolean;
-}) => {
+const BacklogItem = ({ data }: { data: BacklogItemDTO }) => {
   return (
     <div>
-      {!hideTitle && <Title title={`Details "${data.title}"`} />}
       <div className="flex">
         <div>Category:</div>
         <div>{data.category}</div>

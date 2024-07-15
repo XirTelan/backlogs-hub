@@ -13,9 +13,6 @@ const ManageWrapper = ({ items }: { items: DndData }) => {
 
   return (
     <>
-      <section>
-        <Title title={"Manage"} variant={1} />
-      </section>
       <Title
         title={"Backlogs order"}
         variant={2}

@@ -20,8 +20,8 @@ const SidePanel = ({
     position === "left" ? "left-0 border-r" : "right-0 border-l";
   const styleButtonPos = position === "left" ? "border-e" : "border-s";
   const styleButton = isOpen
-    ? ` ${styleButtonPos} border-subtle-1 border-b border-b-background`
-    : "border-b border-subtle-1 border-s border-s-transparent";
+    ? ` ${styleButtonPos} border-border-1 border-b border-b-background`
+    : "border-b border-border-1 border-s border-s-transparent";
   return (
     <div
       ref={ref}
@@ -38,7 +38,7 @@ const SidePanel = ({
       </button>
       {isOpen && (
         <div
-          className={`${styleDropDownPos} absolute top-full z-50 w-64  border-b  border-subtle-1 bg-background   `}
+          className={`${styleDropDownPos} absolute top-full z-50 w-64  border-b  border-border-1 bg-background   `}
         >
           {children}
         </div>

@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
 import { fetcher, generateSlug } from "@/utils";
-import Title from "@/components/Common/Title";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import useSWR from "swr";
@@ -53,7 +52,6 @@ const BacklogCreateForm = () => {
 
   return (
     <>
-      <Title title="Creating backlog "></Title>
       <BacklogForm
         defaultValues={defaultValues}
         onSubmit={onSubmit}

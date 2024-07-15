@@ -123,7 +123,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         <>
           {userFields.map((field, index) => (
             <li
-              className={`${inputTypes[mapFields.get(field.name)?.type || "text"]}  w-auto`}
+              className={`${inputTypes[mapFields.get(field.name)?.type || "text"]}  w-auto bg-layer-1 p-2 `}
               key={index}
             >
               {getFieldInput(field, index)}

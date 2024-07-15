@@ -35,7 +35,7 @@ const Timer = ({
   };
 
   return (
-    <div className="flex flex-col gap-4  bg-background ">
+    <div className="flex flex-col gap-4   ">
       <p>Timer</p>
       <div className=" flex items-center">
         <div

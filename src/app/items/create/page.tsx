@@ -1,5 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
-import Title from "@/components/Common/Title";
+import TopTitle from "@/components/Common/UI/TopTitle";
 import ItemsCreateForm from "@/containers/Items/ItemsCreateForm";
 import { getUserBacklogBySlug } from "@/services/backlogs";
 import { BacklogItemCreationDTO } from "@/zodTypes";
@@ -29,16 +29,18 @@ const CreateItem = async ({
   };
 
   return (
-    <main className="container px-4">
-      <Title title={`Add new item to "${backlogInfo.backlogTitle}"`} />
-      <ItemsCreateForm
-        backlog={{
-          fields: backlogInfo.fields || [],
-          categories: backlogInfo.categories,
-        }}
-        defaultValues={defaultValues}
-      />
-    </main>
+    <>
+      <TopTitle title={`Add new item to "${backlogInfo.backlogTitle}"`} />
+      <main className="container self-center px-4">
+        <ItemsCreateForm
+          backlog={{
+            fields: backlogInfo.fields || [],
+            categories: backlogInfo.categories,
+          }}
+          defaultValues={defaultValues}
+        />
+      </main>
+    </>
   );
 };
 

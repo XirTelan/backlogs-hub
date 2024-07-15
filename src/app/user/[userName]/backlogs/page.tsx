@@ -22,10 +22,10 @@ export default async function Backlogs({
 
   return (
     <>
-      <main className="container flex w-full  flex-col">
-        <div className="w-full px-4">
-          {isOwner ? (
-            <Title style={{ marginLeft: "1rem" }} title={"My backlogs"}>
+      {isOwner ? (
+        <div className="mb-4 flex w-full  justify-center bg-black">
+          <div className="container">
+            <Title title={"My backlogs"}>
               <div className="flex">
                 <LinkButton
                   href={`/manage-backlogs`}
@@ -43,9 +43,14 @@ export default async function Backlogs({
                 </LinkButton>
               </div>
             </Title>
-          ) : (
-            <Title title={`${params.userName} backlogs`} />
-          )}
+          </div>
+        </div>
+      ) : (
+        <Title title={`${params.userName} backlogs`} />
+      )}
+
+      <main className="container flex  w-full flex-col  self-center">
+        <div className="w-full px-4">
           <UserBacklogs user={{ name: params.userName, isOwner }} />
         </div>
       </main>

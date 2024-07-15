@@ -1,4 +1,5 @@
-import Title from "@/components/Common/Title";
+
+import TopTitle from "@/components/Common/UI/TopTitle";
 import ItemsEditForm from "@/containers/Items/ItemsEditForm";
 import { getBacklogItemById } from "@/services/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
@@ -20,16 +21,18 @@ const EditItem = async ({
   );
   if (!isSuccess) redirect("/");
   return (
-    <main className=" container px-4">
-      <Title title="Edit" />
-      <ItemsEditForm
-        backlog={{
-          fields: backlog.fields || [],
-          categories: backlog.categories,
-        }}
-        defaultValues={res.data}
-      />
-    </main>
+    <>
+      <TopTitle title="Edit" />
+      <main className=" container self-center px-4">
+        <ItemsEditForm
+          backlog={{
+            fields: backlog.fields || [],
+            categories: backlog.categories,
+          }}
+          defaultValues={res.data}
+        />
+      </main>
+    </>
   );
 };
 

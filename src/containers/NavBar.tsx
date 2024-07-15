@@ -42,7 +42,7 @@ const NavBar = ({ userName }: { userName: string }) => {
       <span className=" hidden md:flex md:items-center">
         <HomeLink />
         <div className="flex py-3 pe-4">
-          <div className="h-6  w-[1px] grow bg-subtle-1 "></div>
+          <div className="bg-border-1  h-6 w-[1px] grow "></div>
         </div>
         {navList}
       </span>

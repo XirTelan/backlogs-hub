@@ -5,7 +5,7 @@ import React from "react";
 
 const style = {
   line: {
-    default: "md:border-b border-subtle-1 h-[49px]",
+    default: "md:border-b border-border-1 h-[49px]",
     active:
       "border-l-[3px] md:border-b-[3px] h-[49px] md:border-0 border-border-interactive",
   },

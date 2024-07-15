@@ -36,6 +36,7 @@ const config: Config = {
         border: {
           DEFAULT: "#333333",
           interactive: "#4589FF",
+          1: "#393939",
         },
         field: {
           1: "#262626",

@@ -30,7 +30,7 @@ export default async function Backlog({
   );
 
   return (
-    <main className="container h-[calc(100svh-49px)] px-4">
+    <main className="container h-[calc(100svh-49px)] ">
       <Title title={data.backlogTitle}>
         <>
           {isOwner && (
@@ -44,13 +44,13 @@ export default async function Backlog({
           )}
         </>
       </Title>
-      <section className="me-auto flex  justify-center rounded py-4 lg:m-0 lg:justify-start">
+      <section className="me-auto flex justify-center  rounded px-4 py-4 lg:m-0 lg:justify-start">
         <FilterBlock
           backlogSlug={data.slug}
           backlogCategories={data.categories}
         />
       </section>
-      <section className="me-auto flex flex-col py-4 lg:m-0">
+      <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
         <Suspense fallback={<SkeletonDataTable />}>
           <Backloglist
             isOwner={isOwner}

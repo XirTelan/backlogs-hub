@@ -12,14 +12,20 @@ const Templates = async ({
   const user = await getCurrentUserInfo();
   const query = filter ? `?filter=${filter}` : "";
   return (
-    <main className="container self-center">
-      <Title style={{ marginLeft: "1rem" }} title={"Templates"} />
-      <div className="mb-4 ms-4">
-        <TemplateSwitcher />
+    <>
+      <div className="mb-4 flex w-full  justify-center bg-black">
+        <div className="container">
+          <Title title={"Templates"} />
+        </div>
       </div>
-      <TemplateList userName={user?.username || ""} search={query} />
-      <TemplateLegend />
-    </main>
+      <main className="container self-center">
+        <div className="mb-4 ms-4">
+          <TemplateSwitcher />
+        </div>
+        <TemplateList userName={user?.username || ""} search={query} />
+        <TemplateLegend />
+      </main>
+    </>
   );
 };
 

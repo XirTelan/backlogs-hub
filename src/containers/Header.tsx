@@ -9,7 +9,7 @@ const Header = async () => {
   const user = await getCurrentUserInfo();
   return (
     <>
-      <header className="relative   flex h-12 w-full items-center border-b border-subtle-1 ">
+      <header className="border-border-1   relative flex h-12 w-full items-center border-b ">
         {user ? (
           <div className="flex w-full items-center justify-between">
             <NavBar userName={user.username!} />

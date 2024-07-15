@@ -40,6 +40,16 @@ const UserSchema = new mongoose.Schema<UserDTO>(
       type: userConfigSchema,
       required: true,
     },
+    stats: {
+      totalBacklogs: {
+        type: Number,
+        default: 0,
+      },
+      totalTemplates: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   {
     timestamps: true,

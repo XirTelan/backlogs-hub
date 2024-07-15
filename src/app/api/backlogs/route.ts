@@ -9,8 +9,9 @@ import {
   isBacklogExist,
   isPrivateProfile,
 } from "@/services/backlogs";
-import { updateUserFolders } from "@/services/user";
+import { updateStat, updateUserFolders } from "@/services/user";
 import { generateSlug, sendMsg } from "@/utils";
+import { BacklogCreationSchema } from "@/zod";
 import {
   BacklogCreationDTO,
   BacklogDTO,
@@ -72,9 +73,13 @@ export async function POST(request: NextRequest) {
     totalCount: 0,
   };
   try {
-    const backlog = await createBacklog(backlogData);
+    const parsedData = BacklogCreationSchema.safeParse(backlogData);
+    if (!parsedData.success)
+      return sendMsg.error(parsedData.error.message, 400);
+    const backlog = await createBacklog(parsedData.data);
     if (!backlog.isSuccess)
       return sendMsg.error(backlog.message, 400, backlog.errors);
+    await updateStat(user.id, "totalBacklogs");
     revalidatePath(`/user/${user.username}/backlogs`);
     return NextResponse.json(backlog);
   } catch (error) {

@@ -1,9 +1,11 @@
 import { routesList } from "@/data";
+import Backlog from "@/models/Backlog";
 import {
   deleteBacklogById,
   isAuthorizedBacklogOwner,
   updateBacklogById,
 } from "@/services/backlogs";
+import { updateStat } from "@/services/user";
 import { cleanParamString, sendMsg } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -49,7 +51,14 @@ export async function DELETE(
   try {
     const { isSuccess, message } = await isAuthorizedBacklogOwner(id, "edit");
     if (!isSuccess) return sendMsg.error(message || "Not authorized", 403);
-    await deleteBacklogById(id);
+
+    const backlogToDelete = await Backlog.findById(id).select("userId").lean();
+    const res = await deleteBacklogById(id);
+
+    if (!res.isSuccess) return NextResponse.json("Error", { status: 500 });
+    if (backlogToDelete?.userId)
+      await updateStat(backlogToDelete?.userId, "totalBacklogs", "decrement");
+
     revalidatePath(routesList.manageBacklogs);
     return NextResponse.json("Success");
   } catch (error) {

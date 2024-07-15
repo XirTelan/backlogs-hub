@@ -222,7 +222,9 @@ export const deleteBacklogById = async (id: string) => {
   try {
     await dbConnect();
     const res = await Backlog.deleteOne({ _id: id });
-    if (res.deletedCount > 0) await BacklogItem.deleteMany({ backlogId: id });
+    if (res.deletedCount === 0) return { isSuccess: false };
+    await BacklogItem.deleteMany({ backlogId: id });
+    return { isSuccess: true };
   } catch (error) {
     throw new Error(`${error}`);
   }

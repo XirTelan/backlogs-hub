@@ -1,11 +1,9 @@
 "use server";
-import {
-  getCurrentUserInfo,
-} from "@/auth/utils";
+import { getCurrentUserInfo } from "@/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { ResponseData } from "@/types";
-import { ConfigType, UserDTO } from "@/zodTypes";
+import { ConfigType, StatsType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
@@ -221,5 +219,31 @@ export async function changeUserName(username: string) {
   } catch (error) {
     console.error(error);
     return { error: "Error ", isSuccess: false };
+  }
+}
+
+export async function updateStat(
+  id: string,
+  option: keyof StatsType,
+  type: "increment" | "decrement" = "increment",
+  defVal = 1,
+) {
+  try {
+    await dbConnect();
+    const user = await User.findById(id);
+    const stats = user?.stats;
+    if (!user || !stats) return;
+    if (!Object.prototype.hasOwnProperty.call(stats, option)) {
+      return;
+    }
+    if (!Object.prototype.hasOwnProperty.call(stats, option)) {
+      return;
+    }
+    const oldVal = stats[option] || 0;
+    const newVal = type === "increment" ? oldVal + defVal : oldVal - defVal;
+    await user.updateOne({ stats: { ...stats, [option]: newVal } });
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Update error`);
   }
 }

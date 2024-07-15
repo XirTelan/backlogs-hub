@@ -12,6 +12,7 @@ import {
   DndDataSchema,
   FieldSchema,
   OauthSchema,
+  StatsSchema,
   TemplateDTOSchema,
   UserBase,
   UserSchema,
@@ -40,3 +41,4 @@ export type DndData = z.infer<typeof DndDataSchema>;
 export type UserBase = z.infer<typeof UserBase>;
 export type UserDTO = z.infer<typeof UserSchema>;
 export type ConfigType = z.infer<typeof ConfigSchema>;
+export type StatsType = z.infer<typeof StatsSchema>;

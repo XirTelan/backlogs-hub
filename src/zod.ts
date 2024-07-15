@@ -1,40 +1,6 @@
 import { z } from "zod";
 
-export const RegistrationSchema = z
-  .object({
-    username: z
-      .string()
-      .min(4)
-      .regex(new RegExp(/^[a-zA-Z0-9_=]+$/), {
-        message: `Username can only contain letters, numbers, "-", and "_"`,
-      }),
-    email: z.string().email("Email is required"),
-    folders: z.string().array().default(["Default"]),
-    password: z
-      .string()
-      .min(6, { message: "Password must have at least 6 characters" }),
-    passwordConfirm: z
-      .string()
-      .min(6, { message: "Password must have at least 6 characters" }),
-  })
-  .superRefine(({ password, passwordConfirm }, ctx) => {
-    if (password !== passwordConfirm)
-      ctx.addIssue({
-        code: "custom",
-        message: "The passwords did not match",
-        path: ["passwordConfirm"],
-      });
-  });
-
-export const SignInSchema = z
-  .object({
-    login: z.string().trim().min(1),
-    password: z
-      .string()
-      .min(6, { message: "Password must have at least 6 characters" }),
-  })
-  .required();
-
+// Backlog
 export const FieldSchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),
@@ -112,13 +78,7 @@ export const BacklogItemSchema = BacklogItemCreationSchema.merge(
 
 export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());
 
-export const ConfigSchema = z.object({
-  profileVisibility: z.enum(["public", "private"]),
-  hideFolderNames: z.boolean().default(false),
-  showEmptyFolders: z.boolean(),
-  canChangeUserName: z.boolean().default(false),
-});
-
+//Account
 export const OauthSchema = z.object({
   username: z.string(),
   email: z.string().email(),
@@ -128,6 +88,53 @@ export const OauthSchema = z.object({
 export const AccountSchema = z
   .object({ _id: z.string() })
   .merge(OauthSchema.omit({ username: true }));
+
+export const RegistrationSchema = z
+  .object({
+    username: z
+      .string()
+      .min(4)
+      .regex(new RegExp(/^[a-zA-Z0-9_=]+$/), {
+        message: `Username can only contain letters, numbers, "-", and "_"`,
+      }),
+    email: z.string().email("Email is required"),
+    folders: z.string().array().default(["Default"]),
+    password: z
+      .string()
+      .min(6, { message: "Password must have at least 6 characters" }),
+    passwordConfirm: z
+      .string()
+      .min(6, { message: "Password must have at least 6 characters" }),
+  })
+  .superRefine(({ password, passwordConfirm }, ctx) => {
+    if (password !== passwordConfirm)
+      ctx.addIssue({
+        code: "custom",
+        message: "The passwords did not match",
+        path: ["passwordConfirm"],
+      });
+  });
+
+export const SignInSchema = z
+  .object({
+    login: z.string().trim().min(1),
+    password: z
+      .string()
+      .min(6, { message: "Password must have at least 6 characters" }),
+  })
+  .required();
+
+//USER
+export const StatsSchema = z.object({
+  totalBacklogs: z.number().default(0),
+  totalTemplates: z.number().default(0),
+});
+export const ConfigSchema = z.object({
+  profileVisibility: z.enum(["public", "private"]),
+  hideFolderNames: z.boolean().default(false),
+  showEmptyFolders: z.boolean(),
+  canChangeUserName: z.boolean().default(false),
+});
 
 export const UserBase = z.object({
   _id: z.string(),
@@ -144,12 +151,14 @@ export const UserSchema = UserBase.merge(
     folders: z.string().array(),
     email: z.string().email(),
     config: ConfigSchema,
+    stats: StatsSchema,
   }),
 );
 
 export const rawPasswordSchema = z.string().min(6);
 export const isEmailSchema = z.string().email();
 
+//TEmplate
 export const TemplateDTOSchema = BacklogFormSchema.omit({
   backlogTitle: true,
   order: true,
@@ -164,6 +173,7 @@ export const TemplateDTOSchema = BacklogFormSchema.omit({
 );
 export const TemplateCreateSchema = TemplateDTOSchema.omit({ _id: true });
 
+//utils
 const uniqueArray = <T>(
   items: T[],
   ctx: z.RefinementCtx,

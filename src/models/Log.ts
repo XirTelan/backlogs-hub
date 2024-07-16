@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
 const LogSchema = new mongoose.Schema({
-  type: String,
-  message: String,
+  name: String,
+  email: String,
+  subject: String,
+  description: String,
   level: Number,
 });
 

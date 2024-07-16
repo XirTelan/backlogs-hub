@@ -23,7 +23,6 @@ const Templates = async ({
           <TemplateSwitcher />
         </div>
         <TemplateList userName={user?.username || ""} search={query} />
-        <TemplateLegend />
       </main>
     </>
   );

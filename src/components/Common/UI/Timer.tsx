@@ -10,7 +10,7 @@ const Timer = ({
   close: () => void;
   action: (value: number) => void;
 }) => {
-  const [seconds, setSeconds] = useState(3600);
+  const [seconds, setSeconds] = useState(0);
   const [isPause, setIsPause] = useState(true);
 
   useEffect(() => {

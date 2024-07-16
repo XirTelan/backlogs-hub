@@ -10,7 +10,7 @@ import { updateUserInfo } from "@/services/user";
 import InputField from "@/components/Common/UI/InputField";
 import { toastCustom } from "@/lib/toast";
 import Title from "@/components/Common/Title";
-import TextAreaInput from "@/components/Common/TextAreaInput";
+import TextAreaInput from "@/components/Common/UI/TextAreaInput";
 import { ButtonBaseProps } from "@/types";
 
 const TABS = {

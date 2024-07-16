@@ -36,6 +36,11 @@ const config: Config = {
         border: {
           DEFAULT: "#333333",
           interactive: "#4589FF",
+          strong: {
+            1:  "6f6f6f",
+            2: '8d8d8d',
+            3: 'a8a8a8',
+          },
           1: "#393939",
         },
         field: {
@@ -59,7 +64,10 @@ const config: Config = {
         },
         primary: {
           text: "#F4F4F4",
-          link: "#78A9FF",
+          link: {
+            DEFAULT: "#78A9FF",
+            hover: "#A6C8FF",
+          },
           btn: {
             DEFAULT: "#0F62FE",
             hover: "#0050E6",

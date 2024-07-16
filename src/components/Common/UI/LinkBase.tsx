@@ -6,7 +6,10 @@ const LinkBase = ({
   ...props
 }: LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return (
-    <Link {...props} className="  text-primary-link">
+    <Link
+      {...props}
+      className="  text-primary-link hover:text-primary-link-hover"
+    >
       {children}
     </Link>
   );

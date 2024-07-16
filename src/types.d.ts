@@ -2,9 +2,11 @@ import { FieldError } from "react-hook-form";
 import { BacklogCategory, Field, UserDTO } from "./zodTypes";
 import React from "react";
 
+type Layer = 1 | 2 | 3;
+
 export type InputFieldProps = {
   label?: string;
-  layer?: 1 | 2 | 3;
+  layer?: Layer;
   error?: string;
   helperText?: { message: string; type: "text" | "error" };
   variant?: "small" | "medium" | "large";
@@ -14,7 +16,7 @@ export type InputFieldProps = {
   HTMLInputElement
 >;
 export type SearchBar = {
-  layer?: 1 | 2 | 3;
+  layer?: Layer;
   variant?: "small" | "medium" | "large";
 } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -23,6 +25,7 @@ export type SearchBar = {
 
 export type TextArea = {
   label?: string;
+  layer?: Layer;
 } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement

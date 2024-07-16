@@ -52,6 +52,7 @@ const FieldsArrayItem = ({
         </td>
         <td className="px-2 ">
           <Select
+            layer={2}
             {...register(`fields.${index}.type`)}
             options={["text", "timer", "number", "date", "select"]}
           />

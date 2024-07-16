@@ -1,7 +1,7 @@
 import { getCurrentUserInfo } from "@/auth/utils";
 import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
-import Title from "@/components/Common/Title";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
+import TopTitle from "@/components/Common/UI/TopTitle";
 
 import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
 import FilterBlock from "@/containers/FilterBlock";
@@ -30,8 +30,8 @@ export default async function Backlog({
   );
 
   return (
-    <main className="container h-[calc(100svh-49px)] ">
-      <Title title={data.backlogTitle}>
+    <div className="flex flex-col">
+      <TopTitle title={data.backlogTitle}>
         <>
           {isOwner && (
             <Link href={`/backlog/edit/${data._id}`}>
@@ -43,25 +43,27 @@ export default async function Backlog({
             </Link>
           )}
         </>
-      </Title>
-      <section className="me-auto flex justify-center  rounded px-4 py-4 lg:m-0 lg:justify-start">
-        <FilterBlock
-          backlogSlug={data.slug}
-          backlogCategories={data.categories}
-        />
-      </section>
-      <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
-        <Suspense fallback={<SkeletonDataTable />}>
-          <Backloglist
-            isOwner={isOwner}
-            search={search}
-            selectedCategories={selectedCategories}
+      </TopTitle>
+      <main className="container h-[calc(100svh-49px)] self-center ">
+        <section className="me-auto flex justify-center  rounded px-4 py-4 lg:m-0 lg:justify-start">
+          <FilterBlock
             backlogSlug={data.slug}
-            categoriesMap={categoriesMap}
-            id={data._id.toString()}
+            backlogCategories={data.categories}
           />
-        </Suspense>
-      </section>
-    </main>
+        </section>
+        <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
+          <Suspense fallback={<SkeletonDataTable />}>
+            <Backloglist
+              isOwner={isOwner}
+              search={search}
+              selectedCategories={selectedCategories}
+              backlogSlug={data.slug}
+              categoriesMap={categoriesMap}
+              id={data._id.toString()}
+            />
+          </Suspense>
+        </section>
+      </main>
+    </div>
   );
 }

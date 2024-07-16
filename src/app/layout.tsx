@@ -39,7 +39,7 @@ export default function RootLayout({
             }}
           />
           <Header />
-          {children}
+          <div className="mt-[49px] flex flex-col">{children}</div>
 
           <Footer />
         </div>

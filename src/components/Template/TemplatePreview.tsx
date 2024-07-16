@@ -2,7 +2,7 @@
 import React from "react";
 import TemplateCard from "./TemplateCard";
 import InputField from "../Common/UI/InputField";
-import TextAreaInput from "../Common/TextAreaInput";
+import TextAreaInput from "../Common/UI/TextAreaInput";
 import { BacklogFormData, TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import Title from "../Common/Title";

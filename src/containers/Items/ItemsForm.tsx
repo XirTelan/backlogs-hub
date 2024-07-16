@@ -78,6 +78,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         default:
           return (
             <InputField
+              layer={2}
               label={field.name}
               placeholder={field.name}
               type={backlogField.type}
@@ -89,6 +90,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         case "select":
           return (
             <Select
+              layer={2}
               label={field.name}
               options={backlogField.data || []}
               {...register(`userFields.${index}.value`, {

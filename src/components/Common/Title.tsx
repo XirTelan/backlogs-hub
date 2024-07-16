@@ -5,7 +5,7 @@ const Title = ({
   variant = 1,
   description,
   style,
-  width = "100%",
+  width = "auto",
   titleOffset = 0,
   children,
 }: TitleProps) => {

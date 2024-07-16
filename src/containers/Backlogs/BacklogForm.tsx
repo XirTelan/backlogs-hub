@@ -73,7 +73,7 @@ const BacklogForm = <T extends BacklogFormData>({
                 }
               }
               id="backlogTitle"
-              label="Title (required)"
+              label="Backlog Title (required)"
               {...register(`backlogTitle`, { required: true })}
             />
           </div>

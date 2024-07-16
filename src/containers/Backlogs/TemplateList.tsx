@@ -38,10 +38,10 @@ const TemplateList = ({
   };
 
   return (
-    <div className="my-auto flex h-full grow flex-col">
+    <div className="my-auto flex flex-col px-4">
       <div
         style={{ gridTemplateRows: "max-content" }}
-        className=" wrap relative grid  max-h-screen min-h-[60vh] grid-cols-1 flex-col gap-4 overflow-hidden md:grid-cols-2   2xl:grid-cols-3 "
+        className=" wrap relative grid   min-h-[60vh] grid-cols-1 flex-col gap-4 overflow-hidden md:grid-cols-2   2xl:grid-cols-3 "
       >
         {data.map((template: TemplateDTO) => (
           <TemplateCard

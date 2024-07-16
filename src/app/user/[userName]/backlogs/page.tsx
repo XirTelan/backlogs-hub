@@ -7,6 +7,7 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { IoAdd } from "react-icons/io5";
 import { getCurrentUserInfo } from "@/auth/utils";
 import { getUserData } from "@/services/user";
+import TopTitle from "@/components/Common/UI/TopTitle";
 
 export default async function Backlogs({
   params,
@@ -23,28 +24,24 @@ export default async function Backlogs({
   return (
     <>
       {isOwner ? (
-        <div className="mb-4 flex w-full  justify-center bg-black">
-          <div className="container">
-            <Title title={"My backlogs"}>
-              <div className="flex">
-                <LinkButton
-                  href={`/manage-backlogs`}
-                  text={"Manage backlogs"}
-                  button={{ variant: "ghost", hideText: true }}
-                >
-                  <MdOutlineManageSearch size={24} />
-                </LinkButton>
-                <LinkButton
-                  href={`/backlog/create`}
-                  text={"Create backlog"}
-                  button={{ hideText: true }}
-                >
-                  <IoAdd />
-                </LinkButton>
-              </div>
-            </Title>
+        <TopTitle title={"My backlogs"}>
+          <div className="flex">
+            <LinkButton
+              href={`/manage-backlogs`}
+              text={"Manage backlogs"}
+              button={{ variant: "ghost", hideText: true }}
+            >
+              <MdOutlineManageSearch size={24} />
+            </LinkButton>
+            <LinkButton
+              href={`/backlog/create`}
+              text={"Create backlog"}
+              button={{ hideText: true }}
+            >
+              <IoAdd />
+            </LinkButton>
           </div>
-        </div>
+        </TopTitle>
       ) : (
         <Title title={`${params.userName} backlogs`} />
       )}

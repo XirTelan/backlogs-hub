@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo, useState } from "react";
+import React, { forwardRef, useMemo, useState } from "react";
 import InputField from "./InputField";
 import Timer from "./Timer";
 import { parseSeconds, parseToSeconds } from "@/utils";
@@ -6,43 +6,54 @@ import ButtonBase from "./ButtonBase";
 import { RxLapTimer } from "react-icons/rx";
 
 const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
-  ({ label, name, defaultValue, setValue }, ref) => {
+  ({ label, name, defaultValue, setValue, ...props }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [h, m, s] = useMemo(() => {
-      return defaultValue.split(":").map(Number);
-    }, [defaultValue]);
-    const [hh, setHH] = useState(h || 0);
-    const [mm, setMM] = useState(m || 0);
-    const [ss, setSS] = useState(s || 0);
+    const [time, setTime] = useState(
+      useMemo(() => {
+        console.log("cgheck");
+        const [hh, mm, ss] = defaultValue.split(":").map(Number);
+        return {
+          hh,
+          mm,
+          ss,
+        };
+      }, [defaultValue]),
+    );
 
     const handleTimer = (value: number) => {
-      const seconds = parseToSeconds(hh, mm, ss);
+      const seconds = parseToSeconds(time.hh, time.mm, time.ss);
       const newTime = parseSeconds(seconds + value);
-      setHH(newTime.hh);
-      setMM(newTime.mm);
-      setSS(newTime.ss);
+      setTime(newTime);
     };
 
-    useEffect(() => {
-      setValue(name, `${hh}:${mm}:${ss}`);
-    }, [hh, mm, name, setValue, ss]);
+    const onChange = (option: string, value: number) => {
+      setTime((prev) => {
+        const newVal = {
+          ...prev,
+          [option]: value,
+        };
+        setValue(name, `${newVal.hh}:${newVal.mm}:${newVal.ss}`);
+        return newVal;
+      });
+    };
 
     const currentProgress = (
       <>
         <p>{label}</p>
         <div className="flex items-center">
           <div className="grid grid-cols-3 ">
+            <input {...props} className="hidden"></input>
             <InputField
               placeholder="HH"
-              value={hh}
-              onChange={(e) => setHH(e.currentTarget.valueAsNumber)}
+              value={time.hh}
+              onChange={(e) => onChange("hh", e.currentTarget.valueAsNumber)}
               min={0}
               type="number"
             />
             <InputField
               placeholder="MM"
-              value={mm}
-              onChange={(e) => setMM(e.currentTarget.valueAsNumber)}
+              value={time.mm}
+              onChange={(e) => onChange("mm", e.currentTarget.valueAsNumber)}
               type="number"
               min={0}
               max={59}
@@ -50,8 +61,8 @@ const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
             />
             <InputField
               placeholder="SS"
-              value={ss}
-              onChange={(e) => setSS(e.currentTarget.valueAsNumber)}
+              value={time.ss}
+              onChange={(e) => onChange("ss", e.currentTarget.valueAsNumber)}
               type="number"
               min={0}
               max={59}

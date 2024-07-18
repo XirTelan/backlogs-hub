@@ -73,7 +73,7 @@ const BacklogItemTr = ({
           <tr role="region">
             <td colSpan={3}>
               <div className="p-4">
-                <BacklogItem hideTitle data={res.data.data} />
+                <BacklogItem data={res.data.data} />
               </div>
             </td>
           </tr>

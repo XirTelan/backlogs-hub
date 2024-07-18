@@ -7,6 +7,7 @@ import TableBase from "@/components/Common/UI/TableBase";
 import Title from "@/components/Common/Title";
 import FieldsArrayItem from "./FieldsArrayItem";
 import { Field } from "@/zodTypes";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
   const fieldsArray = useFieldArray({
@@ -39,10 +40,10 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
       </Title>
       <TableBase
         headers={[
-          { title: "#", width: "1rem" },
-          { title: "Name", width: "auto" },
-          { title: "Type" },
-          { title: "Actions", width: "112px" },
+          { id: "index", title: "#", width: "1rem" },
+          { id: "name", title: "Name", width: "auto" },
+          { id: "type", title: "Type" },
+          { id: "actions", title: <BsThreeDotsVertical />, width: "48px" },
         ]}
         description={""}
       >

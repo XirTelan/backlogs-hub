@@ -10,7 +10,7 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import { RiDeleteBack2Line } from "react-icons/ri";
+import { MdClose } from "react-icons/md";
 
 type FieldsArrayItem = {
   index: number;
@@ -57,13 +57,18 @@ const FieldsArrayItem = ({
             options={["text", "timer", "number", "date", "select"]}
           />
         </td>
-        <td className="px-4 text-center">
-          <ButtonBase
-            variant="ghost"
-            type="button"
-            icon={<RiDeleteBack2Line size={24} />}
-            onClick={() => remove(index)}
-          ></ButtonBase>
+        <td>
+          <div className="flex">
+            <div className="m-auto ">
+              <ButtonBase
+                size="small"
+                variant="dangerGhost"
+                type="button"
+                icon={<MdClose size={20} />}
+                onClick={() => remove(index)}
+              ></ButtonBase>
+            </div>
+          </div>
         </td>
       </tr>
       {field.type === "select" && (

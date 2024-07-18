@@ -21,7 +21,7 @@ const TableBase = ({
         )}
         {customButton && (
           <section aria-label="data table  toolbar">
-            <div className="flex max-w-full justify-between">
+            <div className=" flex max-w-full  justify-between">
               {search && <SearchBar />}
               {showButton && <div>{customButton}</div>}
             </div>
@@ -33,7 +33,7 @@ const TableBase = ({
               <tr className=" h-12 bg-layer-accent-1">
                 {headers.map((header) => (
                   <th
-                    key={header.title}
+                    key={header.id}
                     style={{ width: header.width || "auto" }}
                     className="p-4 text-start text-primary-text"
                   >
@@ -55,7 +55,7 @@ export default TableBase;
 type TableBaseProps = {
   title?: string;
   description?: string;
-  headers: { title: string; width?: string }[];
+  headers: { id: string; title: string | React.ReactNode; width?: string }[];
   search?: boolean;
   showButton?: boolean;
   customButton?: React.ReactElement;

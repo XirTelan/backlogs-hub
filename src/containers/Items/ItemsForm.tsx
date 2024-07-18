@@ -5,12 +5,7 @@ import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Select from "@/components/Common/UI/Select";
-import {
-  BacklogCategory,
-  BacklogItemCreationDTO,
-  BacklogItemDTO,
-  Field,
-} from "@/zodTypes";
+import { BacklogCategory, BacklogItemCreationDTO, Field } from "@/zodTypes";
 import { useCallback } from "react";
 import ProgressTimer from "@/components/Common/UI/ProgressTimer";
 import { toastCustom } from "@/lib/toast";
@@ -33,7 +28,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
 
   const onSubmit = useCallback(
     async (
-      data: BacklogItemDTO,
+      data: BacklogItemCreationDTO & { _id?: string },
       type: "edit" | "create",
       router: AppRouterInstance,
     ) => {
@@ -74,7 +69,6 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
     onSubmit(
       {
-        _id: "",
         ...defaultValues,
         ...data,
       },

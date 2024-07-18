@@ -12,7 +12,7 @@ const BacklogItem = ({ data }: { data: BacklogItemDTO }) => {
       <div>
         {data.userFields.map((field, indx) => (
           <div key={indx} className="flex justify-between">
-            <div className="me-2"> {field.name}</div>
+            <div className="me-2"> {field.backlogFieldId}</div>
             <div>
               {field.value ? (
                 field.value

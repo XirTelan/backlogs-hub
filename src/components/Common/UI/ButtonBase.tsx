@@ -46,7 +46,7 @@ const ButtonBase = ({
         )}
         {icon && (
           <div
-            className={`${buttonSize[size]} ms-auto flex min-h-8 items-center justify-center p-1 `}
+            className={`${buttonSize[size]} ${text && "ms-auto"}  flex min-h-8 items-center justify-center p-1 `}
           >
             {icon}
           </div>

@@ -1,4 +1,4 @@
-import { BacklogItemDTO } from "@/zodTypes";
+import { BacklogItemCreationDTO } from "@/zodTypes";
 import ItemsForm from "./ItemsForm";
 import { BacklogCategory, Field } from "@/zodTypes";
 
@@ -8,7 +8,7 @@ const ItemsFormTypeWrapper = async ({
   type,
 }: {
   backlog: { fields: Field[]; categories: BacklogCategory[] };
-  defaultValues: BacklogItemDTO;
+  defaultValues: BacklogItemCreationDTO;
   type: "edit" | "create";
 }) => {
   const mapFields = defaultValues.userFields.reduce((mapAcc, field) => {

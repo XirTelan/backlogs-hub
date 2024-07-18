@@ -35,7 +35,7 @@ const CreateItem = async ({
             fields: backlogInfo.fields || [],
             categories: backlogInfo.categories,
           }}
-          defaultValues={{ _id: "", ...defaultValues }}
+          defaultValues={defaultValues}
           type="create"
         />
       </main>

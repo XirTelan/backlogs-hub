@@ -55,9 +55,9 @@ const Backloglist = async ({
         search
         description=""
         headers={[
-          { title: "", width: "49px" },
-          { title: "Title" },
-          { title: "Actions", width: "112px" },
+          { id: "accordion", title: "", width: "49px" },
+          { id: "title", title: "Title" },
+          { id: "actions", title: "Actions", width: "112px" },
         ]}
       >
         {data.length > 0 ? (

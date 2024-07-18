@@ -5,7 +5,7 @@ export default async function Home() {
   return (
     <>
       <div
-        className="relative flex h-[calc(100vh-48px)] w-full"
+        className="h-screen-bh relative flex  w-full"
         style={{
           // backgroundImage: `url(${bg.src})`,
           backgroundPositionX: "center",

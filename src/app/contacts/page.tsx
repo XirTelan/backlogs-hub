@@ -4,8 +4,7 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import InputField from "@/components/Common/UI/InputField";
 import Select from "@/components/Common/UI/Select";
 import TopTitle from "@/components/Common/UI/TopTitle";
-import { sendContactForm } from "@/services/Log";
-import React from "react";
+import { sendContactForm } from "@/services/log";
 
 const page = async () => {
   const user = await getCurrentUserInfo();

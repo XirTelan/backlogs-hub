@@ -20,8 +20,11 @@ const BacklogItemTr = ({
   const res = useSWR(isOpen ? `/api/items/${item._id}` : null, fetcher);
   return (
     <>
-      <tr aria-expanded={isOpen} className="border-b border-field-2 ">
-        <td className={isOpen ? " [&_div]:m-auto " : ``}>
+      <tr
+        aria-expanded={isOpen}
+        className={`${!isOpen && "border-b border-field-2 "}`}
+      >
+        <td className={`  ps-2 ${isOpen ? "[&_div]:m-auto " : ``}`}>
           <ButtonBase
             size="medium"
             variant="ghost"
@@ -31,7 +34,7 @@ const BacklogItemTr = ({
             onClick={() => setIsOpen((prev) => !prev)}
           />
         </td>
-        <td className={`p-2`} style={{ color: color }}>
+        <td className={`px-4`} style={{ color: color }}>
           {item.title}
         </td>
         <td className={`ms-auto flex p-2 `}>
@@ -66,13 +69,14 @@ const BacklogItemTr = ({
       </tr>
       {isOpen &&
         (res.isLoading ? (
-          <tr role="region">
+          <tr role="region" className="border-b border-field-2 ">
             <td colSpan={3}>Loading</td>
           </tr>
         ) : (
-          <tr role="region">
-            <td colSpan={3}>
-              <div className="p-4">
+          <tr role="region" className="border-b border-field-2 ">
+            <td></td>
+            <td colSpan={2} className="border-t border-field-2 ">
+              <div className=" p-4 ">
                 <BacklogItem data={res.data.data} />
               </div>
             </td>

@@ -1,4 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
+import NotAvailable from "@/components/Common/NotAvailable";
 import NotFound from "@/components/Common/NotFound";
 import UserProfile from "@/containers/User/UserProfile";
 import { getUserData } from "@/services/user";
@@ -18,7 +19,7 @@ const Page = async ({
     curerntUser?.username !== userName &&
     user.data.config?.profileVisibility === "private"
   )
-    return <div>Error</div>;
+    return <NotAvailable />;
 
   return (
     <>

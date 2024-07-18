@@ -11,6 +11,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        "screen-bh": "calc(100svh - 49px)",
+      },
+      minHeight: {
+        "screen-bh": "calc(100svh - 49px)",
+      },
       boxShadow: {
         around: "0 0 15px 5px rgba(0, 0, 0, 0.3)",
       },
@@ -37,9 +43,9 @@ const config: Config = {
           DEFAULT: "#333333",
           interactive: "#4589FF",
           strong: {
-            1:  "6f6f6f",
-            2: '8d8d8d',
-            3: 'a8a8a8',
+            1: "6f6f6f",
+            2: "8d8d8d",
+            3: "a8a8a8",
           },
           1: "#393939",
         },

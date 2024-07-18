@@ -1,6 +1,5 @@
-
 import TopTitle from "@/components/Common/UI/TopTitle";
-import ItemsEditForm from "@/containers/Items/ItemsEditForm";
+import ItemsFormTypeWrapper from "@/containers/Items/ItemsFormTypeWrapper";
 import { getBacklogItemById } from "@/services/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { redirect } from "next/navigation";
@@ -24,12 +23,13 @@ const EditItem = async ({
     <>
       <TopTitle title="Edit" />
       <main className=" container self-center px-4">
-        <ItemsEditForm
+        <ItemsFormTypeWrapper
           backlog={{
             fields: backlog.fields || [],
             categories: backlog.categories,
           }}
           defaultValues={res.data}
+          type="edit"
         />
       </main>
     </>

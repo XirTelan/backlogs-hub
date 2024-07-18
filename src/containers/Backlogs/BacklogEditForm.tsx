@@ -13,6 +13,8 @@ const BacklogEditForm = ({ id }: { id: string }) => {
   const userFolders = useSWR(`/api/users/`, fetcher);
   const router = useRouter();
 
+  if (backlogData.isLoading || userFolders.isLoading) return <div>Loading</div>;
+
   const onSubmit: SubmitHandler<BacklogDTO> = async (data) => {
     if (data._id) {
       data._id;
@@ -24,18 +26,20 @@ const BacklogEditForm = ({ id }: { id: string }) => {
       },
       body: JSON.stringify(data),
     });
+    if (res.ok)
 
-    if (res.ok) router.push("/");
+      router.push(
+        `/user/${userFolders.data.data.username}/backlogs/${backlogData.data.slug}`,
+      );
   };
 
-  if (backlogData.isLoading || userFolders.isLoading) return <div>Loading</div>;
   return (
     <>
       <TopTitle title={`Editing backlog "${backlogData.data.backlogTitle}"`} />
       <main className="container self-center px-4">
         <BacklogForm
           defaultValues={backlogData.data}
-          userFolders={userFolders.data}
+          userFolders={userFolders.data.data.folders}
           onSubmit={onSubmit}
         />
       </main>

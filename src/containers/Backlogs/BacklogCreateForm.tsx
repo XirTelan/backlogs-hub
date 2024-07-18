@@ -11,8 +11,7 @@ const BacklogCreateForm = () => {
   const router = useRouter();
   const userFolders = useSWR(`/api/users/`, fetcher);
   if (userFolders.isLoading) return <div>Loading</div>;
-  if (!userFolders.data[0]) return <div>Error</div>;
-
+  if (!userFolders.data.isSuccess) return <div>Error</div>;
   const defaultCategories: BacklogCategory[] = [
     { name: "Completed", color: "#0043CE", protected: false },
     { name: "Playing", color: "#6929C4", protected: false },
@@ -23,7 +22,7 @@ const BacklogCreateForm = () => {
     order: 99,
     backlogTitle: "",
     description: "",
-    folder: userFolders.data[0],
+    folder: userFolders.data.data.folders[0],
     slug: "",
     visibility: "public",
     categories: defaultCategories,
@@ -55,7 +54,7 @@ const BacklogCreateForm = () => {
       <BacklogForm
         defaultValues={defaultValues}
         onSubmit={onSubmit}
-        userFolders={userFolders.data}
+        userFolders={userFolders.data.data.folders}
       />
     </>
   );

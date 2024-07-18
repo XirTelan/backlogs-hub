@@ -60,6 +60,7 @@ const FieldsArrayItem = ({
         <td className="px-4 text-center">
           <ButtonBase
             variant="ghost"
+            type="button"
             icon={<RiDeleteBack2Line size={24} />}
             onClick={() => remove(index)}
           ></ButtonBase>

@@ -1,6 +1,6 @@
 "use client";
 import InputField from "@/components/Common/UI/InputField";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
@@ -8,36 +8,61 @@ import Select from "@/components/Common/UI/Select";
 import {
   BacklogCategory,
   BacklogItemCreationDTO,
-  BacklogItemUserField,
+  BacklogItemDTO,
   Field,
 } from "@/zodTypes";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import ProgressTimer from "@/components/Common/UI/ProgressTimer";
+import { toastCustom } from "@/lib/toast";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   categories,
-  fields,
+  backlogFields,
+  mapFields,
   defaultValues,
-  onSubmit,
+  type,
 }: {
   categories: BacklogCategory[];
-  fields: Field[];
+  backlogFields: Field[];
+  mapFields: Map<string, string>;
   defaultValues: T;
-  onSubmit: SubmitHandler<T>;
+  type: "edit" | "create";
 }) => {
   const router = useRouter();
-  const mapFields: Map<string, Field> = useMemo(
-    () =>
-      fields.reduce((mapAccumulator, obj) => {
-        mapAccumulator.set(obj.name, obj);
-        return mapAccumulator;
-      }, new Map()),
-    [fields],
+
+  const onSubmit = useCallback(
+    async (
+      data: BacklogItemDTO,
+      type: "edit" | "create",
+      router: AppRouterInstance,
+    ) => {
+      try {
+        const url = `/api/items${type === "edit" ? `/${data._id}` : ""}`;
+        const res = await fetch(url, {
+          method: type === "edit" ? "PUT" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          toastCustom.success("Saved");
+          router.back();
+        } else {
+          const error = await res.json();
+          console.error(error);
+          toastCustom.error(res.statusText);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [],
   );
 
   const {
     handleSubmit,
-    control,
     register,
     setValue,
     formState: { isValid, isSubmitting },
@@ -45,26 +70,28 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     defaultValues,
     mode: "onBlur",
   });
-  const { fields: userFields } = useFieldArray({
-    name: "userFields",
-    control,
-    rules: {},
-  });
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
-    onSubmit({ ...defaultValues, ...data });
+    onSubmit(
+      {
+        _id: "",
+        ...defaultValues,
+        ...data,
+      },
+      type,
+      router,
+    );
   };
 
   const getFieldInput = useCallback(
-    (field: BacklogItemUserField, index: number) => {
-      const backlogField = mapFields?.get(field.name);
-      if (!backlogField) return <div>Error</div>;
-      switch (backlogField.type) {
+    (field: Field, index: number) => {
+      const fieldValue = mapFields?.get(field._id || "") || "";
+      switch (field.type) {
         case "timer":
           return (
             <ProgressTimer
               label={field.name}
-              defaultValue={field.value}
+              defaultValue={fieldValue}
               setValue={setValue as (name: string, val: string) => void}
               {...register(`userFields.${index}.value`, {
                 required: false,
@@ -81,7 +108,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
               layer={2}
               label={field.name}
               placeholder={field.name}
-              type={backlogField.type}
+              type={field.type}
               {...register(`userFields.${index}.value`, {
                 required: false,
               })}
@@ -92,7 +119,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
             <Select
               layer={2}
               label={field.name}
-              options={backlogField.data || []}
+              options={field.data || []}
               {...register(`userFields.${index}.value`, {
                 required: false,
               })}
@@ -102,6 +129,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     },
     [mapFields, register, setValue],
   );
+
   return (
     <form onSubmit={handleSubmit(onSubmitInternal)}>
       <div className="flex flex-col md:flex-row md:items-center md:gap-4 ">
@@ -123,21 +151,23 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       </div>
       <FieldsBlock title="Fields" status="disabled">
         <>
-          {userFields.map((field, index) => (
-            <li
-              className={`${inputTypes[mapFields.get(field.name)?.type || "text"]}  w-auto bg-layer-1 p-2 `}
-              key={index}
-            >
-              {getFieldInput(field, index)}
-            </li>
-          ))}
+          {backlogFields.map((field, index) => {
+            return (
+              <li
+                className={`${inputTypes[field.type || "text"]}  w-auto bg-layer-1 p-2 `}
+                key={index}
+              >
+                {getFieldInput(field, index)}
+              </li>
+            );
+          })}
         </>
       </FieldsBlock>
 
       <div className="my-4 flex w-full flex-col md:w-1/4 md:gap-4 ">
         <ButtonBase
           disabled={!isValid || isSubmitting}
-          text="Create"
+          text={type === "create" ? "Create" : "Save"}
           type="submit"
         />
         <ButtonBase

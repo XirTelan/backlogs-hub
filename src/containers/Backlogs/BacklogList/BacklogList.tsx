@@ -31,7 +31,6 @@ const itemsDoesntExist = (
 
 const Backloglist = async ({
   id,
-  backlogSlug,
   selectedCategories,
   categoriesMap,
   search,
@@ -45,7 +44,7 @@ const Backloglist = async ({
         showButton={isOwner}
         customButton={
           <LinkButton
-            href={`/items/create?backlog=${backlogSlug}`}
+            href={`/items/create?backlog=${id}`}
             text={"Add item"}
             button={{ hideText: true }}
           >

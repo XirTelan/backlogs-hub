@@ -1,11 +1,12 @@
 import { BacklogItemDTO } from "@/zodTypes";
 import mongoose from "mongoose";
 
-const DataItemSchema = new mongoose.Schema<{ name: string; value: string }>(
+const DataItemSchema = new mongoose.Schema<{
+  backlogFieldId: string;
+  value: string;
+}>(
   {
-    name: {
-      type: String,
-    },
+    backlogFieldId: String,
     value: {
       type: String,
     },

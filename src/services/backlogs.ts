@@ -17,10 +17,10 @@ export const getBacklogById = async (
     await dbConnect();
     const backlog: BacklogDTO | null = await Backlog.findById(id, {
       "categories._id": 0,
-      "fields._id": 0,
     }).lean();
     if (!backlog) return null;
     backlog._id = backlog._id.toString();
+    backlog.fields?.forEach((field) => (field._id = field._id?.toString()));
     return backlog;
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -133,11 +133,17 @@ export const getUserBacklogBySlug = async (
           visibility: "public",
           slug: backlogSlug,
         };
-    const backlog: BacklogDTO | null = await Backlog.findOne(options, {
+    const backlog = await Backlog.findOne(options, {
       "categories._id": 0,
-      "fields._id": 0,
     }).lean();
-    if (backlog) backlog._id = backlog._id.toString();
+    if (backlog) {
+      backlog._id = backlog._id.toString();
+      backlog.fields?.forEach((field) => {
+        if (field._id) {
+          field._id = field._id.toString();
+        }
+      });
+    }
     return backlog;
   } catch (error) {
     throw new Error(`Error: ${error}`);

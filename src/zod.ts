@@ -3,10 +3,10 @@ import { z } from "zod";
 // Backlog
 export const FieldSchema = z
   .object({
+    _id: z.string().optional(),
     name: z.string().trim().min(1, "This field cannot be empty"),
     protected: z.boolean().default(false),
   })
-  .required()
   .and(
     z.discriminatedUnion("type", [
       z.object({
@@ -59,7 +59,7 @@ export const BacklogCreationSchema = BacklogDTOSchema.omit({
   createdAt: true,
 });
 export const BacklogItemUserFieldSchema = z.object({
-  name: z.string(),
+  backlogFieldId: z.string(),
   value: z.string(),
 });
 
@@ -72,7 +72,6 @@ export const BacklogItemCreationSchema = z.object({
 export const BacklogItemSchema = BacklogItemCreationSchema.merge(
   z.object({
     _id: z.string(),
-    lowerCategory: z.string().toLowerCase(),
   }),
 );
 

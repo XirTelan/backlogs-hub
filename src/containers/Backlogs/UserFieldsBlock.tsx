@@ -14,7 +14,11 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
     control,
     rules: {},
   });
-  const fields: Field[] = useWatch({ name: "fields", control });
+
+  const fields: (Field & { id?: number })[] = useWatch({
+    name: "fields",
+    control,
+  });
   return (
     <section>
       <Title variant={3} style={{ margin: ".5rem 0" }} title={"Fields"}>
@@ -25,7 +29,8 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
           text="Add field"
           onClick={() =>
             fieldsArray.append({
-              name: "",
+              id: Math.floor(Math.random() * 100000),
+              name: ``,
               type: "text",
               protected: false,
             })
@@ -52,7 +57,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
           </tr>
           {fields.map((field, index) => (
             <FieldsArrayItem
-              key={index}
+              key={field._id || field.id}
               index={index}
               register={register}
               field={field}

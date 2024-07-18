@@ -1,7 +1,6 @@
-import { getCurrentUserInfo } from "@/auth/utils";
 import TopTitle from "@/components/Common/UI/TopTitle";
-import ItemsCreateForm from "@/containers/Items/ItemsCreateForm";
-import { getUserBacklogBySlug } from "@/services/backlogs";
+import ItemsFormTypeWrapper from "@/containers/Items/ItemsFormTypeWrapper";
+import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { BacklogItemCreationDTO } from "@/zodTypes";
 import { redirect } from "next/navigation";
 
@@ -10,11 +9,11 @@ const CreateItem = async ({
 }: {
   searchParams: { backlog: string };
 }) => {
-  const user = await getCurrentUserInfo();
-  if (!user || !backlog) redirect("/");
-
-  const backlogInfo = await getUserBacklogBySlug(user.username, backlog, true);
-  if (!backlogInfo) redirect("/");
+  const { isSuccess, data: backlogInfo } = await isAuthorizedBacklogOwner(
+    backlog,
+    "edit",
+  );
+  if (!isSuccess) redirect("/");
 
   const defaultValues: BacklogItemCreationDTO = {
     backlogId: backlogInfo._id,
@@ -23,21 +22,21 @@ const CreateItem = async ({
     userFields: !backlogInfo.fields
       ? []
       : backlogInfo.fields.map((field) => ({
-          name: field.name,
+          backlogFieldId: field._id || "",
           value: field.type === "select" ? field.data[0] : "",
         })),
   };
-
   return (
     <>
       <TopTitle title={`Add new item to "${backlogInfo.backlogTitle}"`} />
       <main className="container self-center px-4">
-        <ItemsCreateForm
+        <ItemsFormTypeWrapper
           backlog={{
             fields: backlogInfo.fields || [],
             categories: backlogInfo.categories,
           }}
-          defaultValues={defaultValues}
+          defaultValues={{ _id: "", ...defaultValues }}
+          type="create"
         />
       </main>
     </>

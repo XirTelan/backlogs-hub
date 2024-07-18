@@ -12,6 +12,8 @@ import { BacklogFormData } from "@/zodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
 import Select from "@/components/Common/UI/Select";
+import { usePathname } from "next/navigation";
+import { routesList } from "@/data";
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
@@ -22,6 +24,7 @@ const BacklogForm = <T extends BacklogFormData>({
   userFolders: string[];
   onSubmit: SubmitHandler<T>;
 }) => {
+  const pathname = usePathname();
   const [showTemplate, setShowTemplate] = useState(false);
 
   const {
@@ -62,7 +65,7 @@ const BacklogForm = <T extends BacklogFormData>({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitInternal)}>
-        <div className="flex flex-col md:flex-row   md:items-center md:gap-8">
+        <div className="flex flex-col md:flex-row   md:items-center md:gap-2">
           <div className="field w-full grow py-2  ">
             <InputField
               autoFocus
@@ -77,7 +80,7 @@ const BacklogForm = <T extends BacklogFormData>({
               {...register(`backlogTitle`, { required: true })}
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex min-w-fit  justify-between  gap-2 *:w-full md:mb-2 ">
             <Select
               label="Folder"
               options={userFolders}
@@ -104,7 +107,10 @@ const BacklogForm = <T extends BacklogFormData>({
           />
         </div>
         <div className=" mt-4 flex w-full flex-col gap-4 md:w-1/4">
-          <ButtonBase disabled={!isValid} text="Create backlog" />
+          <ButtonBase
+            disabled={!isValid}
+            text={`${pathname.startsWith(routesList.backlogEdit) ? "Save changes" : "Create Backlog"}`}
+          />
           <ButtonBase
             disabled={!isValid}
             type="button"

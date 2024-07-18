@@ -32,7 +32,6 @@ export type BacklogCategory = z.infer<typeof BacklogCategorySchema>;
 export type BacklogItemDTO = z.infer<typeof BacklogItemSchema>;
 export type BacklogItemUserField = z.infer<typeof BacklogItemUserFieldSchema>;
 export type BacklogItemCreationDTO = z.infer<typeof BacklogItemCreationSchema>;
-
 export type OAuthProps = z.infer<typeof OauthSchema>;
 
 export type TemplateDTO = z.infer<typeof TemplateDTOSchema>;

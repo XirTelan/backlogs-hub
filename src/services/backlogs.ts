@@ -218,7 +218,38 @@ export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
 export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
   try {
     await dbConnect();
-    await Backlog.updateOne({ _id: data._id }, { ...data });
+
+    const parsedData = BacklogDTOSchema.safeParse(data);
+    if (!parsedData.success) {
+      console.error(parsedData.error);
+      return { isSuccess: false };
+    }
+
+    const backlog = await Backlog.findById(data._id)
+      .select("categories")
+      .lean();
+
+    const oldBacklogCats = backlog?.categories.map((cat) => cat.name);
+    const oldCount = oldBacklogCats?.length;
+
+    const updQueries: Promise<unknown>[] = [];
+    data.categories?.forEach((cat, indx) => {
+      if (!oldCount || indx > oldCount || cat.name == oldBacklogCats[indx])
+        return;
+      updQueries.push(
+        BacklogItem.updateMany(
+          { backlogId: backlog?._id, category: oldBacklogCats[indx] },
+          { category: cat.name },
+        ),
+      );
+    });
+
+    await Promise.all([
+      ...updQueries,
+      Backlog.findByIdAndUpdate(data._id, parsedData.data),
+    ]);
+
+    return { isSuccess: true };
   } catch (error) {
     throw new Error(`${error}`);
   }

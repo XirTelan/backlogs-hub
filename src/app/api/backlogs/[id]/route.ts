@@ -38,8 +38,9 @@ export async function PUT(request: NextRequest) {
   try {
     const { isSuccess } = await isAuthorizedBacklogOwner(data._id, "edit");
     if (!isSuccess) return sendMsg.error("Not authorized", 403);
-    await updateBacklogById(data);
-    return NextResponse.json("Success");
+    const res = await updateBacklogById(data);
+    if (!res.isSuccess) return sendMsg.error("Failed", 400);
+    return sendMsg.success();
   } catch (error) {
     throw new Error(`${error}`);
   }

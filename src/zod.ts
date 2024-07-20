@@ -47,8 +47,8 @@ export const BacklogDTOSchema = BacklogFormSchema.merge(
     userId: z.string(),
     userName: z.string(),
     _id: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
     totalCount: z.number().default(0),
   }),
 );

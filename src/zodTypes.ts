@@ -11,6 +11,8 @@ import {
   ConfigSchema,
   DndDataSchema,
   FieldSchema,
+  LogDataDTOSchema,
+  LogDataSchema,
   OauthSchema,
   StatsSchema,
   TemplateDTOSchema,
@@ -41,3 +43,6 @@ export type UserBase = z.infer<typeof UserBase>;
 export type UserDTO = z.infer<typeof UserSchema>;
 export type ConfigType = z.infer<typeof ConfigSchema>;
 export type StatsType = z.infer<typeof StatsSchema>;
+
+export type Log = z.infer<typeof LogDataSchema>;
+export type LogDTO = z.infer<typeof LogDataDTOSchema>;

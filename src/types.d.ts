@@ -5,7 +5,7 @@ import React from "react";
 type Layer = 1 | 2 | 3;
 
 export type InputFieldProps = {
-  label?: string;
+  label?: React.ReactNode;
   layer?: Layer;
   error?: string;
   helperText?: { message: string; type: "text" | "error" };

@@ -195,3 +195,17 @@ const uniqueArray = <T>(
     set.set(getter(item), indx);
   });
 };
+
+export const LogDataSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  subject: z.string(),
+  description: z.string(),
+  level: z.number(),
+});
+export const LogDataDTOSchema = LogDataSchema.merge(
+  z.object({
+    code: z.string(),
+    confirmCode: z.string(),
+  }),
+);

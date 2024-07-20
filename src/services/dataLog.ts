@@ -1,9 +1,10 @@
 "use server";
+
 import dbConnect from "@/lib/dbConnect";
 import Log from "@/models/Log";
 import { LogDTO } from "@/zodTypes";
 
-export const sendContactForm = async (data: LogDTO) => {
+export const createLogEntry = async (data: LogDTO) => {
   try {
     await dbConnect();
     await Log.create(data);

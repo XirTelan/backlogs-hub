@@ -7,7 +7,7 @@ import TextAreaInput from "./Common/UI/TextAreaInput";
 import { TokenData } from "@/auth/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
-import { sendContactForm } from "@/services/log";
+import { toastCustom } from "@/lib/toast";
 
 const DEFAULT: LogDTO = {
   name: "",
@@ -38,8 +38,19 @@ const ContactsForm = ({
     },
   });
 
-  const onSubmit: SubmitHandler<LogDTO> = (data) => {
-    sendContactForm(data);
+  const onSubmit: SubmitHandler<LogDTO> = async (data) => {
+    const res = await fetch("/api/data-log", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (res.ok) {
+      toastCustom.success(`Success`);
+    } else {
+      toastCustom.error(await res.json().then((data) => data.message));
+    }
   };
   if (isSubmitSuccessful)
     return <div>Your feedback has been successfully sent</div>;

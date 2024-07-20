@@ -7,7 +7,7 @@ import TextAreaInput from "./Common/UI/TextAreaInput";
 import { TokenData } from "@/auth/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
-import { sendContactForm } from "../services/log";
+import { sendContactForm } from "@/services/log";
 
 const DEFAULT: LogDTO = {
   name: "",
@@ -38,8 +38,8 @@ const ContactsForm = ({
     },
   });
 
-  const onSubmit: SubmitHandler<LogDTO> = (data) => {
-    sendContactForm(data);
+  const onSubmit: SubmitHandler<LogDTO> = async (data) => {
+    await sendContactForm(data);
   };
   if (isSubmitSuccessful)
     return <div>Your feedback has been successfully sent</div>;

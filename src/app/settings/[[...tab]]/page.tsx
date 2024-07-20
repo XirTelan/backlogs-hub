@@ -5,7 +5,9 @@ import { getCurrentUserData } from "@/services/user";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const isPopulated = (arr: unknown[]) => {
+const isPopulated = (
+  arr: unknown[],
+): arr is { _id: string; email: string; provider: string }[] => {
   return arr.every((item) => typeof item === "object");
 };
 
@@ -15,11 +17,13 @@ const Page = async ({ params }: { params: { tab: [TabsType] } }) => {
   if (!res.isSuccess)
     return <div>Something goes wrong: {JSON.stringify(res.message)}</div>;
 
-  if (res.data.accounts && isPopulated(res.data.accounts))
-    res.data.accounts = res.data.accounts.map((item) => {
+  if (res.data.accounts && isPopulated(res.data.accounts)) {
+    const convertToStringArr = res.data.accounts.map((item) => {
       item._id = item._id.toString();
       return item;
     });
+    res.data = { ...res.data, accounts: convertToStringArr };
+  }
 
   return (
     <div className=" container">

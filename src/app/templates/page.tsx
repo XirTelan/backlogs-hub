@@ -1,6 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
 import Title from "@/components/Common/Title";
-import TemplateLegend from "@/components/Template/TemplateLegend";
 import TemplateList from "@/containers/Backlogs/TemplateList";
 import TemplateSwitcher from "@/containers/Templates/TemplateSwitcher";
 

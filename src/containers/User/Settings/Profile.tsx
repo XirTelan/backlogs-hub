@@ -16,7 +16,7 @@ const Profile = ({
 }) => {
   return (
     <div>
-      {data.config?.canChangeUserName && <ChangeUserName id={data._id} />}
+      {data.config?.canChangeUserName && <ChangeUserName />}
       <Setting label={"Display Name"}>
         <ButtonBase
           onClick={() =>

@@ -1,5 +1,4 @@
 "use client";
-import { sendContactForm } from "@/services/log";
 import React from "react";
 import ButtonBase from "./Common/UI/ButtonBase";
 import InputField from "./Common/UI/InputField";
@@ -8,6 +7,7 @@ import TextAreaInput from "./Common/UI/TextAreaInput";
 import { TokenData } from "@/auth/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
+import { sendContactForm } from "@/services/log";
 
 const DEFAULT: LogDTO = {
   name: "",

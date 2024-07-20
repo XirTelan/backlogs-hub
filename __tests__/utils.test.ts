@@ -1,4 +1,10 @@
-import { cleanParamString, generateSlug, sendMsg } from "@/utils";
+import {
+  cleanParamString,
+  generateSlug,
+  parseSeconds,
+  parseToSeconds,
+  sendMsg,
+} from "@/utils";
 
 describe("generate slug", () => {
   it("Test capital", () => {
@@ -79,6 +85,19 @@ describe("sendMsg", () => {
       const response = sendMsg.error(errorMessage, status);
       expect(response.status).toBe(status);
       expect(await response.json()).toEqual(expectedResponse);
+    });
+  });
+});
+
+describe("time pasre ", () => {
+  it("parseToSeconds", () => {
+    expect(parseToSeconds(2, 30, 10)).toBe(9010);
+  });
+  it("parseSeconds", () => {
+    expect(parseSeconds(9010)).toStrictEqual({
+      hh: 2,
+      mm: 30,
+      ss: 10,
     });
   });
 });

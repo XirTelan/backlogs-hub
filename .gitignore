@@ -37,3 +37,5 @@ next-env.d.ts
 
 #test images
 /public/*.jpg
+# Sentry Config File
+.env.sentry-build-plugin

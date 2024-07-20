@@ -7,7 +7,7 @@ import TextAreaInput from "./Common/UI/TextAreaInput";
 import { TokenData } from "@/auth/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
-import { sendContactForm } from "@/services/log";
+import { sendContactForm } from "../services/log";
 
 const DEFAULT: LogDTO = {
   name: "",

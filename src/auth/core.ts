@@ -60,26 +60,35 @@ export const handleCallback = async (
   provider: string,
 ) => {
   if (!provider) return sendMsg.error("Provider is required");
+
   const searchParams = request.nextUrl.searchParams;
   const errors = searchParams.get("error");
+
   if (errors && errors === "access_denied") {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  const code = searchParams.get("code");
 
-  if (!code) return sendMsg.error("code not specified");
-  let oauthData: OAuthProps | undefined = undefined;
-  switch (provider) {
-    case "google":
-      oauthData = await getGoogleUser(code);
-      break;
-    case "discord":
-      oauthData = await getDiscordUser(code);
-      break;
+  const code = searchParams.get("code");
+  if (!code) {
+    console.error("Invalid code format ", code);
+    return sendMsg.error("Invalid code");
   }
 
-  if (!oauthData || !oauthData.email || !oauthData.username)
+  let oauthData: OAuthProps | undefined = undefined;
+  try {
+    const res = await getOAuthData(provider, code);
+    if (!res.isSuccess) return sendMsg.error("Authorize error");
+    oauthData = res.data;
+  } catch (e) {
+    console.error(e);
+    return sendMsg.error("Authorize error, check logs for more information");
+  }
+
+  if (!oauthData?.email || !oauthData?.username) {
+    console.error(oauthData);
     return sendMsg.error("Try again later");
+  }
+
   await dbConnect();
 
   //find account
@@ -151,6 +160,18 @@ export const signInWithLogin = async (
   if (!passwordMatch) return error;
   const access_token = await generateAccessToken(user);
   return { isSuccess: true, data: access_token };
+};
+
+const getOAuthData = async (provider: string, code: string) => {
+  switch (provider) {
+    case "google": {
+      return await getGoogleUser(code);
+    }
+    case "discord":
+      return await getDiscordUser(code);
+    default:
+      throw new Error("Unsupported provider");
+  }
 };
 
 export const updatePassword = async () => {};

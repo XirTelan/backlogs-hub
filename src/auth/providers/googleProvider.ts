@@ -1,5 +1,6 @@
 "use server";
 
+import { ResponseData } from "@/types";
 import { OAuthProps, UserDTO } from "@/zodTypes";
 import { JWTPayload, decodeJwt } from "jose";
 
@@ -27,12 +28,21 @@ export const getGoogleToken = async (code: string) => {
 
 export const getRedirectOauthLink = async () => {};
 
-export const getUserData = async (code: string): Promise<OAuthProps> => {
+export const getUserData = async (
+  code: string,
+): Promise<ResponseData<OAuthProps>> => {
   const token = await getGoogleToken(code);
+  if (!token.id_token) {
+    console.error(token);
+    return { isSuccess: false, message: "" };
+  }
   const userData: Partial<UserDTO> & JWTPayload = decodeJwt(token.id_token);
   return {
-    username: `user_G${userData.sub}`,
-    email: userData.email || "",
-    provider: "google",
+    isSuccess: true,
+    data: {
+      username: `user_G${userData.sub}`,
+      email: userData.email || "",
+      provider: "google",
+    },
   };
 };

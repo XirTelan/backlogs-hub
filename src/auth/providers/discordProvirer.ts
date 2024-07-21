@@ -1,5 +1,6 @@
 "use server";
 
+import { ResponseData } from "@/types";
 import { OAuthProps } from "@/zodTypes";
 
 const TOKEN_URL = "https://discord.com/api/oauth2/token	";
@@ -33,12 +34,18 @@ export const getAuthInformation = async (token: string) => {
   return (await res).json();
 };
 
-export const getUserData = async (code: string): Promise<OAuthProps> => {
+export const getUserData = async (
+  code: string,
+): Promise<ResponseData<OAuthProps>> => {
   const token = await getDiscordToken(code);
+  if (!token) return { isSuccess: false, message: "wrong token" };
   const userData = await getAuthInformation(token.access_token);
   return {
-    username: `user_D${userData.username}`,
-    email: userData.email,
-    provider: "discord",
+    isSuccess: true,
+    data: {
+      username: `user_D${userData.username}`,
+      email: userData.email,
+      provider: "discord",
+    },
   };
 };

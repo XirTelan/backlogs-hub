@@ -7,13 +7,22 @@ import { JWTPayload, decodeJwt } from "jose";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 
 export const getGoogleToken = async (code: string) => {
+  if (
+    !process.env.GOOGLE_ID ||
+    !process.env.GOOGLE_SECRET ||
+    !process.env.DOMAIN_URL
+  ) {
+    console.error("OAuth env vars not provided");
+    throw new Error("OAuth env vars not provided");
+  }
   const params = {
-    client_id: process.env.GOOGLE_ID!,
-    client_secret: process.env.GOOGLE_SECRET!,
+    client_id: process.env.GOOGLE_ID,
+    client_secret: process.env.GOOGLE_SECRET,
     code: code,
-    redirect_uri: `${process.env.DOMAIN_URL!}/api/auth/callback/google`,
+    redirect_uri: `${process.env.DOMAIN_URL}/api/auth/callback/google`,
     grant_type: "authorization_code",
   };
+
   const payload = new URLSearchParams(params);
   const res = await fetch(TOKEN_URL, {
     method: "POST",

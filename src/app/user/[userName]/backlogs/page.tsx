@@ -1,4 +1,3 @@
-import Title from "@/components/Common/Title";
 import LinkButton from "@/components/Common/UI/LinkButton";
 import UserBacklogs from "@/containers/User/UserBacklogs";
 import React from "react";
@@ -43,7 +42,7 @@ export default async function Backlogs({
           </div>
         </TopTitle>
       ) : (
-        <Title title={`${params.userName} backlogs`} />
+        <TopTitle title={`${params.userName} backlogs`} />
       )}
 
       <main className="container flex  w-full flex-col  self-center">

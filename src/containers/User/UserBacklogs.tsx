@@ -8,7 +8,7 @@ import { FaRegFolderOpen } from "react-icons/fa6";
 const listIsEmpty = (isOwner: boolean) => {
   return (
     <>
-      <div className="flex h-80 w-full flex-col justify-center     bg-layer-1 p-4">
+      <div className="flex h-80 w-full flex-col justify-center     bg-layer-1 px-8 py-4">
         <FaRegFolderOpen className=" my-4 text-secondary-text" size={80} />
         <p className="mb-4 text-xl">
           {isOwner

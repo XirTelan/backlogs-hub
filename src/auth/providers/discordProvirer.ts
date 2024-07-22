@@ -6,11 +6,19 @@ import { OAuthProps } from "@/zodTypes";
 const TOKEN_URL = "https://discord.com/api/oauth2/token	";
 
 export const getDiscordToken = async (code: string) => {
+  if (
+    !process.env.DISCORD_ID ||
+    !process.env.DISCORD_SECRET ||
+    !process.env.DOMAIN_URL
+  ) {
+    console.error("OAuth env vars not provided");
+    throw new Error("OAuth env vars not provided");
+  }
   const params = {
-    client_id: process.env.DISCORD_ID!,
-    client_secret: process.env.DISCORD_SECRET!,
+    client_id: process.env.DISCORD_ID,
+    client_secret: process.env.DISCORD_SECRET,
     code: code,
-    redirect_uri: `${process.env.DOMAIN_URL!}/api/auth/callback/discord`,
+    redirect_uri: `${process.env.DOMAIN_URL}/api/auth/callback/discord`,
     grant_type: "authorization_code",
   };
   const payload = new URLSearchParams(params);

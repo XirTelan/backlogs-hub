@@ -1,7 +1,8 @@
 "use client";
+import Loading from "@/components/Common/Loading";
 import GameCard from "@/components/GameCard";
 import useDebounce from "@/hooks/useDebounce";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function SearchGameBar({ onClose }: searchGameBarProps) {
   const [inputText, setInputText] = useState<string>("");
@@ -44,7 +45,7 @@ export default function SearchGameBar({ onClose }: searchGameBarProps) {
       </div>
 
       <div className="flex ">
-        {loading && <div>Loading</div>}
+        {loading && <Loading />}
 
         <ul className="flex flex-wrap gap-4">
           {!loading &&

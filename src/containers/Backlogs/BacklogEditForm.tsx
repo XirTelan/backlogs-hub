@@ -7,13 +7,14 @@ import { BacklogDTO } from "@/zodTypes";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import TopTitle from "@/components/Common/UI/TopTitle";
+import Loading from "@/components/Common/Loading";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const backlogData = useSWR(`/api/backlogs/${id}`, fetcher);
   const userFolders = useSWR(`/api/users/`, fetcher);
   const router = useRouter();
 
-  if (backlogData.isLoading || userFolders.isLoading) return <div>Loading</div>;
+  if (backlogData.isLoading || userFolders.isLoading) return <Loading />;
 
   const onSubmit: SubmitHandler<BacklogDTO> = async (data) => {
     if (data._id) {
@@ -27,7 +28,6 @@ const BacklogEditForm = ({ id }: { id: string }) => {
       body: JSON.stringify(data),
     });
     if (res.ok)
-
       router.push(
         `/user/${userFolders.data.data.username}/backlogs/${backlogData.data.slug}`,
       );

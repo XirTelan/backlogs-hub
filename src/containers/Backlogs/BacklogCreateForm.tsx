@@ -6,11 +6,12 @@ import { fetcher, generateSlug } from "@/utils";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import useSWR from "swr";
+import Loading from "@/components/Common/Loading";
 
 const BacklogCreateForm = () => {
   const router = useRouter();
   const userFolders = useSWR(`/api/users/`, fetcher);
-  if (userFolders.isLoading) return <div>Loading</div>;
+  if (userFolders.isLoading) return <Loading />;
   if (!userFolders.data.isSuccess) return <div>Error</div>;
   const defaultCategories: BacklogCategory[] = [
     { name: "Completed", color: "#0043CE", protected: false },

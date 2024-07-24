@@ -1,6 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import ButtonBase from "./UI/ButtonBase";
+import ButtonBase, { ButtonColorVariants } from "./UI/ButtonBase";
 import { ButtonBaseProps } from "@/types";
 
 const Modal = ({
@@ -13,14 +13,7 @@ const Modal = ({
 }: {
   confirmOptions?: ButtonBaseProps;
   action?: () => unknown;
-  actionType?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "ghost"
-    | "dangerPrimary"
-    | "dangerTertiary"
-    | "dangerGhost";
+  actionType?: ButtonColorVariants;
   showActions?: boolean;
   setClose: () => void;
   children: React.ReactElement | React.ReactElement[];

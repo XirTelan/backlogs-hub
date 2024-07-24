@@ -16,11 +16,23 @@ export async function GET(
   try {
     const res = await getBacklogItemById(itemId);
     if (!res.isSuccess) return sendMsg.error(res.errors, 400);
-    const { isSuccess } = await isAuthorizedBacklogOwner(
+    const backlogData = await isAuthorizedBacklogOwner(
       res.data.backlogId,
       "read",
     );
-    if (!isSuccess) return sendMsg.error("Not authorized", 401);
+    if (!backlogData.isSuccess) return sendMsg.error("Not authorized", 401);
+
+    const map = backlogData.data.fields?.reduce((acc, item) => {
+      acc.set(item._id, item.name);
+      return acc;
+    }, new Map());
+    res.data.userFields = res.data.userFields.map((item) => {
+      return {
+        ...item,
+        backlogFieldId: map?.get(item.backlogFieldId) || item.backlogFieldId,
+      };
+    });
+
     return NextResponse.json({ status: "success", data: res.data });
   } catch (error) {
     sendMsg.error(error);

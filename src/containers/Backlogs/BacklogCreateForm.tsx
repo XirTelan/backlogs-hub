@@ -6,7 +6,7 @@ import { fetcher, generateSlug } from "@/utils";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import useSWR from "swr";
-import Loading from "@/components/Common/Loading";
+import Loading from "@/components/Common/UI/Loading/Loading";
 
 const BacklogCreateForm = () => {
   const router = useRouter();

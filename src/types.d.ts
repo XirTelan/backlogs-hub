@@ -1,7 +1,7 @@
 import { FieldError } from "react-hook-form";
 import { BacklogCategory, Field, UserDTO } from "./zodTypes";
+import { ButtonColorVariants } from "./components/Common/UI/ButtonBase";
 import React from "react";
-
 type Layer = 1 | 2 | 3;
 
 export type InputFieldProps = {
@@ -92,14 +92,7 @@ export type ButtonBaseProps = {
   hideText?: boolean;
   size?: "small" | "medium" | "large" | "elarge";
   icon?: React.ReactElement;
-  variant?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "ghost"
-    | "dangerPrimary"
-    | "dangerTertiary"
-    | "dangerGhost";
+  variant?: ButtonColorVariants;
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement

@@ -7,7 +7,7 @@ import { BacklogDTO } from "@/zodTypes";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import TopTitle from "@/components/Common/UI/TopTitle";
-import Loading from "@/components/Common/Loading";
+import Loading from "@/components/Common/UI/Loading/Loading";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const backlogData = useSWR(`/api/backlogs/${id}`, fetcher);

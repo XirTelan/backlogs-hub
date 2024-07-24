@@ -64,7 +64,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const data: BacklogFormData = await request.json();
   const user = await getCurrentUserInfo();
+  
+  if (!data.backlogTitle) return sendMsg.error("Incorrect data", 400);
   if (!user) return sendMsg.error("Not authorized", 401);
+
   const backlogData: BacklogCreationDTO = {
     ...data,
     userId: user.id,
@@ -80,7 +83,7 @@ export async function POST(request: NextRequest) {
     if (!backlog.isSuccess)
       return sendMsg.error(backlog.message, 400, backlog.errors);
     await updateStat(user.id, "totalBacklogs");
-    revalidatePath(`/user/${user.username}/backlogs`);
+    revalidatePath(`/user/${user.username}`);
     return NextResponse.json(backlog);
   } catch (error) {
     return sendMsg.error(error);

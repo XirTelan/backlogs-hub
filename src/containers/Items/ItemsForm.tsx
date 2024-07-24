@@ -84,6 +84,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         case "timer":
           return (
             <ProgressTimer
+              layer={2}
               label={field.name}
               defaultValue={fieldValue}
               setValue={setValue as (name: string, val: string) => void}

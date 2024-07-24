@@ -236,9 +236,6 @@ export async function updateStat(
     if (!Object.prototype.hasOwnProperty.call(stats, option)) {
       return;
     }
-    if (!Object.prototype.hasOwnProperty.call(stats, option)) {
-      return;
-    }
     const oldVal = stats[option] || 0;
     const newVal = type === "increment" ? oldVal + defVal : oldVal - defVal;
     await user.updateOne({ stats: { ...stats, [option]: newVal } });

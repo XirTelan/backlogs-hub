@@ -3,7 +3,7 @@ import { IoIosArrowUp } from "react-icons/io";
 
 const variants = {
   default: "flex-col pb-2",
-  inline: "justify-between items-center bg-transparent ",
+  inline: "justify-between items-center bg-transparent w-full ",
   fluid: "",
 };
 const elevation = {

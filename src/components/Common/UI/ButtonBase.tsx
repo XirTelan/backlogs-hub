@@ -13,9 +13,10 @@ const buttonSize = {
   large: "w-12 min-w-12",
   elarge: "w-12 min-w-12",
 };
-const variants = {
+const buttonColorVariants = {
   primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
   secondary: "bg-secondary-btn hover:bg-secondary-btn-hover text-white",
+  accent: "bg-green-600 hover:bg-green-500",
   tertiary:
     "outline text-white  hover:text-inverse outline-1 -outline-offset-2 outline-white hover:bg-tertiary-btn-hover",
   ghost: "text-primary-link hover:bg-subtle-3/15",
@@ -24,6 +25,7 @@ const variants = {
   dangerGhost:
     "text-danger-text hover:bg-danger-btn-hover hover:text-white disabled:bg-transparent",
 };
+export type ButtonColorVariants = keyof typeof buttonColorVariants;
 
 const ButtonBase = ({
   text,
@@ -37,7 +39,7 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${variants[variant]} ${sizes[size]}  relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
+        className={`${buttonColorVariants[variant]} ${sizes[size]}  relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
       >
         {text && (
           <div className={` px-2  ${hideText && "hidden md:block"}`}>

@@ -94,7 +94,7 @@ export const RegistrationSchema = z
       .string()
       .min(4)
       .regex(new RegExp(/^[a-zA-Z0-9_=]+$/), {
-        message: `Username can only contain letters, numbers, "-", and "_"`,
+        message: `Username can only contain letters, numbers and "_"`,
       }),
     email: z.string().email("Email is required"),
     folders: z.string().array().default(["Default"]),
@@ -137,7 +137,12 @@ export const ConfigSchema = z.object({
 
 export const UserBase = z.object({
   _id: z.string(),
-  username: z.string(),
+  username: z
+    .string()
+    .min(4)
+    .regex(new RegExp(/^[a-zA-Z0-9_=]+$/), {
+      message: `Username can only contain letters, numbers and "_"`,
+    }),
 });
 
 export const UserSchema = UserBase.merge(

@@ -9,6 +9,7 @@ import BacklogItem from "@/components/Backlog/BacklogItem";
 import { useState } from "react";
 import { fetcher } from "@/utils";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 
 const BacklogItemTr = ({
   item,
@@ -70,7 +71,9 @@ const BacklogItemTr = ({
       {isOpen &&
         (res.isLoading ? (
           <tr role="region" className="border-b border-field-2 ">
-            <td colSpan={3}>Loading</td>
+            <td colSpan={3}>
+              <LoadingAnimation />
+            </td>
           </tr>
         ) : (
           <tr role="region" className="border-b border-field-2 ">

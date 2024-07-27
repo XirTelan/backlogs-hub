@@ -103,7 +103,7 @@ export async function PATCH(request: NextRequest) {
       updateBacklogsOrderById(data.backlogs),
     ]);
     revalidatePath(`/user/${user.username}/backlogs`);
-    return sendMsg.success(`Created`, 201);
+    return sendMsg.success(`Created`, 200);
   } catch (error) {
     throw new Error(`${error}`);
   }

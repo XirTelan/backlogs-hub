@@ -40,7 +40,7 @@ const Title = ({
     >
       <div>
         <Tag
-          className={`${fonts[variant]} flex`}
+          className={`${fonts[variant]} flex break-all `}
           style={{ marginLeft: titleOffset }}
         >
           {title}

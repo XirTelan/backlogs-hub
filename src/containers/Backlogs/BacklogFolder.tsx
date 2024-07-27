@@ -33,7 +33,9 @@ const BacklogFolder = ({
                 key={backlog._id}
               >
                 <>
-                  <Title variant={3} title={backlog.backlogTitle} />
+                  <div>
+                    <Title variant={3} title={backlog.backlogTitle} />
+                  </div>
                   <div className="text-sm font-light text-secondary-text	 ">
                     {backlog.totalCount > 0 ? (
                       <div className="flex items-center justify-between">

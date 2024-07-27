@@ -29,16 +29,6 @@ import BacklogDndItem from "../Backlogs/BacklogDndItem";
 import { DndListProps } from "@/types";
 import { toastCustom } from "@/lib/toast";
 
-const dropAnimation: DropAnimation = {
-  sideEffects: defaultDropAnimationSideEffects({
-    styles: {
-      active: {
-        opacity: "0.5",
-      },
-    },
-  }),
-};
-
 const DnDMultList = ({
   data,
   view = "full",
@@ -303,3 +293,13 @@ const DnDMultList = ({
 };
 
 export default DnDMultList;
+
+const dropAnimation: DropAnimation = {
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: {
+      active: {
+        opacity: "0.5",
+      },
+    },
+  }),
+};

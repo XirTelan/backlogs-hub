@@ -5,7 +5,7 @@ import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import { BacklogDTO, BacklogCreationDTO } from "@/zodTypes";
 import { getUserData } from "./user";
-import { BacklogCreationSchema, BacklogDTOSchema } from "@/zod";
+import { BacklogCreationSchema } from "@/zod";
 import { z } from "zod";
 import { ResponseData } from "@/types";
 
@@ -86,7 +86,7 @@ export const getBacklogsByFolder = async (userName: string) => {
       backlog._id = backlog._id.toString();
       if (isHideFoldersName)
         backlog.folder = `Folder ${user.folders.indexOf(backlog.folder)}`;
-      if (backlog.folder === undefined) {
+      if (backlog.folder === undefined || !hashMap[backlog.folder]) {
         backlog.folder = user.folders[0];
         if (isOwner) {
           updatePromises.push(
@@ -96,7 +96,6 @@ export const getBacklogsByFolder = async (userName: string) => {
       }
       hashMap[backlog.folder].push(backlog);
     }
-
     await Promise.all(updatePromises);
 
     return hashMap;
@@ -194,10 +193,19 @@ export const createBacklog = async (backlog: BacklogCreationDTO) => {
   }
 };
 //PUT/PATCH SECTION
-export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
+export const updateBacklogsOrderById = async (data: Partial<BacklogDTO[]>) => {
   try {
     await dbConnect();
-    const backlogs = z.array(BacklogDTOSchema).safeParse(data);
+    const backlogs = z
+      .array(
+        z.object({
+          _id: z.string(),
+          userId: z.string(),
+          folder: z.string(),
+          order: z.number(),
+        }),
+      )
+      .safeParse(data);
     if (!backlogs.success) return { isSuccess: false, errors: backlogs.error };
     const updates: Promise<unknown>[] = [];
     backlogs.data.forEach(async (backlog) => {
@@ -218,8 +226,9 @@ export const updateBacklogsOrderById = async (data: BacklogDTO[]) => {
 export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
   try {
     await dbConnect();
-
-    const parsedData = BacklogDTOSchema.safeParse(data);
+    const parsedData = z
+      .object({ _id: z.string(), folder: z.string() })
+      .safeParse(data);
     if (!parsedData.success) {
       console.error(parsedData.error);
       return { isSuccess: false };

@@ -1,29 +1,12 @@
 import toast, { Toast } from "react-hot-toast";
-import { FaCheckCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
-import { BsSlashCircleFill } from "react-icons/bs";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { AnimatePresence, motion } from "framer-motion";
-
-const toastIcons = {
-  success: <FaCheckCircle />,
-  error: <BsSlashCircleFill />,
-};
-
-const toastStyle = {
-  success: {
-    border: " border-s-support-success border-support-success/50",
-    text: "text-support-success",
-  },
-  error: {
-    border: "border-s-support-error border-support-error/30",
-    text: " text-support-error ",
-  },
-};
+import { toastStyle } from "@/components/Common/UI/Notification";
 
 const renderToastContent =
   // eslint-disable-next-line react/display-name, @typescript-eslint/no-explicit-any
-  (text: string, type: "success" | "error") => (t: any) => (
+  (text: string, type: "success" | "error" | "info") => (t: any) => (
     <AnimatePresence>
       {t.visible && (
         <motion.div
@@ -33,7 +16,7 @@ const renderToastContent =
           className={`flex min-h-12 items-center gap-4 border border-s-4 ${toastStyle[type].border}  bg-layer-1`}
         >
           <div className={`ms-4 ${toastStyle[type].text} `}>
-            {toastIcons[type]}
+            {toastStyle[type].icon}
           </div>
           <div className="flex w-full flex-wrap">{text}</div>
           <ButtonBase

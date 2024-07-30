@@ -1,6 +1,7 @@
 import PanelItemsWrapper from "@/components/Common/UI/PanelItemsWrapper";
 import { getBacklogsByFolder } from "@/services/backlogs";
 import React from "react";
+import { FaFolder } from "react-icons/fa6";
 
 const UserBacklogsSideNav = async ({ userName }: { userName: string }) => {
   const data = await getBacklogsByFolder(userName);
@@ -11,7 +12,10 @@ const UserBacklogsSideNav = async ({ userName }: { userName: string }) => {
         if (backlogs.length == 0) return;
         return (
           <div key={folder}>
-            <div className="ps-2 text-secondary-text">{folder}</div>
+            <div className="flex items-center">
+              <FaFolder className="ms-2" size={12} />
+              <div className="ps-2 text-secondary-text">{folder}</div>
+            </div>
             <div className="ps-2">
               <PanelItemsWrapper
                 baseUrl={`/user/${userName}/backlogs`}

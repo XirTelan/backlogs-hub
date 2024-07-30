@@ -82,7 +82,7 @@ const DroppableContainer = ({
       <div className="flex items-center ">
         <FaFolder className="mx-2" />
         <Title width="fit-content" title={id as string} variant={3} />
-        <div className="flex min-h-[2rem] w-full bg-transparent">
+        <div className="flex min-h-[2rem] flex-grow bg-transparent">
           <Handle
             style={{
               border: 0,

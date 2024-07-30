@@ -46,7 +46,7 @@ const AddItem = ({
           }}
         />
         <ButtonBase
-          variant="secondary"
+          variant="primary"
           aria-description="Add new folder"
           disabled={isDisabled || newFolder === ""}
           onClick={handleSubmit}
@@ -55,7 +55,6 @@ const AddItem = ({
         />
         <ButtonBase
           aria-description="Cancel"
-
           variant="secondary"
           size="small"
           onClick={() => {

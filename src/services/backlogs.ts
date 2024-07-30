@@ -8,6 +8,7 @@ import { getUserData } from "./user";
 import { BacklogCreationSchema } from "@/zod";
 import { z } from "zod";
 import { ResponseData } from "@/types";
+import { generateSlug } from "@/utils";
 
 //GET SECTION
 export const getBacklogById = async (
@@ -226,36 +227,39 @@ export const updateBacklogsOrderById = async (data: Partial<BacklogDTO[]>) => {
 export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
   try {
     await dbConnect();
-    const parsedData = z
-      .object({ _id: z.string(), folder: z.string() })
-      .safeParse(data);
-    if (!parsedData.success) {
-      console.error(parsedData.error);
-      return { isSuccess: false };
-    }
-
-    const backlog = await Backlog.findById(data._id)
-      .select("categories")
-      .lean();
-
-    const oldBacklogCats = backlog?.categories.map((cat) => cat.name);
-    const oldCount = oldBacklogCats?.length;
 
     const updQueries: Promise<unknown>[] = [];
-    data.categories?.forEach((cat, indx) => {
-      if (!oldCount || indx > oldCount || cat.name == oldBacklogCats[indx])
-        return;
-      updQueries.push(
-        BacklogItem.updateMany(
-          { backlogId: backlog?._id, category: oldBacklogCats[indx] },
-          { category: cat.name },
-        ),
-      );
-    });
+    if (!data._id) return { isSuccess: false };
+
+    if (data.categories) {
+      const backlog = await Backlog.findById(data._id)
+        .select("categories")
+        .lean();
+        
+      if (!backlog) return { isSuccess: false };
+
+      const oldBacklogCats = backlog?.categories.map((cat) => cat.name);
+      const oldCount = oldBacklogCats?.length;
+
+      data.categories?.forEach((cat, indx) => {
+        if (!oldCount || indx > oldCount || cat.name == oldBacklogCats[indx])
+          return;
+        updQueries.push(
+          BacklogItem.updateMany(
+            { backlogId: backlog?._id, category: oldBacklogCats[indx] },
+            { category: cat.name },
+          ),
+        );
+      });
+    }
+
+    if (data.backlogTitle) {
+      data.slug = generateSlug(data.backlogTitle);
+    }
 
     await Promise.all([
       ...updQueries,
-      Backlog.findByIdAndUpdate(data._id, parsedData.data),
+      Backlog.findByIdAndUpdate(data._id, data),
     ]);
 
     return { isSuccess: true };

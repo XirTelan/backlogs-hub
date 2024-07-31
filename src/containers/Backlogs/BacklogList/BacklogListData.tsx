@@ -36,7 +36,7 @@ const BacklogListData = ({
         <BacklogItemTr
           onDelete={() => setIsOpen(item._id)}
           showActions={isOwner}
-          key={indx}
+          key={item._id ?? indx}
           item={item}
           color={categoriesMap.get(item.category) || "#fff"}
         />

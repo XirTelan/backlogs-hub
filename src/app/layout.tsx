@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "BacklogsHub",
   description: "All backlogs in one place",
 };
+import ProgressBarProvider from "@/components/ProgressBarProvider";
 
 export default function RootLayout({
   children,
@@ -38,8 +39,11 @@ export default function RootLayout({
               },
             }}
           />
+
           <Header />
-          <div className="mt-[49px] flex flex-col">{children}</div>
+          <ProgressBarProvider>
+            <div className="mt-[49px] flex flex-col">{children}</div>
+          </ProgressBarProvider>
 
           <Footer />
         </div>

@@ -1,5 +1,4 @@
 import style from "./Loading.module.css";
-const lines = [0, 1, 2, 3, 4, 3, 2, 1, 0];
 
 const LoadingAnimation = ({
   height = 160,
@@ -16,9 +15,15 @@ const LoadingAnimation = ({
         style={{ height: height, maxHeight: height }}
         className={`${style.container}`}
       >
-        {lines.map((item) => {
-          return <div key={item} className={style.bar} />;
-        })}
+        <div className={style.bar} />
+        <div className={style.bar} />
+        <div className={style.bar} />
+        <div className={style.bar} />
+        <div className={style.bar} />
+        <div className={style.bar} />
+        <div className={style.bar} />
+        <div className={style.bar} />
+        <div className={style.bar} />
       </div>
     </div>
   );

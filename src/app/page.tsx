@@ -55,6 +55,10 @@ export default async function Home() {
                       <LinkBase href={"/contacts"}>
                         Appreciate any feedback
                       </LinkBase>
+
+                      <LinkBase href={"/updates"}>
+                        Check out the latest updates
+                      </LinkBase>
                     </div>
                   }
                   type={"info"}

@@ -15,7 +15,11 @@ const UpdatesList = ({ data }: { data: NewsType[] }) => {
           id={news.title}
           title={news.title}
         >
-          <MDEditor.Markdown className="flex-1" source={news.text} />
+          <MDEditor.Markdown
+            style={{ background: "#161616" }}
+            className="flex-1 "
+            source={news.text}
+          />
         </Accordion>
       ))}
     </div>

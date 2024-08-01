@@ -8,6 +8,7 @@ const Footer = () => {
         <div className=" flex flex-col p-4 ">
           <LinkBase href={"/faq"}>FAQ</LinkBase>
           <LinkBase href={"/contacts"}>Contacts</LinkBase>
+          <LinkBase href={"/updates"}>Updates</LinkBase>
         </div>
       </div>
     </footer>

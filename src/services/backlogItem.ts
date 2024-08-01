@@ -2,8 +2,14 @@ import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import { ResponseData } from "@/types";
-import { BacklogItemCreationDTO, BacklogItemDTO } from "@/zodTypes";
+import {
+  BacklogItemCreationDTO,
+  BacklogItemDTO,
+  BacklogItemPopulated,
+  BacklogItemPopUserField,
+} from "@/zodTypes";
 import { NextResponse } from "next/server";
+import { isAuthorizedBacklogOwner } from "./backlogs";
 
 export const getBacklogItemById = async (
   itemId: string,
@@ -146,4 +152,44 @@ export const getBacklogItemsData = async (
   } catch (error) {
     throw new Error(`${error}`);
   }
+};
+
+export const getAndPopulateBacklogItemById = async (
+  itemId: string,
+): Promise<ResponseData<BacklogItemPopulated>> => {
+  const res = await getBacklogItemById(itemId);
+  if (!res.isSuccess) return { isSuccess: false, errors: "Wrong ItenId" };
+  const newFields = await populateUserFields(res.data);
+  if (!newFields.isSuccess)
+    return { isSuccess: false, errors: newFields.errors };
+  return {
+    isSuccess: true,
+    data: { ...res.data, userFields: newFields.data },
+  };
+};
+
+const populateUserFields = async (
+  backlogItem: BacklogItemDTO,
+): Promise<ResponseData<BacklogItemPopUserField[]>> => {
+  const backlogData = await isAuthorizedBacklogOwner(
+    backlogItem.backlogId,
+    "read",
+  );
+  if (!backlogData.isSuccess)
+    return { isSuccess: false, errors: "Not Authorized" };
+
+  const map = backlogData.data.fields?.reduce((acc, item) => {
+    acc.set(item._id, item);
+    return acc;
+  }, new Map());
+
+  const populatedFields = backlogItem.userFields.map((item) => {
+    const curItem = map?.get(item.backlogFieldId);
+    return {
+      ...item,
+      backlogFieldId: curItem.name || item.backlogFieldId,
+      type: curItem.type,
+    };
+  });
+  return { isSuccess: true, data: populatedFields };
 };

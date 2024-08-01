@@ -1,5 +1,6 @@
 import {
   deleteBacklogItem,
+  getAndPopulateBacklogItemById,
   getBacklogItemById,
   putBacklogItem,
 } from "@/services/backlogItem";
@@ -14,27 +15,8 @@ export async function GET(
   { params: { itemId } }: { params: { itemId: string } },
 ) {
   try {
-    const res = await getBacklogItemById(itemId);
-    if (!res.isSuccess) return sendMsg.error(res.errors, 400);
-    const backlogData = await isAuthorizedBacklogOwner(
-      res.data.backlogId,
-      "read",
-    );
-    if (!backlogData.isSuccess) return sendMsg.error("Not authorized", 401);
-
-    const map = backlogData.data.fields?.reduce((acc, item) => {
-      acc.set(item._id, item);
-      return acc;
-    }, new Map());
-    res.data.userFields = res.data.userFields.map((item) => {
-      const curItem = map?.get(item.backlogFieldId);
-      return {
-        ...item,
-        backlogFieldId: curItem.name || item.backlogFieldId,
-        type: curItem.type,
-      };
-    });
-
+    const res = await getAndPopulateBacklogItemById(itemId);
+    if (!res.isSuccess) return sendMsg.error(res.errors);
     return NextResponse.json({ status: "success", data: res.data });
   } catch (error) {
     sendMsg.error(error);

@@ -58,6 +58,12 @@ export const BacklogCreationSchema = BacklogDTOSchema.omit({
   updatedAt: true,
   createdAt: true,
 });
+export const BacklogItemPopUserFieldSchema = z.object({
+  backlogFieldId: z.string(),
+  type: z.string(),
+  value: z.string(),
+});
+
 export const BacklogItemUserFieldSchema = z.object({
   backlogFieldId: z.string(),
   value: z.string(),
@@ -69,6 +75,16 @@ export const BacklogItemCreationSchema = z.object({
   category: z.string(),
   userFields: BacklogItemUserFieldSchema.array(),
 });
+
+export const BacklogItemPopSchema = BacklogItemCreationSchema.omit({
+  userFields: true,
+}).merge(
+  z.object({
+    _id: z.string(),
+    userFields: BacklogItemPopUserFieldSchema.array(),
+  }),
+);
+
 export const BacklogItemSchema = BacklogItemCreationSchema.merge(
   z.object({
     _id: z.string(),
@@ -176,6 +192,15 @@ export const TemplateDTOSchema = BacklogFormSchema.omit({
   }),
 );
 export const TemplateCreateSchema = TemplateDTOSchema.omit({ _id: true });
+
+//News
+
+export const NewsSchema = z.object({
+  _id: z.string(),
+  title: z.string(),
+  text: z.string(),
+  date: z.date().optional(),
+});
 
 //utils
 const uniqueArray = <T>(

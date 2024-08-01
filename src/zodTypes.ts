@@ -6,6 +6,8 @@ import {
   BacklogDTOSchema,
   BacklogFormSchema,
   BacklogItemCreationSchema,
+  BacklogItemPopSchema,
+  BacklogItemPopUserFieldSchema,
   BacklogItemSchema,
   BacklogItemUserFieldSchema,
   ConfigSchema,
@@ -13,6 +15,7 @@ import {
   FieldSchema,
   LogDataDTOSchema,
   LogDataSchema,
+  NewsSchema,
   OauthSchema,
   StatsSchema,
   TemplateDTOSchema,
@@ -32,6 +35,11 @@ export type BacklogCreationDTO = z.infer<typeof BacklogCreationSchema>;
 export type BacklogCategory = z.infer<typeof BacklogCategorySchema>;
 
 export type BacklogItemDTO = z.infer<typeof BacklogItemSchema>;
+export type BacklogItemPopUserField = z.infer<
+  typeof BacklogItemPopUserFieldSchema
+>;
+export type BacklogItemPopulated = z.infer<typeof BacklogItemPopSchema>;
+
 export type BacklogItemUserField = z.infer<typeof BacklogItemUserFieldSchema>;
 export type BacklogItemCreationDTO = z.infer<typeof BacklogItemCreationSchema>;
 export type OAuthProps = z.infer<typeof OauthSchema>;
@@ -46,3 +54,5 @@ export type StatsType = z.infer<typeof StatsSchema>;
 
 export type Log = z.infer<typeof LogDataSchema>;
 export type LogDTO = z.infer<typeof LogDataDTOSchema>;
+
+export type NewsType = z.infer<typeof NewsSchema>;

@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { IoMdTimer } from "react-icons/io";
 import { IoText } from "react-icons/io5";
 import { AiOutlineFieldNumber } from "react-icons/ai";
-import { FaCalendarCheck } from "react-icons/fa";
+import { FaCalendarCheck, FaMarkdown } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import ButtonBase from "../Common/UI/ButtonBase";
 import Title from "../Common/Title";
@@ -20,6 +20,7 @@ const icons = {
   date: <FaCalendarCheck />,
   lock: <FaLock size={16} />,
   select: <GoMultiSelect />,
+  markdown: <FaMarkdown />,
 };
 
 const TemplateCard = ({

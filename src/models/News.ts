@@ -1,3 +1,4 @@
+import { NewsType } from "@/zodTypes";
 import mongoose from "mongoose";
 
 const NewsSchema = new mongoose.Schema(
@@ -9,6 +10,7 @@ const NewsSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const News = mongoose.models.News || mongoose.model("News", NewsSchema);
+const News: mongoose.Model<NewsType> =
+  mongoose.models.News || mongoose.model("News", NewsSchema);
 
 export default News;

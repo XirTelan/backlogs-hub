@@ -7,9 +7,11 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Select from "@/components/Common/UI/Select";
 import { BacklogCategory, BacklogItemCreationDTO, Field } from "@/zodTypes";
 import { useCallback } from "react";
-import ProgressTimer from "@/components/Common/UI/ProgressTimer";
+import ProgressTimer from "@/containers/Fields/ProgressTimer";
 import { toastCustom } from "@/lib/toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
+import MarkdownEditor from "../Fields/MarkdownEditor";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   categories,
@@ -94,6 +96,29 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
             />
           );
           break;
+        case "markdown":
+          return (
+            <MarkdownEditor
+              defaultValue={fieldValue}
+              setValue={setValue as (name: string, val: string) => void}
+              {...register(`userFields.${index}.value`, {
+                required: false,
+              })}
+            />
+          );
+          break;
+        case "select":
+          return (
+            <Select
+              layer={2}
+              label={field.name}
+              options={field.data || []}
+              {...register(`userFields.${index}.value`, {
+                required: false,
+              })}
+            />
+          );
+          break;
         case "text":
         case "number":
         case "date":
@@ -109,17 +134,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
               })}
             />
           );
-        case "select":
-          return (
-            <Select
-              layer={2}
-              label={field.name}
-              options={field.data || []}
-              {...register(`userFields.${index}.value`, {
-                required: false,
-              })}
-            />
-          );
+          break;
       }
     },
     [mapFields, register, setValue],
@@ -144,20 +159,22 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           />
         </div>
       </div>
-      <FieldsBlock title="Fields" status="disabled">
-        <>
-          {backlogFields.map((field, index) => {
-            return (
-              <li
-                className={`${inputTypes[field.type || "text"]}  w-auto bg-layer-1 p-2 `}
-                key={index}
-              >
-                {getFieldInput(field, index)}
-              </li>
-            );
-          })}
-        </>
-      </FieldsBlock>
+      {backlogFields.length > 0 && (
+        <FieldsBlock title="Fields" status="disabled">
+          <>
+            {backlogFields.map((field, index) => {
+              return (
+                <li
+                  className={`${inputTypes[field.type || "text"]}  w-auto bg-layer-1 p-2 `}
+                  key={index}
+                >
+                  {getFieldInput(field, index)}
+                </li>
+              );
+            })}
+          </>
+        </FieldsBlock>
+      )}
 
       <div className="my-4 flex w-full flex-col md:w-1/4 md:gap-4 ">
         <ButtonBase
@@ -177,9 +194,10 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
 };
 
 export default ItemsForm;
-const inputTypes = {
+
+const inputTypes: Record<Field["type"], string> = {
   text: "col-span-2",
-  textArea: "col-span-4",
+  markdown: "col-span-4",
   date: "",
   number: "col-span-2",
   timer: "col-span-2 md:col-span-4",

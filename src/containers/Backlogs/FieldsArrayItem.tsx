@@ -24,6 +24,15 @@ type FieldsArrayItem = {
   };
 };
 
+const FIELD_TYPES: Field["type"][] = [
+  "text",
+  "timer",
+  "number",
+  "date",
+  "markdown",
+  "select",
+];
+
 const FieldsArrayItem = ({
   index,
   register,
@@ -54,7 +63,7 @@ const FieldsArrayItem = ({
           <Select
             layer={2}
             {...register(`fields.${index}.type`)}
-            options={["text", "timer", "number", "date", "select"]}
+            options={FIELD_TYPES}
           />
         </td>
         <td>

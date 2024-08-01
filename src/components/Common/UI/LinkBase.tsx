@@ -8,7 +8,7 @@ const LinkBase = ({
   return (
     <Link
       {...props}
-      className="  text-primary-link hover:text-primary-link-hover"
+      className="  flex text-primary-link hover:text-primary-link-hover"
     >
       {children}
     </Link>

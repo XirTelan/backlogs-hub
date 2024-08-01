@@ -10,7 +10,7 @@ export const FieldSchema = z
   .and(
     z.discriminatedUnion("type", [
       z.object({
-        type: z.enum(["text", "number", "date", "timer"]),
+        type: z.enum(["text", "markdown", "number", "date", "timer"]),
       }),
       z.object({
         type: z.literal("select"),

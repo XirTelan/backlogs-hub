@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import ButtonBase from "./ButtonBase";
+import ButtonBase from "../../components/Common/UI/ButtonBase";
 import { parseSeconds } from "@/utils";
 import { CgClose } from "react-icons/cg";
 

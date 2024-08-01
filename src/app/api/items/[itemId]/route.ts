@@ -23,13 +23,15 @@ export async function GET(
     if (!backlogData.isSuccess) return sendMsg.error("Not authorized", 401);
 
     const map = backlogData.data.fields?.reduce((acc, item) => {
-      acc.set(item._id, item.name);
+      acc.set(item._id, item);
       return acc;
     }, new Map());
     res.data.userFields = res.data.userFields.map((item) => {
+      const curItem = map?.get(item.backlogFieldId);
       return {
         ...item,
-        backlogFieldId: map?.get(item.backlogFieldId) || item.backlogFieldId,
+        backlogFieldId: curItem.name || item.backlogFieldId,
+        type: curItem.type,
       };
     });
 

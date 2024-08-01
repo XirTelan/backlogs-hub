@@ -2,10 +2,13 @@
 import React from "react";
 import BlockWrapper from "./BlockWrapper";
 import InputField from "./UI/InputField";
-import ProgressTimer from "./UI/ProgressTimer";
+import ProgressTimer from "../../containers/Fields/ProgressTimer";
 import Divider from "./UI/Divider";
 import { RxLapTimer } from "react-icons/rx";
 import Select from "./UI/Select";
+import MarkdownEditor from "@/containers/Fields/MarkdownEditor";
+import LinkBase from "./UI/LinkBase";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 const InputsDemoPage = () => {
   return (
@@ -56,6 +59,35 @@ const InputsDemoPage = () => {
           label="Select demo"
           options={["Example 1", "Example 2", "Example 3"]}
         ></Select>
+      </BlockWrapper>
+      <Divider />
+      <BlockWrapper
+        title={"Markdown"}
+        description={
+          <div className="flex gap-1">
+            <p>Text area editor with markdown syntax</p>
+            <LinkBase
+              target="_blank"
+              rel="noopener nofollow  noreferrer"
+              href={
+                "https://www.markdownguide.org/getting-started/#what-is-markdown"
+              }
+            >
+              What is Markdown?
+              <span className="ms-2">
+                <FaExternalLinkAlt title="Open in new window" />
+              </span>
+            </LinkBase>{" "}
+          </div>
+        }
+      >
+        <MarkdownEditor
+          name="Markdown"
+          defaultValue=""
+          setValue={() => {
+            return;
+          }}
+        />
       </BlockWrapper>
     </>
   );

@@ -1,8 +1,8 @@
 import React, { forwardRef, useEffect, useMemo, useState } from "react";
-import InputField from "./InputField";
+import InputField from "../../components/Common/UI/InputField";
 import Timer from "./Timer";
 import { parseSeconds, parseToSeconds } from "@/utils";
-import ButtonBase from "./ButtonBase";
+import ButtonBase from "../../components/Common/UI/ButtonBase";
 import { RxLapTimer } from "react-icons/rx";
 
 const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
@@ -53,7 +53,7 @@ const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
         <p>{label}</p>
         <div className="flex items-center">
           <div className="grid grid-cols-3 ">
-            <input {...props} className="hidden"></input>
+            <input {...props} aria-hidden className="hidden"></input>
             <InputField
               layer={layer}
               placeholder="HH"

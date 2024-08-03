@@ -3,6 +3,7 @@ import MDEditor from "@uiw/react-md-editor";
 import React from "react";
 import Accordion from "./Common/UI/Accordion";
 import { NewsType } from "@/zodTypes";
+import rehypeSanitize from "rehype-sanitize";
 
 const UpdatesList = ({ data }: { data: NewsType[] }) => {
   if (!data || data.length === 0) return <div>Updates doesnot found</div>;
@@ -17,6 +18,7 @@ const UpdatesList = ({ data }: { data: NewsType[] }) => {
         >
           <MDEditor.Markdown
             style={{ background: "#161616" }}
+            rehypePlugins={[rehypeSanitize]}
             className="flex-1 "
             source={news.text}
           />

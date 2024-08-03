@@ -120,7 +120,7 @@ const ContactsForm = ({
             },
           })}
         />
-        <ButtonBase disabled={!isValid} text="Send" />
+        <ButtonBase disabled={!isValid || isSubmitSuccessful} text="Send" />
       </form>
     </div>
   );

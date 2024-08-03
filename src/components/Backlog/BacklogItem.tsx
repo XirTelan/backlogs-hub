@@ -3,6 +3,7 @@ import React from "react";
 import { BacklogItemPopulated } from "@/zodTypes";
 import MDEditor from "@uiw/react-md-editor/nohighlight";
 import Accordion from "../Common/UI/Accordion";
+import rehypeSanitize from "rehype-sanitize";
 
 const BacklogItem = ({ data }: { data: BacklogItemPopulated }) => {
   return (
@@ -28,7 +29,13 @@ const renderFieldValue = (field: {
   value: string;
 }) => {
   if (field.type === "markdown") {
-    return <MDEditor.Markdown className="flex-1" source={field.value} />;
+    return (
+      <MDEditor.Markdown
+        className="flex-1"
+        rehypePlugins={[rehypeSanitize]}
+        source={field.value}
+      />
+    );
   } else {
     return field.value ? (
       field.value

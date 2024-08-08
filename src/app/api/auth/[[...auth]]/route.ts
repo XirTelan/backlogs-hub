@@ -70,7 +70,7 @@ const handleRegister = async (request: NextRequest) => {
     password: passwordHashed,
     provider: "credentials",
   });
-  if (!result.isSuccess) return sendMsg.error(result.message);
+  if (!result.success) return sendMsg.error(result.message);
   return NextResponse.json(
     { message: "Created", data: result.data },
     { status: 201 },
@@ -80,6 +80,6 @@ const handleRegister = async (request: NextRequest) => {
 const handleSignIn = async (request: NextRequest) => {
   const data = await request.json();
   const response = await signInWithLogin(data);
-  if (!response.isSuccess) return sendMsg.error(response.message);
+  if (!response.success) return sendMsg.error(response.message);
   return setTokenCookies(response.data, request.url);
 };

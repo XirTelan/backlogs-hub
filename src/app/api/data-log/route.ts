@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
   const data = await request.json();
   try {
     const res = await createLogEntry(data);
-    if (res.isSuccess) return NextResponse.json("Success", { status: 200 });
+    if (res.success) return NextResponse.json("Success", { status: 200 });
   } catch (error) {
     return sendMsg.error(error);
   }

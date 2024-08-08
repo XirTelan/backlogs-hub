@@ -66,9 +66,9 @@ export const deleteTemplate = async (
     await dbConnect();
     const template = await Template.findById(id);
     if (!userName || template?.author !== userName)
-      return { isSuccess: false, message: "Not Authorized" };
+      return { success: false, message: "Not Authorized" };
     const res = await template?.deleteOne();
-    return { isSuccess: true, data: res?.deletedCount };
+    return { success: true, data: res?.deletedCount };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }

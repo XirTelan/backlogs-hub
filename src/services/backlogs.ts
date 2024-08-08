@@ -110,7 +110,7 @@ export const isPrivateProfile = async (userName: string, isOwner: boolean) => {
   const config = await getUserData(userName, "config");
   return (
     !isOwner &&
-    (!config.isSuccess || config.data.config?.profileVisibility === "private")
+    (!config.success || config.data.config?.profileVisibility === "private")
   );
 };
 
@@ -181,14 +181,14 @@ export const createBacklog = async (backlog: BacklogCreationDTO) => {
     await dbConnect();
     const { success, data, error } = BacklogCreationSchema.safeParse(backlog);
     if (!success)
-      return { isSuccess: false, message: "Validation error", errors: error };
+      return { success: false, message: "Validation error", errors: error };
     const isExist = await isBacklogExist(data.userName, data.slug);
     if (isExist) {
-      return { isSuccess: false, message: "Already exist" };
+      return { success: false, message: "Already exist" };
     }
     const newBacklog = new Backlog(data);
     await newBacklog.save();
-    return { isSuccess: true, data: newBacklog };
+    return { success: true, data: newBacklog };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -207,7 +207,7 @@ export const updateBacklogsOrderById = async (data: Partial<BacklogDTO[]>) => {
         }),
       )
       .safeParse(data);
-    if (!backlogs.success) return { isSuccess: false, errors: backlogs.error };
+    if (!backlogs.success) return { success: false, errors: backlogs.error };
     const updates: Promise<unknown>[] = [];
     backlogs.data.forEach(async (backlog) => {
       updates.push(
@@ -218,7 +218,7 @@ export const updateBacklogsOrderById = async (data: Partial<BacklogDTO[]>) => {
       );
     });
     await Promise.all(updates);
-    return { isSuccess: true };
+    return { success: true };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -229,14 +229,14 @@ export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
     await dbConnect();
 
     const updQueries: Promise<unknown>[] = [];
-    if (!data._id) return { isSuccess: false };
+    if (!data._id) return { success: false };
 
     if (data.categories) {
       const backlog = await Backlog.findById(data._id)
         .select("categories")
         .lean();
-        
-      if (!backlog) return { isSuccess: false };
+
+      if (!backlog) return { success: false };
 
       const oldBacklogCats = backlog?.categories.map((cat) => cat.name);
       const oldCount = oldBacklogCats?.length;
@@ -262,7 +262,7 @@ export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
       Backlog.findByIdAndUpdate(data._id, data),
     ]);
 
-    return { isSuccess: true };
+    return { success: true };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -272,9 +272,9 @@ export const deleteBacklogById = async (id: string) => {
   try {
     await dbConnect();
     const res = await Backlog.deleteOne({ _id: id });
-    if (res.deletedCount === 0) return { isSuccess: false };
+    if (res.deletedCount === 0) return { success: false };
     await BacklogItem.deleteMany({ backlogId: id });
-    return { isSuccess: true };
+    return { success: true };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -303,11 +303,11 @@ export const isAuthorizedBacklogOwner = async (
   ]);
   const isOwner = !!user && user.username === backlog?.userName;
   if (!backlog)
-    return { isSuccess: false, data: null, message: "Backlog doesnt exist" };
+    return { success: false, data: null, message: "Backlog doesnt exist" };
   if (await isPrivateProfile(backlog.userName, isOwner))
-    return { isSuccess: false };
+    return { success: false };
   if (backlog.visibility === "public" && method === "read")
-    return { isSuccess: true, data: backlog };
-  if (backlog.userId !== user?.id) return { isSuccess: false, data: null };
-  return { isSuccess: true, data: backlog };
+    return { success: true, data: backlog };
+  if (backlog.userId !== user?.id) return { success: false, data: null };
+  return { success: true, data: backlog };
 };

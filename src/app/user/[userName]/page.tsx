@@ -15,7 +15,7 @@ const Page = async ({
     getCurrentUserInfo(),
     getUserData(userName, "all"),
   ]);
-  if (!user.isSuccess) return <NotFound />;
+  if (!user.success) return <NotFound />;
   if (
     curerntUser?.username !== userName &&
     user.data.config?.profileVisibility === "private"

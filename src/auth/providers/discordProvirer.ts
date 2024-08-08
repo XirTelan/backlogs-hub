@@ -46,10 +46,10 @@ export const getUserData = async (
   code: string,
 ): Promise<ResponseData<OAuthProps>> => {
   const token = await getDiscordToken(code);
-  if (!token) return { isSuccess: false, message: "wrong token" };
+  if (!token) return { success: false, message: "wrong token" };
   const userData = await getAuthInformation(token.access_token);
   return {
-    isSuccess: true,
+    success: true,
     data: {
       username: `user_D${userData.username}`,
       email: userData.email,

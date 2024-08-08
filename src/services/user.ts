@@ -38,9 +38,9 @@ export async function getUserData(
       .collation({ locale: "en", strength: 2 })
       .populate({ path: "accounts", select: "provider email " })
       .lean();
-    if (!user) return { isSuccess: false };
+    if (!user) return { success: false };
     user._id = user._id.toString();
-    return { isSuccess: true, data: user };
+    return { success: true, data: user };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -51,7 +51,7 @@ export async function getCurrentUserData(): Promise<
 > {
   try {
     const user = await getCurrentUserInfo();
-    if (!user) return { isSuccess: false };
+    if (!user) return { success: false };
     return await getUserData(user.username, "all");
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -79,7 +79,7 @@ export async function createUser(
     });
     if (user) {
       return {
-        isSuccess: false,
+        success: false,
         message: "User already exist",
       };
     }
@@ -95,13 +95,13 @@ export async function createUser(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...newUser } = (await User.create(data)).toObject();
     return {
-      isSuccess: true,
+      success: true,
       data: newUser,
     };
   } catch (error) {
     console.error(error);
     return {
-      isSuccess: false,
+      success: false,
       message: "Unexpected error",
     };
   }
@@ -110,10 +110,10 @@ export const updateUserFolders = async (username: string, data: string[]) => {
   try {
     await dbConnect();
     const user = await User.findOne({ username: username });
-    if (!user) return { isSuccess: false, message: "User doesnt exist" };
+    if (!user) return { success: false, message: "User doesnt exist" };
     user.folders = data;
     await user.save();
-    return { isSuccess: true };
+    return { success: true };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -143,14 +143,14 @@ export async function deleteUser(id: string) {
 //utils
 export async function getConfigOptions(): Promise<ResponseData<ConfigType>> {
   const user = await getCurrentUserInfo();
-  if (!user) return { isSuccess: false, message: "Something goes wrong" };
+  if (!user) return { success: false, message: "Something goes wrong" };
   try {
     await dbConnect();
     const userData = await User.findById(user.id).lean();
-    if (!userData) return { isSuccess: false, message: "Something goes wrong" };
-    return { isSuccess: true, data: userData.config };
+    if (!userData) return { success: false, message: "Something goes wrong" };
+    return { success: true, data: userData.config };
   } catch (error) {
-    return { isSuccess: false, message: JSON.stringify(error) };
+    return { success: false, message: JSON.stringify(error) };
   }
 }
 
@@ -161,10 +161,10 @@ export async function updateUserInfo(
 ) {
   try {
     const user = await getCurrentUserInfo();
-    if (!user) return { isSuccess: false, message: "Something goes wrong" };
+    if (!user) return { success: false, message: "Something goes wrong" };
     await dbConnect();
     const userData = await User.findById(user.id);
-    if (!userData) return { isSuccess: false, message: "User doesnt exist" };
+    if (!userData) return { success: false, message: "User doesnt exist" };
 
     let update;
     switch (type) {
@@ -184,23 +184,23 @@ export async function updateUserInfo(
     }
     await userData.updateOne(update);
     revalidatePath("/");
-    return { isSuccess: true };
+    return { success: true };
   } catch (error) {
-    return { error: error, isSuccess: false };
+    return { error: error, success: false };
   }
 }
 
 export async function changeUserName(username: string) {
-  if (typeof username !== "string") return { isSuccess: false };
+  if (typeof username !== "string") return { success: false };
   const regEx = new RegExp(/^[a-zA-Z0-9_=]+$/);
   const valid = regEx.test(username);
-  if (!valid) return { isSuccess: false };
+  if (!valid) return { success: false };
   try {
     const user = await getCurrentUserInfo();
-    if (!user) return { isSuccess: false, message: "Something goes wrong" };
+    if (!user) return { success: false, message: "Something goes wrong" };
     await dbConnect();
     const userData = await User.findById(user.id).lean();
-    if (!userData) return { isSuccess: false, message: "User doesnt exist" };
+    if (!userData) return { success: false, message: "User doesnt exist" };
 
     const updatedOne = await User.findByIdAndUpdate(
       userData._id,
@@ -215,10 +215,10 @@ export async function changeUserName(username: string) {
       { userName: updatedOne?.username },
     );
 
-    return { isSuccess: true };
+    return { success: true };
   } catch (error) {
     console.error(error);
-    return { error: "Error ", isSuccess: false };
+    return { error: "Error ", success: false };
   }
 }
 

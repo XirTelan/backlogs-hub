@@ -23,7 +23,7 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
               "profileVisibility",
               e.target.value,
             );
-            if (res.isSuccess) toastCustom.success("Option changed");
+            if (res.success) toastCustom.success("Option changed");
           }}
         />
       </div>
@@ -42,7 +42,7 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
               defaultValue={config?.showEmptyFolders || false}
               action={async (state) => {
                 const res = await updateUserInfo("hideFolderNames", state);
-                if (res.isSuccess) toastCustom.success("Option changed");
+                if (res.success) toastCustom.success("Option changed");
               }}
             />
           </div>

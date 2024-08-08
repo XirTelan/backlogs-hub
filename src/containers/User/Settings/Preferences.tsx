@@ -16,7 +16,7 @@ const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
           defaultValue={config.showEmptyFolders || false}
           action={async (state) => {
             const res = await updateUserInfo("showEmptyFolders", state);
-            if (res.isSuccess) toastCustom.success("Option changed");
+            if (res.success) toastCustom.success("Option changed");
           }}
         />
       </div>

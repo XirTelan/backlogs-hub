@@ -32,7 +32,7 @@ export const handleSession = async (request: NextRequest) => {
 
 const createAccountAndUser = async (oauthData: OAuthProps, url: string) => {
   const res = await createUser({ ...oauthData, provider: "oauth" });
-  if (!res.isSuccess) return undefined;
+  if (!res.success) return undefined;
   await createAndLinkAccount(oauthData, res.data._id, url);
   return res.data;
 };
@@ -77,7 +77,7 @@ export const handleCallback = async (
   let oauthData: OAuthProps | undefined = undefined;
   try {
     const res = await getOAuthData(provider, code);
-    if (!res.isSuccess) return sendMsg.error("Authorize error");
+    if (!res.success) return sendMsg.error("Authorize error");
     oauthData = res.data;
   } catch (e) {
     console.error(e);
@@ -141,7 +141,7 @@ export const signInWithLogin = async (
   data: unknown,
 ): Promise<ResponseData<string>> => {
   const error: ResponseData<string> = {
-    isSuccess: false,
+    success: false,
     message: "Username or password is incorrect",
   };
   const parsedCredentials = SignInSchema.safeParse(data);
@@ -159,7 +159,7 @@ export const signInWithLogin = async (
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) return error;
   const access_token = await generateAccessToken(user);
-  return { isSuccess: true, data: access_token };
+  return { success: true, data: access_token };
 };
 
 const getOAuthData = async (provider: string, code: string) => {

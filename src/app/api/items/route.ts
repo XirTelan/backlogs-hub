@@ -13,8 +13,8 @@ export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } },
 ) {
-  const { isSuccess } = await isAuthorizedBacklogOwner(id, "read");
-  if (!isSuccess) return sendMsg.error("Doesnt have permission", 401);
+  const { success } = await isAuthorizedBacklogOwner(id, "read");
+  if (!success) return sendMsg.error("Doesnt have permission", 401);
   const categories = request.nextUrl.searchParams.get("categories")?.split("-");
   const search = request.nextUrl.searchParams.get("search");
   let backlogData;

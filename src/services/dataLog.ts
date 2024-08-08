@@ -8,7 +8,7 @@ export const createLogEntry = async (data: LogDTO) => {
   try {
     await dbConnect();
     await Log.create(data);
-    return { isSuccess: true };
+    return { success: true };
   } catch (error) {
     throw new Error("Error");
   }

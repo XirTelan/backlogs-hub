@@ -16,7 +16,7 @@ export async function GET(
 ) {
   try {
     const res = await getAndPopulateBacklogItemById(itemId);
-    if (!res.isSuccess) return sendMsg.error(res.errors);
+    if (!res.success) return sendMsg.error(res.errors);
     return NextResponse.json({ status: "success", data: res.data });
   } catch (error) {
     sendMsg.error(error);
@@ -31,7 +31,7 @@ export async function DELETE(
     const res = await authorizeAndProceed(itemId, () =>
       deleteBacklogItem(itemId),
     );
-    if (!res.isSuccess) return sendMsg.error(res.data);
+    if (!res.success) return sendMsg.error(res.data);
     const data = res.data as BacklogItemDTO;
     revalidateTag(`backloglist${data._id}`);
     return sendMsg.success(`Deleted ${data!.title}`, 202);
@@ -47,7 +47,7 @@ export async function PUT(
   const data = await request.json();
   try {
     const res = await authorizeAndProceed(itemId, () => putBacklogItem(data));
-    if (!res.isSuccess) return sendMsg.error(res.data);
+    if (!res.success) return sendMsg.error(res.data);
     return sendMsg.success();
   } catch (error) {
     return sendMsg.error(error);
@@ -59,14 +59,14 @@ const authorizeAndProceed = async (
   action: (...args: unknown[]) => Promise<unknown>,
 ) => {
   const res = await getBacklogItemById(itemId);
-  if (!res.isSuccess)
-    return { isSuccess: false, data: sendMsg.error(res.errors, 400) };
-  const { isSuccess } = await isAuthorizedBacklogOwner(
+  if (!res.success)
+    return { success: false, data: sendMsg.error(res.errors, 400) };
+  const { success } = await isAuthorizedBacklogOwner(
     res.data.backlogId,
     "edit",
   );
-  if (!isSuccess)
-    return { isSuccess: false, data: sendMsg.error("Not authorized", 401) };
+  if (!success)
+    return { success: false, data: sendMsg.error("Not authorized", 401) };
   const data = await action();
-  return { isSuccess: true, data: data };
+  return { success: true, data: data };
 };

@@ -5,7 +5,7 @@ import { getAndPopulateBacklogItemById } from "@/services/backlogItem";
 const Page = async ({ params: { itemId } }: { params: { itemId: string } }) => {
   const result = await getAndPopulateBacklogItemById(itemId);
 
-  if (!result.isSuccess) {
+  if (!result.success) {
     console.error(result.errors);
     return <div>Error</div>;
   }

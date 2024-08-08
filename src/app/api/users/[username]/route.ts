@@ -1,8 +1,4 @@
-import {
-  clearCookiesToken,
-  getCurrentUserInfo,
-  TokenData,
-} from "@/auth/utils";
+import { clearCookiesToken, getCurrentUserInfo, TokenData } from "@/auth/utils";
 import {
   deleteUser,
   isUserNameExist,
@@ -31,7 +27,7 @@ export async function PATCH(
   { params: { username } }: { params: { username: string } },
 ) {
   const authCheck = await isAuthorized(username);
-  if (!authCheck.isSuccess) return authCheck.response;
+  if (!authCheck.success) return authCheck.response;
   const data: string[] = await request.json();
   try {
     const res = await updateUserFolders(username, data);
@@ -48,12 +44,12 @@ export async function DELETE(
 ) {
   try {
     const authCheck = await isAuthorized(username);
-    if (!authCheck.isSuccess) return authCheck.response;
+    if (!authCheck.success) return authCheck.response;
     await dbConnect();
 
     if (!authCheck.userToken.id) return sendMsg.error("");
     const user = await User.findById(authCheck.userToken?.id);
-    
+
     if (!user) return sendMsg.error("Cant perform action", 400);
     await deleteUser(authCheck.userToken.id);
     return clearCookiesToken(request);
@@ -64,21 +60,21 @@ export async function DELETE(
 
 const isAuthorized = async (username: string): Promise<IsAuth> => {
   const userToken = await getCurrentUserInfo();
-  if (!userToken) return { isSuccess: false, response: sendMsg.error("", 401) };
+  if (!userToken) return { success: false, response: sendMsg.error("", 401) };
   if (userToken.username !== username)
-    return { isSuccess: false, response: sendMsg.error("", 403) };
-  return { isSuccess: true, userToken };
+    return { success: false, response: sendMsg.error("", 403) };
+  return { success: true, userToken };
 };
 
 type IsAuth =
   | {
-      isSuccess: false;
+      success: false;
       response: NextResponse<{
         message: string;
         error: unknown;
       }>;
     }
   | {
-      isSuccess: true;
+      success: true;
       userToken: TokenData;
     };

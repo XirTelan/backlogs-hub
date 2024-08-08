@@ -14,7 +14,7 @@ const isPopulated = (
 const Page = async ({ params }: { params: { tab: [TabsType] } }) => {
   if (!params.tab || !params.tab[0]) redirect(`${routesList.settings}/account`);
   const res = await getCurrentUserData();
-  if (!res.isSuccess)
+  if (!res.success)
     return <div>Something goes wrong: {JSON.stringify(res.message)}</div>;
 
   if (res.data.accounts && isPopulated(res.data.accounts)) {

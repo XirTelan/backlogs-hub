@@ -17,11 +17,11 @@ export async function GET(
   try {
     const backlogId = cleanParamString(id);
     const {
-      isSuccess,
+      success,
       data: backlog,
       ...rest
     } = await isAuthorizedBacklogOwner(backlogId, "read");
-    if (!isSuccess) return sendMsg.error(rest.message, 403);
+    if (!success) return sendMsg.error(rest.message, 403);
 
     if (backlog) {
       return NextResponse.json(backlog);
@@ -36,10 +36,10 @@ export async function GET(
 export async function PUT(request: NextRequest) {
   const data = await request.json();
   try {
-    const { isSuccess } = await isAuthorizedBacklogOwner(data._id, "edit");
-    if (!isSuccess) return sendMsg.error("Not authorized", 403);
+    const { success } = await isAuthorizedBacklogOwner(data._id, "edit");
+    if (!success) return sendMsg.error("Not authorized", 403);
     const res = await updateBacklogById(data);
-    if (!res.isSuccess) return sendMsg.error("Failed", 400);
+    if (!res.success) return sendMsg.error("Failed", 400);
     return sendMsg.success();
   } catch (error) {
     throw new Error(`${error}`);
@@ -50,13 +50,13 @@ export async function DELETE(
   { params: { id } }: { params: { id: string } },
 ) {
   try {
-    const { isSuccess, message } = await isAuthorizedBacklogOwner(id, "edit");
-    if (!isSuccess) return sendMsg.error(message || "Not authorized", 403);
+    const { success, message } = await isAuthorizedBacklogOwner(id, "edit");
+    if (!success) return sendMsg.error(message || "Not authorized", 403);
 
     const backlogToDelete = await Backlog.findById(id).select("userId").lean();
     const res = await deleteBacklogById(id);
 
-    if (!res.isSuccess) return NextResponse.json("Error", { status: 500 });
+    if (!res.success) return NextResponse.json("Error", { status: 500 });
     if (backlogToDelete?.userId)
       await updateStat(backlogToDelete?.userId, "totalBacklogs", "decrement");
 

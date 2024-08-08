@@ -8,10 +8,10 @@ export async function GET() {
     const user = await getCurrentUserInfo();
     if (!user) return sendMsg.error("Not Authorized", 401);
     const res = await getUserData(user.username, "folders");
-    if (!res.isSuccess) return sendMsg.error(res.message);
+    if (!res.success) return sendMsg.error(res.message);
     return NextResponse.json(
       {
-        isSuccess: true,
+        success: true,
         data: {
           username: user.username,
           folders: res.data.folders,

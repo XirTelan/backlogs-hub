@@ -43,11 +43,11 @@ export const getUserData = async (
   const token = await getGoogleToken(code);
   if (!token.id_token) {
     console.error(token);
-    return { isSuccess: false, message: "" };
+    return { success: false, message: "" };
   }
   const userData: Partial<UserDTO> & JWTPayload = decodeJwt(token.id_token);
   return {
-    isSuccess: true,
+    success: true,
     data: {
       username: `user_G${userData.sub}`,
       email: userData.email || "",

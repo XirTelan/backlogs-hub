@@ -47,7 +47,7 @@ const UserBacklogs = async ({
           <div className="flex grow flex-col flex-wrap">
             {data.map(([folderName, backlogs]) => {
               if (
-                config.isSuccess &&
+                config.success &&
                 !config.data.showEmptyFolders &&
                 backlogs.length === 0
               )

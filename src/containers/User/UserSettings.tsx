@@ -105,7 +105,7 @@ const UserSettings = ({ data, tab }: UserSettingsProps) => {
       value,
       modalData.option.optionType,
     );
-    if (res.isSuccess) toastCustom.success("Changed");
+    if (res.success) toastCustom.success("Changed");
     else toastCustom.error("Nope");
   };
   return (

@@ -23,7 +23,7 @@ export default async function Backlog({
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
 
   const selectedCategories = searchParams.categories?.split("-") || [];
-  const search = searchParams.search || "";
+  const search = searchParams.search ?? "";
 
   const categoriesMap = new Map(
     data.categories.map((category) => [category.name, category.color]),

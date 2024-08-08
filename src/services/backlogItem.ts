@@ -18,9 +18,9 @@ export const getBacklogItemById = async (
     await dbConnect();
     const backlogItem: BacklogItemDTO | null =
       await BacklogItem.findById(itemId).lean();
-    if (!backlogItem) return { isSuccess: false, message: "doesnt exist" };
+    if (!backlogItem) return { success: false, message: "doesnt exist" };
     backlogItem._id = backlogItem._id.toString();
-    return { isSuccess: true, data: backlogItem };
+    return { success: true, data: backlogItem };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -139,10 +139,10 @@ export const getBacklogItemsData = async (
       backlogData = await getBacklogItemsByBacklogId(backlogId);
     }
     if (backlogData) {
-      return { isSuccess: true, data: backlogData };
+      return { success: true, data: backlogData };
     }
     return {
-      isSuccess: false,
+      success: false,
       data: null,
       errors: {
         message: "The requested objects were not found.",
@@ -158,12 +158,11 @@ export const getAndPopulateBacklogItemById = async (
   itemId: string,
 ): Promise<ResponseData<BacklogItemPopulated>> => {
   const res = await getBacklogItemById(itemId);
-  if (!res.isSuccess) return { isSuccess: false, errors: "Wrong ItenId" };
+  if (!res.success) return { success: false, errors: "Wrong ItenId" };
   const newFields = await populateUserFields(res.data);
-  if (!newFields.isSuccess)
-    return { isSuccess: false, errors: newFields.errors };
+  if (!newFields.success) return { success: false, errors: newFields.errors };
   return {
-    isSuccess: true,
+    success: true,
     data: { ...res.data, userFields: newFields.data },
   };
 };
@@ -175,8 +174,7 @@ const populateUserFields = async (
     backlogItem.backlogId,
     "read",
   );
-  if (!backlogData.isSuccess)
-    return { isSuccess: false, errors: "Not Authorized" };
+  if (!backlogData.success) return { success: false, errors: "Not Authorized" };
 
   const map = backlogData.data.fields?.reduce((acc, item) => {
     acc.set(item._id, item);
@@ -191,5 +189,5 @@ const populateUserFields = async (
       type: curItem.type,
     };
   });
-  return { isSuccess: true, data: populatedFields };
+  return { success: true, data: populatedFields };
 };

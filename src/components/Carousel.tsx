@@ -1,0 +1,72 @@
+"use client";
+import React, { useState } from "react";
+import { FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+
+const Carousel = <T,>({
+  data,
+  getKey,
+  renderActive,
+  renderThumbnail,
+}: {
+  data: T[];
+  getKey: (item: T) => string;
+  renderActive: (item: T) => React.ReactNode;
+  renderThumbnail: (item: T) => React.ReactNode;
+}) => {
+  const [active, setActive] = useState(0);
+  const n = data.length;
+
+  const increase = () => {
+    const newVal = active + 1;
+    setActive(newVal >= n ? n : newVal);
+  };
+  const decrease = () => {
+    const newVal = active - 1;
+    setActive(newVal < 0 ? 0 : newVal);
+  };
+  return (
+    <div className="m-auto flex h-screen max-w-[1536px] flex-col  items-center justify-center p-4 ">
+      <div className=" relative flex  h-4/5 w-full items-center justify-center shadow ">
+        <div className="absolute inset-0 m-auto flex">
+          {renderActive(data[active])}
+        </div>
+      </div>
+      <div className="relative h-1/5  w-[90vw]  ">
+        <div className="relative h-full flex items-center justify-center overflow-hidden   px-4   ">
+          {data.map((item, indx) => (
+            <button
+              key={getKey(item)}
+              className="absolute z-20 p-8 shadow transition-all duration-300 ease-in-out lg:p-12  "
+              style={{
+                transform: `translate( ${(indx - active) * 100}%)`,
+                scale: `${active === indx ? "1.1" : "0.9"}`,
+              }}
+              onClick={() => setActive(indx)}
+            >
+              {renderThumbnail(item)}
+            </button>
+          ))}
+        </div>
+        {active != 0 && (
+          <button
+            onClick={decrease}
+            className="absolute bottom-0 left-0 top-0 h-12 w-12  animate-pulse text-primary-btn"
+          >
+            <FaChevronLeft className="absolute inset-0 " size={48} />
+          </button>
+        )}
+        {active < n - 1 && (
+          <button
+            onClick={increase}
+            className="absolute  bottom-0 right-0 top-0 h-12 w-12 animate-pulse text-primary-btn"
+          >
+            <FaChevronRight className="absolute inset-0 " size={48} />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Carousel;

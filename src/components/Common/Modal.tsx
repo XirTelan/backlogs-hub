@@ -24,7 +24,7 @@ const Modal = ({
       className="absolute inset-0 z-50 flex items-center justify-center bg-black/60"
     >
       <div
-        className="absolute   top-1/4 flex flex-col justify-center"
+        className="absolute  flex flex-col justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <>{children}</>

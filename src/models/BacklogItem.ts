@@ -1,4 +1,4 @@
-import { BacklogItemDTO } from "@/zodTypes";
+import { BacklogItemDTO, ModifiersType } from "@/zodTypes";
 import mongoose from "mongoose";
 
 const DataItemSchema = new mongoose.Schema<{
@@ -14,6 +14,12 @@ const DataItemSchema = new mongoose.Schema<{
   { _id: false },
 );
 
+const ModifiersFields = new mongoose.Schema(
+  {
+    steamAppId: String,
+  },
+  { _id: false },
+);
 const BacklogItemSchema = new mongoose.Schema<BacklogItemDTO>({
   backlogId: { type: String, require: true },
   title: {
@@ -25,6 +31,7 @@ const BacklogItemSchema = new mongoose.Schema<BacklogItemDTO>({
     require: true,
   },
   userFields: [DataItemSchema],
+  modifiersFields: ModifiersFields,
 });
 
 BacklogItemSchema.index({ backlogId: 1, title: 1 }, { unique: true });

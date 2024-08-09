@@ -23,6 +23,19 @@ export type SearchBar = {
   HTMLInputElement
 >;
 
+export type ItemsFormBacklogProp = {
+  backlogFields: Field[];
+  modifiers: ModifiersType;
+  categories: BacklogCategory[];
+};
+
+export type ItemsFormProps<T> = {
+  backlog: ItemsFormBacklogProp;
+  mapFields: Map<string, string>;
+  defaultValues: T;
+  type: "edit" | "create";
+};
+
 export type TextArea = {
   label?: string;
   layer?: Layer;
@@ -73,12 +86,12 @@ export type ResponseData<T> = {
   message?: string;
 } & (
   | {
-      isSuccess: true;
+      success: true;
       data: T;
       errors?: null;
     }
   | {
-      isSuccess: false;
+      success: false;
       data?: null;
       errors?: unknown;
     }

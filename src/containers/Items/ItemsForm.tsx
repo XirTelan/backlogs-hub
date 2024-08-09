@@ -5,29 +5,25 @@ import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Select from "@/components/Common/UI/Select";
-import { BacklogCategory, BacklogItemCreationDTO, Field } from "@/zodTypes";
-import { useCallback } from "react";
+import { BacklogItemCreationDTO, Field } from "@/zodTypes";
+import { useCallback, useEffect } from "react";
 import ProgressTimer from "@/containers/Fields/ProgressTimer";
 import { toastCustom } from "@/lib/toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 import MarkdownEditor from "../Fields/MarkdownEditor";
+import SearchGameBar from "../Features/SearchGameBar";
+import { ItemsFormProps } from "@/types";
+import { watch } from "fs";
+import { FaSteam } from "react-icons/fa6";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
-  categories,
-  backlogFields,
+  backlog,
   mapFields,
   defaultValues,
   type,
-}: {
-  categories: BacklogCategory[];
-  backlogFields: Field[];
-  mapFields: Map<string, string>;
-  defaultValues: T;
-  type: "edit" | "create";
-}) => {
+}: ItemsFormProps<T>) => {
   const router = useRouter();
-
   const onSubmit = useCallback(
     async (
       data: BacklogItemCreationDTO & { _id?: string },
@@ -62,6 +58,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     handleSubmit,
     register,
     setValue,
+    watch,
     formState: { isValid, isSubmitting },
   } = useForm<BacklogItemCreationDTO>({
     defaultValues,
@@ -78,7 +75,6 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       router,
     );
   };
-
   const getFieldInput = useCallback(
     (field: Field, index: number) => {
       const fieldValue = mapFields?.get(field._id || "") || "";
@@ -140,29 +136,60 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     [mapFields, register, setValue],
   );
 
+  const isUsingSteamSearch =
+    backlog.modifiers.useSteamSearch && watch("modifiersFields.steamAppId");
+
   return (
     <form onSubmit={handleSubmit(onSubmitInternal)}>
       <div className="flex flex-col md:flex-row md:items-center md:gap-4 ">
-        <div className="field group  relative mt-2 px-0 py-4 md:w-1/2  ">
-          <InputField
-            id="title"
-            placeholder="Title"
-            label="Title"
-            {...register("title", { required: true })}
-          />
+        <div className="field group  relative mt-2 px-0 py-4 md:w-4/5  ">
+          {backlog.modifiers.useSteamSearch ? (
+            <div className="relative">
+              <SearchGameBar
+                readOnly={isUsingSteamSearch !== undefined}
+                addGame={(id, name) => {
+                  setValue("modifiersFields.steamAppId", id);
+                  setValue("title", name);
+                }}
+                labelText="Title"
+                {...register("title", { required: true })}
+              />
+              {isUsingSteamSearch && (
+                <div className="absolute bottom-0 right-0 top-0 mt-6  text-primary-btn-hover">
+                  <ButtonBase
+                    variant="ghost"
+                    type="button"
+                    title="Linked to steam game"
+                    icon={<FaSteam size={24} />}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setValue("modifiersFields.steamAppId", undefined);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            <InputField
+              id="title"
+              placeholder="Title"
+              label="Title"
+              {...register("title", { required: true })}
+            />
+          )}
         </div>
-        <div>
+        <div className="w-1/5">
           <Select
             label="Category"
-            options={categories.map((category) => category.name)}
+            options={backlog.categories.map((category) => category.name)}
             {...register("category")}
           />
         </div>
       </div>
-      {backlogFields.length > 0 && (
+      {backlog.backlogFields.length > 0 && (
         <FieldsBlock title="Fields" status="disabled">
           <>
-            {backlogFields.map((field, index) => {
+            {backlog.backlogFields.map((field, index) => {
               return (
                 <li
                   className={`${inputTypes[field.type || "text"]}  w-auto bg-layer-1 p-2 `}

@@ -26,12 +26,20 @@ export const BacklogCategorySchema = z
   })
   .required();
 
+export const ModifiersSchema = z.object({
+  useSteamSearch: z.boolean().default(false),
+  useSteamImport: z.boolean().default(false),
+});
+
 export const BacklogFormSchema = z.object({
   order: z.number().default(99),
   categories: BacklogCategorySchema.array()
     .min(1)
     .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name)),
-  features: z.string().array().optional(),
+  modifiers: ModifiersSchema.default({
+    useSteamImport: false,
+    useSteamSearch: false,
+  }),
   folder: z.string().default("Default"),
   fields: FieldSchema.array()
     .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name))
@@ -74,6 +82,11 @@ export const BacklogItemCreationSchema = z.object({
   title: z.string().trim(),
   category: z.string(),
   userFields: BacklogItemUserFieldSchema.array(),
+  modifiersFields: z
+    .object({
+      steamAppId: z.string().optional(),
+    })
+    .default({}),
 });
 
 export const BacklogItemPopSchema = BacklogItemCreationSchema.omit({

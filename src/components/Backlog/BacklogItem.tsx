@@ -4,19 +4,38 @@ import { BacklogItemPopulated } from "@/zodTypes";
 import MDEditor from "@uiw/react-md-editor/nohighlight";
 import Accordion from "../Common/UI/Accordion";
 import rehypeSanitize from "rehype-sanitize";
+import SteamGameCard from "@/containers/SteamGameCard";
 
 const BacklogItem = ({ data }: { data: BacklogItemPopulated }) => {
+  const Base = () => {
+    return (
+      <>
+        <div className="flex">
+          <div>Category:</div>
+          <div>{data.category}</div>
+        </div>
+        <div>
+          {data.userFields.map((field, indx) => {
+            return withWrap(field, indx, renderFieldValue);
+          })}
+        </div>
+      </>
+    );
+  };
+
   return (
     <div>
-      <div className="flex">
-        <div>Category:</div>
-        <div>{data.category}</div>
-      </div>
-      <div>
-        {data.userFields.map((field, indx) => {
-          return withWrap(field, indx, renderFieldValue);
-        })}
-      </div>
+      {data.steamData ? (
+        <div>
+          <SteamGameCard data={data.steamData}>
+            <div className="bg-neutral-950/50 p-2 m-2 ">
+              <Base />
+            </div>
+          </SteamGameCard>
+        </div>
+      ) : (
+        <Base />
+      )}
     </div>
   );
 };

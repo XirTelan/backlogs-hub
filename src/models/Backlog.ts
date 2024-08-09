@@ -1,5 +1,13 @@
-import { BacklogDTO } from "@/zodTypes";
+import { BacklogDTO, ModifiersType } from "@/zodTypes";
 import mongoose, { Schema } from "mongoose";
+
+const backlogModifiersSchema = new mongoose.Schema<ModifiersType>(
+  {
+    useSteamSearch: { type: Boolean, default: false },
+    useSteamImport: { type: Boolean, default: false },
+  },
+  { _id: false },
+);
 
 const BacklogSchema = new mongoose.Schema<BacklogDTO>(
   {
@@ -25,9 +33,7 @@ const BacklogSchema = new mongoose.Schema<BacklogDTO>(
     description: {
       type: String,
     },
-    features: {
-      type: String,
-    },
+    modifiers: backlogModifiersSchema,
     order: {
       type: Number,
     },

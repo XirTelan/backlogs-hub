@@ -16,10 +16,11 @@ const buttonSize = {
 const buttonColorVariants = {
   primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
   secondary: "bg-secondary-btn hover:bg-secondary-btn-hover text-white",
-  accent: "bg-green-600 hover:bg-green-500",
+  accent: "bg-green-800 hover:bg-green-700",
   tertiary:
     "outline text-white  hover:text-inverse outline-1 -outline-offset-2 outline-white hover:bg-tertiary-btn-hover",
   ghost: "text-primary-link hover:bg-subtle-3/15",
+  ghostAccent: " text-green-800 hover:text-green-700 ",
   dangerPrimary: "bg-danger-btn hover:bg-danger-btn-hover text-white",
   dangerTertiary: "  ",
   dangerGhost:
@@ -27,6 +28,10 @@ const buttonColorVariants = {
 };
 export type ButtonColorVariants = keyof typeof buttonColorVariants;
 
+/**
+ *Base UI button component
+ * @param {boolean} hideText Text will be hidden with screen < 768px
+ */
 const ButtonBase = ({
   text,
   hideText = false,

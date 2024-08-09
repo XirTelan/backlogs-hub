@@ -9,11 +9,11 @@ const CreateItem = async ({
 }: {
   searchParams: { backlog: string };
 }) => {
-  const { isSuccess, data: backlogInfo } = await isAuthorizedBacklogOwner(
+  const { success, data: backlogInfo } = await isAuthorizedBacklogOwner(
     backlog,
     "edit",
   );
-  if (!isSuccess) redirect("/");
+  if (!success) redirect("/");
 
   const defaultValues: BacklogItemCreationDTO = {
     backlogId: backlogInfo._id,
@@ -25,6 +25,7 @@ const CreateItem = async ({
           backlogFieldId: field._id || "",
           value: field.type === "select" ? field.data[0] : "",
         })),
+    modifiersFields: {},
   };
   return (
     <>
@@ -32,8 +33,9 @@ const CreateItem = async ({
       <main className="container self-center px-4">
         <ItemsFormTypeWrapper
           backlog={{
-            fields: backlogInfo.fields || [],
+            backlogFields: backlogInfo.fields || [],
             categories: backlogInfo.categories,
+            modifiers: backlogInfo.modifiers,
           }}
           defaultValues={defaultValues}
           type="create"

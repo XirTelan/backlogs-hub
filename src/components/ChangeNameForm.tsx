@@ -29,7 +29,7 @@ const ChangeNameForm = () => {
 
   const onSubmit = async (formData: Form) => {
     const update = await changeUserName(formData.userName);
-    if (!update.isSuccess) return;
+    if (!update.success) return;
     const res = await fetch(`${apiRoutesList.auth}/refresh`, {
       method: "POST",
     });

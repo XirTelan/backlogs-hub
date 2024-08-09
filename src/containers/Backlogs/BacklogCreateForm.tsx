@@ -12,7 +12,7 @@ const BacklogCreateForm = () => {
   const router = useRouter();
   const userFolders = useSWR(`/api/users/`, fetcher);
   if (userFolders.isLoading) return <Loading />;
-  if (!userFolders.data.isSuccess) return <div>Error</div>;
+  if (!userFolders.data.success) return <div>Error</div>;
   const defaultCategories: BacklogCategory[] = [
     { name: "Completed", color: "#0043CE", protected: false },
     { name: "Playing", color: "#6929C4", protected: false },
@@ -28,6 +28,10 @@ const BacklogCreateForm = () => {
     visibility: "public",
     categories: defaultCategories,
     fields: [],
+    modifiers: {
+      useSteamSearch: false,
+      useSteamImport: false,
+    },
   };
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {
     data.slug = generateSlug(data.backlogTitle);

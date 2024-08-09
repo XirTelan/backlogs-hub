@@ -8,12 +8,18 @@ import TemplatePreview from "@/components/Template/TemplatePreview";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
 import UserFieldsBlock from "./UserFieldsBlock";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import { BacklogFormData } from "@/zodTypes";
+import { BacklogFormData, ModifiersType } from "@/zodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
 import Select from "@/components/Common/UI/Select";
 import { usePathname } from "next/navigation";
 import { routesList } from "@/data";
+import ModifiersMenu from "@/components/ModifiersMenu";
+
+const MODIFIERS_DEFAULT: ModifiersType = {
+  useSteamSearch: false,
+  useSteamImport: false,
+};
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
@@ -26,6 +32,9 @@ const BacklogForm = <T extends BacklogFormData>({
 }) => {
   const pathname = usePathname();
   const [showTemplate, setShowTemplate] = useState(false);
+  const [modifiers, setModifiers] = useState(
+    defaultValues.modifiers ?? MODIFIERS_DEFAULT,
+  );
 
   const {
     register,
@@ -59,14 +68,16 @@ const BacklogForm = <T extends BacklogFormData>({
     }
   };
   const onSubmitInternal = (data: BacklogFormData) => {
+    data.modifiers = modifiers;
     onSubmit({ ...defaultValues, ...data });
   };
+
   const watchAllFields = watch();
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitInternal)}>
         <div className="flex flex-col md:flex-row   md:items-center md:gap-2">
-          <div className="field w-full grow py-2  ">
+          <div className="field grow py-2  ">
             <InputField
               autoFocus
               helperText={
@@ -80,17 +91,27 @@ const BacklogForm = <T extends BacklogFormData>({
               {...register(`backlogTitle`, { required: true })}
             />
           </div>
-          <div className="flex min-w-fit  justify-between  gap-2 *:w-full md:mb-2 ">
-            <Select
-              label="Folder"
-              options={userFolders}
-              {...register("folder")}
-            />
-            <Select
-              label="Visibility"
-              options={["public", "private"]}
-              {...register("visibility")}
-            />
+          <div className="md:*:w-min-fit flex  min-w-fit gap-2   md:mb-2 md:items-center ">
+            <div className="w-full">
+              <Select
+                label="Folder"
+                options={userFolders}
+                {...register("folder")}
+              />
+            </div>
+            <div className="w-full">
+              <Select
+                label="Visibility"
+                options={["public", "private"]}
+                {...register("visibility")}
+              />
+            </div>
+            <div className="mt-4 self-center">
+              <ModifiersMenu
+                defaultValues={modifiers}
+                setValue={setModifiers}
+              />
+            </div>
           </div>
         </div>
 

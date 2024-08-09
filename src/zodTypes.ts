@@ -15,6 +15,7 @@ import {
   FieldSchema,
   LogDataDTOSchema,
   LogDataSchema,
+  ModifiersSchema,
   NewsSchema,
   OauthSchema,
   StatsSchema,
@@ -29,6 +30,7 @@ export type Field = z.infer<typeof FieldSchema>;
 export type AccountType = { userId: Types.ObjectId } & z.infer<
   typeof AccountSchema
 >;
+export type ModifiersType = z.infer<typeof ModifiersSchema>;
 export type BacklogDTO = z.infer<typeof BacklogDTOSchema>;
 export type BacklogFormData = z.infer<typeof BacklogFormSchema>;
 export type BacklogCreationDTO = z.infer<typeof BacklogCreationSchema>;

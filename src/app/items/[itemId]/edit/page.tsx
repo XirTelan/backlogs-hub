@@ -12,21 +12,22 @@ const EditItem = async ({
   if (!itemId) redirect("/");
 
   const res = await getBacklogItemById(itemId);
-  if (!res.isSuccess) redirect("/");
+  if (!res.success) redirect("/");
 
-  const { isSuccess, data: backlog } = await isAuthorizedBacklogOwner(
+  const { success, data: backlog } = await isAuthorizedBacklogOwner(
     res.data.backlogId,
     "edit",
   );
-  if (!isSuccess) redirect("/");
+  if (!success) redirect("/");
   return (
     <>
       <TopTitle title="Edit" />
       <main className=" container self-center px-4">
         <ItemsFormTypeWrapper
           backlog={{
-            fields: backlog.fields || [],
+            backlogFields: backlog.fields || [],
             categories: backlog.categories,
+            modifiers: backlog.modifiers,
           }}
           defaultValues={res.data}
           type="edit"

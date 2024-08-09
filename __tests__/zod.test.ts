@@ -1,7 +1,7 @@
 import { BacklogFormSchema, RegistrationSchema } from "@/zod";
 
 describe("regestrationForm parse test", () => {
-  it("parse isSuccess if password and conffirm Password same", () => {
+  it("parse success if password and conffirm Password same", () => {
     const parsedData = RegistrationSchema.safeParse({
       username: "testuser",
       email: "test@test.com",

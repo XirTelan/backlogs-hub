@@ -25,7 +25,7 @@ describe("getData", () => {
         folders: ["Default"],
         username: "testuser",
       }),
-      isSuccess: true,
+      success: true,
     });
   });
   it("Flag = config, we get only id and config", async () => {
@@ -38,7 +38,7 @@ describe("getData", () => {
           showEmptyFolders: true,
         },
       },
-      isSuccess: true,
+      success: true,
     });
   });
   it("Flag = folders, we get config and  folders", async () => {
@@ -52,7 +52,7 @@ describe("getData", () => {
           showEmptyFolders: true,
         },
       },
-      isSuccess: true,
+      success: true,
     });
   });
 });

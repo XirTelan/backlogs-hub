@@ -91,11 +91,7 @@ const Landing = () => {
           </div>
           <div className="h-80 w-60 bg-layer-1 p-4">
             <p className=" font-semibold">GamesSearch</p>
-            <p>Adds a game search on Steam or HowLongToBeat</p>
-          </div>
-          <div className="h-80 w-60 bg-layer-1 p-4">
-            <p className=" font-semibold">To-Do List</p>
-            <p>Превращает ваш беклог в доску задач</p>
+            <p>Adds a game search on Steam </p>
           </div>
         </div>
       </div>

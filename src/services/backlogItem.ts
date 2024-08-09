@@ -10,6 +10,7 @@ import {
 } from "@/zodTypes";
 import { NextResponse } from "next/server";
 import { isAuthorizedBacklogOwner } from "./backlogs";
+import { getSteamGameInfo } from "./steamSearch";
 
 export const getBacklogItemById = async (
   itemId: string,
@@ -138,17 +139,17 @@ export const getBacklogItemsData = async (
     } else {
       backlogData = await getBacklogItemsByBacklogId(backlogId);
     }
-    if (backlogData) {
-      return { success: true, data: backlogData };
+    if (!backlogData) {
+      return {
+        success: false,
+        data: null,
+        errors: {
+          message: "The requested objects were not found.",
+          details: "Please check your parameters and ensure they are correct",
+        },
+      };
     }
-    return {
-      success: false,
-      data: null,
-      errors: {
-        message: "The requested objects were not found.",
-        details: "Please check your parameters and ensure they are correct",
-      },
-    };
+    return { success: true, data: backlogData };
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -159,7 +160,17 @@ export const getAndPopulateBacklogItemById = async (
 ): Promise<ResponseData<BacklogItemPopulated>> => {
   const res = await getBacklogItemById(itemId);
   if (!res.success) return { success: false, errors: "Wrong ItenId" };
+  const promises = [];
+
   const newFields = await populateUserFields(res.data);
+  if (res.data.modifiersFields?.steamAppId) {
+    const steamInfo = await getSteamGameInfo(
+      res.data.modifiersFields.steamAppId,
+    );
+    if (steamInfo.success) {
+      res.data.steamData = steamInfo.data;
+    }
+  }
   if (!newFields.success) return { success: false, errors: newFields.errors };
   return {
     success: true,

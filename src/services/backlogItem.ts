@@ -7,6 +7,7 @@ import {
   BacklogItemDTO,
   BacklogItemPopulated,
   BacklogItemPopUserField,
+  BacklogItemWithSteamInfo,
 } from "@/zodTypes";
 import { NextResponse } from "next/server";
 import { isAuthorizedBacklogOwner } from "./backlogs";
@@ -155,20 +156,31 @@ export const getBacklogItemsData = async (
   }
 };
 
+//type guard
+function isSteamData(
+  data: BacklogItemDTO | BacklogItemPopulated,
+): data is BacklogItemWithSteamInfo {
+  return typeof data.modifiersFields.steamAppId === "string";
+}
+
 export const getAndPopulateBacklogItemById = async (
   itemId: string,
-): Promise<ResponseData<BacklogItemPopulated>> => {
+): Promise<ResponseData<BacklogItemPopulated | BacklogItemWithSteamInfo>> => {
   const res = await getBacklogItemById(itemId);
   if (!res.success) return { success: false, errors: "Wrong ItenId" };
-  const promises = [];
 
   const newFields = await populateUserFields(res.data);
+
   if (res.data.modifiersFields?.steamAppId) {
     const steamInfo = await getSteamGameInfo(
       res.data.modifiersFields.steamAppId,
     );
-    if (steamInfo.success) {
-      res.data.steamData = steamInfo.data;
+    if (steamInfo.success && isSteamData(res.data)) {
+      const backlogWithSteamData: BacklogItemWithSteamInfo = {
+        ...res.data,
+        steamData: steamInfo.data,
+      };
+      res.data = backlogWithSteamData;
     }
   }
   if (!newFields.success) return { success: false, errors: newFields.errors };

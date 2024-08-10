@@ -2,7 +2,6 @@
 
 import LinkBase from "@/components/Common/UI/LinkBase";
 import Notification from "@/components/Common/UI/Notification";
-import Landing from "@/components/Landing";
 import SignInForm from "@/containers/Auth/SignInForm";
 
 export default async function Home() {
@@ -67,7 +66,6 @@ export default async function Home() {
             </div>
           </div>
         </section>
-        <Landing />
       </main>
     </>
   );

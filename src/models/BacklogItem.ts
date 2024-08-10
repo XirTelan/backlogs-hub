@@ -1,4 +1,4 @@
-import { BacklogItemDTO, ModifiersType } from "@/zodTypes";
+import { BacklogItemDTO } from "@/zodTypes";
 import mongoose from "mongoose";
 
 const DataItemSchema = new mongoose.Schema<{

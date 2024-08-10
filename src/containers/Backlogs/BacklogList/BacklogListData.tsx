@@ -44,7 +44,11 @@ const BacklogListData = ({
       {isOpen && (
         <Modal
           showActions
-          actionType="dangerPrimary"
+          actionOptions={{
+            confirmBtn: {
+              clrVariant: "dangerPrimary",
+            },
+          }}
           action={() => onDelete(isOpen)}
           setClose={() => setIsOpen(null)}
         >

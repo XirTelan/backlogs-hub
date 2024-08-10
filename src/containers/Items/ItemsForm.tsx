@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Select from "@/components/Common/UI/Select";
 import { BacklogItemCreationDTO, Field } from "@/zodTypes";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import ProgressTimer from "@/containers/Fields/ProgressTimer";
 import { toastCustom } from "@/lib/toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -14,7 +14,6 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import MarkdownEditor from "../Fields/MarkdownEditor";
 import SearchGameBar from "../Features/SearchGameBar";
 import { ItemsFormProps } from "@/types";
-import { watch } from "fs";
 import { FaSteam } from "react-icons/fa6";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({

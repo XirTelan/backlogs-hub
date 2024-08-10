@@ -123,10 +123,13 @@ const UserSettings = ({ data, tab }: UserSettingsProps) => {
               action={
                 modalData.type === "confirm" ? modalData.action : handleUpdate
               }
-              actionType={
-                (modalData.type === "confirm" && modalData.actionType) ||
-                undefined
-              }
+              actionOptions={{
+                confirmBtn: {
+                  clrVariant:
+                    (modalData.type === "confirm" && modalData.actionType) ||
+                    undefined,
+                },
+              }}
               setClose={() => setModalData(defaultValue)}
             >
               <div className=" max-w-sm bg-background p-4 text-white md:max-w-xl">

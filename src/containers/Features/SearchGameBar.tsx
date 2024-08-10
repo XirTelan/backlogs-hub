@@ -3,13 +3,11 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Loading from "@/components/Common/UI/Loading/Loading";
 import SearchField from "@/components/Common/UI/SearchField";
 import useDebounce from "@/hooks/useDebounce";
-import useOutsideClickReg from "@/hooks/useOutsideClickReg";
 import useToggle from "@/hooks/useToggle";
-import { getSteamGameInfo } from "@/services/steamSearch";
 import { SearchBar } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import React, { DetailsHTMLAttributes, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
 const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
@@ -48,7 +46,7 @@ const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
 
       if (!debounceSearch) return;
       search();
-    }, [debounceSearch]);
+    }, [debounceSearch, setOpen]);
 
     const handleAddGame = (id: string, name: string) => {
       addGame(id, name);

@@ -58,7 +58,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
           </tr>
           {fields.map((field, index) => (
             <FieldsArrayItem
-              key={field._id || field.id}
+              key={field._id ?? field.id ?? index}
               index={index}
               register={register}
               field={field}

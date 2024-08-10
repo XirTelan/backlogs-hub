@@ -50,6 +50,5 @@ export async function getSteamGameInfo(id: string) {
     return { success: false };
   }
   const data = await res.json();
-  if (!data.success) console.error(data);
   return { success: true, data: data[id].data };
 }

@@ -7,7 +7,7 @@ import useToggle from "@/hooks/useToggle";
 import { SearchBar } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
 const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
@@ -46,7 +46,8 @@ const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
 
       if (!debounceSearch) return;
       search();
-    }, [debounceSearch, setOpen]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounceSearch]);
 
     const handleAddGame = (id: string, name: string) => {
       addGame(id, name);

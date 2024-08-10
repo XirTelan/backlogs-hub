@@ -304,10 +304,15 @@ export const isAuthorizedBacklogOwner = async (
   const isOwner = !!user && user.username === backlog?.userName;
   if (!backlog)
     return { success: false, data: null, message: "Backlog doesnt exist" };
+
   if (await isPrivateProfile(backlog.userName, isOwner))
-    return { success: false };
+    return { success: false, message: "private profile" };
+
   if (backlog.visibility === "public" && method === "read")
     return { success: true, data: backlog };
-  if (backlog.userId !== user?.id) return { success: false, data: null };
+
+  if (backlog.userId !== user?.id)
+    return { success: false, message: "cant get backlog data", data: null };
+
   return { success: true, data: backlog };
 };

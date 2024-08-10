@@ -1,3 +1,4 @@
+import NotFound from "@/components/Common/NotFound";
 import TopTitle from "@/components/Common/UI/TopTitle";
 import ItemsFormTypeWrapper from "@/containers/Items/ItemsFormTypeWrapper";
 import { getBacklogItemById } from "@/services/backlogItem";
@@ -18,7 +19,7 @@ const EditItem = async ({
     res.data.backlogId,
     "edit",
   );
-  if (!success) redirect("/");
+  if (!success) return <NotFound />;
   return (
     <>
       <TopTitle title="Edit" />

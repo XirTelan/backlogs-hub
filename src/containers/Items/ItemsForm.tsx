@@ -136,13 +136,13 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   );
 
   const isUsingSteamSearch =
-    backlog.modifiers.useSteamSearch && watch("modifiersFields.steamAppId");
+    backlog.modifiers?.useSteamSearch && watch("modifiersFields.steamAppId");
 
   return (
     <form onSubmit={handleSubmit(onSubmitInternal)}>
       <div className="flex flex-col md:flex-row md:items-center md:gap-4 ">
         <div className="field group  relative mt-2 px-0 py-4 md:w-4/5  ">
-          {backlog.modifiers.useSteamSearch ? (
+          {backlog.modifiers?.useSteamSearch ? (
             <div className="relative">
               <SearchGameBar
                 readOnly={isUsingSteamSearch !== undefined}

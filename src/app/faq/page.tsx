@@ -8,7 +8,7 @@ import React from "react";
 const Page = () => {
   return (
     <div className="px-4">
-      <div className="hiddent " id="backlogFields" />
+      <div className="hidden " id="backlogFields" />
       <Accordion
         defaultState={true}
         id={"fields"}
@@ -17,8 +17,8 @@ const Page = () => {
         <div>
           <div>
             <p className=" text-white">
-              Description and examplase for all field types which you can use
-              for backlogs
+              Description and examples for all field types which you can use for
+              backlogs
             </p>
             Full list:
             <ul>
@@ -44,6 +44,27 @@ const Page = () => {
           </div>
           <Divider />
           <InputsDemoPage />
+        </div>
+      </Accordion>
+      <div className="hidden " id="modifiers" />
+      <Accordion
+        defaultState={true}
+        id={"modifiers"}
+        title={<Title variant={2} title={"Modifiers list"} />}
+      >
+        <div>
+          <div>
+            <p className=" text-white">
+              Description for all modifiers which you can use for backlogs
+            </p>
+            Full list:
+            <ul>
+              <li>
+                <LinkBase href={"#Text"}>Steam Search</LinkBase>
+              </li>
+            </ul>
+          </div>
+          <Divider />
         </div>
       </Accordion>
     </div>

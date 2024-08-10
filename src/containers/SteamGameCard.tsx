@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import * as cheerio from "cheerio";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import LinkBase from "@/components/Common/UI/LinkBase";
 import { FaImages, FaSteam } from "react-icons/fa6";
@@ -9,6 +8,7 @@ import { MdLocalMovies } from "react-icons/md";
 import Modal from "@/components/Common/Modal";
 import Carousel from "@/components/Carousel";
 import Clip from "@/components/Clip";
+import { SteamApp } from "@/types";
 const SteamGameCard = ({
   data,
   children,
@@ -17,21 +17,27 @@ const SteamGameCard = ({
   children?: React.ReactNode | React.ReactNode[];
 }) => {
   const [status, setStatus] = useState("none");
-  const [active, setActive] = useState(0);
 
   const showScreenshots = () => {
     return (
-      <Modal setClose={() => setStatus("none")}>
+      <Modal
+        showActions
+        actionOptions={{
+          align: "top",
+          position: "absolute",
+          cancelBtn: { text: "Close", clrVariant: "tertiary" },
+        }}
+        setClose={() => setStatus("none")}
+      >
         <Carousel
           data={data.screenshots}
           getKey={(item) => item.id}
           renderActive={(item) => (
             <Image
               src={item.path_full}
-              height={0}
-              layout="fill"
-              objectFit="contain"
+              fill
               alt={""}
+              style={{ objectFit: "contain" }}
             />
           )}
           renderThumbnail={(item) => (
@@ -40,7 +46,7 @@ const SteamGameCard = ({
               width={0}
               height={0}
               sizes="100vw"
-              style={{ width: "auto", height: "auto" }}
+              style={{ width: "80%", height: "auto", objectFit: "contain" }}
               alt={""}
             />
           )}
@@ -50,7 +56,15 @@ const SteamGameCard = ({
   };
   const showMovies = () => {
     return (
-      <Modal setClose={() => setStatus("none")}>
+      <Modal
+        showActions
+        actionOptions={{
+          align: "top",
+          position: "absolute",
+          cancelBtn: { text: "Close", clrVariant: "tertiary" },
+        }}
+        setClose={() => setStatus("none")}
+      >
         <Carousel
           data={data.movies}
           getKey={(item) => item.id}
@@ -165,34 +179,3 @@ const SteamGameCard = ({
 
 export default SteamGameCard;
 
-type SteamApp = {
-  type: string;
-  name: string;
-  steam_appid: string;
-  short_description: string;
-  header_image: string;
-  website: string;
-  categories: {
-    id: string;
-    description: string;
-  }[];
-  screenshots: {
-    id: string;
-    path_thumbnail: string;
-    path_full: string;
-  }[];
-  movies: {
-    id: string;
-    name: string;
-    thumbnail: string;
-    webm: {
-      "480": string;
-      max: string;
-    };
-    mp4: {
-      "480": string;
-      max: string;
-    };
-  }[];
-  background: string;
-};

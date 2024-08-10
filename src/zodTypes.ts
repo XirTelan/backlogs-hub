@@ -24,6 +24,7 @@ import {
   UserSchema,
 } from "./zod";
 import { Types } from "mongoose";
+import { SteamApp } from "./types";
 
 export type Field = z.infer<typeof FieldSchema>;
 
@@ -41,7 +42,12 @@ export type BacklogItemPopUserField = z.infer<
   typeof BacklogItemPopUserFieldSchema
 >;
 export type BacklogItemPopulated = z.infer<typeof BacklogItemPopSchema>;
-
+export type BacklogItemWithSteamInfo = {
+  modifiersFields: {
+    steamAppId: string;
+  };
+  steamData: SteamApp;
+} & BacklogItemPopulated;
 export type BacklogItemUserField = z.infer<typeof BacklogItemUserFieldSchema>;
 export type BacklogItemCreationDTO = z.infer<typeof BacklogItemCreationSchema>;
 export type OAuthProps = z.infer<typeof OauthSchema>;

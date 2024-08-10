@@ -137,3 +137,35 @@ export type DndListProps = {
   scrollable?: boolean;
   vertical?: boolean;
 };
+
+export type SteamApp = {
+  type: string;
+  name: string;
+  steam_appid: string;
+  short_description: string;
+  header_image: string;
+  website: string;
+  categories: {
+    id: string;
+    description: string;
+  }[];
+  screenshots: {
+    id: string;
+    path_thumbnail: string;
+    path_full: string;
+  }[];
+  movies: {
+    id: string;
+    name: string;
+    thumbnail: string;
+    webm: {
+      "480": string;
+      max: string;
+    };
+    mp4: {
+      "480": string;
+      max: string;
+    };
+  }[];
+  background: string;
+};

@@ -8,14 +8,17 @@ export default async function Layout({
   children: React.ReactElement;
 }) {
   return (
-    <div className="  min-h-screen-bh grid   md:grid-cols-[256px_1fr]  ">
+    <div className="  grid min-h-screen-bh   md:grid-cols-[256px_1fr]  ">
       <div>
-        <aside className="min-h-screen-bh sticky top-[49px] hidden w-64 border-e border-border-1 bg-background pt-4 md:block">
+        <aside className="sticky top-[49px] hidden min-h-screen-bh w-64 border-e border-border-1 bg-background pt-4 md:block">
           <nav>
             <PanelItemsWrapper
               samePage
               baseUrl=""
-              data={[{ id: "backlogFields", content: "Backlog Fields Types" }]}
+              data={[
+                { id: "backlogFields", content: "Backlog Fields Types" },
+                { id: "modifiers", content: "Modifiers" },
+              ]}
             />
           </nav>
         </aside>

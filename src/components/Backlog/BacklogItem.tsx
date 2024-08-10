@@ -1,12 +1,22 @@
 "use client";
 import React from "react";
-import { BacklogItemPopulated } from "@/zodTypes";
+import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/zodTypes";
 import MDEditor from "@uiw/react-md-editor/nohighlight";
 import Accordion from "../Common/UI/Accordion";
 import rehypeSanitize from "rehype-sanitize";
 import SteamGameCard from "@/containers/SteamGameCard";
 
-const BacklogItem = ({ data }: { data: BacklogItemPopulated }) => {
+const isHaveSteamData = (
+  data: BacklogItemPopulated,
+): data is BacklogItemWithSteamInfo => {
+  return Object.prototype.hasOwnProperty.call(data, "steamData");
+};
+
+const BacklogItem = ({
+  data,
+}: {
+  data: BacklogItemPopulated | BacklogItemWithSteamInfo;
+}) => {
   const Base = () => {
     return (
       <>
@@ -25,10 +35,10 @@ const BacklogItem = ({ data }: { data: BacklogItemPopulated }) => {
 
   return (
     <div>
-      {data.steamData ? (
+      {isHaveSteamData(data) ? (
         <div>
           <SteamGameCard data={data.steamData}>
-            <div className="bg-neutral-950/50 p-2 m-2 ">
+            <div className="m-2 bg-neutral-950/50 p-2 ">
               <Base />
             </div>
           </SteamGameCard>

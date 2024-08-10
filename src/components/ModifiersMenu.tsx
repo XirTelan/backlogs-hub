@@ -6,6 +6,7 @@ import ButtonBase from "./Common/UI/ButtonBase";
 import Toggle from "./Common/UI/Toggle";
 import { ModifiersType } from "@/zodTypes";
 import { BsFillWrenchAdjustableCircleFill } from "react-icons/bs";
+import Title from "./Common/Title";
 
 const ModifiersMenu = ({
   defaultValues,
@@ -42,12 +43,25 @@ const ModifiersMenu = ({
       />
       {isOpen && (
         <div>
-          <Modal setClose={setClose}>
-            <div className="bg-background">
-              <Toggle
-                defaultValue={defaultValues.useSteamSearch}
-                action={() => changeModifierState("useSteamSearch")}
-              />
+          <Modal
+            showActions
+            setClose={setClose}
+            actionOptions={{
+              cancelBtn: {
+                text: "Close",
+              },
+            }}
+          >
+            <div className="bg-background p-4 text-primary-text">
+              <Title variant={2} title="Modifiers" />
+              <div className="flex p-4">
+                <p className=" me-4 ">Steam Search: </p>
+
+                <Toggle
+                  defaultValue={defaultValues.useSteamSearch}
+                  action={() => changeModifierState("useSteamSearch")}
+                />
+              </div>
             </div>
           </Modal>
         </div>

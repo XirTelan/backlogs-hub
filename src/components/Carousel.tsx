@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const Carousel = <T,>({
   data,
@@ -33,11 +32,11 @@ const Carousel = <T,>({
         </div>
       </div>
       <div className="relative h-1/5  w-[90vw]  ">
-        <div className="relative h-full flex items-center justify-center overflow-hidden   px-4   ">
+        <div className="relative flex h-full items-center justify-center overflow-hidden   px-4   ">
           {data.map((item, indx) => (
             <button
               key={getKey(item)}
-              className="absolute z-20 p-8 shadow transition-all duration-300 ease-in-out lg:p-12  "
+              className="absolute z-20 flex h-full w-40 items-center justify-center p-4 shadow transition-all duration-300 ease-in-out md:w-80 md:p-8 2xl:w-[480px]  "
               style={{
                 transform: `translate( ${(indx - active) * 100}%)`,
                 scale: `${active === indx ? "1.1" : "0.9"}`,
@@ -51,7 +50,7 @@ const Carousel = <T,>({
         {active != 0 && (
           <button
             onClick={decrease}
-            className="absolute bottom-0 left-0 top-0 h-12 w-12  animate-pulse text-primary-btn"
+            className="absolute bottom-0 left-0 top-0 z-40 h-12 w-12  animate-pulse text-primary-btn"
           >
             <FaChevronLeft className="absolute inset-0 " size={48} />
           </button>
@@ -59,7 +58,7 @@ const Carousel = <T,>({
         {active < n - 1 && (
           <button
             onClick={increase}
-            className="absolute  bottom-0 right-0 top-0 h-12 w-12 animate-pulse text-primary-btn"
+            className="absolute bottom-0 right-0 top-0 z-40 h-12 w-12 animate-pulse text-primary-btn"
           >
             <FaChevronRight className="absolute inset-0 " size={48} />
           </button>

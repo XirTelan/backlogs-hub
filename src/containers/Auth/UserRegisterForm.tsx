@@ -2,7 +2,7 @@
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import InputField from "@/components/Common/UI/InputField";
 import InputWithLoader from "@/components/Common/UI/InputWithLoader";
-import { apiRoutesList } from "@/data";
+import { apiRoutesList } from "@/lib/routesList";
 import useLoaderValue from "@/hooks/useLoaderValue";
 import { toastCustom } from "@/lib/toast";
 import { RegistrationSchema } from "@/zod";

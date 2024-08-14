@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
 import Select from "@/components/Common/UI/Select";
 import { usePathname } from "next/navigation";
-import { routesList } from "@/data";
+import { routesList } from "@/lib/routesList";
 import ModifiersMenu from "@/components/ModifiersMenu";
 
 const MODIFIERS_DEFAULT: ModifiersType = {

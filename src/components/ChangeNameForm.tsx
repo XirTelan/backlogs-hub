@@ -5,7 +5,7 @@ import InputWithLoader from "./Common/UI/InputWithLoader";
 import { changeUserName } from "@/services/user";
 import { useForm } from "react-hook-form";
 import Title from "./Common/Title";
-import { apiRoutesList } from "@/data";
+import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";
 import { useRouter } from "next/navigation";
 

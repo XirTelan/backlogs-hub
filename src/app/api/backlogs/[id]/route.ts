@@ -1,4 +1,4 @@
-import { routesList } from "@/data";
+import { routesList } from "@/lib/routesList";
 import Backlog from "@/models/Backlog";
 import {
   deleteBacklogById,

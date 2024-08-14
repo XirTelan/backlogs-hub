@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 import { ButtonBaseProps } from "@/types";
-import { buttonColorVariants, buttonSize, sizes } from "@/data";
+import { buttonColorVariants, buttonSize, sizes } from "@/lib/styles";
 
 const LinkWithBtnStyle = ({
   href,
@@ -16,11 +16,11 @@ const LinkWithBtnStyle = ({
     <Link
       {...props}
       href={href}
-      className={`${buttonColorVariants[variant]}  ${sizes[size]} flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
+      className={`${buttonColorVariants[variant]}  ${sizes[size]} flex  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
     >
       {children && <div className={` hidden  px-2 md:block`}>{children}</div>}
       <div
-        className={`${buttonSize[size]} ${children && "ms-auto"}  flex min-h-8 items-center justify-center p-1 `}
+        className={`${buttonSize[size]} ${children ? "m-auto md:m-0 md:ms-auto" : "m-auto"}  flex min-h-8 items-center justify-center p-1 `}
       >
         {icon}
       </div>

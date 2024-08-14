@@ -1,7 +1,7 @@
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import SortableItem from "@/components/dnd/SortableItem";
-import { routesList } from "@/data";
+import { routesList } from "@/lib/routesList";
 import { SortableItemProps } from "@/types";
 import { BacklogDTO } from "@/zodTypes";
 import React from "react";

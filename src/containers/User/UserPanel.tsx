@@ -4,7 +4,7 @@ import SidePanel from "@/components/SidePanel";
 import NavLink from "@/components/NavLink";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
-import { routesList } from "@/data";
+import { routesList } from "@/lib/routesList";
 
 const links = [
   {
@@ -38,7 +38,7 @@ const UserPanel = async ({ userName }: { userName: string }) => {
               label={"View profile"}
             ></NavLink>
           </>
-          <div className=" bg-border h-[1px]  w-full  "></div>
+          <div className=" h-[1px] w-full  bg-border  "></div>
           <ul>
             {links.map((link, indx) => (
               <NavLink
@@ -49,7 +49,7 @@ const UserPanel = async ({ userName }: { userName: string }) => {
                 label={link.label}
               ></NavLink>
             ))}
-            <div className=" bg-border h-[1px]  w-full  "></div>
+            <div className=" h-[1px] w-full  bg-border  "></div>
             <SignOutButton />
           </ul>
         </>

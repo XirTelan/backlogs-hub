@@ -2,7 +2,7 @@
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import InputField from "@/components/Common/UI/InputField";
 import LinkBase from "@/components/Common/UI/LinkBase";
-import { apiRoutesList } from "@/data";
+import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";
 import { SignInSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";

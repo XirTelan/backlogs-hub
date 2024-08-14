@@ -4,7 +4,7 @@ import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import { IoAdd } from "react-icons/io5";
 
 import BacklogListData from "./BacklogListData";
-import { routesList } from "@/data";
+import { routesList } from "@/lib/routesList";
 
 const itemsNotFound = (
   <>

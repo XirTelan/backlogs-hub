@@ -1,4 +1,4 @@
-import { buttonColorVariants, buttonSize, sizes } from "@/data";
+import { buttonColorVariants, buttonSize, sizes } from "@/lib/styles";
 import { ButtonBaseProps } from "@/types";
 import React from "react";
 

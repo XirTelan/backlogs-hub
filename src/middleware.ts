@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getTokenData } from "./auth/utils";
-import { routesCategories } from "./data";
+import { routesCategories } from "./lib/routesList";
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value || "";

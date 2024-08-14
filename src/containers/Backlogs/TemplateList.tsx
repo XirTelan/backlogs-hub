@@ -7,7 +7,7 @@ import TemplateForm from "@/components/Template/TemplateForm";
 import { useState } from "react";
 import { TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
-import { apiRoutesList } from "@/data";
+import { apiRoutesList } from "@/lib/routesList";
 import Loading from "@/components/Common/UI/Loading/Loading";
 
 const isEmpty = <div>Its empty</div>;

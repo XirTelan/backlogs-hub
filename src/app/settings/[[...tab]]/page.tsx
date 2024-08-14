@@ -1,5 +1,5 @@
 import UserSettings, { TabsType } from "@/containers/User/UserSettings";
-import { routesList } from "@/data";
+import { routesList } from "@/lib/routesList";
 import { Session } from "@/providers/sessionProvider";
 import { getCurrentUserData } from "@/services/user";
 import { redirect } from "next/navigation";

@@ -1,7 +1,6 @@
 import { FieldError } from "react-hook-form";
 import { BacklogCategory, Field, UserDTO } from "./zodTypes";
-import { ButtonColorVariants } from "./components/Common/UI/ButtonBase";
-import { buttonColorVariants } from "./data";
+import { buttonColorVariants } from "./lib/styles";
 import React from "react";
 type Layer = 1 | 2 | 3;
 

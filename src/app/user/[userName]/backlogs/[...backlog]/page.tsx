@@ -5,7 +5,7 @@ import TopTitle from "@/components/Common/UI/TopTitle";
 
 import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
 import FilterBlock from "@/containers/FilterBlock";
-import { routesList } from "@/data";
+import { routesList } from "@/lib/routesList";
 import { getUserBacklogBySlug } from "@/services/backlogs";
 import React, { Suspense } from "react";
 import { MdEdit } from "react-icons/md";

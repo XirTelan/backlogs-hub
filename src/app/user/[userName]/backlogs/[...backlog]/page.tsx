@@ -1,12 +1,12 @@
 import { getCurrentUserInfo } from "@/auth/utils";
 import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
 import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
 import FilterBlock from "@/containers/FilterBlock";
+import { routesList } from "@/data";
 import { getUserBacklogBySlug } from "@/services/backlogs";
-import Link from "next/link";
 import React, { Suspense } from "react";
 import { MdEdit } from "react-icons/md";
 
@@ -34,17 +34,17 @@ export default async function Backlog({
       <TopTitle title={data.backlogTitle}>
         <>
           {isOwner && (
-            <Link href={`/backlog/edit/${data._id}`}>
-              <ButtonBase
-                variant="tertiary"
-                text="Edit backlog"
-                icon={<MdEdit />}
-              ></ButtonBase>
-            </Link>
+            <LinkWithBtnStyle
+              href={`${routesList.backlogEdit}/${data._id}`}
+              variant="tertiary"
+              icon={<MdEdit />}
+            >
+              Edit backlog
+            </LinkWithBtnStyle>
           )}
         </>
       </TopTitle>
-      <main className="h-screen-bh container self-center ">
+      <main className="container h-screen-bh self-center ">
         <section className="me-auto flex justify-center  rounded px-4 py-4 lg:m-0 lg:justify-start">
           <FilterBlock
             backlogSlug={data.slug}

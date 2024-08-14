@@ -1,7 +1,6 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogItemDTO } from "@/zodTypes";
-import Link from "next/link";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
 import useSWR from "swr";
@@ -10,6 +9,7 @@ import { useState } from "react";
 import { fetcher } from "@/utils";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
+import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 
 const BacklogItemTr = ({
   item,
@@ -19,6 +19,13 @@ const BacklogItemTr = ({
 }: BacklogItemTrProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const res = useSWR(isOpen ? `/api/items/${item._id}` : null, fetcher);
+
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const itemId = e.currentTarget.dataset["itemid"];
+    if (!itemId) return;
+    onDelete(itemId);
+  };
+
   return (
     <>
       <tr
@@ -39,52 +46,53 @@ const BacklogItemTr = ({
           {item.title}
         </td>
         <td className={`ms-auto flex p-2 `}>
-          <Link href={`/items/${item._id}`}>
-            <ButtonBase
-              title="Details"
-              size="small"
-              variant="ghost"
-              icon={<FaFileLines size={20} />}
-            />
-          </Link>
+          <LinkWithBtnStyle
+            title="Details"
+            href={`/items/${item._id}`}
+            size="small"
+            variant="ghost"
+            icon={<FaFileLines size={20} />}
+          />
 
           {showActions && (
             <>
-              <Link href={`/items/${item._id}/edit`}>
-                <ButtonBase
-                  size="small"
-                  variant="ghost"
-                  icon={<MdEdit size={20} />}
-                />
-              </Link>
+              <LinkWithBtnStyle
+                href={`/items/${item._id}/edit`}
+                title="Edit item"
+                size="small"
+                variant="ghost"
+                icon={<MdEdit size={20} />}
+              />
               <ButtonBase
-                title="Delete"
+                title="Delete item"
                 size="small"
                 variant="dangerGhost"
+                data-itemid={item._id}
                 icon={<MdDeleteForever size={20} />}
-                onClick={() => onDelete(item._id)}
+                onClick={handleDelete}
               />
             </>
           )}
         </td>
       </tr>
-      {isOpen &&
-        (res.isLoading ? (
-          <tr role="region" className="border-b border-field-2 ">
+      {isOpen && (
+        <tr role="region" className="border-b border-field-2 ">
+          {res.isLoading ? (
             <td colSpan={3}>
               <LoadingAnimation />
             </td>
-          </tr>
-        ) : (
-          <tr role="region" className="border-b border-field-2 ">
-            <td></td>
-            <td colSpan={2} className="border-t border-field-2 ">
-              <div className=" p-4 ">
-                <BacklogItem data={res.data.data} />
-              </div>
-            </td>
-          </tr>
-        ))}
+          ) : (
+            <>
+              <td></td>
+              <td colSpan={2} className="border-t border-field-2 ">
+                <div className=" p-4 ">
+                  <BacklogItem data={res.data.data} />
+                </div>
+              </td>
+            </>
+          )}
+        </tr>
+      )}
     </>
   );
 };

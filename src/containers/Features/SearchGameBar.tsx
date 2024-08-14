@@ -1,12 +1,12 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
+import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import Loading from "@/components/Common/UI/Loading/Loading";
 import SearchField from "@/components/Common/UI/SearchField";
 import useDebounce from "@/hooks/useDebounce";
 import useToggle from "@/hooks/useToggle";
 import { SearchBar } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
@@ -94,19 +94,16 @@ const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
                         <div className="flex w-full flex-col md:ms-2">
                           <div>{item.name}</div>
                           <div className="flex flex-col md:flex-row">
-                            <Link
-                              className="w-full"
+                            <LinkWithBtnStyle
                               href={item.link}
                               target="_blank"
+                              size="small"
+                              variant="secondary"
                               rel="nofollow norefferer"
                             >
-                              <ButtonBase
-                                size="small"
-                                type="button"
-                                variant="secondary"
-                                text="Steam Page"
-                              />
-                            </Link>
+                              Steam Page
+                            </LinkWithBtnStyle>
+
                             <ButtonBase
                               style={{ width: "100%" }}
                               variant="accent"

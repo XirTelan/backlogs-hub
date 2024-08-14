@@ -1,4 +1,4 @@
-import LinkButton from "@/components/Common/UI/LinkButton";
+import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import UserBacklogs from "@/containers/User/UserBacklogs";
 import React from "react";
 import { MdOutlineManageSearch } from "react-icons/md";
@@ -25,20 +25,16 @@ export default async function Backlogs({
       {isOwner ? (
         <TopTitle title={"My backlogs"}>
           <div className="flex">
-            <LinkButton
+            <LinkWithBtnStyle
               href={`/manage-backlogs`}
-              text={"Manage backlogs"}
-              button={{ variant: "ghost", hideText: true }}
+              icon={<MdOutlineManageSearch size={24} />}
+              variant="ghost"
             >
-              <MdOutlineManageSearch size={24} />
-            </LinkButton>
-            <LinkButton
-              href={`/backlog/create`}
-              text={"Create backlog"}
-              button={{ hideText: true }}
-            >
-              <IoAdd />
-            </LinkButton>
+              Manage backlogs
+            </LinkWithBtnStyle>
+            <LinkWithBtnStyle href={`/backlog/create`} icon={<IoAdd />}>
+              Create backlog
+            </LinkWithBtnStyle>
           </div>
         </TopTitle>
       ) : (

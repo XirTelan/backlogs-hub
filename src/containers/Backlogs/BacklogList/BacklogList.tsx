@@ -1,9 +1,10 @@
 import TableBase from "@/components/Common/UI/TableBase";
 import { getBacklogItemsData } from "@/services/backlogItem";
-import LinkButton from "@/components/Common/UI/LinkButton";
+import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import { IoAdd } from "react-icons/io5";
 
 import BacklogListData from "./BacklogListData";
+import { routesList } from "@/data";
 
 const itemsNotFound = (
   <>
@@ -43,13 +44,12 @@ const Backloglist = async ({
       <TableBase
         showButton={isOwner}
         customButton={
-          <LinkButton
-            href={`/items/create?backlog=${id}`}
-            text={"Add item"}
-            button={{ hideText: true }}
+          <LinkWithBtnStyle
+            href={`${routesList.backlogCreate}/?backlog=${id}`}
+            icon={<IoAdd />}
           >
-            <IoAdd />
-          </LinkButton>
+            Add item
+          </LinkWithBtnStyle>
         }
         title=""
         search

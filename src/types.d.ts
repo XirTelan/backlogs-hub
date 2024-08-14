@@ -1,6 +1,7 @@
 import { FieldError } from "react-hook-form";
 import { BacklogCategory, Field, UserDTO } from "./zodTypes";
 import { ButtonColorVariants } from "./components/Common/UI/ButtonBase";
+import { buttonColorVariants } from "./data";
 import React from "react";
 type Layer = 1 | 2 | 3;
 
@@ -99,13 +100,16 @@ export type ResponseData<T> = {
 
 export type UserCreationDTO = Pick<UserDTO, "username" | "email" | "provider">;
 
+export type ButtonColorVariants = keyof typeof buttonColorVariants;
+
 export type ButtonBaseProps = {
   children?: React.ReactElement;
   text?: string;
   hideText?: boolean;
   size?: "small" | "medium" | "large" | "elarge";
   icon?: React.ReactElement;
-  variant?: ButtonColorVariants;
+  variant?: keyof typeof buttonColorVariants;
+  onlyVisual?: boolean;
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement

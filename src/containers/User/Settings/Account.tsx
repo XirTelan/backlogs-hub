@@ -6,10 +6,10 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { FaChevronRight } from "react-icons/fa";
 import { UserDTO } from "@/zodTypes";
 import { ModalProps } from "../UserSettings";
-import Link from "next/link";
 import { toastCustom } from "@/lib/toast";
 
 import DeleteAccount from "./DeleteAccount";
+import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 
 type AccountType = {
   provider: string;
@@ -113,14 +113,13 @@ const providerButton = (
     </Setting>
   ) : (
     <Setting label={label}>
-      <Link href={process.env.NEXT_PUBLIC_DISCORDOAUTH!}>
-        <ButtonBase
-          style={{ width: "10rem" }}
-          text="Connect"
-          variant="tertiary"
-          icon={<FaChevronRight size={18} />}
-        />
-      </Link>
+      <LinkWithBtnStyle
+        href={process.env.NEXT_PUBLIC_DISCORDOAUTH!}
+        icon={<FaChevronRight size={18} />}
+        variant="tertiary"
+      >
+        Connect
+      </LinkWithBtnStyle>
     </Setting>
   );
   return button;

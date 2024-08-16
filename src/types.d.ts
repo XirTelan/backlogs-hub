@@ -31,9 +31,10 @@ export type ItemsFormBacklogProp = {
 
 export type ItemsFormProps<T> = {
   backlog: ItemsFormBacklogProp;
-  mapFields: Map<string, string>;
   defaultValues: T;
   type: "edit" | "create";
+  view?: "page" | "modal";
+  btnCancel?: () => void;
 };
 
 export type TextArea = {
@@ -102,11 +103,11 @@ export type UserCreationDTO = Pick<UserDTO, "username" | "email" | "provider">;
 export type ButtonColorVariants = keyof typeof buttonColorVariants;
 
 export type ButtonBaseProps = {
-  children?: React.ReactElement;
   text?: string;
   hideText?: boolean;
   size?: "small" | "medium" | "large" | "elarge";
   icon?: React.ReactElement;
+  children?: React.ReactNode;
   variant?: keyof typeof buttonColorVariants;
   onlyVisual?: boolean;
 } & React.DetailedHTMLProps<

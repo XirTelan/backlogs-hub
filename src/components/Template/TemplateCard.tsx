@@ -57,7 +57,7 @@ const TemplateCard = ({
         <div className=" grid gap-2 px-4  text-base">
           <div>
             <span>Modifiers:</span>{" "}
-            <div>{template.modifiers.useSteamSearch && "Steam Search"}</div>
+            <div>{template.modifiers?.useSteamSearch && "Steam Search"}</div>
           </div>
           <div className="flex justify-between">
             {template.fields && template.fields.length > 2 ? (

@@ -8,8 +8,8 @@ const SidePanel = ({
   children,
 }: {
   position?: "left" | "right";
-  icon: React.ReactElement;
-  children: React.ReactElement;
+  icon: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ const SidePanel = ({
         <div
           className={`${styleDropDownPos} absolute top-full z-50 w-64  border-b  border-border-1 bg-background   `}
         >
-          {children}
+          <>{children}</>
         </div>
       )}
     </div>

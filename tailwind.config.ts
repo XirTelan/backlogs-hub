@@ -17,6 +17,9 @@ const config: Config = {
       minHeight: {
         "screen-bh": "calc(100svh - 49px)",
       },
+      maxHeight: {
+        "screen-bh": "calc(100svh - 49px)",
+      },
       boxShadow: {
         around: "0 0 15px 5px rgba(0, 0, 0, 0.3)",
       },

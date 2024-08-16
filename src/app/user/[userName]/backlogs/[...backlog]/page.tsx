@@ -21,7 +21,7 @@ export default async function Backlog({
   const isOwner = user?.username == userName;
   const data = await getUserBacklogBySlug(userName, backlog, isOwner);
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
-
+  
   const selectedCategories = searchParams.categories?.split("-") || [];
   const search = searchParams.search ?? "";
 
@@ -56,8 +56,8 @@ export default async function Backlog({
             <Backloglist
               isOwner={isOwner}
               search={search}
+              backlog={data}
               selectedCategories={selectedCategories}
-              backlogSlug={data.slug}
               categoriesMap={categoriesMap}
               id={data._id.toString()}
             />

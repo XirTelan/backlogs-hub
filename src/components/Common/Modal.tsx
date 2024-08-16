@@ -1,7 +1,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import ButtonBase, { ButtonColorVariants } from "./UI/ButtonBase";
-import { ButtonBaseProps } from "@/types";
+import ButtonBase from "./UI/ButtonBase";
+import { ButtonBaseProps, ButtonColorVariants } from "@/types";
 
 const DEFAULTS: ModalProps["actionOptions"] = {
   position: "inherit",
@@ -49,6 +49,7 @@ const Modal = ({
   return createPortal(
     <div
       onClick={setClose}
+      role="dialog"
       className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 "
     >
       <div

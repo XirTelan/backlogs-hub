@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Select from "@/components/Common/UI/Select";
 import { BacklogItemCreationDTO, Field } from "@/zodTypes";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import ProgressTimer from "@/containers/Fields/ProgressTimer";
 import { toastCustom } from "@/lib/toast";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 import MarkdownEditor from "../Fields/MarkdownEditor";
 import SearchGameBar from "../Features/SearchGameBar";
@@ -18,39 +17,49 @@ import { FaSteam } from "react-icons/fa6";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,
-  mapFields,
   defaultValues,
   type,
+  view = "page",
+  btnCancel,
 }: ItemsFormProps<T>) => {
   const router = useRouter();
+
+  const mapFields = useMemo(
+    () =>
+      defaultValues.userFields.reduce((mapAcc, field) => {
+        mapAcc.set(field.backlogFieldId, field.value);
+        return mapAcc;
+      }, new Map()),
+    [defaultValues.userFields],
+  );
+
   const onSubmit = useCallback(
-    async (
-      data: BacklogItemCreationDTO & { _id?: string },
-      type: "edit" | "create",
-      router: AppRouterInstance,
-    ) => {
+    async (data: BacklogItemCreationDTO & { _id?: string }) => {
+      const url = `/api/items${type === "edit" ? `/${data._id}` : ""}`;
+      const options = {
+        method: type === "edit" ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+
       try {
-        const url = `/api/items${type === "edit" ? `/${data._id}` : ""}`;
-        const res = await fetch(url, {
-          method: type === "edit" ? "PUT" : "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        if (res.ok) {
-          toastCustom.success("Saved");
-          router.back();
-        } else {
+        const res = await fetch(url, options);
+
+        if (!res.ok) {
           const error = await res.json();
-          console.error(error);
-          toastCustom.error(res.statusText);
+          console.error("API error:", error);
+          throw new Error(res.statusText || "Failed to submit data.");
         }
+
+        return true;
       } catch (error) {
-        console.error(error);
+        console.error("Fetch error:", error);
+        throw error;
       }
     },
-    [],
+    [type],
   );
 
   const {
@@ -64,56 +73,51 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     mode: "onBlur",
   });
 
-  const onSubmitInternal = (data: BacklogItemCreationDTO) => {
-    onSubmit(
-      {
-        ...defaultValues,
-        ...data,
-      },
-      type,
-      router,
-    );
+  const handleCancel = () => {
+    if (btnCancel) {
+      btnCancel();
+      return;
+    }
+    console.log(view);
+    view === "page" ? router.back() : router.refresh();
   };
+
+  const onSubmitInternal = (data: BacklogItemCreationDTO) => {
+    onSubmit({
+      ...defaultValues,
+      ...data,
+    })
+      .then((success) => {
+        if (success) {
+          handleCancel();
+          toastCustom.success("success");
+        }
+      })
+      .catch((error) => {
+        toastCustom.error(error.statusText);
+      });
+  };
+
   const getFieldInput = useCallback(
     (field: Field, index: number) => {
       const fieldValue = mapFields?.get(field._id || "") || "";
+
+      const commonProps = {
+        label: field.name,
+        defaultValue: fieldValue,
+        setValue: setValue as (name: string, val: string) => void,
+        ...register(`userFields.${index}.value`, { required: false }),
+      };
+
       switch (field.type) {
         case "timer":
-          return (
-            <ProgressTimer
-              layer={2}
-              label={field.name}
-              defaultValue={fieldValue}
-              setValue={setValue as (name: string, val: string) => void}
-              {...register(`userFields.${index}.value`, {
-                required: false,
-              })}
-            />
-          );
-          break;
+          return <ProgressTimer layer={2} {...commonProps} />;
         case "markdown":
-          return (
-            <MarkdownEditor
-              defaultValue={fieldValue}
-              setValue={setValue as (name: string, val: string) => void}
-              {...register(`userFields.${index}.value`, {
-                required: false,
-              })}
-            />
-          );
-          break;
+          return <MarkdownEditor {...commonProps} />;
         case "select":
           return (
-            <Select
-              layer={2}
-              label={field.name}
-              options={field.data || []}
-              {...register(`userFields.${index}.value`, {
-                required: false,
-              })}
-            />
+            <Select layer={2} options={field.data || []} {...commonProps} />
           );
-          break;
         case "text":
         case "number":
         case "date":
@@ -121,15 +125,11 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           return (
             <InputField
               layer={2}
-              label={field.name}
               placeholder={field.name}
               type={field.type}
-              {...register(`userFields.${index}.value`, {
-                required: false,
-              })}
+              {...commonProps}
             />
           );
-          break;
       }
     },
     [mapFields, register, setValue],
@@ -137,6 +137,16 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
 
   const isUsingSteamSearch =
     backlog.modifiers?.useSteamSearch && watch("modifiersFields.steamAppId");
+
+  const handleSteamSearchAddGame = (id: string, name: string) => {
+    setValue("modifiersFields.steamAppId", id);
+    setValue("title", name);
+  };
+
+  const handleSteamSearchUnlink = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setValue("modifiersFields.steamAppId", undefined);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmitInternal)}>
@@ -146,10 +156,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
             <div className="relative">
               <SearchGameBar
                 readOnly={isUsingSteamSearch !== undefined}
-                addGame={(id, name) => {
-                  setValue("modifiersFields.steamAppId", id);
-                  setValue("title", name);
-                }}
+                addGame={handleSteamSearchAddGame}
                 labelText="Title"
                 {...register("title", { required: true })}
               />
@@ -160,10 +167,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
                     type="button"
                     title="Linked to steam game"
                     icon={<FaSteam size={24} />}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setValue("modifiersFields.steamAppId", undefined);
-                    }}
+                    onClick={handleSteamSearchUnlink}
                   />
                 </div>
               )}
@@ -212,7 +216,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           text="Cancel"
           variant="secondary"
           type="button"
-          onClick={() => router.back()}
+          onClick={handleCancel}
         />
       </div>
     </form>

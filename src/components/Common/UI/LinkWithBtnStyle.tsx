@@ -14,9 +14,9 @@ const LinkWithBtnStyle = ({
 }: LinkButtonProps) => {
   return (
     <Link
-      {...props}
       href={href}
-      className={`${buttonColorVariants[variant]}  ${sizes[size]} flex  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
+      {...props}
+      className={`${props.className} ${buttonColorVariants[variant]}  ${sizes[size]} flex  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
     >
       {children && <div className={` hidden  px-2 md:block`}>{children}</div>}
       <div

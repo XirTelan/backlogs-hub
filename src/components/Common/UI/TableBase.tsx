@@ -27,24 +27,22 @@ const TableBase = ({
             </div>
           </section>
         )}
-        <div className=" max-h-[calc(100svh-20rem)] overflow-auto ">
-          <table className="w-full table-fixed ">
-            <thead>
-              <tr className=" h-12 bg-layer-accent-1">
-                {headers.map((header) => (
-                  <th
-                    key={header.id}
-                    style={{ width: header.width || "auto" }}
-                    className="p-4 text-start text-primary-text"
-                  >
-                    {header.title}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>{children}</tbody>
-          </table>
-        </div>
+        <table className="w-full table-fixed ">
+          <thead>
+            <tr className=" h-12 bg-layer-accent-1">
+              {headers.map((header) => (
+                <th
+                  key={header.id}
+                  style={{ width: header.width || "auto" }}
+                  className="p-4 text-start text-primary-text"
+                >
+                  {header.title}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{children}</tbody>
+        </table>
       </div>
     </>
   );

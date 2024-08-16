@@ -1,6 +1,6 @@
 import NotFound from "@/components/Common/NotFound";
 import TopTitle from "@/components/Common/UI/TopTitle";
-import ItemsFormTypeWrapper from "@/containers/Items/ItemsFormTypeWrapper";
+import ItemsForm from "@/containers/Items/ItemsForm";
 import { getBacklogItemById } from "@/services/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { redirect } from "next/navigation";
@@ -24,7 +24,7 @@ const EditItem = async ({
     <>
       <TopTitle title="Edit" />
       <main className=" container self-center px-4">
-        <ItemsFormTypeWrapper
+        <ItemsForm
           backlog={{
             backlogFields: backlog.fields || [],
             categories: backlog.categories,

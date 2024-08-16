@@ -1,4 +1,5 @@
 import React from "react";
+import ButtonBase from "./ButtonBase";
 
 type ToggleButtonProps = {
   title: string;
@@ -16,13 +17,16 @@ const ToggleButton = ({
   ...props
 }: ToggleButtonProps) => {
   return (
-    <button
+    <ButtonBase
       className={`rounded border border-neutral-700  bg-neutral-800 p-2 `}
-      style={{ backgroundColor: isActive ? activeColor : "" }}
+      variant="tertiary"
       {...props}
-    >
-      {title}
-    </button>
+      style={{ backgroundColor: isActive ? activeColor : "" }}
+      text={title}
+      icon={
+        <div className="h-4 w-4" style={{ backgroundColor: activeColor }}></div>
+      }
+    />
   );
 };
 

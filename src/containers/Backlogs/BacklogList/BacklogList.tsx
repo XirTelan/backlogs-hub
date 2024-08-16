@@ -1,10 +1,9 @@
 import TableBase from "@/components/Common/UI/TableBase";
 import { getBacklogItemsData } from "@/services/backlogItem";
-import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
-import { IoAdd } from "react-icons/io5";
 
 import BacklogListData from "./BacklogListData";
-import { routesList } from "@/lib/routesList";
+import ItemFormModal from "@/containers/Items/ItemFormModal";
+import { BacklogDTO } from "@/zodTypes";
 
 const itemsNotFound = (
   <>
@@ -35,22 +34,17 @@ const Backloglist = async ({
   selectedCategories,
   categoriesMap,
   search,
+  backlog,
   isOwner,
 }: BackloglistProps) => {
   const data =
     (await getBacklogItemsData(selectedCategories, search, id)).data || [];
+
   return (
     <>
       <TableBase
         showButton={isOwner}
-        customButton={
-          <LinkWithBtnStyle
-            href={`${routesList.backlogCreate}/?backlog=${id}`}
-            icon={<IoAdd />}
-          >
-            Add item
-          </LinkWithBtnStyle>
-        }
+        customButton={<ItemFormModal backlog={backlog} />}
         title=""
         search
         description=""
@@ -80,7 +74,7 @@ export default Backloglist;
 interface BackloglistProps {
   id: string;
   search: string;
-  backlogSlug: string;
+  backlog: BacklogDTO;
   isOwner: boolean;
   selectedCategories: string[];
   categoriesMap: Map<string, string>;

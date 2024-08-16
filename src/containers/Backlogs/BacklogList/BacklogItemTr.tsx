@@ -1,7 +1,7 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogItemDTO } from "@/zodTypes";
-import { MdEdit, MdDeleteForever } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
 import useSWR from "swr";
 import BacklogItem from "@/components/Backlog/BacklogItem";
@@ -10,6 +10,8 @@ import { fetcher } from "@/utils";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import SidePanel from "@/components/SidePanel";
 
 const BacklogItemTr = ({
   item,
@@ -46,33 +48,35 @@ const BacklogItemTr = ({
           {item.title}
         </td>
         <td className={`ms-auto flex p-2 `}>
-          <LinkWithBtnStyle
-            title="Details"
-            href={`/items/${item._id}`}
-            size="small"
-            variant="ghost"
-            icon={<FaFileLines size={20} />}
-          />
+          <SidePanel icon={<BsThreeDotsVertical />}>
+            <LinkWithBtnStyle
+              title="Details"
+              href={`/items/${item._id}`}
+              size="small"
+              variant="ghost"
+              icon={<FaFileLines size={20} />}
+            />
 
-          {showActions && (
-            <>
-              <LinkWithBtnStyle
-                href={`/items/${item._id}/edit`}
-                title="Edit item"
-                size="small"
-                variant="ghost"
-                icon={<MdEdit size={20} />}
-              />
-              <ButtonBase
-                title="Delete item"
-                size="small"
-                variant="dangerGhost"
-                data-itemid={item._id}
-                icon={<MdDeleteForever size={20} />}
-                onClick={handleDelete}
-              />
-            </>
-          )}
+            {showActions && (
+              <>
+                <LinkWithBtnStyle
+                  href={`/items/${item._id}/edit`}
+                  title="Edit item"
+                  size="small"
+                  variant="ghost"
+                  icon={<MdEdit size={20} />}
+                />
+                <ButtonBase
+                  title="Delete item"
+                  size="small"
+                  variant="dangerGhost"
+                  data-itemid={item._id}
+                  icon={<BsThreeDotsVertical />}
+                  onClick={handleDelete}
+                />
+              </>
+            )}
+          </SidePanel>
         </td>
       </tr>
       {isOpen && (

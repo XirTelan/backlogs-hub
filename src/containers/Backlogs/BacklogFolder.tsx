@@ -31,7 +31,7 @@ const BacklogFolder = ({
             {backlogs.map((backlog) => (
               <BacklogCard
                 href={`/user/${userName}/backlogs/${backlog.slug}`}
-                createLink={`${routesList.backlogCreate}/?backlog=${backlog._id}`}
+                createLink={`${routesList.itemsCreate}/?backlog=${backlog._id}`}
                 key={backlog._id}
               >
                 <>

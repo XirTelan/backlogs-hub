@@ -32,7 +32,7 @@ const FilterBlock = ({ backlogCategories }: FilterBlockProps) => {
   }, [searchCategories]);
 
   return (
-    <div className="flex flex-wrap gap-1">
+    <div className="flex w-full flex-wrap gap-1 *:max-w-40">
       {categories.map((category) => (
         <ToggleButton
           title={category.name}

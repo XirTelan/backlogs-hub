@@ -4,7 +4,7 @@ import News from "@/models/News";
 export async function getNews() {
   try {
     await dbConnect();
-    const news = await News.find().select("-_id").lean();
+    const news = await News.find().select("-_id").sort("-createdAt").lean();
     return news;
   } catch (error) {
     console.error(error);

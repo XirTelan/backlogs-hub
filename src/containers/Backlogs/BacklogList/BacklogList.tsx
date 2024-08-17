@@ -86,5 +86,4 @@ interface BackloglistProps {
   backlog: BacklogDTO;
   isOwner: boolean;
   selectedCategories: string[];
-  categoriesMap: Map<string, string>;
 }

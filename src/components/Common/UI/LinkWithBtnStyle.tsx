@@ -41,4 +41,5 @@ type LinkButtonProps = {
   size?: ButtonBaseProps["size"];
   icon?: ButtonBaseProps["icon"];
   hideText?: boolean;
+  target?: string;
 } & React.HTMLAttributes<HTMLAnchorElement>;

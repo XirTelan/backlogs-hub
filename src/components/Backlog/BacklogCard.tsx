@@ -15,6 +15,7 @@ const BacklogCard = ({ children, href, createLink }: BacklogCardProps) => {
           variant="ghostAccent"
           href={createLink}
           className="md:h-1/4"
+          hideText
           icon={<IoAdd size={24} />}
         >
           Add Item
@@ -24,6 +25,7 @@ const BacklogCard = ({ children, href, createLink }: BacklogCardProps) => {
           variant="tertiary"
           href={href}
           className="md:h-3/4"
+          hideText
           icon={<FaArrowRight />}
         >
           View

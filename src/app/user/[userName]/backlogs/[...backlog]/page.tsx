@@ -25,9 +25,6 @@ export default async function Backlog({
   const selectedCategories = searchParams.categories?.split("-") || [];
   const search = searchParams.search ?? "";
 
-  const categoriesMap = new Map(
-    data.categories.map((category) => [category.name, category.color]),
-  );
 
   return (
     <div className="flex flex-col">
@@ -58,7 +55,6 @@ export default async function Backlog({
               search={search}
               backlog={data}
               selectedCategories={selectedCategories}
-              categoriesMap={categoriesMap}
               id={data._id.toString()}
             />
           </Suspense>

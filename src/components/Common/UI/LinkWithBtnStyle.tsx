@@ -10,6 +10,7 @@ const LinkWithBtnStyle = ({
   icon,
   size = "large",
   variant = "primary",
+  hideText = false,
   ...props
 }: LinkButtonProps) => {
   return (
@@ -18,9 +19,13 @@ const LinkWithBtnStyle = ({
       {...props}
       className={`${props.className} ${buttonColorVariants[variant]}  ${sizes[size]} flex  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
     >
-      {children && <div className={` hidden  px-2 md:block`}>{children}</div>}
+      {children && (
+        <div className={`${hideText && "hidden"}  px-2 md:block`}>
+          {children}
+        </div>
+      )}
       <div
-        className={`${buttonSize[size]} ${children ? "m-auto md:m-0 md:ms-auto" : "m-auto"}  flex min-h-8 items-center justify-center p-1 `}
+        className={`${buttonSize[size]} ${children ? "ms-auto md:m-0 md:ms-auto" : "m-auto"}  flex min-h-8 items-center justify-center p-1 `}
       >
         {icon}
       </div>
@@ -35,7 +40,5 @@ type LinkButtonProps = {
   variant?: ButtonBaseProps["variant"];
   size?: ButtonBaseProps["size"];
   icon?: ButtonBaseProps["icon"];
-} & React.DetailedHTMLProps<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  HTMLAnchorElement
->;
+  hideText?: boolean;
+} & React.HTMLAttributes<HTMLAnchorElement>;

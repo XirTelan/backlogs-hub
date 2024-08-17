@@ -1,6 +1,6 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import { BacklogItemDTO } from "@/zodTypes";
+import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
 import { MdEdit } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
 import useSWR from "swr";
@@ -48,14 +48,20 @@ const BacklogItemTr = ({
           {item.title}
         </td>
         <td className={`ms-auto flex p-2 `}>
-          <SidePanel icon={<BsThreeDotsVertical />}>
+          <SidePanel
+            position="none"
+            borders={false}
+            icon={<BsThreeDotsVertical />}
+          >
             <LinkWithBtnStyle
               title="Details"
               href={`/items/${item._id}`}
               size="small"
               variant="ghost"
               icon={<FaFileLines size={20} />}
-            />
+            >
+              Details{" "}
+            </LinkWithBtnStyle>
 
             {showActions && (
               <>
@@ -65,9 +71,12 @@ const BacklogItemTr = ({
                   size="small"
                   variant="ghost"
                   icon={<MdEdit size={20} />}
-                />
+                >
+                  Edit
+                </LinkWithBtnStyle>
                 <ButtonBase
                   title="Delete item"
+                  text="Delete"
                   size="small"
                   variant="dangerGhost"
                   data-itemid={item._id}
@@ -107,5 +116,6 @@ type BacklogItemTrProps = {
   item: BacklogItemDTO;
   color: string;
   showActions: boolean;
+  categories: BacklogDTO["categories"];
   onDelete: (id: string) => void;
 };

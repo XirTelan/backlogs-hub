@@ -2,13 +2,26 @@
 import useOutsideClickReg from "@/hooks/useOutsideClickReg";
 import React, { useRef, useState } from "react";
 
+const buttonPosStyles = {
+  left: "border-e",
+  none: "",
+  right: "border-s",
+};
+
+const bordersStyles = {
+  open: "border-border-1 border-b border-b-background",
+  close: "border-b border-border-1 border-s border-s-transparent",
+};
+
 const SidePanel = ({
   icon,
   position = "right",
   children,
+  borders = true,
 }: {
-  position?: "left" | "right";
+  position?: "left" | "right" | "none";
   icon: React.ReactNode;
+  borders?: boolean;
   children: React.ReactNode | React.ReactNode[];
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +31,12 @@ const SidePanel = ({
   });
   const styleDropDownPos =
     position === "left" ? "left-0 border-r" : "right-0 border-l";
-  const styleButtonPos = position === "left" ? "border-e" : "border-s";
-  const styleButton = isOpen
-    ? ` ${styleButtonPos} border-border-1 border-b border-b-background`
-    : "border-b border-border-1 border-s border-s-transparent";
+  const styleButtonPos = buttonPosStyles[position];
+  const styleButton = borders
+    ? isOpen
+      ? ` ${styleButtonPos} ${bordersStyles.open} `
+      : `${bordersStyles.close}`
+    : "";
   return (
     <div
       ref={ref}
@@ -31,7 +46,6 @@ const SidePanel = ({
       className="relative"
     >
       <button
-        aria-label="User Panel"
         className={`${styleButton}  h-[49px] w-12   p-[14px] hover:bg-subtle-3/15`}
       >
         {icon}

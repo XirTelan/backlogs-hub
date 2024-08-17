@@ -1,21 +1,27 @@
 "use client";
 import { toastCustom } from "@/lib/toast";
-import { BacklogItemDTO } from "@/zodTypes";
+import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
 import { useRouter } from "next/navigation";
 import BacklogItemTr from "./BacklogItemTr";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Modal from "@/components/Common/Modal";
 import Title from "@/components/Common/Title";
 
 const BacklogListData = ({
   data,
   isOwner,
-  categoriesMap,
+  categories,
 }: {
   data: BacklogItemDTO[];
   isOwner: boolean;
-  categoriesMap: Map<string, string>;
+  categories: BacklogDTO["categories"];
 }) => {
+  const categoriesMap = useMemo(
+    () =>
+      new Map(categories.map((category) => [category.name, category.color])),
+    [categories],
+  );
+
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<string | null>(null);
   const onDelete = async (id: string) => {
@@ -38,6 +44,7 @@ const BacklogListData = ({
           showActions={isOwner}
           key={item._id ?? indx}
           item={item}
+          categories={categories}
           color={categoriesMap.get(item.category) || "#fff"}
         />
       ))}

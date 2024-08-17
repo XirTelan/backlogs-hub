@@ -110,6 +110,7 @@ export const putBacklogItem = async (data: BacklogItemDTO) => {
     throw new Error(`Error: ${error}`);
   }
 };
+
 export const deleteBacklogItem = async (id: string) => {
   try {
     await dbConnect();

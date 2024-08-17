@@ -16,7 +16,7 @@ const ItemFormModal = ({ backlog }: { backlog: BacklogDTO }) => {
       setClose,
       setOpen,
     },
-    { text: "Add item", icon: <IoAdd /> },
+    { hideText: true, text: "Add item", icon: <IoAdd /> },
   );
   return (
     <>

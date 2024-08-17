@@ -13,6 +13,7 @@ export const apiRoutesList = {
   signIn: "/api/auth/signIn",
   register: "/api/auth/register",
   templates: "/api/templates",
+  items: "/api/items",
 };
 export const routesCategories = {
   protectedRoutes: [
@@ -25,5 +26,3 @@ export const routesCategories = {
   ],
   forNonUser: ["/", routesList.register],
 };
-
-

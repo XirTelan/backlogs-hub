@@ -4,6 +4,7 @@ import { getBacklogItemsData } from "@/services/backlogItem";
 import BacklogListData from "./BacklogListData";
 import ItemFormModal from "@/containers/Items/ItemFormModal";
 import { BacklogDTO } from "@/zodTypes";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const itemsNotFound = (
   <>
@@ -32,7 +33,6 @@ const itemsDoesntExist = (
 const Backloglist = async ({
   id,
   selectedCategories,
-  categoriesMap,
   search,
   backlog,
   isOwner,
@@ -51,13 +51,22 @@ const Backloglist = async ({
         headers={[
           { id: "accordion", title: "", width: "49px" },
           { id: "title", title: "Title" },
-          { id: "actions", title: "Actions", width: "112px" },
+          {
+            id: "actions",
+            title: (
+              <BsThreeDotsVertical
+                title="Actions"
+                className="m-auto text-secondary-text"
+              />
+            ),
+            width: "64px",
+          },
         ]}
       >
         {data.length > 0 ? (
           <BacklogListData
             data={data}
-            categoriesMap={categoriesMap}
+            categories={backlog.categories}
             isOwner={isOwner}
           />
         ) : search ? (

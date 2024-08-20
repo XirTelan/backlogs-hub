@@ -1,17 +1,18 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
-import { MdEdit } from "react-icons/md";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
 import useSWR from "swr";
 import BacklogItem from "@/components/Backlog/BacklogItem";
-import { useState } from "react";
 import { fetcher } from "@/utils";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import SidePanel from "@/components/SidePanel";
+import { ItemChangeCategoryOpenModal } from "@/containers/Items/ItemChangeCategoryModal";
+import useToggle from "@/hooks/useToggle";
 
 const BacklogItemTr = ({
   item,
@@ -19,7 +20,7 @@ const BacklogItemTr = ({
   color,
   showActions,
 }: BacklogItemTrProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, toggle } = useToggle(false);
   const res = useSWR(isOpen ? `/api/items/${item._id}` : null, fetcher);
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +42,7 @@ const BacklogItemTr = ({
             icon={
               isOpen ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />
             }
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={toggle}
           />
         </td>
         <td className={`px-4`} style={{ color: color }}>
@@ -53,6 +54,7 @@ const BacklogItemTr = ({
             borders={false}
             icon={<BsThreeDotsVertical />}
           >
+            <ItemChangeCategoryOpenModal data={item} />
             <LinkWithBtnStyle
               title="Details"
               href={`/items/${item._id}`}
@@ -80,7 +82,7 @@ const BacklogItemTr = ({
                   size="small"
                   variant="dangerGhost"
                   data-itemid={item._id}
-                  icon={<BsThreeDotsVertical />}
+                  icon={<MdDeleteForever size={24} />}
                   onClick={handleDelete}
                 />
               </>

@@ -173,3 +173,14 @@ export type SteamApp = {
   }[];
   background: string;
 };
+
+export type ModalContextProps = {
+  isOpen: boolean;
+  key: string;
+  data?: unknown;
+  setOpen: () => void;
+  setClose: () => void;
+  toggle: () => void;
+  setData: Dispatch<SetStateAction<unknown>>;
+  setKey: Dispatch<SetStateAction<string>>;
+};

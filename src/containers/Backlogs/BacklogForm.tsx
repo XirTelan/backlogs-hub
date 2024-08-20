@@ -69,6 +69,7 @@ const BacklogForm = <T extends BacklogFormData>({
   };
   const onSubmitInternal = (data: BacklogFormData) => {
     data.modifiers = modifiers;
+    data.backlogTitle = data.backlogTitle.trim();
     onSubmit({ ...defaultValues, ...data });
   };
 

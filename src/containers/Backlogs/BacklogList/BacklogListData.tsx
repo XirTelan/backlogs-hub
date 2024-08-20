@@ -6,6 +6,7 @@ import BacklogItemTr from "./BacklogItemTr";
 import { useMemo, useState } from "react";
 import Modal from "@/components/Common/Modal";
 import Title from "@/components/Common/Title";
+import useToggle from "@/hooks/useToggle";
 
 const BacklogListData = ({
   data,
@@ -23,9 +24,13 @@ const BacklogListData = ({
   );
 
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState<string | null>(null);
-  const onDelete = async (id: string) => {
-    const res = await fetch(`/api/items/${id}`, {
+  const { isOpen, setOpen, setClose } = useToggle();
+  const [itemId, setItemId] = useState<string>("");
+
+  const onDelete = async () => {
+    if (!itemId) return;
+
+    const res = await fetch(`/api/items/${itemId}`, {
       method: "DELETE",
     });
     if (res.ok) toastCustom.success(`Deleted`);
@@ -36,11 +41,16 @@ const BacklogListData = ({
     router.refresh();
   };
 
+  const handleDelete = (id: string) => {
+    setItemId(id);
+    setOpen();
+  };
+
   return (
     <>
       {data.map((item: BacklogItemDTO, indx) => (
         <BacklogItemTr
-          onDelete={() => setIsOpen(item._id)}
+          onDelete={handleDelete}
           showActions={isOwner}
           key={item._id ?? indx}
           item={item}
@@ -56,8 +66,8 @@ const BacklogListData = ({
               clrVariant: "dangerPrimary",
             },
           }}
-          action={() => onDelete(isOpen)}
-          setClose={() => setIsOpen(null)}
+          action={onDelete}
+          setClose={setClose}
         >
           <>
             <div className=" bg-layer-1 p-4 text-white ">

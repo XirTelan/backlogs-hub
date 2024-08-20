@@ -2,9 +2,13 @@ import TableBase from "@/components/Common/UI/TableBase";
 import { getBacklogItemsData } from "@/services/backlogItem";
 
 import BacklogListData from "./BacklogListData";
-import ItemFormModal from "@/containers/Items/ItemFormModal";
+import ItemFormModal, {
+  ItemFormModalOpen,
+} from "@/containers/Items/ItemFormModal";
 import { BacklogDTO } from "@/zodTypes";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { ModalProvider } from "@/providers/modalProvider";
+import ItemChangeCategoryModal from "@/containers/Items/ItemChangeCategoryModal";
 
 const itemsNotFound = (
   <>
@@ -42,39 +46,43 @@ const Backloglist = async ({
 
   return (
     <>
-      <TableBase
-        showButton={isOwner}
-        customButton={<ItemFormModal backlog={backlog} />}
-        title=""
-        search
-        description=""
-        headers={[
-          { id: "accordion", title: "", width: "49px" },
-          { id: "title", title: "Title" },
-          {
-            id: "actions",
-            title: (
-              <BsThreeDotsVertical
-                title="Actions"
-                className="m-auto text-secondary-text"
-              />
-            ),
-            width: "64px",
-          },
-        ]}
-      >
-        {data.length > 0 ? (
-          <BacklogListData
-            data={data}
-            categories={backlog.categories}
-            isOwner={isOwner}
-          />
-        ) : search ? (
-          itemsNotFound
-        ) : (
-          itemsDoesntExist
-        )}
-      </TableBase>
+      <ModalProvider>
+        <TableBase
+          showButton={isOwner}
+          customButton={<ItemFormModalOpen />}
+          title=""
+          search
+          description=""
+          headers={[
+            { id: "accordion", title: "", width: "49px" },
+            { id: "title", title: "Title" },
+            {
+              id: "actions",
+              title: (
+                <BsThreeDotsVertical
+                  title="Actions"
+                  className="m-auto text-secondary-text"
+                />
+              ),
+              width: "64px",
+            },
+          ]}
+        >
+          {data.length > 0 ? (
+            <BacklogListData
+              data={data}
+              categories={backlog.categories}
+              isOwner={isOwner}
+            />
+          ) : search ? (
+            itemsNotFound
+          ) : (
+            itemsDoesntExist
+          )}
+        </TableBase>
+        <ItemFormModal backlog={backlog} />
+        <ItemChangeCategoryModal categories={backlog.categories} />
+      </ModalProvider>
     </>
   );
 };

@@ -168,9 +168,10 @@ export const getAndPopulateBacklogItemById = async (
   itemId: string,
 ): Promise<ResponseData<BacklogItemPopulated | BacklogItemWithSteamInfo>> => {
   const res = await getBacklogItemById(itemId);
-  if (!res.success) return { success: false, errors: "Wrong ItenId" };
+  if (!res.success) return { success: false, errors: "Wrong ItemId" };
 
   const newFields = await populateUserFields(res.data);
+  if (!newFields.success) return { success: false, errors: newFields.errors };
 
   if (res.data.modifiersFields?.steamAppId) {
     const steamInfo = await getSteamGameInfo(
@@ -184,7 +185,6 @@ export const getAndPopulateBacklogItemById = async (
       res.data = backlogWithSteamData;
     }
   }
-  if (!newFields.success) return { success: false, errors: newFields.errors };
   return {
     success: true,
     data: { ...res.data, userFields: newFields.data },

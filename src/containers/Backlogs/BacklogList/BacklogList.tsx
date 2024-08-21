@@ -1,5 +1,5 @@
+"use client";
 import TableBase from "@/components/Common/UI/TableBase";
-import { getBacklogItemsData } from "@/services/backlogItem";
 
 import BacklogListData from "./BacklogListData";
 import ItemFormModal, {
@@ -9,6 +9,10 @@ import { BacklogDTO } from "@/zodTypes";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ModalProvider } from "@/providers/modalProvider";
 import ItemChangeCategoryModal from "@/containers/Items/ItemChangeCategoryModal";
+import useSWR from "swr";
+import { apiRoutesList } from "@/lib/routesList";
+import { fetcher } from "@/utils";
+import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
 
 const itemsNotFound = (
   <>
@@ -34,15 +38,25 @@ const itemsDoesntExist = (
   </>
 );
 
-const Backloglist = async ({
+const Backloglist = ({
   id,
   selectedCategories,
   search,
   backlog,
   isOwner,
 }: BackloglistProps) => {
-  const data =
-    (await getBacklogItemsData(selectedCategories, search, id)).data || [];
+  const searchParams = new URLSearchParams();
+  if (selectedCategories && selectedCategories.length > 0)
+    searchParams.append("categories", selectedCategories.join("-"));
+
+  if (search) searchParams.append("search", search);
+
+  searchParams.append("backlog", id);
+
+  const seqrchUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
+  const { data, isLoading } = useSWR(seqrchUrl, fetcher);
+
+  if (isLoading) return <SkeletonDataTable />;
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
-import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
+import NotFound from "@/components/Common/NotFound";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
@@ -7,7 +7,7 @@ import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
 import FilterBlock from "@/containers/FilterBlock";
 import { routesList } from "@/lib/routesList";
 import { getUserBacklogBySlug } from "@/services/backlogs";
-import React, { Suspense } from "react";
+import React from "react";
 import { MdEdit } from "react-icons/md";
 
 export default async function Backlog({
@@ -18,13 +18,14 @@ export default async function Backlog({
   searchParams: { categories: string | undefined; search: string | undefined };
 }) {
   const user = await getCurrentUserInfo();
+  if (!user || !userName) return <NotFound />;
+
   const isOwner = user?.username == userName;
   const data = await getUserBacklogBySlug(userName, backlog, isOwner);
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
-  
+
   const selectedCategories = searchParams.categories?.split("-") || [];
   const search = searchParams.search ?? "";
-
 
   return (
     <div className="flex flex-col">
@@ -49,15 +50,13 @@ export default async function Backlog({
           />
         </section>
         <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
-          <Suspense fallback={<SkeletonDataTable />}>
-            <Backloglist
-              isOwner={isOwner}
-              search={search}
-              backlog={data}
-              selectedCategories={selectedCategories}
-              id={data._id.toString()}
-            />
-          </Suspense>
+          <Backloglist
+            isOwner={isOwner}
+            search={search}
+            backlog={data}
+            selectedCategories={selectedCategories}
+            id={data._id.toString()}
+          />
         </section>
       </main>
     </div>

@@ -9,6 +9,7 @@ import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
 import { ModalContext } from "@/providers/modalProvider";
 import { toastCustom } from "@/lib/toast";
 import { IoMdSwap } from "react-icons/io";
+import { useSWRConfig } from "swr";
 
 const ModalProvider = createModal(ModalContext, "itemChangeCategory", {
   openerButtton: {
@@ -31,6 +32,7 @@ const ItemChangeCategoryModal = ({
 }: {
   categories: BacklogDTO["categories"];
 }) => {
+  const { mutate } = useSWRConfig();
   const [isLoading, setIsLoading] = useState(false);
   const cntx = useContext(ModalContext);
   const backlogItem: BacklogItemDTO = cntx.data as BacklogItemDTO;
@@ -43,6 +45,11 @@ const ItemChangeCategoryModal = ({
         if (success) {
           cntx.setClose();
           toastCustom.success("Category changed");
+          mutate(
+            (key) =>
+              typeof key === "string" &&
+              key.startsWith(`${apiRoutesList.items}`),
+          );
         }
       })
       .finally(() => setIsLoading(false));

@@ -1,46 +1,26 @@
-import {
-  addBacklogItem,
-  getBacklogItemsByBacklogId,
-  getBacklogItemsByQuery,
-} from "@/services/backlogItem";
+import { addBacklogItem, getBacklogItemsData } from "@/services/backlogItem";
+
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { BacklogItemDTO } from "@/zodTypes";
 import { sendMsg } from "@/utils";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params: { id } }: { params: { id: string } },
-) {
-  const { success } = await isAuthorizedBacklogOwner(id, "read");
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const backlogId = searchParams.get("backlog");
+  if (!backlogId) return sendMsg.error("Invalid params", 400);
+
+  const { success } = await isAuthorizedBacklogOwner(backlogId, "read");
   if (!success) return sendMsg.error("Doesnt have permission", 401);
-  const categories = request.nextUrl.searchParams.get("categories")?.split("-");
-  const search = request.nextUrl.searchParams.get("search");
-  let backlogData;
+
+  const categories = searchParams.get("categories")?.split("-");
+  const search = searchParams.get("search");
   try {
-    if (search || categories) {
-      backlogData = await getBacklogItemsByQuery({
-        backlogId: id,
-        categories: categories,
-        search: search,
-      });
-    } else {
-      backlogData = await getBacklogItemsByBacklogId(id);
-    }
-    if (backlogData) {
-      return NextResponse.json(backlogData);
-    }
-    return NextResponse.json(
-      {
-        data: null,
-        error: {
-          message: "The requested objects were not found.",
-          details: "Please check your parameters and ensure they are correct",
-        },
-      },
-      { status: 404 },
-    );
+    const res = await getBacklogItemsData(categories, search, backlogId);
+    if (!res.success) return sendMsg.error(res.errors);
+
+    return NextResponse.json(res.data);
   } catch (error) {
     sendMsg.error(error);
   }

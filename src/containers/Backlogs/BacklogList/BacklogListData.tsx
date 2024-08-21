@@ -1,12 +1,13 @@
 "use client";
 import { toastCustom } from "@/lib/toast";
 import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
-import { useRouter } from "next/navigation";
 import BacklogItemTr from "./BacklogItemTr";
 import { useMemo, useState } from "react";
 import Modal from "@/components/Common/Modal";
 import Title from "@/components/Common/Title";
 import useToggle from "@/hooks/useToggle";
+import { useSWRConfig } from "swr";
+import { apiRoutesList } from "@/lib/routesList";
 
 const BacklogListData = ({
   data,
@@ -22,8 +23,7 @@ const BacklogListData = ({
       new Map(categories.map((category) => [category.name, category.color])),
     [categories],
   );
-
-  const router = useRouter();
+  const { mutate } = useSWRConfig();
   const { isOpen, setOpen, setClose } = useToggle();
   const [itemId, setItemId] = useState<string>("");
 
@@ -33,12 +33,16 @@ const BacklogListData = ({
     const res = await fetch(`/api/items/${itemId}`, {
       method: "DELETE",
     });
-    if (res.ok) toastCustom.success(`Deleted`);
-    else {
+    if (res.ok) {
+      toastCustom.success(`Deleted`);
+      mutate(
+        (key) =>
+          typeof key === "string" && key.startsWith(`${apiRoutesList.items}`),
+      );
+    } else {
       const { message } = await res.json();
       toastCustom.error(message);
     }
-    router.refresh();
   };
 
   const handleDelete = (id: string) => {

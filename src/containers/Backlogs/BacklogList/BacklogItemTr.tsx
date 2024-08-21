@@ -3,7 +3,7 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
-import useSWR from "swr";
+import useSWR, { preload } from "swr";
 import BacklogItem from "@/components/Backlog/BacklogItem";
 import { fetcher } from "@/utils";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
@@ -13,6 +13,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import SidePanel from "@/components/SidePanel";
 import { ItemChangeCategoryOpenModal } from "@/containers/Items/ItemChangeCategoryModal";
 import useToggle from "@/hooks/useToggle";
+import { apiRoutesList } from "@/lib/routesList";
 
 const BacklogItemTr = ({
   item,
@@ -21,7 +22,8 @@ const BacklogItemTr = ({
   showActions,
 }: BacklogItemTrProps) => {
   const { isOpen, toggle } = useToggle(false);
-  const res = useSWR(isOpen ? `/api/items/${item._id}` : null, fetcher);
+  const url = `${apiRoutesList.items}/${item._id}`;
+  const res = useSWR(isOpen ? url : null, fetcher);
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     const itemId = e.currentTarget.dataset["itemid"];
@@ -42,6 +44,9 @@ const BacklogItemTr = ({
             icon={
               isOpen ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />
             }
+            onMouseEnter={() => {
+              preload(url, fetcher);
+            }}
             onClick={toggle}
           />
         </td>
@@ -49,23 +54,14 @@ const BacklogItemTr = ({
           {item.title}
         </td>
         <td className={`ms-auto flex p-2 `}>
-          <SidePanel
-            position="none"
-            borders={false}
-            icon={<BsThreeDotsVertical />}
-          >
-            <ItemChangeCategoryOpenModal data={item} />
-            <LinkWithBtnStyle
-              title="Details"
-              href={`/items/${item._id}`}
-              size="small"
-              variant="ghost"
-              icon={<FaFileLines size={20} />}
+          {showActions ? (
+            <SidePanel
+              position="none"
+              borders={false}
+              icon={<BsThreeDotsVertical />}
             >
-              Details{" "}
-            </LinkWithBtnStyle>
-
-            {showActions && (
+              <ItemChangeCategoryOpenModal data={item} />
+              <DetailsButton id={item._id} text={"Details"} />
               <>
                 <LinkWithBtnStyle
                   href={`/items/${item._id}/edit`}
@@ -86,8 +82,10 @@ const BacklogItemTr = ({
                   onClick={handleDelete}
                 />
               </>
-            )}
-          </SidePanel>
+            </SidePanel>
+          ) : (
+            <DetailsButton id={item._id} text={""} />
+          )}
         </td>
       </tr>
       {isOpen && (
@@ -120,4 +118,18 @@ type BacklogItemTrProps = {
   showActions: boolean;
   categories: BacklogDTO["categories"];
   onDelete: (id: string) => void;
+};
+
+const DetailsButton = ({ text, id }: { text: string; id: string }) => {
+  return (
+    <LinkWithBtnStyle
+      title={text}
+      href={`/items/${id}`}
+      size="small"
+      variant="ghost"
+      icon={<FaFileLines size={20} />}
+    >
+      {text}
+    </LinkWithBtnStyle>
+  );
 };

@@ -14,6 +14,8 @@ import MarkdownEditor from "../Fields/MarkdownEditor";
 import SearchGameBar from "../Features/SearchGameBar";
 import { ItemsFormProps } from "@/types";
 import { FaSteam } from "react-icons/fa6";
+import { useSWRConfig } from "swr";
+import { apiRoutesList } from "@/lib/routesList";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,
@@ -23,6 +25,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   btnCancel,
 }: ItemsFormProps<T>) => {
   const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const mapFields = useMemo(
     () =>
@@ -52,14 +55,17 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           console.error("API error:", error);
           throw new Error(res.statusText || "Failed to submit data.");
         }
-
+        mutate(
+          (key) =>
+            typeof key === "string" && key.startsWith(`${apiRoutesList.items}`),
+        );
         return true;
       } catch (error) {
         console.error("Fetch error:", error);
         throw error;
       }
     },
-    [type],
+    [mutate, type],
   );
 
   const {
@@ -78,8 +84,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       btnCancel();
       return;
     }
-    console.log(view);
-    view === "page" ? router.back() : router.refresh();
+    if (view === "page") router.back();
   };
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {

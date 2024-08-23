@@ -11,9 +11,9 @@ const useOutsideClickReg = (
         handleClick();
       }
     }
-    if (state) document.addEventListener("mousedown", handleClickOutside);
+    if (state) document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [state, ref, handleClick]);
 };

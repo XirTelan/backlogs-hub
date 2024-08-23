@@ -12,10 +12,8 @@ import { MdEdit } from "react-icons/md";
 
 export default async function Backlog({
   params: { userName, backlog },
-  searchParams,
 }: {
   params: { userName: string; backlog: string };
-  searchParams: { categories: string | undefined; search: string | undefined };
 }) {
   const user = await getCurrentUserInfo();
   if (!user || !userName) return <NotFound />;
@@ -23,9 +21,6 @@ export default async function Backlog({
   const isOwner = user?.username == userName;
   const data = await getUserBacklogBySlug(userName, backlog, isOwner);
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
-
-  const selectedCategories = searchParams.categories?.split("-") || [];
-  const search = searchParams.search ?? "";
 
   return (
     <div className="flex flex-col">
@@ -52,9 +47,7 @@ export default async function Backlog({
         <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
           <Backloglist
             isOwner={isOwner}
-            search={search}
             backlog={data}
-            selectedCategories={selectedCategories}
             id={data._id.toString()}
           />
         </section>

@@ -52,7 +52,7 @@ const BacklogListData = ({
 
   return (
     <>
-      {data.map((item: BacklogItemDTO, indx) => (
+      {data?.map((item: BacklogItemDTO, indx) => (
         <BacklogItemTr
           onDelete={handleDelete}
           showActions={isOwner}

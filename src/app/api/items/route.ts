@@ -13,22 +13,6 @@ const availableSortOptions: Record<string, string> = {
   created: "createdAt",
 };
 
-const isSortOrder = (option: unknown): option is SortOrder => {
-  if (typeof option === "number") {
-    if (option === 1 || option === -1) return true;
-    else return false;
-  }
-
-  if (typeof option === "string") {
-    const availableValues = ["asc", "ascending", "desc", "descending"];
-
-    if (availableValues.includes(option)) return true;
-    else return false;
-  }
-
-  return false;
-};
-
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const backlogId = searchParams.get("backlog");
@@ -71,3 +55,19 @@ export async function POST(request: NextRequest) {
     return sendMsg.error(error);
   }
 }
+
+const isSortOrder = (option: unknown): option is SortOrder => {
+  if (typeof option === "number") {
+    if (option === 1 || option === -1) return true;
+    else return false;
+  }
+
+  if (typeof option === "string") {
+    const availableValues = ["asc", "ascending", "desc", "descending"];
+
+    if (availableValues.includes(option)) return true;
+    else return false;
+  }
+
+  return false;
+};

@@ -95,7 +95,6 @@ const ItemChangeCategoryModal = ({
                   title={`Change category for "${backlogItem.title}"`}
                 />
                 <Select
-                  defaultValue={0}
                   value={backlogItem.category}
                   onChange={handleChange}
                   options={categories.map((category) => category.name)}

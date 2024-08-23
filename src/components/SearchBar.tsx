@@ -7,9 +7,9 @@ import ButtonBase from "./Common/UI/ButtonBase";
 import { IoClose } from "react-icons/io5";
 
 const SearchBar = () => {
-  const [searchBar, setSearchBar] = useState("");
+  const { searchParams, changeParams } = useChangeSearchParams();
+  const [searchBar, setSearchBar] = useState(searchParams.get("search") ?? "");
   const debouncedValue = useDebounce(searchBar);
-  const { changeParams } = useChangeSearchParams();
 
   useEffect(() => {
     changeParams("search", debouncedValue);

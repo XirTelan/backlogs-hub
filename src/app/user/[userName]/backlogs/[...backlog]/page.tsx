@@ -37,7 +37,7 @@ export default async function Backlog({
           )}
         </>
       </TopTitle>
-      <main className="container h-screen-bh self-center ">
+      <main className="container self-center  ">
         <section className="me-auto flex justify-center  rounded px-4 py-4 lg:m-0 lg:justify-start">
           <FilterBlock
             backlogSlug={data.slug}

@@ -12,6 +12,8 @@ import BacklogItemsTable, {
   BacklogItemsTableToolbar,
 } from "./BacklogItemsTable";
 import { useSearchParams } from "next/navigation";
+import ItemChangeCategoryModal from "@/containers/Items/ItemChangeCategoryModal";
+import ItemFormModal from "@/containers/Items/ItemFormModal";
 
 const itemsNotFound = (
   <>
@@ -65,6 +67,8 @@ const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
             )}
           </BacklogItemsTable>
         )}
+        <ItemFormModal backlog={backlog} />
+        <ItemChangeCategoryModal categories={backlog.categories} />
       </ModalProvider>
     </>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import ButtonBase from "./UI/ButtonBase";
 import { ButtonBaseProps, ButtonColorVariants } from "@/types";
@@ -46,11 +46,19 @@ const Modal = ({
     </div>
   );
 
+  useEffect(() => {
+    document.body.classList.toggle("modal");
+
+    return () => {
+      document.body.classList.toggle("modal");
+    };
+  });
+
   return createPortal(
     <div
       onClick={setClose}
       role="dialog"
-      className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 "
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 "
     >
       <div
         className="absolute  flex flex-col justify-center"

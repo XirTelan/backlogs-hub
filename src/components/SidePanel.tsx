@@ -39,7 +39,11 @@ const SidePanel = ({
       ? ` ${styleButtonPos} ${bordersStyles.open} `
       : `${bordersStyles.close}`
     : "";
-
+  const handleClosePanel = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    e.stopPropagation();
+  };
   return (
     <div
       ref={ref}
@@ -56,7 +60,7 @@ const SidePanel = ({
       {isOpen && (
         <div
           className={`${styleDropDownPos} absolute top-full z-50 w-64  border-b  border-border-1 bg-background   `}
-          onClick={(e) => e.stopPropagation()}
+          onClick={handleClosePanel}
         >
           <>{children}</>
         </div>

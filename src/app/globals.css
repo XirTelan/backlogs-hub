@@ -20,6 +20,9 @@
   }
 }
 
+.modal {
+  overflow: hidden;
+}
 /*
 UI/Switcher
 */

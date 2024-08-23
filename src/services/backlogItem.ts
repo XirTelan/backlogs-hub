@@ -34,6 +34,9 @@ export const getBacklogItemsByBacklogId = async (
   sortOptions: {
     order: SortOrder;
     sort: string;
+  } = {
+    order: "asc",
+    sort: "title",
   },
 ) => {
   if (!backlogId) return;

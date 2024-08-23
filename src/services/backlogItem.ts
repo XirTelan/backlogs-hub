@@ -12,6 +12,7 @@ import {
 import { NextResponse } from "next/server";
 import { isAuthorizedBacklogOwner } from "./backlogs";
 import { getSteamGameInfo } from "./steamSearch";
+import { SortOrder } from "mongoose";
 
 export const getBacklogItemById = async (
   itemId: string,
@@ -30,10 +31,15 @@ export const getBacklogItemById = async (
 
 export const getBacklogItemsByBacklogId = async (
   backlogId: string | undefined,
+  sortOptions: {
+    order: SortOrder;
+    sort: string;
+  },
 ) => {
   if (!backlogId) return;
   try {
     await dbConnect();
+
     const backlogData: BacklogItemDTO[] = await BacklogItem.find(
       {
         backlogId: backlogId,
@@ -41,12 +47,15 @@ export const getBacklogItemsByBacklogId = async (
       {
         userFields: 0,
       },
-    ).lean();
+    )
+      .sort({ [sortOptions.sort]: sortOptions.order })
+      .lean();
     return backlogData.map((backlog) => ({
       ...backlog,
       _id: backlog._id.toString(),
     }));
   } catch (error) {
+    console.error(error);
     throw new Error(`Error: ${error}`);
   }
 };
@@ -55,20 +64,27 @@ export const getBacklogItemsByQuery = async ({
   backlogId,
   categories,
   search,
+  sortOptions,
 }: {
   backlogId: string;
   categories: string[] | null | undefined;
   search: string | null;
+  sortOptions: {
+    order: SortOrder;
+    sort: string;
+  };
 }) => {
   try {
     await dbConnect();
     const stage = BacklogItem.aggregate([{ $unset: ["userFields"] }]);
     stage.match({ backlogId: backlogId });
     let optRegexp;
+
     if (categories && categories.length > 0) {
       optRegexp = categories.map((value) => new RegExp("^" + value + "$", "i"));
       stage.match({ category: { $in: optRegexp } });
     }
+
     if (search) {
       const regex = new RegExp(
         search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
@@ -76,7 +92,11 @@ export const getBacklogItemsByQuery = async ({
       );
       stage.match({ title: regex });
     }
-    const result = await stage.exec();
+    const result = await stage
+      .sort({
+        [sortOptions.sort]: sortOptions.order,
+      })
+      .exec();
 
     return result.map((item) => ({
       ...item,
@@ -127,19 +147,31 @@ export const deleteBacklogItem = async (id: string) => {
 
 export const getBacklogItemsData = async (
   categories: string[] | null | undefined,
-  search: string | null | undefined,
+  searchOptions: {
+    term: string | null | undefined;
+    sort: string;
+    order: SortOrder;
+  },
   backlogId: string,
 ): Promise<ResponseData<BacklogItemDTO[]>> => {
+  const { term, sort, order } = searchOptions;
   let backlogData;
   try {
-    if (search || (categories && categories.length > 0)) {
+    if (term || (categories && categories.length > 0)) {
       backlogData = await getBacklogItemsByQuery({
         backlogId: backlogId,
         categories: categories,
-        search: search ? search : null,
+        search: term ? term : null,
+        sortOptions: {
+          sort: sort,
+          order: order,
+        },
       });
     } else {
-      backlogData = await getBacklogItemsByBacklogId(backlogId);
+      backlogData = await getBacklogItemsByBacklogId(backlogId, {
+        order: order,
+        sort: sort,
+      });
     }
     if (!backlogData) {
       return {

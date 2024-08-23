@@ -94,6 +94,8 @@ export const BacklogItemPopSchema = BacklogItemCreationSchema.omit({
 }).merge(
   z.object({
     _id: z.string(),
+    createdAt: z.date().or(z.string()).optional(),
+    updatedAt: z.date().or(z.string()).optional(),
     userFields: BacklogItemPopUserFieldSchema.array(),
   }),
 );
@@ -101,6 +103,8 @@ export const BacklogItemPopSchema = BacklogItemCreationSchema.omit({
 export const BacklogItemSchema = BacklogItemCreationSchema.merge(
   z.object({
     _id: z.string(),
+    createdAt: z.date().or(z.string()).optional(),
+    updatedAt: z.date().or(z.string()).optional(),
   }),
 );
 

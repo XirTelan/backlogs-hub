@@ -5,11 +5,34 @@ import MDEditor from "@uiw/react-md-editor/nohighlight";
 import Accordion from "../Common/UI/Accordion";
 import rehypeSanitize from "rehype-sanitize";
 import SteamGameCard from "@/containers/SteamGameCard";
+import { IoMdCreate } from "react-icons/io";
+import { MdOutlineUpdate } from "react-icons/md";
 
 const isHaveSteamData = (
   data: BacklogItemPopulated,
 ): data is BacklogItemWithSteamInfo => {
   return Object.prototype.hasOwnProperty.call(data, "steamData");
+};
+
+type TimeStamp = {
+  value: Date | string;
+  icon: React.ReactNode;
+  title: string;
+};
+const renderTimeField: (data: TimeStamp) => React.ReactElement = ({
+  value,
+  icon,
+  title,
+}) => {
+  return (
+    <div title={title} className="flex items-center">
+      {icon}
+
+      {typeof value === "string"
+        ? new Date(value).toDateString()
+        : value.toDateString()}
+    </div>
+  );
 };
 
 const BacklogItem = ({
@@ -18,16 +41,33 @@ const BacklogItem = ({
   data: BacklogItemPopulated | BacklogItemWithSteamInfo;
 }) => {
   const Base = () => {
+    const timestamps = [
+      data.createdAt && {
+        value: data.createdAt,
+        icon: <IoMdCreate className="mx-2" />,
+        title: "Created At",
+      },
+      data.updatedAt && {
+        value: data.updatedAt,
+        icon: <MdOutlineUpdate className="mx-2" />,
+        title: "Updated At",
+      },
+    ].filter((f) => f != undefined);
+
     return (
       <>
-        <div className="flex">
+        <div className=" flex gap-2">
           <div>Category:</div>
-          <div>{data.category}</div>
+
+          <div className=" text-secondary-text">{data.category}</div>
         </div>
         <div>
           {data.userFields.map((field, indx) => {
             return withWrap(field, indx, renderFieldValue);
           })}
+        </div>
+        <div className="flex justify-end text-xs text-secondary-text opacity-50 hover:opacity-100">
+          {timestamps?.map((field) => renderTimeField(field as TimeStamp))}
         </div>
       </>
     );

@@ -20,19 +20,22 @@ const ModifiersFields = new mongoose.Schema(
   },
   { _id: false },
 );
-const BacklogItemSchema = new mongoose.Schema<BacklogItemDTO>({
-  backlogId: { type: String, require: true },
-  title: {
-    type: String,
-    require: true,
+const BacklogItemSchema = new mongoose.Schema<BacklogItemDTO>(
+  {
+    backlogId: { type: String, require: true },
+    title: {
+      type: String,
+      require: true,
+    },
+    category: {
+      type: String,
+      require: true,
+    },
+    userFields: [DataItemSchema],
+    modifiersFields: ModifiersFields,
   },
-  category: {
-    type: String,
-    require: true,
-  },
-  userFields: [DataItemSchema],
-  modifiersFields: ModifiersFields,
-});
+  { timestamps: true },
+);
 
 BacklogItemSchema.index({ backlogId: 1, title: 1 }, { unique: true });
 

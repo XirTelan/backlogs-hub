@@ -3,7 +3,7 @@ import React from "react";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import TableBase from "@/components/Common/UI/TableBase";
+import TableBase from "@/lib/createTable";
 import Title from "@/components/Common/Title";
 import FieldsArrayItem from "./FieldsArrayItem";
 import { Field } from "@/zodTypes";

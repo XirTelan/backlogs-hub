@@ -1,18 +1,17 @@
 "use client";
-import TableBase from "@/components/Common/UI/TableBase";
 
 import BacklogListData from "./BacklogListData";
-import ItemFormModal, {
-  ItemFormModalOpen,
-} from "@/containers/Items/ItemFormModal";
+
 import { BacklogDTO } from "@/zodTypes";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { ModalProvider } from "@/providers/modalProvider";
-import ItemChangeCategoryModal from "@/containers/Items/ItemChangeCategoryModal";
 import useSWR from "swr";
 import { apiRoutesList } from "@/lib/routesList";
 import { fetcher } from "@/utils";
 import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
+import BacklogItemsTable, {
+  BacklogItemsTableToolbar,
+} from "./BacklogItemsTable";
+import { useSearchParams } from "next/navigation";
 
 const itemsNotFound = (
   <>
@@ -38,64 +37,34 @@ const itemsDoesntExist = (
   </>
 );
 
-const Backloglist = ({
-  id,
-  selectedCategories,
-  search,
-  backlog,
-  isOwner,
-}: BackloglistProps) => {
-  const searchParams = new URLSearchParams();
-  if (selectedCategories && selectedCategories.length > 0)
-    searchParams.append("categories", selectedCategories.join("-"));
-
-  if (search) searchParams.append("search", search);
-
+const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
+  const searchParams = new URLSearchParams(useSearchParams());
   searchParams.append("backlog", id);
-
-  const seqrchUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
-  const { data, isLoading } = useSWR(seqrchUrl, fetcher);
-
-  if (isLoading) return <SkeletonDataTable />;
+  const requstUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
+  const searchTerm = searchParams.get("search");
+  const { data, isLoading } = useSWR(requstUrl, fetcher);
 
   return (
     <>
       <ModalProvider>
-        <TableBase
-          showButton={isOwner}
-          customButton={<ItemFormModalOpen />}
-          title=""
-          search
-          description=""
-          headers={[
-            { id: "accordion", title: "", width: "49px" },
-            { id: "title", title: "Title" },
-            {
-              id: "actions",
-              title: (
-                <BsThreeDotsVertical
-                  title="Actions"
-                  className="m-auto text-secondary-text"
-                />
-              ),
-              width: "64px",
-            },
-          ]}
-        >
-          {data.length > 0 ? (
-            <BacklogListData
-              data={data}
-              categories={backlog.categories}
-              isOwner={isOwner}
-            />
-          ) : search ? (
-            itemsNotFound
-          ) : (
-            itemsDoesntExist
-          )}
-        </TableBase>
-        <ItemFormModal backlog={backlog} />
-        <ItemChangeCategoryModal categories={backlog.categories} />
+        <BacklogItemsTableToolbar />
+        {isLoading ? (
+          <SkeletonDataTable />
+        ) : (
+          <BacklogItemsTable>
+            {data.length > 0 ? (
+              <BacklogListData
+                data={data}
+                categories={backlog.categories}
+                isOwner={isOwner}
+              />
+            ) : searchTerm ? (
+              itemsNotFound
+            ) : (
+              itemsDoesntExist
+            )}
+          </BacklogItemsTable>
+        )}
       </ModalProvider>
     </>
   );
@@ -104,8 +73,6 @@ export default Backloglist;
 
 interface BackloglistProps {
   id: string;
-  search: string;
   backlog: BacklogDTO;
   isOwner: boolean;
-  selectedCategories: string[];
 }

@@ -2,8 +2,6 @@ import { buttonColorVariants, buttonSize, sizes } from "@/lib/styles";
 import { ButtonBaseProps } from "@/types";
 import React from "react";
 
-
-
 /**
  *Base UI button component
  * @param {boolean} hideText Text will be hidden with screen < 768px

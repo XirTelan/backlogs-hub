@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, VideoHTMLAttributes } from "react";
+import React, { useEffect, useRef } from "react";
 
 const Clip = ({ controls = false, videoSrc, ...props }: ClipProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,7 +23,4 @@ type ClipProps = {
     mp4: string;
   };
   controls?: boolean;
-} & React.DetailedHTMLProps<
-  VideoHTMLAttributes<HTMLVideoElement>,
-  HTMLVideoElement
->;
+} & React.HTMLProps<HTMLVideoElement>;

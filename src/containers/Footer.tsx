@@ -1,4 +1,5 @@
 import LinkBase from "@/components/Common/UI/LinkBase";
+import { routesList } from "@/lib/routesList";
 import React from "react";
 
 const Footer = () => {
@@ -6,9 +7,9 @@ const Footer = () => {
     <footer className="mt-auto flex  w-full justify-center bg-black ">
       <div className="container my-4 ">
         <div className=" flex flex-col p-4 ">
-          <LinkBase href={"/faq"}>FAQ</LinkBase>
-          <LinkBase href={"/contacts"}>Contacts</LinkBase>
-          <LinkBase href={"/updates"}>Updates</LinkBase>
+          <LinkBase href={routesList.faq}>FAQ</LinkBase>
+          <LinkBase href={routesList.contacts}>Contacts</LinkBase>
+          <LinkBase href={routesList.updates}>Updates</LinkBase>
         </div>
       </div>
     </footer>

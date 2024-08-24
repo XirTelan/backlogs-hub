@@ -21,8 +21,6 @@ type Props = {
   title: string;
   color?: string;
   icon?: React.ReactNode;
-} & React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
+} & React.HTMLProps<HTMLDivElement>;
+
 export default Tag;

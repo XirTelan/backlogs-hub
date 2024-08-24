@@ -7,6 +7,11 @@ export const routesList = {
   templates: "/templates",
   settings: "/settings",
   register: "/register",
+  faq: "/faq",
+  faqFields: "/faq/fields",
+  faqModifiers: "/faq/modifiers",
+  updates: "/updates",
+  contacts: "/contacts",
 };
 export const apiRoutesList = {
   auth: "/api/auth",
@@ -23,6 +28,7 @@ export const routesCategories = {
     routesList.itemsCreate,
     routesList.itemsEdit,
     routesList.settings,
+    routesList.manageBacklogs,
   ],
   forNonUser: ["/", routesList.register],
 };

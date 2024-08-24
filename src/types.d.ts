@@ -18,10 +18,7 @@ export type InputFieldProps = {
 export type SearchBar = {
   layer?: Layer;
   variant?: "small" | "medium" | "large";
-} & React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
+} & React.HTMLProps<HTMLInputElement>;
 
 export type ItemsFormBacklogProp = {
   backlogFields: Field[];

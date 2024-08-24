@@ -13,10 +13,9 @@ export default async function Layout({
         <aside className="sticky top-[49px] hidden min-h-screen-bh w-64 border-e border-border-1 bg-background pt-4 md:block">
           <nav>
             <PanelItemsWrapper
-              samePage
-              baseUrl=""
+              baseUrl="/faq"
               data={[
-                { id: "backlogFields", content: "Backlog Fields Types" },
+                { id: "fields", content: "Backlog Fields Types" },
                 { id: "modifiers", content: "Modifiers" },
               ]}
             />

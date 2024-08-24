@@ -33,7 +33,7 @@ type FieldsBlockProps = {
   title?: string;
   children: React.ReactElement;
 } & (FieldsBlockRead | FieldsBlockEdit) &
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+  React.HTMLProps<HTMLDivElement>;
 
 type FieldsBlockRead = {
   status: "disabled";

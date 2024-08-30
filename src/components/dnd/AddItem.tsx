@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import ButtonBase from "../Common/UI/ButtonBase";
 import { MdCheck, MdClose } from "react-icons/md";
-import InputField from "../Common/UI/InputField";
+import InputField from "../Common/UI/Input/InputField";
 
 const AddItem = ({
   action,

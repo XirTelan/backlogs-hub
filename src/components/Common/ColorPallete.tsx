@@ -12,6 +12,7 @@ const defaultColors = [
   "A2191F",
   "005D5D",
   "9F1853",
+  "FFFFFF",
 ];
 
 const ColorPallete = ({

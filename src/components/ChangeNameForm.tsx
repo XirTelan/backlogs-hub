@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import ButtonBase from "./Common/UI/ButtonBase";
 import useLoaderValue from "@/hooks/useLoaderValue";
-import InputWithLoader from "./Common/UI/InputWithLoader";
+import InputWithLoader from "./Common/UI/Input/InputWithLoader";
 import { changeUserName } from "@/services/user";
 import { useForm } from "react-hook-form";
 import Title from "./Common/Title";

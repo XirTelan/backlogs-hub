@@ -1,6 +1,6 @@
 "use client";
 import { useCallback } from "react";
-import InputWithLoader from "../Common/UI/InputWithLoader";
+import InputWithLoader from "../Common/UI/Input/InputWithLoader";
 import ButtonBase from "../Common/UI/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Common/Title";
@@ -25,7 +25,7 @@ const TemplateForm = ({
     defaultValues: selectedTemplate,
   });
   const backlogTitle = watch("templateTitle", selectedTemplate.templateTitle);
-  
+
   const onSubmit: SubmitHandler<TemplateDTO> = async (data) => {
     const backlog: BacklogCreationDTO = {
       ...selectedTemplate,
@@ -34,7 +34,7 @@ const TemplateForm = ({
       order: 99,
       userId: "",
       userName: "",
-      totalCount: 0
+      totalCount: 0,
     };
     try {
       const res = await fetch("/api/backlogs/", {

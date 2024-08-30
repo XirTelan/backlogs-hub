@@ -7,7 +7,7 @@ import { UserDTO } from "@/zodTypes";
 import Profile from "./Settings/Profile";
 import Modal from "@/components/Common/Modal";
 import { updateUserInfo } from "@/services/user";
-import InputField from "@/components/Common/UI/InputField";
+import InputField from "@/components/Common/UI/Input/InputField";
 import { toastCustom } from "@/lib/toast";
 import Title from "@/components/Common/Title";
 import TextAreaInput from "@/components/Common/UI/TextAreaInput";

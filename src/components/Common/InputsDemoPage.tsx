@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import BlockWrapper from "./BlockWrapper";
-import InputField from "./UI/InputField";
+import InputField from "./UI/Input/InputField";
 import ProgressTimer from "../../containers/Fields/ProgressTimer";
 import Divider from "./UI/Divider";
 import { RxLapTimer } from "react-icons/rx";

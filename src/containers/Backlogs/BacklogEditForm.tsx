@@ -10,11 +10,18 @@ import TopTitle from "@/components/Common/UI/TopTitle";
 import Loading from "@/components/Common/UI/Loading/Loading";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
-  const backlogData = useSWR(`/api/backlogs/${id}`, fetcher);
-  const userFolders = useSWR(`/api/users/`, fetcher);
+  const {
+    isLoading: backlogIsLoading,
+    data: backlogData,
+    mutate,
+  } = useSWR(`/api/backlogs/${id}`, fetcher);
+  const { isLoading: foldersIsLoading, data: userFolders } = useSWR(
+    `/api/users/`,
+    fetcher,
+  );
   const router = useRouter();
 
-  if (backlogData.isLoading || userFolders.isLoading) return <Loading />;
+  if (backlogIsLoading || foldersIsLoading) return <Loading />;
 
   const onSubmit: SubmitHandler<BacklogDTO> = async (data) => {
     if (data._id) {
@@ -27,19 +34,21 @@ const BacklogEditForm = ({ id }: { id: string }) => {
       },
       body: JSON.stringify(data),
     });
-    if (res.ok)
+    if (res.ok) {
+      mutate();
       router.push(
-        `/user/${userFolders.data.data.username}/backlogs/${backlogData.data.slug}`,
+        `/user/${userFolders.data.username}/backlogs/${backlogData.slug}`,
       );
+    }
   };
 
   return (
     <>
-      <TopTitle title={`Editing backlog "${backlogData.data.backlogTitle}"`} />
+      <TopTitle title={`Editing backlog "${backlogData.backlogTitle}"`} />
       <main className="container self-center px-4">
         <BacklogForm
-          defaultValues={backlogData.data}
-          userFolders={userFolders.data.data.folders}
+          defaultValues={backlogData}
+          userFolders={userFolders.data.folders}
           onSubmit={onSubmit}
         />
       </main>

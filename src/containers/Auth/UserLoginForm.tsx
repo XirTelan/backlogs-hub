@@ -1,6 +1,6 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import InputField from "@/components/Common/UI/InputField";
+import InputField from "@/components/Common/UI/Input/InputField";
 import LinkBase from "@/components/Common/UI/LinkBase";
 import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";

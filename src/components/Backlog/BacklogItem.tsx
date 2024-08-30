@@ -37,8 +37,10 @@ const renderTimeField: (data: TimeStamp) => React.ReactElement = ({
 
 const BacklogItem = ({
   data,
+  hideCategory = false,
 }: {
   data: BacklogItemPopulated | BacklogItemWithSteamInfo;
+  hideCategory?: boolean;
 }) => {
   const Base = () => {
     const timestamps = [
@@ -56,11 +58,13 @@ const BacklogItem = ({
 
     return (
       <>
-        <div className=" flex gap-2">
-          <div>Category:</div>
+        {!hideCategory && (
+          <div className=" flex gap-2">
+            <div>Category:</div>
 
-          <div className=" text-secondary-text">{data.category}</div>
-        </div>
+            <div className=" text-secondary-text">{data.category}</div>
+          </div>
+        )}
         <div>
           {data.userFields.map((field, indx) => {
             return withWrap(field, indx, renderFieldValue);

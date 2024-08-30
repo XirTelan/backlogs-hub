@@ -10,6 +10,6 @@ export default async function Layout({
 }) {
   const user = await getCurrentUserInfo();
   if (!user) redirect("/");
-  
+
   return <Session userData={{ user: user }}>{children}</Session>;
 }

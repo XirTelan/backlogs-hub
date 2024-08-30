@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useMemo, useState } from "react";
-import InputField from "../../components/Common/UI/InputField";
+import InputField from "../../components/Common/UI/Input/InputField";
 import Timer from "./Timer";
 import { parseSeconds, parseToSeconds } from "@/utils";
 import ButtonBase from "../../components/Common/UI/ButtonBase";

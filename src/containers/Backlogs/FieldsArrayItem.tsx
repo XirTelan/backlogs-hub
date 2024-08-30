@@ -1,5 +1,5 @@
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import InputField from "@/components/Common/UI/InputField";
+import InputField from "@/components/Common/UI/Input/InputField";
 import Select from "@/components/Common/UI/Select";
 import { BacklogFormData, Field } from "@/zodTypes";
 import React from "react";
@@ -84,23 +84,25 @@ const FieldsArrayItem = ({
         <>
           <tr>
             <td colSpan={2}></td>
-            <td>
-              <div className="px-4">Options: {field.data?.length}</div>
-            </td>
-            <td>
-              <div className="flex items-center justify-between">
-                <ButtonBase
-                  type="button"
-                  variant="ghost"
-                  onClick={customAction.remove}
-                  icon={<FaMinus />}
-                />
-                <ButtonBase
-                  type="button"
-                  variant="ghost"
-                  onClick={customAction.update}
-                  icon={<FaPlus />}
-                />
+            <td colSpan={2}>
+              <div className="flex items-center justify-between mt-2">
+                <div className="px-4">Options: {field.data?.length}</div>
+                <div className="flex items-center justify-between">
+                  <ButtonBase
+                    type="button"
+                    variant="ghost"
+                    size="small"
+                    onClick={customAction.remove}
+                    icon={<FaMinus />}
+                  />
+                  <ButtonBase
+                    type="button"
+                    variant="ghost"
+                    size="small"
+                    onClick={customAction.update}
+                    icon={<FaPlus />}
+                  />
+                </div>
               </div>
             </td>
           </tr>
@@ -110,13 +112,14 @@ const FieldsArrayItem = ({
               <div className="my-2 flex flex-col gap-2">
                 {field.data?.length > 0 &&
                   field.data.map((option, indx) => (
-                    <InputField
-                      key={`${index}.${indx}`}
-                      variant={"small"}
-                      layer={2}
-                      isSimple
-                      {...register(`fields.${index}.data.${indx}`)}
-                    />
+                    <div key={`${index}.${indx}`} className="px-4">
+                      <InputField
+                        variant={"small"}
+                        layer={2}
+                        isSimple
+                        {...register(`fields.${index}.data.${indx}`)}
+                      />
+                    </div>
                   ))}
               </div>
             </td>

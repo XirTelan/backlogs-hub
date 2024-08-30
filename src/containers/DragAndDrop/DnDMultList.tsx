@@ -28,6 +28,8 @@ import useDragAndDrop from "@/hooks/useDragAndDrop";
 import BacklogDndItem from "../Backlogs/BacklogDndItem";
 import { DndListProps } from "@/types";
 import { toastCustom } from "@/lib/toast";
+import { useSWRConfig } from "swr";
+import { apiRoutesList } from "@/lib/routesList";
 
 const DnDMultList = ({
   data,
@@ -42,6 +44,8 @@ const DnDMultList = ({
   vertical = true,
   scrollable,
 }: DndListProps) => {
+  
+  const { mutate } = useSWRConfig();
   const [isAddNew, setIsAddNew] = useState(false);
   const [modalData, setModalData] = useState<
     | {
@@ -96,6 +100,7 @@ const DnDMultList = ({
         });
         if (res.ok) {
           toastCustom.success("Saved");
+          mutate(`${apiRoutesList.backlogs}?type=byFolder`);
         } else {
           toastCustom.error(await res.json());
         }
@@ -103,7 +108,7 @@ const DnDMultList = ({
         console.error(error);
       }
     },
-    [],
+    [mutate],
   );
   const handleDelete = async (id: string) => {
     try {
@@ -112,6 +117,7 @@ const DnDMultList = ({
       });
       if (res.ok) {
         toastCustom.success("Deleted");
+        mutate(`${apiRoutesList.backlogs}?type=byFolder`);
       } else toastCustom.error((await res.json()).message);
     } catch (error) {
       console.error(error);

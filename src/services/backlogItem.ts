@@ -13,6 +13,13 @@ import { NextResponse } from "next/server";
 import { isAuthorizedBacklogOwner } from "./backlogs";
 import { getSteamGameInfo } from "./steamSearch";
 import { SortOrder } from "mongoose";
+import {
+  BacklogCreationSchema,
+  BacklogItemCreationSchema,
+  BacklogItemSchema,
+} from "@/zod";
+import { sendError } from "next/dist/server/api-utils";
+import { sendMsg } from "@/utils";
 
 export const getBacklogItemById = async (
   itemId: string,
@@ -114,11 +121,19 @@ export const getBacklogItemsByQuery = async ({
 export const addBacklogItem = async (data: BacklogItemCreationDTO) => {
   try {
     await dbConnect();
-    const backlogItem = await BacklogItem.create(data);
+
+    const parsing = BacklogItemCreationSchema.safeParse(data);
+
+    if (!parsing.success) return { success: false, erors: parsing.error };
+
+
+    const backlogItem = await BacklogItem.create(parsing.data);
+
     await Backlog.findByIdAndUpdate(backlogItem.backlogId, {
       $inc: { totalCount: 1 },
     });
-    return backlogItem;
+
+    return { success: true, data: backlogItem };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -127,7 +142,11 @@ export const addBacklogItem = async (data: BacklogItemCreationDTO) => {
 export const putBacklogItem = async (data: BacklogItemDTO) => {
   try {
     await dbConnect();
-    await BacklogItem.updateOne({ _id: data._id }, data);
+
+    const parsing = BacklogItemSchema.safeParse(data);
+    if (!parsing.success) return sendMsg.error(parsing.error);
+
+    await BacklogItem.updateOne({ _id: data._id }, parsing.data);
     return NextResponse.json("ok");
   } catch (error) {
     throw new Error(`Error: ${error}`);

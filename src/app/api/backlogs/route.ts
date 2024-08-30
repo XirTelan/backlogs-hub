@@ -8,6 +8,7 @@ import {
   updateBacklogsOrderById,
   isBacklogExist,
   isPrivateProfile,
+  getBacklogsByFolder,
 } from "@/services/backlogs";
 import { updateStat, updateUserFolders } from "@/services/user";
 import { generateSlug, sendMsg } from "@/utils";
@@ -22,7 +23,7 @@ import { Types } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-const accessTypes = ["withData", "baseInfo", "exist"] as const;
+const accessTypes = ["withData", "baseInfo", "exist", "byFolder"] as const;
 type Types = (typeof accessTypes)[number];
 
 const isType = (value: unknown): value is Types => {
@@ -35,8 +36,10 @@ export async function GET(request: NextRequest) {
   const isOwner = user ? userNameParam === user.username : false;
   const userName = userNameParam ? userNameParam : user?.username;
   if (!userName) return sendMsg.error(`Params not provided`);
+
   if (await isPrivateProfile(userName, isOwner))
     return sendMsg.error(`Params not provided`, 403);
+
   const backlogSlug = request.nextUrl.searchParams
     .get("backlog")
     ?.trim()
@@ -47,6 +50,7 @@ export async function GET(request: NextRequest) {
     backlog: undefined,
     backlogData: undefined,
   };
+
   if (isType(queryType)) {
     await handleTypeGet(queryType, resultData, userName, backlogSlug, isOwner);
   } else if (!backlogSlug) {
@@ -83,7 +87,7 @@ export async function POST(request: NextRequest) {
     if (!backlog.success)
       return sendMsg.error(backlog.message, 400, backlog.errors);
     await updateStat(user.id, "totalBacklogs");
-    revalidatePath(`/user/${user.username}`);
+    revalidatePath(`/user/${user.username}/backlogs`);
     return NextResponse.json(backlog);
   } catch (error) {
     return sendMsg.error(error);
@@ -117,30 +121,38 @@ const handleTypeGet = async (
   isOwner: boolean,
 ) => {
   switch (queryType) {
-    case "withData": {
-      if (!backlogSlug) return sendMsg.error("Wrong parameters");
-      resultData.backlog = await getUserBacklogBySlug(
-        userName,
-        backlogSlug,
-        isOwner,
-      );
-      resultData.backlogData = await getBacklogItemsByBacklogId(
-        resultData?.backlog?._id,
-      );
+    case "withData":
+      {
+        if (!backlogSlug) return sendMsg.error("Wrong parameters");
+        resultData.backlog = await getUserBacklogBySlug(
+          userName,
+          backlogSlug,
+          isOwner,
+        );
+        resultData.backlogData = await getBacklogItemsByBacklogId(
+          resultData?.backlog?._id,
+        );
+      }
       break;
-    }
-    case "baseInfo": {
-      resultData.backlog = await getBacklogsBaseInfoByUserName(
-        userName,
-        isOwner,
-      );
+    case "baseInfo":
+      {
+        resultData.backlog = await getBacklogsBaseInfoByUserName(
+          userName,
+          isOwner,
+        );
+      }
       break;
-    }
-    case "exist": {
-      if (!backlogSlug) return sendMsg.error(`Params not provided`);
-      resultData.backlog = await isBacklogExist(userName, backlogSlug);
+    case "exist":
+      {
+        if (!backlogSlug) return sendMsg.error(`Params not provided`);
+        resultData.backlog = await isBacklogExist(userName, backlogSlug);
+      }
       break;
-    }
+    case "byFolder":
+      {
+        resultData.backlog = await getBacklogsByFolder(userName);
+      }
+      break;
   }
 };
 

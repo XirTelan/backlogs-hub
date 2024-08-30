@@ -29,6 +29,10 @@ const useDragAndDrop = (data: DndData) => {
       recentlyMovedToNewContainer.current = false;
     });
   }, [items]);
+
+  useEffect(() => {
+    setItems(data);
+  }, [data]);
   /**
    * Custom collision detection strategy optimized for multiple containers
    *

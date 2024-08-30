@@ -15,6 +15,7 @@ export const routesList = {
 };
 export const apiRoutesList = {
   auth: "/api/auth",
+  backlogs: "/api/backlogs",
   signIn: "/api/auth/signIn",
   register: "/api/auth/register",
   templates: "/api/templates",

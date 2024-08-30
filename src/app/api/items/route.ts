@@ -48,7 +48,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const data: BacklogItemDTO = await request.json();
   try {
+    
     const res = await addBacklogItem(data);
+    if (!res.success) return sendMsg.error(res.erors);
+
     revalidateTag(`backloglist${data.backlogId}`);
     return NextResponse.json({ message: "created", res }, { status: 201 });
   } catch (error) {

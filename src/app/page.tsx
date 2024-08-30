@@ -26,7 +26,7 @@ export default async function Home() {
               <div className="flex flex-col gap-2">
                 <p className=" text-4xl font-bold">
                   Welcome to{" "}
-                  <span className=" text-primary-link  "> BaclogsHub </span> -{" "}
+                  <span className=" text-primary-link  "> BacklogsHub </span> -{" "}
                   <span className="font-normal">
                     {" "}
                     All backlogs in one place

@@ -3,13 +3,19 @@ import useChangeSearchParams from "@/hooks/useChangeParams";
 import { motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 
-const Switcher = ({ options }: { options: Options }) => {
+const Switcher = ({
+  initial,
+  options,
+}: {
+  initial?: number;
+  options: Options;
+}) => {
   const { key, items, callback } = options;
-  const [active, setActive] = useState<number>(0);
+  const [active, setActive] = useState<number>(initial ?? 0);
   const countMaxItem = useMemo(() => {
     let max = 0;
     items.forEach((item) => {
-      const length = typeof item.title==='string' ? item.title.length : 1;
+      const length = typeof item.title === "string" ? item.title.length : 1;
       if (length > max) max = length;
     });
     return max;
@@ -23,11 +29,11 @@ const Switcher = ({ options }: { options: Options }) => {
     });
     indx = indx === -1 ? 0 : indx;
     setActive(indx);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className=" flex">
+    <div className=" flex w-full self-center">
       {items.map((item, index) => (
         <button
           key={index}

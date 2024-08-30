@@ -1,4 +1,4 @@
-import { buttonColorVariants, buttonSize, sizes } from "@/lib/styles";
+import { btnStyleVariants } from "@/lib/styles";
 import { ButtonBaseProps } from "@/types";
 import React from "react";
 
@@ -18,7 +18,7 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${buttonColorVariants[variant]} ${sizes[size]}  relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
+        className={`${btnStyleVariants.colors[variant]} ${btnStyleVariants.heights[size]}  relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
       >
         {text && (
           <div className={` px-2  ${hideText && "hidden md:block"}`}>
@@ -27,7 +27,7 @@ const ButtonBase = ({
         )}
         {icon && (
           <div
-            className={`${buttonSize[size]} ${text && "ms-auto"}  flex min-h-8 items-center justify-center p-1 `}
+            className={`${btnStyleVariants.sizes[size]} ${text && "ms-auto"}  flex min-h-8 items-center justify-center p-1 `}
           >
             {icon}
           </div>

@@ -1,7 +1,7 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import InputField from "@/components/Common/UI/InputField";
-import InputWithLoader from "@/components/Common/UI/InputWithLoader";
+import InputField from "@/components/Common/UI/Input/InputField";
+import InputWithLoader from "@/components/Common/UI/Input/InputWithLoader";
 import { apiRoutesList } from "@/lib/routesList";
 import useLoaderValue from "@/hooks/useLoaderValue";
 import { toastCustom } from "@/lib/toast";
@@ -60,7 +60,7 @@ const UserRegisterForm = () => {
       reset();
     }
   };
-  
+
   const isUserExist = useCallback(async (value: string) => {
     const data = await fetch(`/api/users/${value}`, {
       method: "GET",

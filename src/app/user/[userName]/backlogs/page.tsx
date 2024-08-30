@@ -26,13 +26,20 @@ export default async function Backlogs({
         <TopTitle title={"My backlogs"}>
           <div className="flex">
             <LinkWithBtnStyle
+              hideText
+              title="Manage backlogs"
               href={`/manage-backlogs`}
               icon={<MdOutlineManageSearch size={24} />}
               variant="ghost"
             >
               Manage backlogs
             </LinkWithBtnStyle>
-            <LinkWithBtnStyle href={`/backlog/create`} icon={<IoAdd />}>
+            <LinkWithBtnStyle
+              hideText
+              title="Create backlog"
+              href={`/backlog/create`}
+              icon={<IoAdd />}
+            >
               Create backlog
             </LinkWithBtnStyle>
           </div>

@@ -1,7 +1,7 @@
 import ColorPallete from "@/components/Common/ColorPallete";
-import InputField from "@/components/Common/UI/InputField";
+import InputField from "@/components/Common/UI/Input/InputField";
 import React from "react";
-import { Controller, useFieldArray } from "react-hook-form";
+import { Controller, UseFieldArrayReturn } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 
 import FieldsBlock from "../../components/FieldsBlock";
@@ -9,22 +9,27 @@ import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 
 const CategoriesFieldsBlock = ({
+  name,
+  title,
+  placeholder,
   errors,
   control,
   register,
-}: FieldsBlockProps) => {
-  const categoriesArray = useFieldArray({
-    name: "categories",
-    control,
-  });
-
+  data,
+}: FieldsBlockProps & {
+  name: "tags" | "categories";
+  title: string;
+  placeholder: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: UseFieldArrayReturn<any, "categories" | "tags", "id">;
+}) => {
   return (
     <>
       <FieldsBlock
-        title="Categories"
+        title={title}
         status="active"
         append={() =>
-          categoriesArray.append({
+          data.append({
             name: "",
             color: "#0043CE",
             protected: false,
@@ -32,7 +37,7 @@ const CategoriesFieldsBlock = ({
         }
       >
         <>
-          {categoriesArray.fields.map((item, index) => (
+          {data.fields.map((item, index) => (
             <li className="relative flex h-8 items-center gap-2 " key={item.id}>
               <div className=" w-8 text-sm text-secondary-text">
                 {index + 1}
@@ -49,24 +54,23 @@ const CategoriesFieldsBlock = ({
                 }
                 isSimple
                 variant="small"
-                placeholder="Category name"
-                {...register(`categories.${index}.name`)}
+                placeholder={placeholder}
+                {...register(`${name}.${index}.name`)}
               />
               <div className="flex gap-2">
                 <Controller
                   control={control}
-                  name={`categories.${index}.color`}
+                  name={`${name}.${index}.color`}
                   render={({ field: { onChange, value } }) => (
                     <ColorPallete onChange={onChange} value={value} />
                   )}
                 />
                 <ButtonBase
-                  disabled={categoriesArray.fields.length === 1}
+                  disabled={data.fields.length === 1}
                   variant="secondary"
                   size="small"
                   onClick={() => {
-                    if (categoriesArray.fields.length > 1)
-                      categoriesArray.remove(index);
+                    if (data.fields.length > 1) data.remove(index);
                   }}
                   icon={<IoClose />}
                 />

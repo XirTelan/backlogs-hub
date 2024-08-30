@@ -1,15 +1,24 @@
 "use client";
 import React, { useState } from "react";
 import Title from "@/components/Common/Title";
-import { DndData } from "@/zodTypes";
 import DnDMultList from "./DnDMultList";
 import Switcher from "@/components/Common/UI/Switcher";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";
 
-const ManageWrapper = ({ items }: { items: DndData }) => {
+import useSWR from "swr";
+import { apiRoutesList } from "@/lib/routesList";
+import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
+import { fetcher } from "@/utils";
+
+const ManageWrapper = () => {
   const [isFullView, setIsFullView] = useState<boolean>(true);
+
+  const { data: items, isLoading } = useSWR(
+    `${apiRoutesList.backlogs}?type=byFolder`,
+    fetcher,
+  );
 
   return (
     <>
@@ -40,12 +49,17 @@ const ManageWrapper = ({ items }: { items: DndData }) => {
           />
         </div>
       </Title>
-
-      <DnDMultList
-        modifiers={[restrictToVerticalAxis]}
-        view={isFullView ? "full" : "compact"}
-        data={items}
-      />
+      {isLoading ? (
+        <LoadingAnimation />
+      ) : (
+        items?.backlog && (
+          <DnDMultList
+            modifiers={[restrictToVerticalAxis]}
+            view={isFullView ? "full" : "compact"}
+            data={items.backlog}
+          />
+        )
+      )}
     </>
   );
 };

@@ -14,7 +14,7 @@ const TopTitle = ({
     <div className="mb-4 flex w-full  justify-center bg-black">
       <div className="container">
         <Title title={title} {...props}>
-          {children}
+          <div>{children}</div>
         </Title>
       </div>
     </div>

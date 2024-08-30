@@ -1,4 +1,4 @@
-import InputField from "@/components/Common/UI/InputField";
+import InputField from "@/components/Common/UI/Input/InputField";
 import React from "react";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { FieldsBlockProps } from "@/types";

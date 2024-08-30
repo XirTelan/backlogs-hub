@@ -7,6 +7,7 @@ import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import useSWR from "swr";
 import Loading from "@/components/Common/UI/Loading/Loading";
+import { apiRoutesList } from "@/lib/routesList";
 
 const BacklogCreateForm = () => {
   const router = useRouter();
@@ -31,12 +32,13 @@ const BacklogCreateForm = () => {
     modifiers: {
       useSteamSearch: false,
       useSteamImport: false,
+      useTagsSystem: false,
     },
   };
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {
     data.slug = generateSlug(data.backlogTitle);
     try {
-      const res = await fetch("/api/backlogs/", {
+      const res = await fetch(apiRoutesList.backlogs, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

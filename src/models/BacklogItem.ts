@@ -27,6 +27,7 @@ const BacklogItemSchema = new mongoose.Schema<BacklogItemDTO>(
       type: String,
       require: true,
     },
+    tags: [String],
     category: {
       type: String,
       require: true,

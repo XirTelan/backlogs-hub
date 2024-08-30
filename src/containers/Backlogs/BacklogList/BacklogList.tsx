@@ -58,6 +58,7 @@ const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
               <BacklogListData
                 data={data}
                 categories={backlog.categories}
+                tags={backlog.tags}
                 isOwner={isOwner}
               />
             ) : searchTerm ? (

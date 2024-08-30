@@ -1,8 +1,8 @@
 "use client";
 
-import InputField from "@/components/Common/UI/InputField";
+import InputField from "@/components/Common/UI/Input/InputField";
 import React, { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import Modal from "@/components/Common/Modal";
 import TemplatePreview from "@/components/Template/TemplatePreview";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
@@ -15,10 +15,13 @@ import Select from "@/components/Common/UI/Select";
 import { usePathname } from "next/navigation";
 import { routesList } from "@/lib/routesList";
 import ModifiersMenu from "@/components/ModifiersMenu";
+import Switcher from "@/components/Common/UI/Switcher";
+import useToggle from "@/hooks/useToggle";
 
 const MODIFIERS_DEFAULT: ModifiersType = {
   useSteamSearch: false,
   useSteamImport: false,
+  useTagsSystem: false,
 };
 
 const BacklogForm = <T extends BacklogFormData>({
@@ -32,6 +35,7 @@ const BacklogForm = <T extends BacklogFormData>({
 }) => {
   const pathname = usePathname();
   const [showTemplate, setShowTemplate] = useState(false);
+  const { isOpen: showTags, setOpen, setClose } = useToggle();
   const [modifiers, setModifiers] = useState(
     defaultValues.modifiers ?? MODIFIERS_DEFAULT,
   );
@@ -70,9 +74,21 @@ const BacklogForm = <T extends BacklogFormData>({
   const onSubmitInternal = (data: BacklogFormData) => {
     data.modifiers = modifiers;
     data.backlogTitle = data.backlogTitle.trim();
+
+    if (!data.modifiers.useTagsSystem) {
+      data.tags = undefined;
+    }
+
     onSubmit({ ...defaultValues, ...data });
   };
-
+  const categoriesArray = useFieldArray({
+    name: "categories",
+    control,
+  });
+  const tagsArray = useFieldArray({
+    name: "tags",
+    control,
+  });
   const watchAllFields = watch();
   return (
     <>
@@ -81,6 +97,7 @@ const BacklogForm = <T extends BacklogFormData>({
           <div className="field grow py-2  ">
             <InputField
               autoFocus
+              variant="medium"
               helperText={
                 errors.backlogTitle && {
                   message: errors.backlogTitle.message!,
@@ -90,6 +107,7 @@ const BacklogForm = <T extends BacklogFormData>({
               id="backlogTitle"
               label="Backlog Title (required)"
               {...register(`backlogTitle`, { required: true })}
+              style={{marginTop: '6px'}}
             />
           </div>
           <div className="md:*:w-min-fit flex  min-w-fit gap-2   md:mb-2 md:items-center ">
@@ -117,11 +135,52 @@ const BacklogForm = <T extends BacklogFormData>({
         </div>
 
         <div className="flex flex-col lg:flex-row lg:gap-4 ">
-          <CategoriesFieldsBlock
-            errors={errors.categories}
-            control={control}
-            register={register}
-          />
+          <div>
+            {modifiers.useTagsSystem && (
+              <Switcher
+                initial={showTags ? 1 : 0}
+                options={{
+                  key: "",
+                  callback: (value) => {
+                    if (value === "tags") setOpen();
+                    else setClose();
+                  },
+                  items: [
+                    {
+                      title: "Categories",
+                      value: "categories",
+                    },
+                    {
+                      title: "Tags",
+                      value: "tags",
+                    },
+                  ],
+                }}
+              />
+            )}
+            {modifiers.useTagsSystem && showTags ? (
+              <CategoriesFieldsBlock
+                errors={errors.tags}
+                data={tagsArray}
+                control={control}
+                register={register}
+                name={"tags"}
+                title={"Tags"}
+                placeholder={"Tag name"}
+              />
+            ) : (
+              <CategoriesFieldsBlock
+                errors={errors.categories}
+                data={categoriesArray}
+                control={control}
+                register={register}
+                name={"categories"}
+                title={"Categories"}
+                placeholder={"Category name"}
+              />
+            )}
+          </div>
+
           <UserFieldsBlock
             errors={errors.fields}
             control={control}

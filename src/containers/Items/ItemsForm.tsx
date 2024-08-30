@@ -1,5 +1,5 @@
 "use client";
-import InputField from "@/components/Common/UI/InputField";
+import InputField from "@/components/Common/UI/Input/InputField";
 import { useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ import { ItemsFormProps } from "@/types";
 import { FaSteam } from "react-icons/fa6";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
+import DropDown from "@/components/Common/UI/DropDown/DropDown";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,
@@ -84,7 +85,9 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       btnCancel();
       return;
     }
-    if (view === "page") router.back();
+    if (view === "page") {
+      router.back();
+    }
   };
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
@@ -140,7 +143,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     [mapFields, register, setValue],
   );
 
-  const isUsingSteamSearch =
+  const isLinkedToGame =
     backlog.modifiers?.useSteamSearch && watch("modifiersFields.steamAppId");
 
   const handleSteamSearchAddGame = (id: string, name: string) => {
@@ -153,19 +156,23 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     setValue("modifiersFields.steamAppId", undefined);
   };
 
+  const handleTagsChange = (value: string[]) => {
+    setValue("tags", value);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmitInternal)}>
       <div className="flex flex-col md:flex-row md:items-center md:gap-4 ">
-        <div className="field group  relative mt-2 px-0 py-4 md:w-4/5  ">
+        <div className="field group relative  mt-3 px-0 md:w-4/5  ">
           {backlog.modifiers?.useSteamSearch ? (
             <div className="relative">
               <SearchGameBar
-                readOnly={isUsingSteamSearch !== undefined}
+                readOnly={isLinkedToGame !== undefined}
                 addGame={handleSteamSearchAddGame}
                 labelText="Title"
                 {...register("title", { required: true })}
               />
-              {isUsingSteamSearch && (
+              {isLinkedToGame && (
                 <div className="absolute bottom-0 right-0 top-0 mt-6  text-primary-btn-hover">
                   <ButtonBase
                     variant="ghost"
@@ -182,17 +189,26 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
               id="title"
               placeholder="Title"
               label="Title"
+              variant="medium"
               {...register("title", { required: true })}
             />
           )}
         </div>
-        <div className="w-1/5">
+        <div className="md:w-1/5">
           <Select
             label="Category"
             options={backlog.categories.map((category) => category.name)}
             {...register("category")}
           />
         </div>
+      </div>
+      <div>
+        <DropDown
+          onChange={handleTagsChange}
+          id={"tags"}
+          label={"tags"}
+          options={backlog.tags?.map((tag) => tag.name)}
+        />
       </div>
       {backlog.backlogFields.length > 0 && (
         <FieldsBlock title="Fields" status="disabled">

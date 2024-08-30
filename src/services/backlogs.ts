@@ -15,10 +15,15 @@ export const getBacklogById = async (
   id: string,
 ): Promise<BacklogDTO | null> => {
   try {
+    const isMongoId = id.match(new RegExp(/^[0-9a-f]{24}$/));
+    if (!isMongoId) return null;
+
     await dbConnect();
     const backlog: BacklogDTO | null = await Backlog.findById(id, {
       "categories._id": 0,
+      "tags._id": 0,
     }).lean();
+
     if (!backlog) return null;
     backlog._id = backlog._id.toString();
     backlog.fields?.forEach((field) => (field._id = field._id?.toString()));
@@ -29,7 +34,6 @@ export const getBacklogById = async (
 };
 
 export const getBacklogsBaseInfoByUserName = async (
-  //task bhub40
   userName: string,
   isOwner: boolean,
 ): Promise<BacklogDTO[]> => {
@@ -133,8 +137,9 @@ export const getUserBacklogBySlug = async (
           visibility: "public",
           slug: backlogSlug,
         };
-    const backlog = await Backlog.findOne(options, {
+    const backlog: BacklogDTO | null = await Backlog.findOne(options, {
       "categories._id": 0,
+      "tags._id": 0,
     }).lean();
     if (backlog) {
       backlog._id = backlog._id.toString();

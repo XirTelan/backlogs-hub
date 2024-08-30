@@ -20,6 +20,7 @@ const EditItem = async ({
     "edit",
   );
   if (!success) return <NotFound />;
+
   return (
     <>
       <TopTitle title="Edit" />
@@ -29,6 +30,7 @@ const EditItem = async ({
             backlogFields: backlog.fields || [],
             categories: backlog.categories,
             modifiers: backlog.modifiers,
+            tags: backlog.tags,
           }}
           defaultValues={res.data}
           type="edit"

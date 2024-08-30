@@ -1,6 +1,6 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
+import { BacklogItemDTO } from "@/zodTypes";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
 import useSWR, { preload } from "swr";
@@ -17,10 +17,12 @@ import { apiRoutesList } from "@/lib/routesList";
 
 const BacklogItemTr = ({
   item,
-  onDelete,
   color,
   showActions,
+  tags,
+  onDelete,
 }: BacklogItemTrProps) => {
+  console.log("data item", item);
   const { isOpen, toggle } = useToggle(false);
   const url = `${apiRoutesList.items}/${item._id}`;
   const res = useSWR(isOpen ? url : null, fetcher);
@@ -50,8 +52,24 @@ const BacklogItemTr = ({
             onClick={toggle}
           />
         </td>
-        <td className={`px-4`} style={{ color: color }}>
-          {item.title}
+        <td className={`px-4`}>
+          <div className="flex items-center justify-between">
+            <p style={{ color: color }}>{item.title}</p>
+            {tags && (
+              <div className="flex gap-2 ">
+                {tags.length > 0 &&
+                  tags.map((tag) => (
+                    <div
+                      key={tag.name}
+                      style={{ color: "#fff", backgroundColor: tag.color }}
+                      className="rounded-full px-2"
+                    >
+                      {tag.name}
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
         </td>
         <td className={`ms-auto flex p-2 `}>
           {showActions ? (
@@ -99,7 +117,7 @@ const BacklogItemTr = ({
               <td></td>
               <td colSpan={2} className="border-t border-field-2 ">
                 <div className=" p-4 ">
-                  <BacklogItem data={res.data.data} />
+                  <BacklogItem hideCategory data={res.data.data} />
                 </div>
               </td>
             </>
@@ -116,7 +134,10 @@ type BacklogItemTrProps = {
   item: BacklogItemDTO;
   color: string;
   showActions: boolean;
-  categories: BacklogDTO["categories"];
+  tags?: {
+    name: string;
+    color: string;
+  }[];
   onDelete: (id: string) => void;
 };
 

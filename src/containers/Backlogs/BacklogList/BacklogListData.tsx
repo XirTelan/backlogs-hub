@@ -13,16 +13,24 @@ const BacklogListData = ({
   data,
   isOwner,
   categories,
+  tags,
 }: {
   data: BacklogItemDTO[];
   isOwner: boolean;
   categories: BacklogDTO["categories"];
+  tags?: BacklogDTO["tags"];
 }) => {
   const categoriesMap = useMemo(
     () =>
       new Map(categories.map((category) => [category.name, category.color])),
     [categories],
   );
+  const tagsMap = useMemo(() => {
+    if (!tags) return undefined;
+    else
+      return new Map(tags?.map((category) => [category.name, category.color]));
+  }, [tags]);
+
   const { mutate } = useSWRConfig();
   const { isOpen, setOpen, setClose } = useToggle();
   const [itemId, setItemId] = useState<string>("");
@@ -52,16 +60,26 @@ const BacklogListData = ({
 
   return (
     <>
-      {data?.map((item: BacklogItemDTO, indx) => (
-        <BacklogItemTr
-          onDelete={handleDelete}
-          showActions={isOwner}
-          key={item._id ?? indx}
-          item={item}
-          categories={categories}
-          color={categoriesMap.get(item.category) || "#fff"}
-        />
-      ))}
+      {data?.map((item: BacklogItemDTO, indx) => {
+        let tagsData: { name: string; color: string }[] | undefined;
+        if (tagsMap && item.tags) {
+          tagsData = item.tags.map((tag) => ({
+            name: tag,
+            color: tagsMap.get(tag) ?? "",
+          }));
+        }
+
+        return (
+          <BacklogItemTr
+            onDelete={handleDelete}
+            showActions={isOwner}
+            key={item._id ?? indx}
+            item={item}
+            tags={tagsData}
+            color={categoriesMap.get(item.category) || "#fff"}
+          />
+        );
+      })}
       {isOpen && (
         <Modal
           showActions

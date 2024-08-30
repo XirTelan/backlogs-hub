@@ -5,6 +5,7 @@ const backlogModifiersSchema = new mongoose.Schema<ModifiersType>(
   {
     useSteamSearch: { type: Boolean, default: false },
     useSteamImport: { type: Boolean, default: false },
+    useTagsSystem: { type: Boolean, default: false },
   },
   { _id: false },
 );
@@ -21,6 +22,12 @@ const BacklogSchema = new mongoose.Schema<BacklogDTO>(
       required: true,
       maxlength: 60,
     },
+    tags: [
+      {
+        name: { type: String, required: true },
+        color: { type: String, required: true },
+      },
+    ],
     backlogTitle: {
       type: String,
       required: true,

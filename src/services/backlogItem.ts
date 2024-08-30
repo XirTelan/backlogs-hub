@@ -14,11 +14,9 @@ import { isAuthorizedBacklogOwner } from "./backlogs";
 import { getSteamGameInfo } from "./steamSearch";
 import { SortOrder } from "mongoose";
 import {
-  BacklogCreationSchema,
   BacklogItemCreationSchema,
   BacklogItemSchema,
 } from "@/zod";
-import { sendError } from "next/dist/server/api-utils";
 import { sendMsg } from "@/utils";
 
 export const getBacklogItemById = async (

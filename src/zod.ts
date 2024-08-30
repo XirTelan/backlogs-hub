@@ -18,6 +18,12 @@ export const FieldSchema = z
       }),
     ]),
   );
+
+export const BacklogTagsSchema = z.object({
+  name: z.string().trim().min(1, "This field cannot be empty"),
+  color: z.string().min(7).max(7).startsWith("#"),
+});
+
 export const BacklogCategorySchema = z
   .object({
     name: z.string().trim().min(1, "This field cannot be empty"),
@@ -29,6 +35,7 @@ export const BacklogCategorySchema = z
 export const ModifiersSchema = z.object({
   useSteamSearch: z.boolean().default(false),
   useSteamImport: z.boolean().default(false),
+  useTagsSystem: z.boolean().default(false),
 });
 
 export const BacklogFormSchema = z.object({
@@ -36,6 +43,10 @@ export const BacklogFormSchema = z.object({
   categories: BacklogCategorySchema.array()
     .min(1)
     .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name)),
+  tags: BacklogTagsSchema.array()
+    .min(1)
+    .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name))
+    .optional(),
   modifiers: ModifiersSchema.default({
     useSteamImport: false,
     useSteamSearch: false,
@@ -81,6 +92,7 @@ export const BacklogItemCreationSchema = z.object({
   backlogId: z.string(),
   title: z.string().trim(),
   category: z.string(),
+  tags: z.string().array().optional(),
   userFields: BacklogItemUserFieldSchema.array(),
   modifiersFields: z
     .object({
@@ -89,22 +101,19 @@ export const BacklogItemCreationSchema = z.object({
     .default({}),
 });
 
-export const BacklogItemPopSchema = BacklogItemCreationSchema.omit({
-  userFields: true,
-}).merge(
-  z.object({
-    _id: z.string(),
-    createdAt: z.date().or(z.string()).optional(),
-    updatedAt: z.date().or(z.string()).optional(),
-    userFields: BacklogItemPopUserFieldSchema.array(),
-  }),
-);
-
 export const BacklogItemSchema = BacklogItemCreationSchema.merge(
   z.object({
     _id: z.string(),
     createdAt: z.date().or(z.string()).optional(),
     updatedAt: z.date().or(z.string()).optional(),
+  }),
+);
+
+export const BacklogItemPopSchema = BacklogItemSchema.omit({
+  userFields: true,
+}).merge(
+  z.object({
+    userFields: BacklogItemPopUserFieldSchema.array(),
   }),
 );
 

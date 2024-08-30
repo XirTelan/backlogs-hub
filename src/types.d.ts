@@ -1,20 +1,27 @@
 import { FieldError } from "react-hook-form";
-import { BacklogCategory, Field, UserDTO } from "./zodTypes";
-import { buttonColorVariants } from "./lib/styles";
+import { BacklogCategory, ModifiersType, Field, UserDTO } from "./zodTypes";
+import { btnStyleVariants } from "./lib/styles";
 import React from "react";
 type Layer = 1 | 2 | 3;
 
-export type InputFieldProps = {
-  label?: React.ReactNode;
+export type InputFielBasedProps = {
   layer?: Layer;
-  error?: string;
   helperText?: { message: string; type: "text" | "error" };
   variant?: "small" | "medium" | "large";
-  isSimple?: boolean;
 } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >;
+
+export type InputFieldProps = InputFielBasedProps & {
+  label?: React.ReactNode;
+  error?: string;
+  isSimple?: boolean;
+  children?: React.ReactNode;
+} & React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >;
 export type SearchBar = {
   layer?: Layer;
   variant?: "small" | "medium" | "large";
@@ -24,6 +31,7 @@ export type ItemsFormBacklogProp = {
   backlogFields: Field[];
   modifiers: ModifiersType;
   categories: BacklogCategory[];
+  tags?: Omit<BacklogCategory, "protected">[];
 };
 
 export type ItemsFormProps<T> = {
@@ -97,7 +105,7 @@ export type ResponseData<T> = {
 
 export type UserCreationDTO = Pick<UserDTO, "username" | "email" | "provider">;
 
-export type ButtonColorVariants = keyof typeof buttonColorVariants;
+export type ButtonColorVariants = keyof typeof btnStyleVariants.colors;
 
 export type ButtonBaseProps = {
   text?: string;
@@ -105,7 +113,7 @@ export type ButtonBaseProps = {
   size?: "small" | "medium" | "large" | "elarge";
   icon?: React.ReactElement;
   children?: React.ReactNode;
-  variant?: keyof typeof buttonColorVariants;
+  variant?: ButtonColorVariants;
   onlyVisual?: boolean;
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

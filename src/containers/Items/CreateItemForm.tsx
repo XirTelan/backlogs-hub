@@ -29,6 +29,7 @@ export const CreateItemForm = ({
         backlogFields: backlogInfo.fields || [],
         categories: backlogInfo.categories,
         modifiers: backlogInfo.modifiers,
+        tags: backlogInfo.tags,
       }}
       defaultValues={defaultValues}
       type="create"

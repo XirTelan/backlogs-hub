@@ -36,7 +36,7 @@ const ModifiersMenu = ({
         variant="accent"
         type="button"
         text={`Mods (${activeModifiers})`}
-        size="small"
+        size="medium"
         hideText
         icon={<BsFillWrenchAdjustableCircleFill />}
         onClick={toggle}
@@ -54,13 +54,23 @@ const ModifiersMenu = ({
           >
             <div className="bg-background p-4 text-primary-text">
               <Title variant={2} title="Modifiers" />
-              <div className="flex p-4">
-                <p className=" me-4 ">Steam Search: </p>
+              <div className="flex flex-col gap-4 p-4">
+                <div className="flex justify-between">
+                  <p className=" me-4 ">Steam Search: </p>
 
-                <Toggle
-                  defaultValue={defaultValues.useSteamSearch}
-                  action={() => changeModifierState("useSteamSearch")}
-                />
+                  <Toggle
+                    defaultValue={defaultValues.useSteamSearch}
+                    action={() => changeModifierState("useSteamSearch")}
+                  />
+                </div>
+                <div className="flex justify-between">
+                  <p className=" me-4 ">Tags: </p>
+
+                  <Toggle
+                    defaultValue={defaultValues.useTagsSystem}
+                    action={() => changeModifierState("useTagsSystem")}
+                  />
+                </div>
               </div>
             </div>
           </Modal>

@@ -1,0 +1,14 @@
+.container {
+  outline: 0;
+}
+
+.container:has(.drop-input:focus),
+.container[aria-expanded="true"] {
+  outline-color: #fff;
+  outline: 1px solid;
+  outline-offset: -2px;
+}
+.container:has(.drop-input:focus) {
+  outline: 2px solid;
+  outline-offset: -3px;
+}

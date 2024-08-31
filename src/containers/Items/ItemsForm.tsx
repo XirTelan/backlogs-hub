@@ -207,14 +207,16 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           />
         </div>
       </div>
-      <div>
-        <DropDown
-          onChange={handleTagsChange}
-          id={"tags"}
-          label={"tags"}
-          options={backlog.tags?.map((tag) => tag.name)}
-        />
-      </div>
+      {backlog.modifiers.useTagsSystem && (
+        <div>
+          <DropDown
+            onChange={handleTagsChange}
+            id={"tags"}
+            label={"Tags"}
+            options={backlog.tags?.map((tag) => tag.name)}
+          />
+        </div>
+      )}
       {backlog.backlogFields.length > 0 && (
         <FieldsBlock title="Fields" status="disabled">
           <>

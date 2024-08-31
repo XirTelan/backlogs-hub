@@ -90,6 +90,7 @@ const BacklogForm = <T extends BacklogFormData>({
     control,
   });
   const watchAllFields = watch();
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitInternal)}>
@@ -107,7 +108,7 @@ const BacklogForm = <T extends BacklogFormData>({
               id="backlogTitle"
               label="Backlog Title (required)"
               {...register(`backlogTitle`, { required: true })}
-              style={{marginTop: '6px'}}
+              style={{ marginTop: "6px" }}
             />
           </div>
           <div className="md:*:w-min-fit flex  min-w-fit gap-2   md:mb-2 md:items-center ">

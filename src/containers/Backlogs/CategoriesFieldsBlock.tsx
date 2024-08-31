@@ -66,11 +66,12 @@ const CategoriesFieldsBlock = ({
                   )}
                 />
                 <ButtonBase
-                  disabled={data.fields.length === 1}
+                  type="button"
+                  disabled={name === "categories" && data.fields.length === 1}
                   variant="secondary"
                   size="small"
                   onClick={() => {
-                    if (data.fields.length > 1) data.remove(index);
+                    if (data.fields.length > 0) data.remove(index);
                   }}
                   icon={<IoClose />}
                 />

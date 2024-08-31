@@ -44,7 +44,6 @@ export const BacklogFormSchema = z.object({
     .min(1)
     .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name)),
   tags: BacklogTagsSchema.array()
-    .min(1)
     .superRefine((val, ctx) => uniqueArray(val, ctx, (item) => item.name))
     .optional(),
   modifiers: ModifiersSchema.default({

@@ -14,7 +14,6 @@ const DropDown = ({
   options,
   onChange,
   children,
-  ...props
 }: {
   id: string;
   label: string;
@@ -22,7 +21,6 @@ const DropDown = ({
   onChange?: (value: string[]) => void;
   children?: React.ReactNode;
 }) => {
-  console.log(props);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState("");
   const [results, setResults] = useState(options ?? []);
@@ -43,7 +41,6 @@ const DropDown = ({
     const tag = e.currentTarget.dataset.tag;
     if (!tag) return;
 
-    console.log(tag);
     if (selected.has(tag)) selected.delete(tag);
     else selected.add(tag);
     setSelected(new Set(selected));

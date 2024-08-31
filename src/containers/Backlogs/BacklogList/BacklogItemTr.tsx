@@ -22,7 +22,7 @@ const BacklogItemTr = ({
   tags,
   onDelete,
 }: BacklogItemTrProps) => {
-  console.log("data item", item);
+  
   const { isOpen, toggle } = useToggle(false);
   const url = `${apiRoutesList.items}/${item._id}`;
   const res = useSWR(isOpen ? url : null, fetcher);

@@ -17,6 +17,7 @@ import { FaSteam } from "react-icons/fa6";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
 import DropDown from "@/components/Common/UI/DropDown/DropDown";
+import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,
@@ -91,19 +92,23 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   };
 
   const onSubmitInternal = (data: BacklogItemCreationDTO) => {
-    onSubmit({
-      ...defaultValues,
-      ...data,
-    })
-      .then((success) => {
-        if (success) {
-          handleCancel();
-          toastCustom.success("success");
-        }
+    return new Promise((res, rej) => {
+      onSubmit({
+        ...defaultValues,
+        ...data,
       })
-      .catch((error) => {
-        toastCustom.error(error.statusText);
-      });
+        .then((success) => {
+          if (success) {
+            handleCancel();
+            toastCustom.success("success");
+            res(true);
+          } else rej();
+        })
+        .catch((error) => {
+          toastCustom.error(error.statusText);
+          rej();
+        });
+    });
   };
 
   const getFieldInput = useCallback(
@@ -228,17 +233,24 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       )}
 
       <div className="my-4 flex w-full flex-col md:w-1/4 md:gap-4 ">
-        <ButtonBase
-          disabled={!isValid || isSubmitting}
-          text={type === "create" ? "Create" : "Save"}
-          type="submit"
-        />
-        <ButtonBase
-          text="Cancel"
-          variant="secondary"
-          type="button"
-          onClick={handleCancel}
-        />
+        {" "}
+        {isSubmitting ? (
+          <LoadingAnimation />
+        ) : (
+          <>
+            <ButtonBase
+              disabled={!isValid}
+              text={type === "create" ? "Create" : "Save"}
+              type="submit"
+            />
+            <ButtonBase
+              text="Cancel"
+              variant="secondary"
+              type="button"
+              onClick={handleCancel}
+            />
+          </>
+        )}
       </div>
     </form>
   );

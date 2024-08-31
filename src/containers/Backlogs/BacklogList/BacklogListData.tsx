@@ -9,17 +9,11 @@ import useToggle from "@/hooks/useToggle";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
 
-const BacklogListData = ({
-  data,
-  isOwner,
-  categories,
-  tags,
-}: {
-  data: BacklogItemDTO[];
-  isOwner: boolean;
-  categories: BacklogDTO["categories"];
-  tags?: BacklogDTO["tags"];
-}) => {
+const BacklogListData = ({ data, isOwner, categories, tags }: Props) => {
+  const { mutate } = useSWRConfig();
+  const { isOpen, setOpen, setClose } = useToggle();
+  const [itemId, setItemId] = useState<string>("");
+
   const categoriesMap = useMemo(
     () =>
       new Map(categories.map((category) => [category.name, category.color])),
@@ -30,10 +24,6 @@ const BacklogListData = ({
     else
       return new Map(tags?.map((category) => [category.name, category.color]));
   }, [tags]);
-
-  const { mutate } = useSWRConfig();
-  const { isOpen, setOpen, setClose } = useToggle();
-  const [itemId, setItemId] = useState<string>("");
 
   const onDelete = async () => {
     if (!itemId) return;
@@ -63,10 +53,17 @@ const BacklogListData = ({
       {data?.map((item: BacklogItemDTO, indx) => {
         let tagsData: { name: string; color: string }[] | undefined;
         if (tagsMap && item.tags) {
-          tagsData = item.tags.map((tag) => ({
-            name: tag,
-            color: tagsMap.get(tag) ?? "",
-          }));
+          tagsData = item.tags.reduce(
+            (arr: { name: string; color: string }[], tag) => {
+              if (!tagsMap.has(tag)) return arr;
+              arr.push({
+                name: tag,
+                color: tagsMap.get(tag) ?? "",
+              });
+              return arr;
+            },
+            [],
+          );
         }
 
         return (
@@ -104,3 +101,10 @@ const BacklogListData = ({
 };
 
 export default BacklogListData;
+
+type Props = {
+  data: BacklogItemDTO[];
+  isOwner: boolean;
+  categories: BacklogDTO["categories"];
+  tags?: BacklogDTO["tags"];
+};

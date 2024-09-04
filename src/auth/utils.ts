@@ -51,6 +51,7 @@ export const setTokenCookies = async (token: string, url: string) => {
   response.cookies.set("access_token", token, {
     httpOnly: true,
     maxAge: 604800,
+    sameSite: "lax",
   });
   return response;
 };

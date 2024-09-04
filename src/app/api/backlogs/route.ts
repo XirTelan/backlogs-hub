@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo, TokenData } from "@/auth/utils";
 import { getBacklogItemsByBacklogId } from "@/services/backlogItem";
 import {
   createBacklog,
@@ -30,11 +30,23 @@ const isType = (value: unknown): value is Types => {
   return accessTypes.some((valid) => valid === value);
 };
 
+const checkIsOwner = (
+  curUser: TokenData | null,
+  reqUser: string | undefined,
+) => {
+  if (curUser && reqUser === undefined) return true;
+  return curUser ? curUser.username === reqUser : false;
+};
+
 export async function GET(request: NextRequest) {
   const user = await getCurrentUserInfo();
   const userNameParam = request.nextUrl.searchParams.get("userName")?.trim();
-  const isOwner = user ? userNameParam === user.username : false;
+
+  if (!userNameParam && !user) return sendMsg.error(`Params not provided`);
+
+  const isOwner = checkIsOwner(user, userNameParam);
   const userName = userNameParam ? userNameParam : user?.username;
+
   if (!userName) return sendMsg.error(`Params not provided`);
 
   if (await isPrivateProfile(userName, isOwner))

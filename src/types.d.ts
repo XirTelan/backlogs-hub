@@ -1,5 +1,11 @@
 import { FieldError } from "react-hook-form";
-import { BacklogCategory, ModifiersType, Field, UserDTO } from "./zodTypes";
+import {
+  BacklogCategory,
+  ModifiersType,
+  Field,
+  UserDTO,
+  DndData,
+} from "./zodTypes";
 import { btnStyleVariants } from "./lib/styles";
 import React from "react";
 type Layer = 1 | 2 | 3;

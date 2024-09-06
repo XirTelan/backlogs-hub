@@ -7,7 +7,7 @@ import {
   DndData,
 } from "./zodTypes";
 import { btnStyleVariants } from "./lib/styles";
-import React from "react";
+import React, { ReactNode } from "react";
 type Layer = 1 | 2 | 3;
 
 export type InputFielBasedProps = {
@@ -37,7 +37,7 @@ export type ItemsFormBacklogProp = {
   backlogFields: Field[];
   modifiers: ModifiersType;
   categories: BacklogCategory[];
-  tags?: Omit<BacklogCategory, "protected">[];
+  tags?: Omit<BacklogCategory, "protected" | "order">[];
 };
 
 export type ItemsFormProps<T> = {
@@ -67,7 +67,7 @@ export type ListItemInput = {
 } & InputFieldProps;
 
 export type SortableItemProps = {
-  children?: React.ReactElement;
+  children?: React.ReactNode | ReactNode[];
   containerId: UniqueIdentifier;
   id: UniqueIdentifier;
   index: number;
@@ -126,21 +126,34 @@ export type ButtonBaseProps = {
   HTMLButtonElement
 >;
 
-export type DndListProps = {
-  data: DndData;
+export type DndData<T> = Record<string, T[]>;
+
+type GetItemStyles = (args: {
+  value: UniqueIdentifier;
+  index: number;
+  overIndex: number;
+  isDragging: boolean;
+  containerId: UniqueIdentifier;
+  isSorting: boolean;
+  isDragOverlay: boolean;
+}) => React.CSSProperties;
+
+type RenderItemProps = {
+  item: T;
+  isSortingContainer: boolean;
+  containerId: UniqueIdentifier;
+  index;
+  handle: boolean;
+  getItemStyles: GetItemStyles;
+  getIndex;
+};
+export type DndListProps<T> = {
+  data: DndData<T>;
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   containerStyle?: React.CSSProperties;
   coordinateGetter?: KeyboardCoordinateGetter;
-  getItemStyles?(args: {
-    value: UniqueIdentifier;
-    index: number;
-    overIndex: number;
-    isDragging: boolean;
-    containerId: UniqueIdentifier;
-    isSorting: boolean;
-    isDragOverlay: boolean;
-  }): React.CSSProperties;
+
   itemCount?: number;
   items?: Items;
   view?: "full" | "compact";
@@ -151,6 +164,23 @@ export type DndListProps = {
   trashable?: boolean;
   scrollable?: boolean;
   vertical?: boolean;
+
+  actions?: {
+    addMode: "none" | "top" | "inner";
+    addAction?: (newValue: string) => void;
+  } & (
+    | {
+        saveStrategy: "manual";
+        saveManaul?: (containers: string[], items: DndData<T>) => void;
+      }
+    | {
+        saveStrategy: "onChange";
+        saveItemChange?: (id: string, category: string) => void;
+        saveFoldreChange?: (containers: string[]) => void;
+      }
+  );
+  renderItem?: (args: RenderItemProps) => React.ReactNode;
+  getItemStyles?: GetItemStyles;
 };
 
 export type SteamApp = {

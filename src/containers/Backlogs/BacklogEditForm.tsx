@@ -8,13 +8,14 @@ import useSWR from "swr";
 import { fetcher } from "@/utils";
 import TopTitle from "@/components/Common/UI/TopTitle";
 import Loading from "@/components/Common/UI/Loading/Loading";
+import NotFound from "@/components/Common/NotFound";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const {
     isLoading: backlogIsLoading,
     data: backlogData,
     mutate,
-  } = useSWR(`/api/backlogs/${id}`, fetcher);
+  } = useSWR<BacklogDTO>(`/api/backlogs/${id}`, fetcher);
   const { isLoading: foldersIsLoading, data: userFolders } = useSWR(
     `/api/users/`,
     fetcher,
@@ -36,12 +37,13 @@ const BacklogEditForm = ({ id }: { id: string }) => {
     });
     if (res.ok) {
       mutate();
-      router.push(
-        `/user/${userFolders.data.username}/backlogs/${backlogData.slug}`,
-      );
+      router.push(`/user/${userFolders.data.username}/backlogs/${data.slug}`);
     }
   };
 
+  if (!backlogData?.backlogTitle) return <NotFound />;
+  backlogData.categories.sort((a, b) => a.order - b.order);
+  
   return (
     <>
       <TopTitle title={`Editing backlog "${backlogData.backlogTitle}"`} />

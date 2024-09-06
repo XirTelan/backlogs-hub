@@ -18,8 +18,11 @@ export async function GET(request: NextRequest) {
   const backlogId = searchParams.get("backlog");
   if (!backlogId) return sendMsg.error("Invalid params", 400);
 
-  const { success } = await isAuthorizedBacklogOwner(backlogId, "read");
-  if (!success) return sendMsg.error("Doesnt have permission", 401);
+  const { success, message } = await isAuthorizedBacklogOwner(
+    backlogId,
+    "read",
+  );
+  if (!success) return sendMsg.error(message, 401);
 
   const categories = searchParams.get("categories")?.split("-");
   let order: string | number | null = searchParams.get("order") ?? "asc";
@@ -48,7 +51,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const data: BacklogItemDTO = await request.json();
   try {
-    
     const res = await addBacklogItem(data);
     if (!res.success) return sendMsg.error(res.erors);
 

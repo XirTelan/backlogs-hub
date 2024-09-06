@@ -2,7 +2,6 @@ import Title from "@/components/Common/Title";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import AddItem from "@/components/dnd/AddItem";
 import Handle from "@/components/dnd/Handle";
-import { BacklogDTO } from "@/zodTypes";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -24,7 +23,7 @@ type Props = {
   onRemove: () => void;
 };
 
-const DroppableContainer = ({
+const DroppableContainer = <T,>({
   children,
   disabled,
   id,
@@ -38,7 +37,7 @@ const DroppableContainer = ({
 }: Props & {
   disabled?: boolean;
   id: UniqueIdentifier;
-  items: BacklogDTO[];
+  items: T[];
 }) => {
   const {
     attributes,
@@ -79,7 +78,7 @@ const DroppableContainer = ({
       }}
       {...props}
     >
-      <div className="flex items-center ">
+      <div className="flex items-center">
         <FaFolder className="mx-2" />
         <Title width="fit-content" title={id as string} variant={3} />
         <div className="flex min-h-[2rem] flex-grow bg-transparent">
@@ -100,10 +99,10 @@ const DroppableContainer = ({
             <div className="group relative flex h-full w-full grow">
               <div
                 style={{ maxHeight: "20px" }}
-                className="absolute inset-0 m-auto flex h-[1%] w-full grow items-center justify-center bg-layer-1 transition-all duration-500 ease-in-out group-hover:h-full "
+                className="absolute inset-0 m-auto flex h-[1%] w-full grow items-center justify-center bg-layer-1 transition-all duration-500 ease-in-out group-hover:h-full"
               >
-                <div className=" opacity-0 transition-opacity    duration-500  ease-in-out  group-hover:opacity-100  ">
-                  <MdDragHandle size={24} className=" self-center" />
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
+                  <MdDragHandle size={24} className="self-center" />
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { DndData } from "@/zodTypes";
+import { DndData } from "@/types";
 import {
   CollisionDetection,
   DragEndEvent,
@@ -13,9 +13,12 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const useDragAndDrop = (data: DndData) => {
-  const [items, setItems] = useState<DndData>(data);
-  const [clonedItems, setClonedItems] = useState<DndData | null>(null);
+type BaseItem = {
+  _id: string;
+};
+const useDragAndDrop = <T extends BaseItem>(data: DndData<T>) => {
+  const [items, setItems] = useState(data);
+  const [clonedItems, setClonedItems] = useState<typeof data | null>(null);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [containers, setContainers] = useState(
     Object.keys(items) as UniqueIdentifier[],

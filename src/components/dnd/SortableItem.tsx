@@ -34,7 +34,6 @@ const SortableItem = ({
   return (
     <Item
       ref={disabled ? undefined : setNodeRef}
-      title={title}
       dragging={isDragging}
       handle={handle}
       handleProps={handle ? { ref: setActivatorNodeRef } : undefined}
@@ -51,7 +50,7 @@ const SortableItem = ({
       transform={transform}
       listeners={listeners}
     >
-      {children}
+      <>{children}</>
     </Item>
   );
 };

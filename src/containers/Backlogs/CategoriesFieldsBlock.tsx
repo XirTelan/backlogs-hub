@@ -1,3 +1,4 @@
+"use client";
 import ColorPallete from "@/components/Common/ColorPallete";
 import InputField from "@/components/Common/UI/Input/InputField";
 import React from "react";
@@ -7,6 +8,7 @@ import { IoClose } from "react-icons/io5";
 import FieldsBlock from "../../components/FieldsBlock";
 import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 
 const CategoriesFieldsBlock = ({
   name,
@@ -23,6 +25,11 @@ const CategoriesFieldsBlock = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: UseFieldArrayReturn<any, "categories" | "tags", "id">;
 }) => {
+  const move = (from: number, to: number) => {
+    const max = data.fields.length;
+    data.move(from, to < 0 ? max + to : to % max);
+  };
+
   return (
     <>
       <FieldsBlock
@@ -33,14 +40,36 @@ const CategoriesFieldsBlock = ({
             name: "",
             color: "#0043CE",
             protected: false,
+            order: data.fields.length,
           })
         }
       >
         <>
           {data.fields.map((item, index) => (
-            <li className="relative flex h-8 items-center gap-2 " key={item.id}>
-              <div className=" w-8 text-sm text-secondary-text">
+            <li
+              className="group relative flex h-8 items-center gap-2 "
+              key={item.id}
+            >
+              <div className=" relative w-8 text-sm text-secondary-text">
                 {index + 1}
+                {false && (
+                  <div className="absolute inset-0 z-10 flex  ">
+                    <ButtonBase
+                      type="button"
+                      size="small"
+                      variant="ghost"
+                      icon={<TiArrowSortedUp />}
+                      onClick={() => move(index, index - 1)}
+                    />
+                    <ButtonBase
+                      type="button"
+                      size="small"
+                      variant="ghost"
+                      icon={<TiArrowSortedDown />}
+                      onClick={() => move(index, index + 1)}
+                    />
+                  </div>
+                )}
               </div>
 
               <InputField

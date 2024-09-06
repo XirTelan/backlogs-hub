@@ -15,10 +15,30 @@ const BacklogCreateForm = () => {
   if (userFolders.isLoading) return <Loading />;
   if (!userFolders.data.success) return <div>Error</div>;
   const defaultCategories: BacklogCategory[] = [
-    { name: "Completed", color: "#0043CE", protected: false },
-    { name: "Playing", color: "#6929C4", protected: false },
-    { name: "Backlog", color: "#4D5358", protected: false },
-    { name: "Retired", color: "#A2191F", protected: false },
+    {
+      name: "Completed",
+      color: "#0043CE",
+      protected: false,
+      order: 0,
+    },
+    {
+      name: "Playing",
+      color: "#6929C4",
+      protected: false,
+      order: 1,
+    },
+    {
+      name: "Backlog",
+      color: "#4D5358",
+      protected: false,
+      order: 2,
+    },
+    {
+      name: "Retired",
+      color: "#A2191F",
+      protected: false,
+      order: 3,
+    },
   ];
   const defaultValues: BacklogFormData = {
     order: 99,

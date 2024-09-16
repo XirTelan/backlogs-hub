@@ -1,4 +1,8 @@
-import { addBacklogItem, getBacklogItemsData } from "@/services/backlogItem";
+import {
+  addBacklogItem,
+  getBacklogItemsData,
+  getItemsGroupedByCategory,
+} from "@/services/backlogItem";
 
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { BacklogItemDTO } from "@/zodTypes";
@@ -18,10 +22,11 @@ export async function GET(request: NextRequest) {
   const backlogId = searchParams.get("backlog");
   if (!backlogId) return sendMsg.error("Invalid params", 400);
 
-  const { success, message } = await isAuthorizedBacklogOwner(
-    backlogId,
-    "read",
-  );
+  const {
+    success,
+    data: backlog,
+    message,
+  } = await isAuthorizedBacklogOwner(backlogId, "read");
   if (!success) return sendMsg.error(message, 401);
 
   const categories = searchParams.get("categories")?.split("-");
@@ -30,18 +35,24 @@ export async function GET(request: NextRequest) {
   if (!isSortOrder(order)) {
     order = 1;
   }
-
   const searchOptions = {
     term: searchParams.get("search"),
     sort: availableSortOptions[
       searchParams.get("sort")?.toLocaleLowerCase() ?? "title"
     ],
     order: order as SortOrder,
+    page: searchParams.get("page"),
+    pageSize: searchParams.get("pageSize"),
   };
-  try {
-    const res = await getBacklogItemsData(categories, searchOptions, backlogId);
-    if (!res.success) return sendMsg.error(res.errors);
 
+  try {
+    let res;
+    if (backlog.modifiers.useBoardType) {
+      res = await getItemsGroupedByCategory(backlog);
+    } else {
+      res = await getBacklogItemsData(categories, searchOptions, backlog._id);
+    }
+    if (!res.success) return sendMsg.error(res.errors);
     return NextResponse.json(res.data);
   } catch (error) {
     sendMsg.error(error);

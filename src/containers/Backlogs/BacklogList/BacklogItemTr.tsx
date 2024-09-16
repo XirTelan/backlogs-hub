@@ -1,7 +1,6 @@
 "use client";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { BacklogItemDTO } from "@/zodTypes";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
 import useSWR, { preload } from "swr";
 import BacklogItem from "@/components/Backlog/BacklogItem";
@@ -9,11 +8,10 @@ import { fetcher } from "@/utils";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import SidePanel from "@/components/SidePanel";
-import { ItemChangeCategoryOpenModal } from "@/containers/Items/ItemChangeCategoryModal";
 import useToggle from "@/hooks/useToggle";
 import { apiRoutesList } from "@/lib/routesList";
+import ItemFastRename from "@/containers/Items/ItemsFastRename";
+import BacklogItemActions from "./BacklogItemActions";
 
 const BacklogItemTr = ({
   item,
@@ -22,16 +20,9 @@ const BacklogItemTr = ({
   tags,
   onDelete,
 }: BacklogItemTrProps) => {
-  
   const { isOpen, toggle } = useToggle(false);
   const url = `${apiRoutesList.items}/${item._id}`;
   const res = useSWR(isOpen ? url : null, fetcher);
-
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const itemId = e.currentTarget.dataset["itemid"];
-    if (!itemId) return;
-    onDelete(itemId);
-  };
 
   return (
     <>
@@ -54,7 +45,8 @@ const BacklogItemTr = ({
         </td>
         <td className={`px-4`}>
           <div className="flex items-center justify-between">
-            <p style={{ color: color }}>{item.title}</p>
+            <ItemFastRename item={item} color={color} />
+            {/* <p style={{ color: color }}>{item.title}</p> */}
             {tags && (
               <div className="flex gap-2 ">
                 {tags.length > 0 &&
@@ -73,34 +65,7 @@ const BacklogItemTr = ({
         </td>
         <td className={`ms-auto flex p-2 `}>
           {showActions ? (
-            <SidePanel
-              position="none"
-              borders={false}
-              icon={<BsThreeDotsVertical />}
-            >
-              <ItemChangeCategoryOpenModal data={item} />
-              <DetailsButton id={item._id} text={"Details"} />
-              <>
-                <LinkWithBtnStyle
-                  href={`/items/${item._id}/edit`}
-                  title="Edit item"
-                  size="small"
-                  variant="ghost"
-                  icon={<MdEdit size={20} />}
-                >
-                  Edit
-                </LinkWithBtnStyle>
-                <ButtonBase
-                  title="Delete item"
-                  text="Delete"
-                  size="small"
-                  variant="dangerGhost"
-                  data-itemid={item._id}
-                  icon={<MdDeleteForever size={24} />}
-                  onClick={handleDelete}
-                />
-              </>
-            </SidePanel>
+            <BacklogItemActions item={item} onDelete={onDelete} />
           ) : (
             <DetailsButton id={item._id} text={""} />
           )}
@@ -140,7 +105,6 @@ type BacklogItemTrProps = {
   }[];
   onDelete: (id: string) => void;
 };
-
 const DetailsButton = ({ text, id }: { text: string; id: string }) => {
   return (
     <LinkWithBtnStyle

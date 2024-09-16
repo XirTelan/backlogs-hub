@@ -53,6 +53,7 @@ const BacklogCreateForm = () => {
       useSteamSearch: false,
       useSteamImport: false,
       useTagsSystem: false,
+      useBoardType: false
     },
   };
   const onSubmit: SubmitHandler<BacklogFormData> = async (data) => {

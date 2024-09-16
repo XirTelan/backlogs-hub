@@ -1,14 +1,20 @@
 import Modal from "@/components/Common/Modal";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { ButtonBaseProps, ModalContextProps } from "@/types";
-import { Context, useContext } from "react";
+import { Context,  useContext } from "react";
 
 export function createModal(
   cntx: Context<ModalContextProps>,
   key: string,
   config?: ConfigType,
 ) {
-  const Opener = ({ data }: { data?: unknown }) => {
+  const Opener = ({
+    data,
+    btnOptions,
+  }: {
+    data?: unknown;
+    btnOptions?: ButtonBaseProps;
+  }) => {
     const ctx = useContext(cntx);
 
     const handleClick = () => {
@@ -18,7 +24,11 @@ export function createModal(
     };
 
     return (
-      <ButtonBase {...config?.openerButtton} onClick={handleClick}></ButtonBase>
+      <ButtonBase
+        {...config?.openerButtton}
+        {...btnOptions}
+        onClick={handleClick}
+      ></ButtonBase>
     );
   };
 

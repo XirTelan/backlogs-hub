@@ -11,6 +11,7 @@ import BacklogItemsTable, {
   BacklogItemsTableToolbar,
 } from "./BacklogItemsTable";
 import { useSearchParams } from "next/navigation";
+import Pagination from "@/containers/Pagination";
 
 const itemsNotFound = (
   <>
@@ -42,27 +43,29 @@ const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
   const requstUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
   const searchTerm = searchParams.get("search");
   const { data, isLoading } = useSWR(requstUrl, fetcher);
-
   return (
     <>
       <BacklogItemsTableToolbar />
       {isLoading ? (
         <SkeletonDataTable />
       ) : (
-        <BacklogItemsTable>
-          {data.length > 0 ? (
-            <BacklogListData
-              data={data}
-              categories={backlog.categories}
-              tags={backlog.tags}
-              isOwner={isOwner}
-            />
-          ) : searchTerm ? (
-            itemsNotFound
-          ) : (
-            itemsDoesntExist
-          )}
-        </BacklogItemsTable>
+        <>
+          <BacklogItemsTable>
+            {data.totalCount > 0 ? (
+              <BacklogListData
+                data={data.items}
+                categories={backlog.categories}
+                tags={backlog.tags}
+                isOwner={isOwner}
+              />
+            ) : searchTerm ? (
+              itemsNotFound
+            ) : (
+              itemsDoesntExist
+            )}
+          </BacklogItemsTable>
+          <Pagination totalCount={data.totalCount} />
+        </>
       )}
     </>
   );

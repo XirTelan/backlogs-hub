@@ -24,31 +24,49 @@ import AddItem from "@/components/dnd/AddItem";
 import { IoMdAdd } from "react-icons/io";
 
 import useDragAndDrop from "@/hooks/useDragAndDrop";
-import { DndListProps } from "@/types";
+import { DndData, DndListProps } from "@/types";
 
 type BaseItem = {
   _id: string;
 };
 
-const DnDMultList = <T extends BaseItem>({
+export default function DnDMultList<T extends BaseItem>({
   data,
   view = "full",
   adjustScale = false,
   cancelDrop,
   handle = true,
   containerStyle,
-  getItemStyles = () => ({}),
   modifiers,
   strategy = verticalListSortingStrategy,
   vertical = true,
   scrollable,
-  actions = {
-    addMode: "top",
-    saveStrategy: "manual",
-  },
+  actions,
   renderItem,
-}: DndListProps<T>) => {
+}: DndListProps<T>) {
   const [isAddNew, setIsAddNew] = useState(false);
+
+  const backlogs = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(data)
+          .sort((a, b) => a[1].order - b[1].order)
+          .map((item) => {
+            return [item[0], item[1].items];
+          }),
+      ),
+    [data],
+  );
+
+  const defaultContainers = useMemo(() => {
+    const res: string[] = [];
+    Object.entries(data)
+      .sort((a, b) => a[1].order - b[1].order)
+      .forEach((item) => {
+        res.push(item[0]);
+      });
+    return res;
+  }, [data]);
 
   const {
     activeId,
@@ -65,64 +83,33 @@ const DnDMultList = <T extends BaseItem>({
     handleRename,
     onDragCancel,
     collisionDetectionStrategy,
-  } = useDragAndDrop(data);
+  } = useDragAndDrop(backlogs, defaultContainers);
 
-  const containersSet = useMemo(() => new Set(containers), [containers]);
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
 
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
-  const AddNewCat = useCallback(
-    () => (
-      <AddItem
-        action={(newFolder) => {
-          setContainers((containers) => [...containers, newFolder]);
-          setItems((prev: typeof data) => {
-            return { ...prev, [newFolder]: [] };
-          });
-        }}
-        close={() => setIsAddNew(false)}
-        disabled={(value) => containersSet.has(value)}
-      />
-    ),
-    [containersSet, setContainers, setItems],
+  const handleSave = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault();
+      if (actions.saveStrategy === "manual")
+        actions.handleSave(containers as string[], items);
+    },
+    [actions, containers, items],
   );
-
-  const ActionsBlock = ({ isAddNew }: { isAddNew: boolean }) => {
-    if (isAddNew)
-      return (
-        <div>
-          <AddNewCat />
-        </div>
-      );
-
-    return (
-      <div className="group flex h-8 items-center">
-        <ButtonBase
-          variant="secondary"
-          size="medium"
-          onClick={() => setIsAddNew(true)}
-          icon={<IoMdAdd />}
-        />
-        {actions.saveStrategy === "manual" && (
-          <ButtonBase
-            text="Save changes"
-            size="medium"
-            onClick={(e) => {
-              e.preventDefault();
-              if (actions.saveManaul)
-                actions.saveManaul(containers as string[], items);
-            }}
-          />
-        )}
-      </div>
-    );
-  };
 
   return (
     <>
-      <section className={`my-4 ${!isAddNew && "ms-auto"}`}>
-        {actions.addMode === "top" && <ActionsBlock isAddNew={isAddNew} />}
+      <section className={`my-4 ${!isAddNew && "ms-auto"} max-w-80`}>
+        <ActionsBlock
+          isAddNew={isAddNew}
+          containers={containers}
+          setContainers={setContainers}
+          setIsAddNew={setIsAddNew}
+          setItems={setItems}
+          saveStrategy={actions.saveStrategy}
+          handleSave={handleSave}
+        />
       </section>
       <section>
         <DndContext
@@ -152,47 +139,46 @@ const DnDMultList = <T extends BaseItem>({
               }
             >
               <>
-                {containers.map((containerId) => (
-                  <DroppableContainer
-                    key={containerId}
-                    id={containerId}
-                    onRename={(value: string) =>
-                      handleRename(value, containerId)
-                    }
-                    onRemove={() => {
-                      handleRemove(containerId);
-                    }}
-                    containers={containers}
-                    items={items[containerId]}
-                    scrollable={scrollable}
-                    style={containerStyle}
-                    showActions={view === "compact"}
-                  >
-                    {view === "full" && (
-                      <SortableContext
-                        id={`${containerId}`}
-                        items={items[containerId].map((item) => item._id)}
-                        strategy={strategy}
-                      >
-                        {items[containerId].map((item, index) => {
-                          if (!renderItem) return <div key={index}>well</div>;
-                          return renderItem({
-                            item,
-                            containerId,
-                            index,
-                            handle,
-                            getItemStyles,
-                            getIndex,
-                            isSortingContainer,
-                          });
-                        })}
-                      </SortableContext>
-                    )}
-                  </DroppableContainer>
-                ))}
-                {actions.addMode === "inner" && (
-                  <ActionsBlock isAddNew={isAddNew} />
-                )}
+                {containers.map((containerId) => {
+                  const currentItems = items[containerId] ?? [];
+                  return (
+                    <DroppableContainer
+                      key={containerId}
+                      id={containerId}
+                      onRename={(value: string) =>
+                        handleRename(value, containerId)
+                      }
+                      onRemove={() => {
+                        handleRemove(containerId);
+                      }}
+                      containers={containers}
+                      items={currentItems}
+                      scrollable={scrollable}
+                      style={containerStyle}
+                      showActions={view === "compact"}
+                    >
+                      {view === "full" && (
+                        <SortableContext
+                          id={`${containerId}`}
+                          items={currentItems.map((item) => item._id)}
+                          strategy={strategy}
+                        >
+                          {currentItems.map((item, index) => {
+                            if (!renderItem) return <div key={index}>well</div>;
+                            return renderItem({
+                              item,
+                              containerId,
+                              index,
+                              handle,
+                              getIndex,
+                              isSortingContainer,
+                            });
+                          })}
+                        </SortableContext>
+                      )}
+                    </DroppableContainer>
+                  );
+                })}
               </>
             </SortableContext>
           </div>
@@ -239,9 +225,7 @@ const DnDMultList = <T extends BaseItem>({
       </Item>
     );
   }
-};
-
-export default DnDMultList;
+}
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -251,4 +235,58 @@ const dropAnimation: DropAnimation = {
       },
     },
   }),
+};
+
+function ActionsBlock<T>({
+  containers,
+  isAddNew,
+  handleSave,
+  saveStrategy,
+  setIsAddNew,
+  setContainers,
+  setItems,
+}: ActionsBlockProps<T>) {
+  const containersSet = useMemo(() => new Set(containers), [containers]);
+
+  const addNewContainer = (newFolder: string) => {
+    setContainers((containers) => [...containers, newFolder]);
+    setItems((prev) => {
+      return { ...prev, [newFolder]: [] };
+    });
+  };
+
+  if (isAddNew)
+    return (
+      <div>
+        <AddItem
+          action={addNewContainer}
+          close={() => setIsAddNew(false)}
+          disabled={(value) => containersSet.has(value)}
+        />
+      </div>
+    );
+
+  return (
+    <div className="group flex h-8 items-center">
+      <ButtonBase
+        variant="secondary"
+        size="medium"
+        onClick={() => setIsAddNew(true)}
+        icon={<IoMdAdd />}
+      />
+      {saveStrategy === "manual" && (
+        <ButtonBase text="Save changes" size="medium" onClick={handleSave} />
+      )}
+    </div>
+  );
+}
+
+type ActionsBlockProps<T> = {
+  containers: UniqueIdentifier[];
+  isAddNew: boolean;
+  saveStrategy: "manual" | "onChange";
+  handleSave: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  setContainers: React.Dispatch<React.SetStateAction<UniqueIdentifier[]>>;
+  setIsAddNew: React.Dispatch<React.SetStateAction<boolean>>;
+  setItems: React.Dispatch<React.SetStateAction<DndData<T>>>;
 };

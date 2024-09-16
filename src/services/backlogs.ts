@@ -71,7 +71,8 @@ export const getBacklogsByFolder = async (userName: string) => {
       getUserData(userName, "folders"),
     ]);
     const isOwner = currentUser != null && currentUser.username === userName;
-    const hashMap: { [key: string]: BacklogDTO[] } = {};
+    const hashMap: { [key: string]: { order: number; items: BacklogDTO[] } } =
+      {};
 
     if (!user || !user.folders) return hashMap;
     if (!isOwner && user.config?.profileVisibility === "private")
@@ -81,7 +82,10 @@ export const getBacklogsByFolder = async (userName: string) => {
 
     user.folders.forEach(
       (folder, indx) =>
-        (hashMap[isHideFoldersName ? `Folder ${indx}` : folder] = []),
+        (hashMap[isHideFoldersName ? `Folder ${indx}` : folder] = {
+          order: indx,
+          items: [],
+        }),
     );
 
     const updatePromises = [];
@@ -99,7 +103,7 @@ export const getBacklogsByFolder = async (userName: string) => {
           );
         }
       }
-      hashMap[backlog.folder].push(backlog);
+      hashMap[backlog.folder].items.push(backlog);
     }
     await Promise.all(updatePromises);
 

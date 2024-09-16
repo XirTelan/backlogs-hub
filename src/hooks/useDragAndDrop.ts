@@ -16,12 +16,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 type BaseItem = {
   _id: string;
 };
-const useDragAndDrop = <T extends BaseItem>(data: DndData<T>) => {
+const useDragAndDrop = <T extends BaseItem>(
+  data: DndData<T>,
+  defaultContainers?: string[],
+) => {
   const [items, setItems] = useState(data);
   const [clonedItems, setClonedItems] = useState<typeof data | null>(null);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [containers, setContainers] = useState(
-    Object.keys(items) as UniqueIdentifier[],
+    defaultContainers ?? (Object.keys(items) as UniqueIdentifier[]),
   );
   const [overlayTitle, setOverlayTitle] = useState("");
   const recentlyMovedToNewContainer = useRef(false);
@@ -36,6 +39,7 @@ const useDragAndDrop = <T extends BaseItem>(data: DndData<T>) => {
   useEffect(() => {
     setItems(data);
   }, [data]);
+
   /**
    * Custom collision detection strategy optimized for multiple containers
    *

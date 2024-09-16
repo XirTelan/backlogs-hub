@@ -13,10 +13,11 @@ const UserBacklogs = async ({
 }: {
   user: { name: string; isOwner: boolean };
 }) => {
-  const data: [string, BacklogDTO[]][] = Object.entries(
-    await getBacklogsByFolder(user.name),
-  );
-  const isHaveData = data.some(([, backlogs]) => backlogs.length !== 0);
+  const data: [string, { order: number; items: BacklogDTO[] }][] =
+    Object.entries(await getBacklogsByFolder(user.name)).sort(
+      (a, b) => a[1].order - b[1].order,
+    );
+  const isHaveData = data.some(([, backlogs]) => backlogs.items.length !== 0);
   const config = await getConfigOptions();
   return (
     <>
@@ -27,7 +28,7 @@ const UserBacklogs = async ({
               if (
                 config.success &&
                 !config.data.showEmptyFolders &&
-                backlogs.length === 0
+                backlogs.items.length === 0
               )
                 return;
               return (
@@ -35,7 +36,7 @@ const UserBacklogs = async ({
                   key={folderName}
                   userName={user.name}
                   folderName={folderName}
-                  backlogs={backlogs}
+                  backlogs={backlogs.items}
                 />
               );
             })}

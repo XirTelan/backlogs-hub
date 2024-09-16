@@ -37,9 +37,10 @@ const BacklogForm = <T extends BacklogFormData>({
   const pathname = usePathname();
   const [showTemplate, setShowTemplate] = useState(false);
   const { isOpen: showTags, setOpen, setClose } = useToggle();
-  const [modifiers, setModifiers] = useState(
-    defaultValues.modifiers ?? MODIFIERS_DEFAULT,
-  );
+  const [modifiers, setModifiers] = useState({
+    ...MODIFIERS_DEFAULT,
+    ...defaultValues.modifiers,
+  });
 
   const {
     register,
@@ -74,6 +75,7 @@ const BacklogForm = <T extends BacklogFormData>({
   };
   const onSubmitInternal = (data: BacklogFormData) => {
     data.modifiers = modifiers;
+
     data.backlogTitle = data.backlogTitle.trim();
 
     if (!data.modifiers.useTagsSystem) {

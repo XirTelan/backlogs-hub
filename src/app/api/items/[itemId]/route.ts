@@ -66,6 +66,7 @@ const authorizeAndProceed = async (
   );
   if (!success)
     return { success: false, message: "Not authorized", status: 401 };
+
   const data = await action();
   return { success: true, data: data };
 };

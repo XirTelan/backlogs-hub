@@ -1,5 +1,5 @@
 import { getCurrentUserInfo, TokenData } from "@/auth/utils";
-import { getBacklogItemsByBacklogId } from "@/services/backlogItem";
+import { getBacklogItemsByQuery } from "@/services/backlogItem";
 import {
   createBacklog,
   getBacklogsByUserName,
@@ -136,14 +136,19 @@ const handleTypeGet = async (
     case "withData":
       {
         if (!backlogSlug) return sendMsg.error("Wrong parameters");
+
         resultData.backlog = await getUserBacklogBySlug(
           userName,
           backlogSlug,
           isOwner,
         );
-        resultData.backlogData = await getBacklogItemsByBacklogId(
-          resultData?.backlog?._id,
-        );
+
+        if (!resultData.backlog || !resultData.backlog._id)
+          return sendMsg.error("Backlog doesnt found");
+
+        resultData.backlogData = await getBacklogItemsByQuery({
+          backlogId: resultData.backlog._id,
+        });
       }
       break;
     case "baseInfo":
@@ -171,5 +176,8 @@ const handleTypeGet = async (
 type GetResult = {
   status?: number;
   backlog: Partial<BacklogDTO> | BacklogDTO[] | null | undefined;
-  backlogData?: Partial<BacklogItemDTO>[];
+  backlogData?: {
+    items: Partial<BacklogItemDTO>[];
+    totalCount: number;
+  };
 };

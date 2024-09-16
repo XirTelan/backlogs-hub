@@ -22,7 +22,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           <select
             {...props}
             ref={ref}
-            className={` ${variant === "default" ? elevation[layer] : "bg-transparent"}  p-2 pe-8 text-secondary-text  hover:cursor-pointer `}
+            className={` ${variant === "default" ? elevation[layer] : "bg-transparent"}  pe-8 ps-4 text-secondary-text  *:bg-layer-1 hover:cursor-pointer `}
           >
             {options.map((option, indx) => (
               <option key={indx} value={option}>
@@ -30,7 +30,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               </option>
             ))}
           </select>
-          <IoIosArrowUp className="absolute right-2" />
+          <IoIosArrowUp className="absolute right-2 pointer-events-none" />
         </div>
       </div>
     );

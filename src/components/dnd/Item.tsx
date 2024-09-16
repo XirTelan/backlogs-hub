@@ -53,16 +53,16 @@ export const Item = React.memo(
           <span>
             {handle ? (
               <Handle
+                style={{ border: 0, background: "transparent" }}
                 {...handleProps}
                 {...listeners}
-                style={{ borderRight: 0 }}
               >
                 <MdDragIndicator className="text-neutral-600" size={24} />
               </Handle>
             ) : null}
           </span>
           <div
-            className={`flex w-full touch-manipulation items-center border ${dragOverlay ? "border-layer-3 bg-layer-2" : "border-layer-2 bg-layer-1"} p-1`}
+            className={`flex w-full touch-manipulation items-center border ${dragOverlay ? "border-layer-3 bg-layer-2" : "border-layer-2 bg-layer-1"} `}
             {...(!handle ? listeners : undefined)}
             {...props}
             tabIndex={!handle ? 0 : undefined}

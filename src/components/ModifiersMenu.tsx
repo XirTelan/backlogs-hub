@@ -1,6 +1,6 @@
 "use client";
 import useToggle from "@/hooks/useToggle";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import Modal from "./Common/Modal";
 import ButtonBase from "./Common/UI/ButtonBase";
 import Toggle from "./Common/UI/Toggle";
@@ -22,12 +22,38 @@ const ModifiersMenu = ({
     [defaultValues],
   );
 
-  const changeModifierState = (modifier: keyof ModifiersType) => {
-    setValue((prev) => ({
-      ...prev,
-      [modifier]: !prev[modifier],
-    }));
-  };
+  const changeModifierState = useCallback(
+    (modifier: keyof ModifiersType) => {
+      setValue((prev) => ({
+        ...prev,
+        [modifier]: !prev[modifier],
+      }));
+    },
+    [setValue],
+  );
+  const MenuItem = useCallback(
+    ({
+      title,
+      value,
+      modifier,
+    }: {
+      title: string;
+      value: boolean;
+      modifier: keyof ModifiersType;
+    }) => {
+      return (
+        <div className="flex justify-between">
+          <p className=" me-4 ">{title}</p>
+
+          <Toggle
+            defaultValue={value}
+            action={() => changeModifierState(modifier)}
+          />
+        </div>
+      );
+    },
+    [changeModifierState],
+  );
   return (
     <>
       <ButtonBase
@@ -55,22 +81,21 @@ const ModifiersMenu = ({
             <div className="bg-background p-4 text-primary-text">
               <Title variant={2} title="Modifiers" />
               <div className="flex flex-col gap-4 p-4">
-                <div className="flex justify-between">
-                  <p className=" me-4 ">Steam Search: </p>
-
-                  <Toggle
-                    defaultValue={defaultValues.useSteamSearch}
-                    action={() => changeModifierState("useSteamSearch")}
-                  />
-                </div>
-                <div className="flex justify-between">
-                  <p className=" me-4 ">Tags: </p>
-
-                  <Toggle
-                    defaultValue={defaultValues.useTagsSystem}
-                    action={() => changeModifierState("useTagsSystem")}
-                  />
-                </div>
+                <MenuItem
+                  modifier={"useSteamSearch"}
+                  title={"Steam Search:"}
+                  value={defaultValues.useSteamSearch}
+                />
+                <MenuItem
+                  modifier={"useTagsSystem"}
+                  title={"Tags:"}
+                  value={defaultValues.useTagsSystem}
+                />
+                <MenuItem
+                  modifier={"useBoardType"}
+                  title={"Transform to board:"}
+                  value={defaultValues.useBoardType}
+                />
               </div>
             </div>
           </Modal>

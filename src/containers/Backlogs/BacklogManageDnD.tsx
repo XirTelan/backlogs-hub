@@ -12,12 +12,13 @@ import { toastCustom } from "@/lib/toast";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
 import DnDMultList from "../DragAndDrop/DndMultiList";
+import { UniqueIdentifier } from "@dnd-kit/core";
 
 const BacklogManageDnD = ({
   data,
   view,
 }: {
-  data: DndData<BacklogDTO>;
+  data: Record<string, { order: number; items: BacklogDTO[] }>;
   view: "full" | "compact" | undefined;
 }) => {
   const { mutate } = useSWRConfig();
@@ -33,7 +34,7 @@ const BacklogManageDnD = ({
   >();
 
   const handleBacklogsSave = useCallback(
-    async (containers: string[], data: DndData<BacklogDTO>) => {
+    async (containers: UniqueIdentifier[], data: DndData<BacklogDTO>) => {
       const dataFormatted: { folders: string[]; backlogs: BacklogDTO[] } = {
         folders: containers as string[],
         backlogs: [],
@@ -111,18 +112,16 @@ const BacklogManageDnD = ({
         data={data}
         view={view}
         actions={{
-          addMode: "top",
           saveStrategy: "manual",
-          saveManaul: handleBacklogsSave,
+          handleSave: handleBacklogsSave,
         }}
-        renderItem={({ item, isSortingContainer, getItemStyles, ...rest }) => {
+        renderItem={({ item, isSortingContainer, ...rest }) => {
           return (
             <BacklogDndItem
               disabled={isSortingContainer}
               key={item._id}
               id={item._id}
               title={item.backlogTitle}
-              style={getItemStyles}
               {...rest}
               action={() => {
                 setModalData({

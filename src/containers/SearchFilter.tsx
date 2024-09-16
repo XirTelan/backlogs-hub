@@ -31,7 +31,7 @@ const SearchFilter = () => {
 
   return (
     <div className="bg-layer-1">
-      <SidePanel borders={false} position="none" icon={<FiFilter />}>
+      <SidePanel keepOpen borders={false} position="none" icon={<FiFilter />}>
         <div className="p-2">
           <p className="mb-2 text-lg">Filters:</p>
           <Select

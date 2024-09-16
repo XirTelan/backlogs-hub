@@ -33,6 +33,7 @@ const DroppableContainer = <T,>({
   containers,
   style,
   showActions = false,
+  handleProps,
   ...props
 }: Props & {
   disabled?: boolean;
@@ -78,7 +79,7 @@ const DroppableContainer = <T,>({
       }}
       {...props}
     >
-      <div className="flex items-center">
+      <div className="flex min-w-40 items-center">
         <FaFolder className="mx-2" />
         <Title width="fit-content" title={id as string} variant={3} />
         <div className="flex min-h-[2rem] flex-grow bg-transparent">
@@ -88,11 +89,13 @@ const DroppableContainer = <T,>({
               padding: 0,
               margin: "0 0 0 16px",
               maxHeight: 100,
+              minWidth: 60,
               justifyContent: "center",
               display: "flex",
               flex: "1 0 0",
               background: "rgb(38 38 38 / 0%)",
             }}
+            {...handleProps}
             {...attributes}
             {...listeners}
           >

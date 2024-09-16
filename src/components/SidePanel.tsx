@@ -7,6 +7,11 @@ const buttonPosStyles = {
   none: "",
   right: "border-s",
 };
+const dropDownStyle = {
+  left: "left-0 border-r",
+  none: "right-0 border-r border-l",
+  right: "right-0 border-l",
+};
 
 const bordersStyles = {
   open: "border-border-1 border-b border-b-background",
@@ -18,11 +23,13 @@ const SidePanel = ({
   position = "right",
   children,
   borders = true,
+  keepOpen = false,
 }: {
   position?: "left" | "right" | "none";
   icon: React.ReactNode;
   borders?: boolean;
   children: React.ReactNode | React.ReactNode[];
+  keepOpen?: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -30,20 +37,20 @@ const SidePanel = ({
   useOutsideClickReg(isOpen, ref, () => {
     setIsOpen(false);
   });
-
-  const styleDropDownPos =
-    position === "left" ? "left-0 border-r" : "right-0 border-l";
+  const styleDropDownPos = dropDownStyle[position];
   const styleButtonPos = buttonPosStyles[position];
   const styleButton = borders
     ? isOpen
       ? ` ${styleButtonPos} ${bordersStyles.open} `
       : `${bordersStyles.close}`
     : "";
+
   const handleClosePanel = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
-    e.stopPropagation();
+    if (keepOpen) e.stopPropagation();
   };
+
   return (
     <div
       ref={ref}

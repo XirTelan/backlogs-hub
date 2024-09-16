@@ -7,7 +7,8 @@ import {
   DndData,
 } from "./zodTypes";
 import { btnStyleVariants } from "./lib/styles";
-import React, { ReactNode } from "react";
+import React, { ComponentPropsWithRef, ReactNode } from "react";
+import { UniqueIdentifier } from "@dnd-kit/core";
 type Layer = 1 | 2 | 3;
 
 export type InputFielBasedProps = {
@@ -68,14 +69,13 @@ export type ListItemInput = {
 
 export type SortableItemProps = {
   children?: React.ReactNode | ReactNode[];
-  containerId: UniqueIdentifier;
   id: UniqueIdentifier;
   index: number;
   title: string;
   handle: boolean;
+  handpleProps?: ComponentPropsWithRef<"button">;
   disabled?: boolean;
-  style(args: unknown): React.CSSProperties;
-  getIndex(id: UniqueIdentifier): number;
+  style?: React.CSSProperties;
   renderItem?: () => React.ReactElement;
 };
 
@@ -128,27 +128,16 @@ export type ButtonBaseProps = {
 
 export type DndData<T> = Record<string, T[]>;
 
-type GetItemStyles = (args: {
-  value: UniqueIdentifier;
-  index: number;
-  overIndex: number;
-  isDragging: boolean;
-  containerId: UniqueIdentifier;
-  isSorting: boolean;
-  isDragOverlay: boolean;
-}) => React.CSSProperties;
-
 type RenderItemProps = {
   item: T;
   isSortingContainer: boolean;
   containerId: UniqueIdentifier;
   index;
   handle: boolean;
-  getItemStyles: GetItemStyles;
   getIndex;
 };
 export type DndListProps<T> = {
-  data: DndData<T>;
+  data: Record<string, { order: number; items: T[] }>;
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   containerStyle?: React.CSSProperties;
@@ -165,22 +154,12 @@ export type DndListProps<T> = {
   scrollable?: boolean;
   vertical?: boolean;
 
-  actions?: {
-    addMode: "none" | "top" | "inner";
+  actions: {
     addAction?: (newValue: string) => void;
-  } & (
-    | {
-        saveStrategy: "manual";
-        saveManaul?: (containers: string[], items: DndData<T>) => void;
-      }
-    | {
-        saveStrategy: "onChange";
-        saveItemChange?: (id: string, category: string) => void;
-        saveFoldreChange?: (containers: string[]) => void;
-      }
-  );
+    saveStrategy: "manual" | "onChange";
+    handleSave: (containers: UniqueIdentifier[], items: DndData<T>) => void;
+  };
   renderItem?: (args: RenderItemProps) => React.ReactNode;
-  getItemStyles?: GetItemStyles;
 };
 
 export type SteamApp = {

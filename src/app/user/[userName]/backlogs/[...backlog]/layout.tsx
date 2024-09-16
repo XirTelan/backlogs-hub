@@ -10,9 +10,7 @@ export default async function Layout({
 }) {
   return (
     <div className=" grid   md:grid-cols-[auto_1fr]">
-      <aside className=" border-border-1 hidden min-h-screen-bh h-full w-64 border-e pt-4 md:block">
-        <UserBacklogsSideNav userName={userName} />
-      </aside>
+      <UserBacklogsSideNav userName={userName} />
       <>{children}</>
     </div>
   );

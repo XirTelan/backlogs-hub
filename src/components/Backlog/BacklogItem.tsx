@@ -59,13 +59,13 @@ const BacklogItem = ({
     return (
       <>
         {!hideCategory && (
-          <div className=" flex gap-2">
+          <div className=" my-2 flex gap-2">
             <div>Category:</div>
 
             <div className=" text-secondary-text">{data.category}</div>
           </div>
         )}
-        <div>
+        <div className=" *:py-4 *:border-t *:border-border-1 ">
           {data.userFields.map((field, indx) => {
             return withWrap(field, indx, renderFieldValue);
           })}
@@ -132,22 +132,25 @@ const withWrap = (
   indx: number,
   renderField: (field: RenderField) => React.ReactNode,
 ) => {
-  if (["markdown", "text"].includes(field.type)) {
-    return (
-      <Accordion
-        key={indx}
-        id={field.backlogFieldId}
-        title={field.backlogFieldId}
-      >
-        {renderField(field)}
-      </Accordion>
-    );
+  switch (field.type) {
+    case "markdown": {
+      return (
+        <Accordion
+          key={indx}
+          id={field.backlogFieldId}
+          title={field.backlogFieldId}
+        >
+          {renderField(field)}
+        </Accordion>
+      );
+    }
+    default: {
+      return (
+        <div key={indx} className="flex justify-between">
+          <div className="me-2"> {field.backlogFieldId}</div>
+          <div> {renderField(field)}</div>
+        </div>
+      );
+    }
   }
-
-  return (
-    <div key={indx} className="flex justify-between">
-      <div className="me-2"> {field.backlogFieldId}</div>
-      <div> {renderField(field)}</div>
-    </div>
-  );
 };

@@ -1,7 +1,7 @@
 import Modal from "@/components/Common/Modal";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { ButtonBaseProps, ModalContextProps } from "@/types";
-import { Context,  useContext } from "react";
+import React, { Context, useContext } from "react";
 
 export function createModal(
   cntx: Context<ModalContextProps>,
@@ -11,9 +11,11 @@ export function createModal(
   const Opener = ({
     data,
     btnOptions,
+    render,
   }: {
     data?: unknown;
     btnOptions?: ButtonBaseProps;
+    render?: (openAction: () => void) => React.JSX.Element;
   }) => {
     const ctx = useContext(cntx);
 
@@ -22,6 +24,8 @@ export function createModal(
       ctx.setKey(key);
       ctx.setOpen();
     };
+
+    if (render) return render(handleClick);
 
     return (
       <ButtonBase

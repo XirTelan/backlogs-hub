@@ -36,10 +36,6 @@ const useDragAndDrop = <T extends BaseItem>(
     });
   }, [items]);
 
-  useEffect(() => {
-    setItems(data);
-  }, [data]);
-
   /**
    * Custom collision detection strategy optimized for multiple containers
    *

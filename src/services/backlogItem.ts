@@ -100,14 +100,15 @@ export const getBacklogItemsByQuery = async ({
 
 export const getItemsGroupedByCategory = async (backlog: BacklogDTO) => {
   try {
-    const hashMap = new Map<string, {order: number, items: BacklogItemDTO[]}>();
+    const hashMap = new Map<
+      string,
+      { order: number; items: BacklogItemDTO[] }
+    >();
 
     backlog.categories.sort((a, b) => a.order - b.order);
-    console.log(backlog.categories);
     backlog.categories.forEach((category) =>
       hashMap.set(category.name, { order: category.order, items: [] }),
     );
-    console.log(hashMap);
     const data = await BacklogItem.find({ backlogId: backlog._id })
       .sort("modifiersFields.order")
       .lean();
@@ -117,8 +118,6 @@ export const getItemsGroupedByCategory = async (backlog: BacklogDTO) => {
       item._id = item._id.toString();
       hashMap.get(item.category)?.items.push(item);
     });
-    console.log(hashMap);
-    console.log(Object.fromEntries(hashMap));
     return { success: true, data: Object.fromEntries(hashMap) };
   } catch (error) {
     console.error("Error:", error);
@@ -204,7 +203,7 @@ export const getBacklogItemsData = async (
     pageSize?: string | null;
   },
   backlogId: string,
-): Promise<ResponseData<BacklogItemDTO[]>> => {
+): Promise<ResponseData<{ totalCount: number; items: BacklogItemDTO[] }>> => {
   const { term, sort, order, page, pageSize } = searchOptions;
   let backlogData;
   try {
@@ -251,10 +250,8 @@ export const getAndPopulateBacklogItemById = async (
 ): Promise<ResponseData<BacklogItemPopulated | BacklogItemWithSteamInfo>> => {
   const res = await getBacklogItemById(itemId);
   if (!res.success) return { success: false, errors: "Wrong ItemId" };
-
   const newFields = await populateUserFields(res.data);
   if (!newFields.success) return { success: false, errors: newFields.errors };
-
   if (res.data.modifiersFields?.steamAppId) {
     const steamInfo = await getSteamGameInfo(
       res.data.modifiersFields.steamAppId,
@@ -281,18 +278,17 @@ const populateUserFields = async (
     "read",
   );
   if (!backlogData.success) return { success: false, errors: "Not Authorized" };
-
   const map = backlogData.data.fields?.reduce((acc, item) => {
     acc.set(item._id, item);
     return acc;
   }, new Map());
-
   const populatedFields = backlogItem.userFields.map((item) => {
     const curItem = map?.get(item.backlogFieldId);
+
     return {
       ...item,
-      backlogFieldId: curItem.name || item.backlogFieldId,
-      type: curItem.type,
+      backlogFieldId: curItem?.name ?? item.backlogFieldId,
+      type: curItem?.type,
     };
   });
   return { success: true, data: populatedFields };

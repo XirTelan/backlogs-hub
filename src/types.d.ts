@@ -7,7 +7,7 @@ import {
   DndData,
 } from "./zodTypes";
 import { btnStyleVariants } from "./lib/styles";
-import React, { ComponentPropsWithRef, ReactNode } from "react";
+import React, { ComponentPropsWithRef, ComponentType, ReactNode } from "react";
 import { UniqueIdentifier } from "@dnd-kit/core";
 type Layer = 1 | 2 | 3;
 
@@ -140,9 +140,13 @@ export type DndListProps<T> = {
   data: Record<string, { order: number; items: T[] }>;
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
-  containerStyle?: React.CSSProperties;
   coordinateGetter?: KeyboardCoordinateGetter;
-
+  containersOptions?: {
+    style?: React.CSSProperties;
+    handle?: boolean;
+    customTitle?: (id: string) => React.ReactNode | React.ReactNode[];
+    CustomAction?: ComponentType;
+  };
   itemCount?: number;
   items?: Items;
   view?: "full" | "compact";

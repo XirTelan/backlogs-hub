@@ -8,7 +8,6 @@ import FieldsBlock from "../../components/FieldsBlock";
 import { FieldsBlockProps } from "@/types";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 
-
 const CategoriesFieldsBlock = ({
   name,
   title,
@@ -24,7 +23,6 @@ const CategoriesFieldsBlock = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: UseFieldArrayReturn<any, "categories" | "tags", "id">;
 }) => {
-
   return (
     <>
       <FieldsBlock

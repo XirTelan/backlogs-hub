@@ -46,17 +46,15 @@ export default function DnDMultList<T extends BaseItem>({
   actions,
   renderItem,
 }: DndListProps<T>) {
-  const backlogs = useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(data)
-          .sort((a, b) => a[1].order - b[1].order)
-          .map((item) => {
-            return [item[0], item[1].items];
-          }),
-      ),
-    [data],
-  );
+  const backlogs = useMemo(() => {
+    return Object.fromEntries(
+      Object.entries(data)
+        .sort((a, b) => a[1].order - b[1].order)
+        .map((item) => {
+          return [item[0], item[1].items];
+        }),
+    );
+  }, [data]);
 
   const defaultContainers = useMemo(() => {
     const res: string[] = [];
@@ -84,7 +82,6 @@ export default function DnDMultList<T extends BaseItem>({
     onDragCancel,
     collisionDetectionStrategy,
   } = useDragAndDrop(backlogs, defaultContainers);
-
   const containersSet = useMemo(() => new Set(containers), [containers]);
 
   const addNewContainer = (newFolder: string) => {

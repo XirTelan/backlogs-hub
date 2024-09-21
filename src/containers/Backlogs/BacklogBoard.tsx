@@ -4,7 +4,7 @@ import { apiRoutesList } from "@/lib/routesList";
 import { BacklogItemDTO } from "@/zodTypes";
 import React, { useCallback } from "react";
 import useSWR from "swr";
-import { DndData } from "@/types";
+import { DndData, RenderItemProps } from "@/types";
 import { fetcher } from "@/utils";
 import { ItemFormModalOpen } from "../Items/ItemFormModal";
 import SortableItem from "@/components/dnd/SortableItem";
@@ -15,6 +15,7 @@ import BacklogItemActions from "./BacklogList/BacklogItemActions";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { toastCustom } from "@/lib/toast";
 import Title from "@/components/Common/Title";
+import { ItemInfoModalOpen } from "../Items/ItemInfoModal";
 
 const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
   const { data, isLoading, mutate } = useSWR(
@@ -89,6 +90,7 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
       </div>
     </div>
   );
+
   return (
     <div className="px-4">
       <div className=" min-h-[calc(98vh-210px)] overflow-auto md:max-w-[calc(98vw-288px)]">
@@ -107,26 +109,7 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
             },
             customTitle: containerTitle,
           }}
-          renderItem={({ item, isSortingContainer, ...rest }) => {
-            return (
-              <SortableItem
-                key={item._id}
-                disabled={isSortingContainer}
-                id={item._id}
-                title={item.title}
-                style={{ minWidth: "240px", border: 0 }}
-                {...rest}
-                handle={false}
-              >
-                <div className="flex  h-12 flex-1 cursor-grab items-center justify-between border-border-interactive ps-2 text-sm hover:active:cursor-grabbing hover:active:border ">
-                  <ItemFastRename item={item} color={""} />
-                  <div onMouseDown={(e) => e.preventDefault()}>
-                    <BacklogItemActions item={item} />
-                  </div>
-                </div>
-              </SortableItem>
-            );
-          }}
+          renderItem={renderDndItem}
         />
       </div>
     </div>
@@ -134,3 +117,48 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
 };
 
 export default BacklogBoard;
+
+function renderDndItem({ item, isSortingContainer, ...rest }: RenderItemProps) {
+  return (
+    <SortableItem
+      key={item._id}
+      disabled={isSortingContainer}
+      id={item._id}
+      title={item.title}
+      style={{ minWidth: "240px", border: 0 }}
+      {...rest}
+      handle={false}
+    >
+      <div className="flex  h-12 flex-1 cursor-grab items-center justify-between  ps-2 text-sm hover:active:cursor-grabbing  ">
+        <div onMouseDown={(e) => e.stopPropagation()}>
+          <ItemFastRename
+            type="button"
+            item={item}
+            color={"#fff"}
+            textProps={{
+              tag: "p",
+              render: (
+                <ItemInfoModalOpen
+                  data={item._id}
+                  render={(handle) => (
+                    <button
+                      className="hover:underline "
+                      style={{ color: "#fff" }}
+                      onClick={handle}
+                    >
+                      <p className=" text-left ">{item.title}</p>
+                    </button>
+                  )}
+                />
+              ),
+            }}
+          />
+        </div>
+
+        <div onMouseDown={(e) => e.preventDefault()}>
+          <BacklogItemActions item={item} />
+        </div>
+      </div>
+    </SortableItem>
+  );
+}

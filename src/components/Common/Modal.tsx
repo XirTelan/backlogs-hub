@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import ButtonBase from "./UI/ButtonBase";
 import { ButtonBaseProps, ButtonColorVariants } from "@/types";
+import { motion } from "framer-motion";
 
 const DEFAULTS: ModalProps["actionOptions"] = {
   position: "inherit",
@@ -59,8 +60,12 @@ const Modal = ({
       onClick={setClose}
       role="dialog"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 "
+
     >
-      <div
+      <motion.div
+            initial={{ opacity: 0.1, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ease: "easeInOut", duration: 0.125 }}
         className="absolute  flex flex-col justify-center"
         onClick={(e) => e.stopPropagation()}
       >
@@ -72,7 +77,7 @@ const Modal = ({
           (actionOptions.align ?? DEFAULTS.align) === "bottom" && (
             <ActionsBlock />
           )}
-      </div>
+      </motion.div>
     </div>,
     document.body,
   );

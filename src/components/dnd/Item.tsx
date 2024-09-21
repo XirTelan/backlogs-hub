@@ -42,11 +42,10 @@ export const Item = React.memo(
     ) => {
       return (
         <li
-          className="flex touch-manipulation items-center"
+          className="flex touch-manipulation items-center  hover:cursor-grabbing"
           ref={ref}
           style={{
             transform: CSS.Translate.toString(transform || null),
-            scale: dragOverlay ? "0.95" : 1,
             opacity: dragging ? 0.5 : 1,
           }}
         >

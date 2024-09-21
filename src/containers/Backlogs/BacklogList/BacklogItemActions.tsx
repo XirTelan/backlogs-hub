@@ -1,4 +1,5 @@
 import ButtonBase from "@/components/Common/UI/ButtonBase";
+import Divider from "@/components/Common/UI/Divider";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import SidePanel from "@/components/SidePanel";
 import { ItemChangeCategoryOpenModal } from "@/containers/Items/ItemChangeCategoryModal";
@@ -23,6 +24,7 @@ const BacklogItemActions = ({
 
   return (
     <SidePanel position="none" borders={false} icon={<BsThreeDotsVertical />}>
+
       <ItemChangeCategoryOpenModal
         data={item}
         btnOptions={{ hideText: false }}
@@ -46,6 +48,7 @@ const BacklogItemActions = ({
         >
           Edit
         </LinkWithBtnStyle>
+        <Divider />
         <ButtonBase
           title="Delete item"
           text="Delete"

@@ -29,6 +29,7 @@ export const BacklogCategorySchema = z
     name: z.string().trim().min(1, "This field cannot be empty"),
     color: z.string().min(7).max(7).startsWith("#"),
     protected: z.boolean().default(false),
+    order: z.number().default(99),
   })
   .required();
 
@@ -36,6 +37,7 @@ export const ModifiersSchema = z.object({
   useSteamSearch: z.boolean().default(false),
   useSteamImport: z.boolean().default(false),
   useTagsSystem: z.boolean().default(false),
+  useBoardType: z.boolean().default(false),
 });
 
 export const BacklogFormSchema = z.object({
@@ -49,6 +51,8 @@ export const BacklogFormSchema = z.object({
   modifiers: ModifiersSchema.default({
     useSteamImport: false,
     useSteamSearch: false,
+    useBoardType: false,
+    useTagsSystem: false,
   }),
   folder: z.string().default("Default"),
   fields: FieldSchema.array()
@@ -96,6 +100,7 @@ export const BacklogItemCreationSchema = z.object({
   modifiersFields: z
     .object({
       steamAppId: z.string().optional(),
+      order: z.number().optional(),
     })
     .default({}),
 });
@@ -115,8 +120,6 @@ export const BacklogItemPopSchema = BacklogItemSchema.omit({
     userFields: BacklogItemPopUserFieldSchema.array(),
   }),
 );
-
-export const DndDataSchema = z.record(z.string(), BacklogDTOSchema.array());
 
 //Account
 export const OauthSchema = z.object({

@@ -7,7 +7,8 @@ import {
   DndData,
 } from "./zodTypes";
 import { btnStyleVariants } from "./lib/styles";
-import React from "react";
+import React, { ComponentPropsWithRef, ComponentType, ReactNode } from "react";
+import { UniqueIdentifier } from "@dnd-kit/core";
 type Layer = 1 | 2 | 3;
 
 export type InputFielBasedProps = {
@@ -37,7 +38,7 @@ export type ItemsFormBacklogProp = {
   backlogFields: Field[];
   modifiers: ModifiersType;
   categories: BacklogCategory[];
-  tags?: Omit<BacklogCategory, "protected">[];
+  tags?: Omit<BacklogCategory, "protected" | "order">[];
 };
 
 export type ItemsFormProps<T> = {
@@ -67,15 +68,14 @@ export type ListItemInput = {
 } & InputFieldProps;
 
 export type SortableItemProps = {
-  children?: React.ReactElement;
-  containerId: UniqueIdentifier;
+  children?: React.ReactNode | ReactNode[];
   id: UniqueIdentifier;
   index: number;
   title: string;
   handle: boolean;
+  handpleProps?: ComponentPropsWithRef<"button">;
   disabled?: boolean;
-  style(args: unknown): React.CSSProperties;
-  getIndex(id: UniqueIdentifier): number;
+  style?: React.CSSProperties;
   renderItem?: () => React.ReactElement;
 };
 
@@ -126,21 +126,27 @@ export type ButtonBaseProps = {
   HTMLButtonElement
 >;
 
-export type DndListProps = {
-  data: DndData;
+export type DndData<T> = Record<string, T[]>;
+
+type RenderItemProps = {
+  item: T;
+  isSortingContainer: boolean;
+  containerId: UniqueIdentifier;
+  index;
+  handle: boolean;
+  getIndex;
+};
+export type DndListProps<T> = {
+  data: Record<string, { order: number; items: T[] }>;
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
-  containerStyle?: React.CSSProperties;
   coordinateGetter?: KeyboardCoordinateGetter;
-  getItemStyles?(args: {
-    value: UniqueIdentifier;
-    index: number;
-    overIndex: number;
-    isDragging: boolean;
-    containerId: UniqueIdentifier;
-    isSorting: boolean;
-    isDragOverlay: boolean;
-  }): React.CSSProperties;
+  containersOptions?: {
+    style?: React.CSSProperties;
+    handle?: boolean;
+    customTitle?: (id: string) => React.ReactNode | React.ReactNode[];
+    CustomAction?: ComponentType;
+  };
   itemCount?: number;
   items?: Items;
   view?: "full" | "compact";
@@ -151,6 +157,13 @@ export type DndListProps = {
   trashable?: boolean;
   scrollable?: boolean;
   vertical?: boolean;
+
+  actions: {
+    addAction?: (newValue: string) => void;
+    saveStrategy: "manual" | "onChange";
+    handleSave: (containers: UniqueIdentifier[], items: DndData<T>) => void;
+  };
+  renderItem?: (args: RenderItemProps) => React.ReactNode;
 };
 
 export type SteamApp = {

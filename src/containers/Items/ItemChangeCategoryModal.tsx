@@ -22,6 +22,7 @@ const ModalProvider = createModal(ModalContext, "itemChangeCategory", {
   closeButton: {
     text: "Cancel",
     variant: "secondary",
+    size: "small",
   },
 });
 

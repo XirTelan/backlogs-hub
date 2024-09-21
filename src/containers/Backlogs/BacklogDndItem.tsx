@@ -3,22 +3,21 @@ import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import SortableItem from "@/components/dnd/SortableItem";
 import { routesList } from "@/lib/routesList";
 import { SortableItemProps } from "@/types";
-import { BacklogDTO } from "@/zodTypes";
 import React from "react";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 
 const BacklogDndItem = ({
-  backlog,
   action,
   ...props
-}: SortableItemProps & { backlog: BacklogDTO; action: () => void }) => {
+}: SortableItemProps & { action: () => void }) => {
   return (
     <>
       <SortableItem {...props}>
-        <div className=" ms-auto flex ">
+        <span className="ms-2">{props.title}</span>
+        <div className="ms-auto flex">
           <LinkWithBtnStyle
             title="Edit"
-            href={`${routesList.backlogEdit}/${backlog._id}`}
+            href={`${routesList.backlogEdit}/${props.id}`}
             size="small"
             variant="ghost"
             icon={<MdEdit size={20} />}

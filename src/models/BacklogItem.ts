@@ -17,6 +17,7 @@ const DataItemSchema = new mongoose.Schema<{
 const ModifiersFields = new mongoose.Schema(
   {
     steamAppId: String,
+    order: Number,
   },
   { _id: false },
 );

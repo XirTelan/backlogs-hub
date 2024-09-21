@@ -1,4 +1,4 @@
-import { routesList } from "@/lib/routesList";
+import { apiRoutesList, routesList } from "@/lib/routesList";
 import Backlog from "@/models/Backlog";
 import {
   deleteBacklogById,
@@ -7,6 +7,7 @@ import {
 } from "@/services/backlogs";
 import { updateStat } from "@/services/user";
 import { cleanParamString, sendMsg } from "@/utils";
+import { BacklogDTOSchema } from "@/zod";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -34,12 +35,20 @@ export async function GET(
 }
 
 export async function PUT(request: NextRequest) {
-  const data = await request.json();
+  const { data, success, error } = BacklogDTOSchema.partial().safeParse(
+    await request.json(),
+  );
+  if (!success || !data._id)
+    return sendMsg.error(error ?? "Incorrect data", 400);
+
   try {
     const { success } = await isAuthorizedBacklogOwner(data._id, "edit");
     if (!success) return sendMsg.error("Not authorized", 403);
     const res = await updateBacklogById(data);
     if (!res.success) return sendMsg.error("Failed", 400);
+
+    revalidatePath(`${apiRoutesList.backlogs}/${data._id}`);
+
     return sendMsg.success();
   } catch (error) {
     throw new Error(`${error}`);

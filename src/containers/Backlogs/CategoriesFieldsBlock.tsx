@@ -1,6 +1,6 @@
+"use client";
 import ColorPallete from "@/components/Common/ColorPallete";
 import InputField from "@/components/Common/UI/Input/InputField";
-import React from "react";
 import { Controller, UseFieldArrayReturn } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 
@@ -33,16 +33,13 @@ const CategoriesFieldsBlock = ({
             name: "",
             color: "#0043CE",
             protected: false,
+            order: data.fields.length,
           })
         }
       >
         <>
           {data.fields.map((item, index) => (
             <li className="relative flex h-8 items-center gap-2 " key={item.id}>
-              <div className=" w-8 text-sm text-secondary-text">
-                {index + 1}
-              </div>
-
               <InputField
                 id={`category_${index}`}
                 helperText={

@@ -47,7 +47,7 @@ export async function PUT(
   const data = await request.json();
   try {
     const res = await authorizeAndProceed(itemId, () => putBacklogItem(data));
-    if (!res.success) return sendMsg.error(res.data);
+    if (!res.success) return sendMsg.error(res.message, res.status ?? 400);
     return sendMsg.success();
   } catch (error) {
     return sendMsg.error(error);
@@ -59,14 +59,14 @@ const authorizeAndProceed = async (
   action: (...args: unknown[]) => Promise<unknown>,
 ) => {
   const res = await getBacklogItemById(itemId);
-  if (!res.success)
-    return { success: false, data: sendMsg.error(res.errors, 400) };
+  if (!res.success) return { success: false, message: res.errors, status: 400 };
   const { success } = await isAuthorizedBacklogOwner(
     res.data.backlogId,
     "edit",
   );
   if (!success)
-    return { success: false, data: sendMsg.error("Not authorized", 401) };
+    return { success: false, message: "Not authorized", status: 401 };
+
   const data = await action();
   return { success: true, data: data };
 };

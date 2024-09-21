@@ -4,7 +4,7 @@ import ButtonBase from "./Common/UI/ButtonBase";
 
 const FieldsBlock = (props: FieldsBlockProps) => {
   return (
-    <section className=" flex flex-col">
+    <div className=" flex flex-col">
       {props.title && (
         <div className="border-b border-subtle-1">
           <Title variant={3} style={{ margin: ".5rem 0" }} title={props.title}>
@@ -23,7 +23,7 @@ const FieldsBlock = (props: FieldsBlockProps) => {
       <div className="flex-wrap  rounded  py-4">
         <ul className="grid  gap-4 overflow-auto">{props.children}</ul>
       </div>
-    </section>
+    </div>
   );
 };
 

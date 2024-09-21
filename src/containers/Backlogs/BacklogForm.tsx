@@ -22,6 +22,7 @@ const MODIFIERS_DEFAULT: ModifiersType = {
   useSteamSearch: false,
   useSteamImport: false,
   useTagsSystem: false,
+  useBoardType: false,
 };
 
 const BacklogForm = <T extends BacklogFormData>({
@@ -36,9 +37,10 @@ const BacklogForm = <T extends BacklogFormData>({
   const pathname = usePathname();
   const [showTemplate, setShowTemplate] = useState(false);
   const { isOpen: showTags, setOpen, setClose } = useToggle();
-  const [modifiers, setModifiers] = useState(
-    defaultValues.modifiers ?? MODIFIERS_DEFAULT,
-  );
+  const [modifiers, setModifiers] = useState({
+    ...MODIFIERS_DEFAULT,
+    ...defaultValues.modifiers,
+  });
 
   const {
     register,
@@ -73,18 +75,22 @@ const BacklogForm = <T extends BacklogFormData>({
   };
   const onSubmitInternal = (data: BacklogFormData) => {
     data.modifiers = modifiers;
+
     data.backlogTitle = data.backlogTitle.trim();
 
     if (!data.modifiers.useTagsSystem) {
       data.tags = undefined;
     }
-
+    data.categories.forEach((cat, indx) => {
+      cat.order = indx;
+    });
     onSubmit({ ...defaultValues, ...data });
   };
   const categoriesArray = useFieldArray({
     name: "categories",
     control,
   });
+
   const tagsArray = useFieldArray({
     name: "tags",
     control,
@@ -136,7 +142,7 @@ const BacklogForm = <T extends BacklogFormData>({
         </div>
 
         <div className="flex flex-col lg:flex-row lg:gap-4 ">
-          <div>
+          <section>
             {modifiers.useTagsSystem && (
               <Switcher
                 initial={showTags ? 1 : 0}
@@ -180,7 +186,7 @@ const BacklogForm = <T extends BacklogFormData>({
                 placeholder={"Category name"}
               />
             )}
-          </div>
+          </section>
 
           <UserFieldsBlock
             errors={errors.fields}

@@ -3,7 +3,6 @@
 import BacklogListData from "./BacklogListData";
 
 import { BacklogDTO } from "@/zodTypes";
-import { ModalProvider } from "@/providers/modalProvider";
 import useSWR from "swr";
 import { apiRoutesList } from "@/lib/routesList";
 import { fetcher } from "@/utils";
@@ -12,8 +11,7 @@ import BacklogItemsTable, {
   BacklogItemsTableToolbar,
 } from "./BacklogItemsTable";
 import { useSearchParams } from "next/navigation";
-import ItemChangeCategoryModal from "@/containers/Items/ItemChangeCategoryModal";
-import ItemFormModal from "@/containers/Items/ItemFormModal";
+import Pagination from "@/containers/Pagination";
 
 const itemsNotFound = (
   <>
@@ -45,18 +43,17 @@ const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
   const requstUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
   const searchTerm = searchParams.get("search");
   const { data, isLoading } = useSWR(requstUrl, fetcher);
-
   return (
     <>
-      <ModalProvider>
-        <BacklogItemsTableToolbar />
-        {isLoading ? (
-          <SkeletonDataTable />
-        ) : (
+      <BacklogItemsTableToolbar />
+      {isLoading ? (
+        <SkeletonDataTable />
+      ) : (
+        <>
           <BacklogItemsTable>
-            {data.length > 0 ? (
+            {data.totalCount > 0 ? (
               <BacklogListData
-                data={data}
+                data={data.items}
                 categories={backlog.categories}
                 tags={backlog.tags}
                 isOwner={isOwner}
@@ -67,10 +64,9 @@ const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
               itemsDoesntExist
             )}
           </BacklogItemsTable>
-        )}
-        <ItemFormModal backlog={backlog} />
-        <ItemChangeCategoryModal categories={backlog.categories} />
-      </ModalProvider>
+          <Pagination totalCount={data.totalCount} />
+        </>
+      )}
     </>
   );
 };

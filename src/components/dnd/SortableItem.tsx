@@ -6,12 +6,11 @@ import { SortableItemProps } from "@/types";
 
 const SortableItem = ({
   children,
-  containerId,
   disabled,
-  getIndex,
   id,
   index,
   handle,
+  handpleProps,
   title,
   style,
 }: SortableItemProps) => {
@@ -20,9 +19,6 @@ const SortableItem = ({
     setActivatorNodeRef,
     listeners,
     isDragging,
-    isSorting,
-    over,
-    overIndex,
     transform,
     transition,
   } = useSortable({
@@ -34,24 +30,18 @@ const SortableItem = ({
   return (
     <Item
       ref={disabled ? undefined : setNodeRef}
-      title={title}
       dragging={isDragging}
       handle={handle}
-      handleProps={handle ? { ref: setActivatorNodeRef } : undefined}
+      handleProps={
+        handle ? { ...handpleProps, ref: setActivatorNodeRef } : undefined
+      }
       index={index}
-      style={style({
-        index,
-        value: id,
-        isDragging,
-        isSorting,
-        overIndex: over ? getIndex(over.id) : overIndex,
-        containerId,
-      })}
+      style={style}
       transition={transition}
       transform={transform}
       listeners={listeners}
     >
-      {children}
+      <>{children}</>
     </Item>
   );
 };

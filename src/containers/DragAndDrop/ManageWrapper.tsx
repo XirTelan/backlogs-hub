@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Title from "@/components/Common/Title";
-import DnDMultList from "./DnDMultList";
+import BacklogDnDMultList from "../Backlogs/BacklogManageDnD";
 import Switcher from "@/components/Common/UI/Switcher";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";
 
@@ -53,8 +52,7 @@ const ManageWrapper = () => {
         <LoadingAnimation />
       ) : (
         items?.backlog && (
-          <DnDMultList
-            modifiers={[restrictToVerticalAxis]}
+          <BacklogDnDMultList
             view={isFullView ? "full" : "compact"}
             data={items.backlog}
           />

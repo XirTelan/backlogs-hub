@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoIosColorPalette } from "react-icons/io";
 import ButtonBase from "./UI/ButtonBase";
 import useOutsideClickReg from "@/hooks/useOutsideClickReg";
+import useToggle from "@/hooks/useToggle";
 
 const defaultColors = [
   "0043CE",
@@ -23,13 +24,15 @@ const ColorPallete = ({
   onChange: (value: string) => void;
 }) => {
   const [currentColor, setCurrentColor] = useState("#ffffff");
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setClose, setOpen } = useToggle();
   const ref = useRef(null);
-  useOutsideClickReg(isOpen, ref, () => setIsOpen(false));
+
+  useOutsideClickReg(isOpen, ref, setClose);
 
   useEffect(() => {
     setCurrentColor(value);
   }, [value]);
+
   return (
     <div>
       <ButtonBase
@@ -37,7 +40,7 @@ const ColorPallete = ({
         variant="secondary"
         size="small"
         style={{ backgroundColor: currentColor }}
-        onClick={() => setIsOpen((prevValue) => !prevValue)}
+        onClick={setOpen}
         icon={<IoIosColorPalette />}
       />
 
@@ -51,7 +54,7 @@ const ColorPallete = ({
                 style={{ backgroundColor: `#${color}` }}
                 onClick={() => {
                   onChange(`#${color}`);
-                  setIsOpen(false);
+                  setClose();
                 }}
               ></div>
             ))}

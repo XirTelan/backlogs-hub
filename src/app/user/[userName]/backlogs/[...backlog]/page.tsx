@@ -6,6 +6,7 @@ import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
 import FilterBlock from "@/containers/FilterBlock";
 import ItemChangeCategoryModal from "@/containers/Items/ItemChangeCategoryModal";
 import ItemFormModal from "@/containers/Items/ItemFormModal";
+import ItemInfoModal from "@/containers/Items/ItemInfoModal";
 import { routesList } from "@/lib/routesList";
 import { ModalProvider } from "@/providers/modalProvider";
 import { getUserBacklogBySlug } from "@/services/backlogs";
@@ -65,6 +66,7 @@ export default async function Backlog({
           )}
         </main>
         <ItemFormModal backlog={data} />
+        <ItemInfoModal />
         <ItemChangeCategoryModal categories={data.categories} />
       </ModalProvider>
     </div>

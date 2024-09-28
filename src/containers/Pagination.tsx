@@ -6,11 +6,10 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Pagination = ({ totalCount }: { totalCount: number }) => {
   const { changeParams, searchParams } = useChangeSearchParams();
-  
+
   const pageSize = parseInt(searchParams.get("pageSize") ?? "50");
   const page = parseInt(searchParams.get("page") ?? "1");
   const pageCount = Math.ceil(totalCount / pageSize);
-
 
   const onPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     changeParams("page", e.target.value);
@@ -32,7 +31,7 @@ const Pagination = ({ totalCount }: { totalCount: number }) => {
   );
 
   return (
-    <div className="mt-2 flex flex-1 items-center border-t  border-border bg-layer-1   text-sm *:h-10 ">
+    <div className="my-2 flex flex-1 items-center border-t  border-border bg-layer-1   text-sm *:h-10 ">
       <div className=" hidden  border-e  border-border ps-4 text-primary-text md:flex">
         <span className="h-auto content-center whitespace-nowrap  text-center ">
           {" "}
@@ -53,7 +52,7 @@ const Pagination = ({ totalCount }: { totalCount: number }) => {
       </div>
       <div className="flex *:content-center">
         <Select
-          defaultValue={page}
+          value={page}
           variant="inline"
           options={selectOptions}
           onChange={onPageChange}

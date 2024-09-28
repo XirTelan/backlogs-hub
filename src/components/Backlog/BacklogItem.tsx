@@ -25,7 +25,7 @@ const renderTimeField: (data: TimeStamp) => React.ReactElement = ({
   title,
 }) => {
   return (
-    <div title={title} className="flex items-center">
+    <div key={title} title={title} className="flex items-center">
       {icon}
 
       {typeof value === "string"
@@ -65,7 +65,7 @@ const BacklogItem = ({
             <div className=" text-secondary-text">{data.category}</div>
           </div>
         )}
-        <div className=" *:py-4 *:border-t *:border-border-1 ">
+        <div className=" *:border-t *:border-border-1 *:py-4 ">
           {data.userFields.map((field, indx) => {
             return withWrap(field, indx, renderFieldValue);
           })}

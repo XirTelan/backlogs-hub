@@ -57,6 +57,7 @@ const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
             <InputField
               layer={layer}
               placeholder="HH"
+              variant="small"
               value={time.hh}
               onChange={(e) => onChange("hh", e.currentTarget.valueAsNumber)}
               min={0}
@@ -66,6 +67,7 @@ const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
               layer={layer}
               placeholder="MM"
               value={time.mm}
+              variant="small"
               onChange={(e) => onChange("mm", e.currentTarget.valueAsNumber)}
               type="number"
               min={0}
@@ -75,6 +77,7 @@ const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
             <InputField
               layer={layer}
               placeholder="SS"
+              variant="small"
               value={time.ss}
               onChange={(e) => onChange("ss", e.currentTarget.valueAsNumber)}
               type="number"
@@ -86,6 +89,7 @@ const ProgressTimer = forwardRef<HTMLDivElement, ProgressTimerProps>(
             <ButtonBase
               type="button"
               variant="secondary"
+              size="small"
               icon={<RxLapTimer />}
               onClick={() => setIsOpen((prev) => !prev)}
             />

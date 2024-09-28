@@ -27,7 +27,7 @@ const ButtonBase = ({
         )}
         {icon && (
           <div
-            className={`${btnStyleVariants.sizes[size]} ${text && "ms-auto"}  flex min-h-8 items-center justify-center p-1 `}
+            className={`${btnStyleVariants.sizes[size]} ${text && "ms-auto"}  flex min-h-8 items-center justify-center p-1 pointer-events-none `}
           >
             {icon}
           </div>

@@ -39,7 +39,7 @@ const Timer = ({
       <p>Timer</p>
       <div className=" flex items-center">
         <div
-          className={`flex h-12 w-full place-content-center bg-layer-2 p-2 text-xl ${isPause ? "text-white" : " text-primary-link "}`}
+          className={`flex h-10 w-full place-content-center bg-layer-2 p-2 text-xl ${isPause ? "text-white" : " text-primary-link "}`}
         >
           {formated}
         </div>
@@ -47,6 +47,7 @@ const Timer = ({
           <ButtonBase
             type="button"
             variant="secondary"
+            size="medium"
             onClick={close}
             icon={<CgClose />}
           />
@@ -56,11 +57,13 @@ const Timer = ({
         <ButtonBase
           type="button"
           variant="tertiary"
+          size="medium"
           onClick={reset}
           text={"Reset"}
         />
         <ButtonBase
           type="button"
+          size="medium"
           variant="tertiary"
           onClick={() => setIsPause((prev) => !prev)}
           text={isPause ? "Start" : "Pause"}
@@ -68,6 +71,7 @@ const Timer = ({
 
         <ButtonBase
           type="button"
+          size="medium"
           variant="accent"
           onClick={handleSubmit}
           text={"Add"}

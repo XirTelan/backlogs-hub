@@ -33,12 +33,14 @@ export const getBacklogItemById = async (
 export const getBacklogItemsByQuery = async ({
   backlogId,
   categories,
+  tags,
   search,
   pagination,
   sortOptions = { order: "asc", sort: "title" },
 }: {
   backlogId: string;
   categories?: string[] | null;
+  tags?: string[] | null;
   search?: string | null;
   pagination?: {
     page: number;
@@ -60,6 +62,10 @@ export const getBacklogItemsByQuery = async ({
     if (categories && categories.length > 0) {
       optRegexp = categories.map((value) => new RegExp("^" + value + "$", "i"));
       stage.match({ category: { $in: optRegexp } });
+    }
+
+    if (tags && tags.length > 0) {
+      stage.match({ tags: { $in: tags } });
     }
 
     if (search) {
@@ -201,19 +207,21 @@ export const getBacklogItemsData = async (
     order: SortOrder;
     page?: string | null;
     pageSize?: string | null;
+    tags?: string[] | null;
   },
   backlogId: string,
 ): Promise<ResponseData<{ totalCount: number; items: BacklogItemDTO[] }>> => {
-  const { term, sort, order, page, pageSize } = searchOptions;
+  const { term, tags, sort, order, page, pageSize } = searchOptions;
   let backlogData;
   try {
     backlogData = await getBacklogItemsByQuery({
-      backlogId: backlogId,
-      categories: categories,
+      backlogId,
+      categories,
+      tags,
       search: term ? term : null,
       sortOptions: {
-        sort: sort,
-        order: order,
+        sort,
+        order,
       },
       pagination: page
         ? {

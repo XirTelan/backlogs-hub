@@ -175,8 +175,16 @@ export const StatsSchema = z.object({
 export const ConfigSchema = z.object({
   profileVisibility: z.enum(["public", "private"]),
   hideFolderNames: z.boolean().default(false),
-  showEmptyFolders: z.boolean(),
+  showEmptyFolders: z.boolean().default(true),
   canChangeUserName: z.boolean().default(false),
+  pagination: z.enum(["bottom", "top", "both"]).default("bottom"),
+  hideAsideNavBacklogs: z.boolean().default(false),
+  categoryDesignation: z
+    .enum(["color", "colorMark", "explicit", "none"])
+    .default("color"),
+  categoryBlockView: z
+    .enum(["buttons", "dropDown", "dynamic"])
+    .default("buttons"),
 });
 
 export const UserBase = z.object({

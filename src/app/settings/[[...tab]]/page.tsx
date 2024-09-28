@@ -30,7 +30,7 @@ const Page = async ({ params }: { params: { tab: [TabsType] } }) => {
       <Session
         userData={{
           user: {
-            id: res.data._id || "",
+            _id: res.data._id || "",
             username: res.data.username || "",
           },
         }}

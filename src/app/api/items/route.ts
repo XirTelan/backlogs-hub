@@ -36,6 +36,7 @@ export async function GET(request: NextRequest) {
     order = 1;
   }
   const searchOptions = {
+    tags: searchParams.get("tags")?.split("-"),
     term: searchParams.get("search"),
     sort: availableSortOptions[
       searchParams.get("sort")?.toLocaleLowerCase() ?? "title"
@@ -44,7 +45,6 @@ export async function GET(request: NextRequest) {
     page: searchParams.get("page"),
     pageSize: searchParams.get("pageSize"),
   };
-
   try {
     let res;
     if (backlog.modifiers.useBoardType) {

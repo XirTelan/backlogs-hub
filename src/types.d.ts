@@ -5,6 +5,7 @@ import {
   Field,
   UserDTO,
   DndData,
+  ConfigType,
 } from "./zodTypes";
 import { btnStyleVariants } from "./lib/styles";
 import React, { ComponentPropsWithRef, ComponentType, ReactNode } from "react";
@@ -207,4 +208,8 @@ export type ModalContextProps = {
   toggle: () => void;
   setData: Dispatch<SetStateAction<unknown>>;
   setKey: Dispatch<SetStateAction<string>>;
+};
+
+export type UserPrefsProps = {
+  userPrefs: ConfigType;
 };

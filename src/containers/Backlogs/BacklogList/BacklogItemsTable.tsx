@@ -26,7 +26,6 @@ const BacklogItemsTable = ({
   children: React.ReactNode | React.ReactNode[];
 }) => {
   const headers = [
-    { id: "accordion", title: "", width: "49px" },
     { id: "title", title: "Title" },
     {
       id: "actions",

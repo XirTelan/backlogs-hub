@@ -6,6 +6,7 @@ import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import ItemFastRename from "@/containers/Items/ItemsFastRename";
 import BacklogItemActions from "./BacklogItemActions";
 import { ItemInfoModalOpen } from "@/containers/Items/ItemInfoModal";
+import { useSession } from "@/providers/sessionProvider";
 
 const BacklogItemTr = ({
   item,
@@ -14,11 +15,14 @@ const BacklogItemTr = ({
   tags,
   onDelete,
 }: BacklogItemTrProps) => {
+  const { user } = useSession();
+  const categoryDesignation = user?.config?.categoryDesignation ?? "color";
+
   return (
     <>
       <tr className=" border-b border-field-2   ">
-        <td colSpan={2} className={`px-4`}>
-          <div className="flex items-center justify-between">
+        <td className={`px-4`}>
+          <div className="relative flex items-center justify-between">
             <ItemFastRename
               type="button"
               item={item}
@@ -31,16 +35,33 @@ const BacklogItemTr = ({
                     render={(handle) => (
                       <button
                         className="hover:underline "
-                        style={{ color: color }}
+                        style={{
+                          color:
+                            categoryDesignation === "color" ? color : "#F4F4F4",
+                        }}
                         onClick={handle}
                       >
-                        <p className=" text-left ">{item.title}</p>
+                        <p className=" text-left">
+                          <span>{item.title}</span>
+
+                          {categoryDesignation === "explicit" && (
+                            <span className=" ms-2 text-secondary-text ">
+                              {`| ${item.category}`}
+                            </span>
+                          )}
+                        </p>
                       </button>
                     )}
                   />
                 ),
               }}
             />
+            {categoryDesignation === "colorMark" && (
+              <div
+                className="absolute -left-2 h-full w-1"
+                style={{ background: `${color}` }}
+              ></div>
+            )}
 
             {tags && (
               <div className="flex gap-2 ">

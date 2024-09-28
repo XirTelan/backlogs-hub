@@ -2,7 +2,6 @@
 
 import BacklogListData from "./BacklogListData";
 
-import { BacklogDTO } from "@/zodTypes";
 import useSWR from "swr";
 import { apiRoutesList } from "@/lib/routesList";
 import { fetcher } from "@/utils";
@@ -12,6 +11,7 @@ import BacklogItemsTable, {
 } from "./BacklogItemsTable";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/containers/Pagination";
+import { useSession } from "@/providers/sessionProvider";
 
 const itemsNotFound = (
   <>
@@ -37,12 +37,16 @@ const itemsDoesntExist = (
   </>
 );
 
-const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
+const Backloglist = ({ id, isOwner }: BackloglistProps) => {
   const searchParams = new URLSearchParams(useSearchParams());
   searchParams.append("backlog", id);
+  const { user } = useSession();
+  const pagination = user?.config?.pagination ?? "bottom";
   const requstUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
-  const searchTerm = searchParams.get("search");
+  const isSearching =
+    searchParams.get("search") || searchParams.get("categories");
   const { data, isLoading } = useSWR(requstUrl, fetcher);
+
   return (
     <>
       <BacklogItemsTableToolbar />
@@ -50,21 +54,22 @@ const Backloglist = ({ id, backlog, isOwner }: BackloglistProps) => {
         <SkeletonDataTable />
       ) : (
         <>
+          {["both", "top"].includes(pagination) && (
+            <Pagination totalCount={data.totalCount} />
+          )}
+
           <BacklogItemsTable>
             {data.totalCount > 0 ? (
-              <BacklogListData
-                data={data.items}
-                categories={backlog.categories}
-                tags={backlog.tags}
-                isOwner={isOwner}
-              />
-            ) : searchTerm ? (
+              <BacklogListData data={data.items} isOwner={isOwner} />
+            ) : isSearching ? (
               itemsNotFound
             ) : (
               itemsDoesntExist
             )}
           </BacklogItemsTable>
-          <Pagination totalCount={data.totalCount} />
+          {["both", "bottom"].includes(pagination) && (
+            <Pagination totalCount={data.totalCount} />
+          )}
         </>
       )}
     </>
@@ -74,6 +79,5 @@ export default Backloglist;
 
 interface BackloglistProps {
   id: string;
-  backlog: BacklogDTO;
   isOwner: boolean;
 }

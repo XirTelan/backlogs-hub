@@ -1,29 +1,33 @@
 "use client";
 import { toastCustom } from "@/lib/toast";
-import { BacklogDTO, BacklogItemDTO } from "@/zodTypes";
+import { BacklogItemDTO } from "@/zodTypes";
 import BacklogItemTr from "./BacklogItemTr";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import Modal from "@/components/Common/Modal";
 import Title from "@/components/Common/Title";
 import useToggle from "@/hooks/useToggle";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
+import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
 
-const BacklogListData = ({ data, isOwner, categories, tags }: Props) => {
+const BacklogListData = ({ data, isOwner }: Props) => {
   const { mutate } = useSWRConfig();
   const { isOpen, setOpen, setClose } = useToggle();
   const [itemId, setItemId] = useState<string>("");
 
+  const { backlog } = useContext(BacklogInfoContext);
+
   const categoriesMap = useMemo(
     () =>
-      new Map(categories.map((category) => [category.name, category.color])),
-    [categories],
+      new Map(
+        backlog?.categories.map((category) => [category.name, category.color]),
+      ),
+    [backlog?.categories],
   );
   const tagsMap = useMemo(() => {
-    if (!tags) return undefined;
-    else
-      return new Map(tags?.map((category) => [category.name, category.color]));
-  }, [tags]);
+    if (!backlog?.tags) return undefined;
+    else return new Map(backlog.tags?.map((tag) => [tag.name, tag.color]));
+  }, [backlog?.tags]);
 
   const onDelete = async () => {
     if (!itemId) return;
@@ -105,6 +109,4 @@ export default BacklogListData;
 type Props = {
   data: BacklogItemDTO[];
   isOwner: boolean;
-  categories: BacklogDTO["categories"];
-  tags?: BacklogDTO["tags"];
 };

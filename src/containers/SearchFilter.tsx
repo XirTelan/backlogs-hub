@@ -18,6 +18,9 @@ const SearchFilter = () => {
     () => backlog?.tags?.map((tag) => tag.name) ?? [],
     [backlog],
   );
+  const isShowTagsFilter =
+    backlog?.modifiers.useTagsSystem && backlogTags?.length > 0;
+    
   const [order, setOrder] = useState(searchParams.get("order") ?? ORDER[0]);
   const [sort, setSort] = useState(searchParams.get("sort") ?? SORT[0]);
   const tagsInitial = searchParams.get("tags")?.split("-") ?? [];
@@ -50,13 +53,16 @@ const SearchFilter = () => {
     <div className="bg-layer-1">
       <SidePanel keepOpen borders={false} position="none" icon={<FiFilter />}>
         <div className="flex flex-col gap-2 px-2">
-          <DropDown
-            id={""}
-            label={"Tags"}
-            activeItems={tagsInitial}
-            options={backlogTags}
-            onChange={changeTags}
-          />
+          {isShowTagsFilter && (
+            <DropDown
+              id={""}
+              label={"Tags"}
+              activeItems={tagsInitial}
+              options={backlogTags}
+              onChange={changeTags}
+            />
+          )}
+
           <Select
             label="Sort by"
             value={sort}

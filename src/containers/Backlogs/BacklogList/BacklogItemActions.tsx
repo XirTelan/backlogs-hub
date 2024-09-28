@@ -2,7 +2,7 @@ import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Divider from "@/components/Common/UI/Divider";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import SidePanel from "@/components/SidePanel";
-import { ItemChangeCategoryOpenModal } from "@/containers/Items/ItemChangeCategoryModal";
+import ItemChangeCategory from "@/containers/Items/ItemChangeCategory";
 import { BacklogItemDTO } from "@/zodTypes";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -24,11 +24,8 @@ const BacklogItemActions = ({
 
   return (
     <SidePanel position="none" borders={false} icon={<BsThreeDotsVertical />}>
+      <ItemChangeCategory backlogItem={item} />
 
-      <ItemChangeCategoryOpenModal
-        data={item}
-        btnOptions={{ hideText: false }}
-      />
       <LinkWithBtnStyle
         title={"Details"}
         href={`/items/${item._id}`}

@@ -4,9 +4,9 @@ import React, { Suspense, useContext } from "react";
 import { IoAdd } from "react-icons/io5";
 import { CreateItemForm } from "./CreateItemForm";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
-import { BacklogDTO } from "@/zodTypes";
 import Title from "@/components/Common/Title";
 import { ModalContext } from "@/providers/modalProvider";
+import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
 
 const ModalProvider = createModal(ModalContext, "itemForm", {
   openerButtton: {
@@ -18,8 +18,12 @@ const ModalProvider = createModal(ModalContext, "itemForm", {
 
 export const ItemFormModalOpen = ModalProvider.Opener;
 
-const ItemFormModal = ({ backlog }: { backlog: BacklogDTO }) => {
+const ItemFormModal = () => {
   const cntx = useContext(ModalContext);
+  const backlogInfo = useContext(BacklogInfoContext);
+
+  if (!backlogInfo.backlog) return;
+
   return (
     <>
       <ModalProvider.WithModal>
@@ -27,7 +31,7 @@ const ItemFormModal = ({ backlog }: { backlog: BacklogDTO }) => {
           <div className="min-h-[90vh] min-w-[90vw] bg-background p-4 text-primary-text ">
             <Title variant={2} title={"Create"} />
             <CreateItemForm
-              backlogInfo={backlog}
+              backlogInfo={backlogInfo.backlog}
               options={{ btnCancel: cntx.setClose }}
             />
           </div>

@@ -12,16 +12,18 @@ const DropDown = ({
   id,
   label,
   options,
-  onChange,
+  activeItems,
   children,
+  onChange,
 }: {
   id: string;
   label: string;
   options?: string[];
   onChange?: (value: string[]) => void;
+  activeItems?: string[];
   children?: React.ReactNode;
 }) => {
-  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<Set<string>>(new Set(activeItems));
   const [search, setSearch] = useState("");
   const [results, setResults] = useState(options ?? []);
   const { isOpen, setOpen, setClose, toggle } = useToggle();
@@ -48,6 +50,7 @@ const DropDown = ({
 
   const clearTags = () => {
     setSelected(new Set());
+    setClose();
   };
 
   useEffect(() => {
@@ -63,7 +66,11 @@ const DropDown = ({
   }, [onChange, selected]);
 
   return (
-    <div className="max-w-80">
+    <div
+      style={{
+        width: `min(300px,100%)`,
+      }}
+    >
       <label htmlFor={`dropdown_${id}-input`}>{label}</label>
       <div
         className={`${styles.container} relative  bg-layer-1   `}
@@ -72,47 +79,57 @@ const DropDown = ({
         ref={containerRef}
         onBlur={clearSearch}
       >
-        <div className="flex items-center">
-          {selected.size > 0 && (
-            <div className="me-2 ms-4 flex h-6 items-center rounded-full  bg-primary-text ">
-              <span className=" ps-2 text-xs text-neutral-900">
-                {selected.size}
-              </span>
-              <button
-                type="button"
-                className=" flex h-6 w-6 items-center justify-center rounded-full text-neutral-900 hover:bg-neutral-300"
-                onClick={clearTags}
-              >
+        <div className="flex  items-center">
+          <div
+            className={`${selected.size === 0 ? "hidden" : "flex"} me-2 ms-4 flex h-6 items-center rounded-full  bg-primary-text `}
+          >
+            <span className=" ps-2 text-xs text-neutral-900">
+              {selected.size}
+            </span>
+            <button
+              type="button"
+              className=" flex h-6 w-6 items-center justify-center rounded-full text-neutral-900 hover:bg-neutral-300"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={clearTags}
+            >
+              <div className=" pointer-events-none ">
                 <IoIosClose />
-              </button>
-            </div>
-          )}
+              </div>
+            </button>
+          </div>
           <input
             id={`dropdown_${id}-input`}
             placeholder="Search..."
             value={search}
             onChange={handleSearchChange}
             onClick={setOpen}
-            className={`${styles["drop-input"]}  ${inputStyleVariants.layers[1]} ${inputStyleVariants.sizes["medium"]} flex min-w-20 flex-1  text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent `}
+            className={`${styles["drop-input"]}  ${inputStyleVariants.layers[1]} ${inputStyleVariants.sizes["medium"]}  flex min-w-0 flex-1 grow  pe-10  text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent `}
+            style={{
+              paddingLeft: selected.size > 0 ? 0 : 16,
+            }}
           />
           {search && (
+            <div className="absolute right-8  border-e border-field-3">
+              <ButtonBase
+                type="button"
+                variant="ghost"
+                size="small"
+                icon={<IoClose />}
+                style={{ width: "auto" }}
+                onClick={clearSearch}
+              />
+            </div>
+          )}
+          <div className="absolute right-0">
             <ButtonBase
               type="button"
               variant="ghost"
-              size="medium"
-              icon={<IoClose />}
+              size="small"
+              icon={isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
               style={{ width: "auto" }}
-              onClick={clearSearch}
+              onClick={toggle}
             />
-          )}
-          <ButtonBase
-            type="button"
-            variant="ghost"
-            size="medium"
-            icon={isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
-            style={{ width: "auto" }}
-            onClick={toggle}
-          />
+          </div>
         </div>
         {isOpen && (
           <div

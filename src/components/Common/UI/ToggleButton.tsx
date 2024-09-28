@@ -1,14 +1,12 @@
 import React from "react";
 import ButtonBase from "./ButtonBase";
+import { ButtonBaseProps } from "@/types";
 
 type ToggleButtonProps = {
   title: string;
   activeColor?: string;
   isActive: boolean;
-} & React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
+} & ButtonBaseProps;
 
 const ToggleButton = ({
   title,

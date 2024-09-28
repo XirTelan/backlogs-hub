@@ -25,16 +25,18 @@ const useChangeSearchParams = () => {
 
   const changeParams = useCallback(
     (key: string | string[], newValue: string | string[]) => {
-      const current = new URLSearchParams(Array.from(searchParams.entries()));
+      const currentSearch = searchParams.toString();
+      const newParams = new URLSearchParams(Array.from(searchParams.entries()));
 
       if (Array.isArray(key) && Array.isArray(newValue)) {
-        updateKeys(key, newValue, current);
+        updateKeys(key, newValue, newParams);
       } else if (typeof key === "string" && typeof newValue === "string") {
-        updateKeys([key], [newValue], current);
+        updateKeys([key], [newValue], newParams);
       }
 
-      const search = current.toString();
-      const query = search ? `?${search}` : "";
+      const newSearch = newParams.toString();
+      if (newSearch === currentSearch) return;
+      const query = newSearch ? `?${newSearch}` : "";
       router.push(`${pathname}${query}`, { scroll: false });
     },
     [pathname, router, searchParams, updateKeys],

@@ -7,6 +7,10 @@ const userConfigSchema = new mongoose.Schema<ConfigType>(
     hideFolderNames: { type: Boolean, default: false },
     showEmptyFolders: { type: Boolean, default: true },
     canChangeUserName: { type: Boolean, default: false },
+    pagination: { type: String, default: "bottom" },
+    hideAsideNavBacklogs: { type: Boolean, default: false },
+    categoryDesignation: { type: String, default: "color" },
+    categoryBlockView: { type: String, default: "buttons" },
   },
   { _id: false },
 );

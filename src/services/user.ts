@@ -22,6 +22,10 @@ const DEFAULT_CONFIG: ConfigType = {
   hideFolderNames: false,
   showEmptyFolders: true,
   canChangeUserName: false,
+  pagination: "bottom",
+  hideAsideNavBacklogs: false,
+  categoryDesignation: "color",
+  categoryBlockView: "dropDown",
 };
 type UserDataTypes = keyof typeof userDataTypes;
 
@@ -40,19 +44,20 @@ export async function getUserData(
       .lean();
     if (!user) return { success: false };
     user._id = user._id.toString();
+    if (select !== "all") user.accounts = [];
     return { success: true, data: user };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
 }
 
-export async function getCurrentUserData(): Promise<
-  ResponseData<Partial<UserDTO>>
-> {
+export async function getCurrentUserData(
+  type: UserDataTypes = "all",
+): Promise<ResponseData<Partial<UserDTO>>> {
   try {
     const user = await getCurrentUserInfo();
     if (!user) return { success: false };
-    return await getUserData(user.username, "all");
+    return await getUserData(user.username, type);
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -186,6 +191,7 @@ export async function updateUserInfo(
     revalidatePath("/");
     return { success: true };
   } catch (error) {
+    console.error(error);
     return { error: error, success: false };
   }
 }

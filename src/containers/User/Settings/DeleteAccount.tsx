@@ -9,6 +9,7 @@ const DeleteAccount = () => {
   const { user } = useSession();
   const router = useRouter();
   const handleSubmit = async () => {
+    if (!user?.username) return;
     const res = await fetch(`/api/users/${user?.username}/`, {
       method: "DELETE",
     });

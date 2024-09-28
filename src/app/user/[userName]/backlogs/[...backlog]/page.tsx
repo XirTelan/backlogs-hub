@@ -3,12 +3,10 @@ import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
 import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
+import BacklogModalsWrapper from "@/containers/Backlogs/BacklogModalsWrapper";
 import FilterBlock from "@/containers/FilterBlock";
-import ItemChangeCategoryModal from "@/containers/Items/ItemChangeCategoryModal";
-import ItemFormModal from "@/containers/Items/ItemFormModal";
-import ItemInfoModal from "@/containers/Items/ItemInfoModal";
 import { routesList } from "@/lib/routesList";
-import { ModalProvider } from "@/providers/modalProvider";
+import { BacklogInfoProvider } from "@/providers/backlogInfoProvider";
 import { getUserBacklogBySlug } from "@/services/backlogs";
 import dynamic from "next/dynamic";
 import React from "react";
@@ -30,45 +28,45 @@ export default async function Backlog({
 
   return (
     <div className="flex flex-col">
-      <ModalProvider>
-        <TopTitle title={data.backlogTitle}>
-          <>
-            {isOwner && (
-              <LinkWithBtnStyle
-                href={`${routesList.backlogEdit}/${data._id}`}
-                variant="tertiary"
-                icon={<MdEdit />}
-              >
-                Edit backlog
-              </LinkWithBtnStyle>
-            )}
-          </>
-        </TopTitle>
-        <main className="container self-center">
+      <TopTitle title={data.backlogTitle}>
+        <>
+          {isOwner && (
+            <LinkWithBtnStyle
+              href={`${routesList.backlogEdit}/${data._id}`}
+              variant="tertiary"
+              icon={<MdEdit />}
+            >
+              Edit backlog
+            </LinkWithBtnStyle>
+          )}
+        </>
+      </TopTitle>
+      <main className="container self-center">
+        <BacklogInfoProvider data={data}>
           {data.modifiers.useBoardType ? (
-            <Board backlogId={data._id} />
+            <BacklogModalsWrapper>
+              <Board backlogId={data._id} />
+            </BacklogModalsWrapper>
           ) : (
             <>
-              <section className="me-auto flex justify-center  rounded px-4 py-4 lg:m-0 lg:justify-start">
+              <section className="me-auto flex justify-center  rounded px-4 lg:m-0 lg:justify-start">
                 <FilterBlock
                   backlogSlug={data.slug}
                   backlogCategories={data.categories}
                 />
               </section>
-              <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
-                <Backloglist
-                  isOwner={isOwner}
-                  backlog={data}
-                  id={data._id.toString()}
-                />
-              </section>
+              <BacklogModalsWrapper>
+                <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
+                  <Backloglist
+                    isOwner={isOwner}
+                    id={data._id.toString()}
+                  />
+                </section>
+              </BacklogModalsWrapper>
             </>
           )}
-        </main>
-        <ItemFormModal backlog={data} />
-        <ItemInfoModal />
-        <ItemChangeCategoryModal categories={data.categories} />
-      </ModalProvider>
+        </BacklogInfoProvider>
+      </main>
     </div>
   );
 }

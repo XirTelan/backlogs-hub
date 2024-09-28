@@ -8,6 +8,7 @@ export const routesList = {
   settings: "/settings",
   register: "/register",
   faq: "/faq",
+  faqGeneral: "/faq/general",
   faqFields: "/faq/fields",
   faqModifiers: "/faq/modifiers",
   updates: "/updates",

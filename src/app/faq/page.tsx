@@ -11,14 +11,19 @@ const Page = () => {
         <Divider />
         <ul>
           <li>
-            <LinkBase href={routesList.faqFields}>Backlkog Fileds </LinkBase>
+            <LinkBase href={routesList.faqGeneral}>General</LinkBase>
+            <p>Genaral information</p>
+            <Divider />
           </li>
-          <p>Information about all available field types</p>
-          <Divider />
+          <li>
+            <LinkBase href={routesList.faqFields}>Backlkog Fileds </LinkBase>
+            <p>Information about all available field types</p>
+            <Divider />
+          </li>
           <li>
             <LinkBase href={routesList.faqModifiers}>Modifiers</LinkBase>
+            <p>Information about all available modifiers</p>
           </li>
-          <p>Information about all available modifiers</p>
         </ul>
       </div>
     </div>

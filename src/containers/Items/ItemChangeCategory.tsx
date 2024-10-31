@@ -12,8 +12,10 @@ import { IoMdSwap } from "react-icons/io";
 
 const ItemChangeCategory = ({
   backlogItem,
+  customBtn,
 }: {
   backlogItem: BacklogItemDTO;
+  customBtn?: (toggle: () => void, isOpen: boolean) => React.JSX.Element;
 }) => {
   const { mutate } = useSWRConfig();
 
@@ -75,7 +77,6 @@ const ItemChangeCategory = ({
       />
     );
   };
-
   return (
     <>
       <SidePanel
@@ -83,7 +84,7 @@ const ItemChangeCategory = ({
         onHover
         position="none"
         icon={undefined}
-        renderCustomBtn={renderTitle}
+        renderCustomBtn={customBtn ?? renderTitle}
       >
         <ul>
           {backlog.categories.map((category) => {

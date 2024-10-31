@@ -12,7 +12,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "shared.akamai.steamstatic.com",
+        hostname: "**.steamstatic.com",
         port: "",
         pathname: "/**",
       },

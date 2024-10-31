@@ -75,10 +75,10 @@ const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
                 {!loading &&
                   results &&
                   results.length > 0 &&
-                  results.map((item) => {
+                  results.map((item, indx) => {
                     return (
                       <div
-                        key={item.app_id}
+                        key={`${item.app_id}_${indx}`}
                         className="flex  w-full flex-col items-center  bg-layer-1 p-2 md:flex-row"
                       >
                         <div className="relative h-[45px] w-[120px] shrink-0 md:h-auto">

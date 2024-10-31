@@ -28,7 +28,7 @@ const ItemFormModal = () => {
     <>
       <ModalProvider.WithModal>
         <Suspense fallback={<LoadingAnimation />}>
-          <div className="min-h-[90vh] min-w-[90vw] bg-background p-4 text-primary-text ">
+          <div className="max-h-[90vh] overflow-auto min-w-[90vw] bg-background p-4 text-primary-text ">
             <Title variant={2} title={"Create"} />
             <CreateItemForm
               backlogInfo={backlogInfo.backlog}

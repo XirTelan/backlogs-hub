@@ -11,6 +11,12 @@ import { fetcher } from "@/utils";
 import useSWR from "swr";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { MdClose } from "react-icons/md";
+import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
+import ItemsForm from "./ItemsForm";
+import Title from "@/components/Common/Title";
+import ItemChangeCategory from "./ItemChangeCategory";
+import { IoMdSwap } from "react-icons/io";
+import useToggle from "@/hooks/useToggle";
 
 const ModalProvider = createModal(ModalContext, "ItemInfo", {
   openerButtton: {
@@ -24,13 +30,15 @@ export const ItemInfoModalOpen = ModalProvider.Opener;
 
 const ItemInfoModal = () => {
   const cntx = useContext(ModalContext);
+  const { backlog } = useContext(BacklogInfoContext);
+  const { isOpen: isEdit, setClose, setOpen } = useToggle(false);
   const url = `${apiRoutesList.items}/${cntx.data}`;
   const { data, isLoading } = useSWR(cntx.data ? url : null, fetcher);
 
   return (
     <>
       <ModalProvider.WithModal>
-        <div className="relative  min-h-40  min-w-[90vw] bg-background p-4 text-primary-text ">
+        <div className="relative  min-h-40  min-w-[90vw] max-w-[98vw] bg-background p-4 text-primary-text ">
           {isLoading ? (
             <div className="absolute inset-0 m-auto flex items-center justify-center">
               <LoadingAnimation />
@@ -38,12 +46,12 @@ const ItemInfoModal = () => {
           ) : (
             data?.status === "success" && (
               <>
-                <div className="flex justify-between">
+                <div className="flex h-12 items-center justify-between">
                   <ItemFastRename
                     textProps={{
                       tag: "h2",
                       className:
-                        "w-full text-2xl font-bold mb-2 hover:bg-layer-1 p-2",
+                        "w-full text-3xl font-bold hover:bg-layer-1 p-2",
                     }}
                     inputProps={{
                       variant: "large",
@@ -51,19 +59,77 @@ const ItemInfoModal = () => {
                     item={data.data}
                     color={""}
                   />
-                  <ButtonBase
-                    variant="ghost"
-                    size="medium"
-                    icon={<MdClose />}
-                    onClick={cntx.setClose}
-                    style={{
-                      width: "auto",
-                    }}
-                  />
+                  <div className="flex items-center">
+                    <ButtonBase
+                      variant="secondary"
+                      icon={<MdClose />}
+                      onClick={cntx.setClose}
+                      style={{
+                        width: "auto",
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="p-2">
-                  <BacklogItem data={data.data} />
+                <div className=" my-2 flex  items-center  gap-2">
+                  <div>Category:</div>
+
+                  <div className=" text-secondary-text">
+                    <ItemChangeCategory
+                      backlogItem={data.data}
+                      customBtn={(toggle: () => void, isOpen: boolean) => {
+                        return (
+                          <ButtonBase
+                            onClick={toggle}
+                            aria-expanded={isOpen}
+                            text={`${data.data.category}`}
+                            variant="ghost"
+                            size="small"
+                            icon={<IoMdSwap />}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
+                {data.data.userFields?.length > 0 && (
+                  <div className="mt-2">
+                    {!isEdit && (
+                      <div className="flex justify-between">
+                        <Title variant={3} title={"Fields"} />
+                        <div className="w-1/5 ">
+                          <ButtonBase
+                            size="small"
+                            variant="secondary"
+                            text="Edit"
+                            onClick={setOpen}
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {isEdit ? (
+                      <ItemsForm
+                        backlog={{
+                          backlogFields: backlog?.fields || [],
+                          categories: backlog?.categories || [],
+                          modifiers: backlog?.modifiers || {
+                            useSteamImport: false,
+                            useSteamSearch: false,
+                            useBoardType: false,
+                            useTagsSystem: false,
+                          },
+                          tags: backlog?.tags || [],
+                        }}
+                        defaultValues={data.data}
+                        btnCancel={setClose}
+                        view="modal"
+                        type="edit"
+                      />
+                    ) : (
+                      <BacklogItem hideCategory data={data.data} />
+                    )}
+                  </div>
+                )}
               </>
             )
           )}

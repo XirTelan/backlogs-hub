@@ -29,6 +29,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   const router = useRouter();
   const { mutate } = useSWRConfig();
 
+
   const mapFields = useMemo(
     () =>
       defaultValues.userFields.reduce((mapAcc, field) => {
@@ -118,15 +119,29 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       const commonProps = {
         label: field.name,
         defaultValue: fieldValue,
-        setValue: setValue as (name: string, val: string) => void,
         ...register(`userFields.${index}.value`, { required: false }),
       };
 
       switch (field.type) {
         case "timer":
-          return <ProgressTimer layer={2} {...commonProps} />;
+          return (
+            <ProgressTimer
+              layer={1}
+              {...{
+                ...commonProps,
+                setValue: setValue as (name: string, val: string) => void,
+              }}
+            />
+          );
         case "markdown":
-          return <MarkdownEditor {...commonProps} />;
+          return (
+            <MarkdownEditor
+              {...{
+                ...commonProps,
+                setValue: setValue as (name: string, val: string) => void,
+              }}
+            />
+          );
         case "select":
           return (
             <Select layer={2} options={field.data || []} {...commonProps} />
@@ -147,7 +162,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     },
     [mapFields, register, setValue],
   );
-
+  const isShowTags = backlog.modifiers.useTagsSystem && view === "page";
   const isLinkedToGame =
     backlog.modifiers?.useSteamSearch && watch("modifiersFields.steamAppId");
 
@@ -190,29 +205,34 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
               )}
             </div>
           ) : (
-            <InputField
-              id="title"
-              placeholder="Title"
-              label="Title"
-              variant="medium"
-              {...register("title", { required: true })}
-            />
+            view === "page" && (
+              <InputField
+                id="title"
+                placeholder="Title"
+                label="Title"
+                variant="medium"
+                {...register("title", { required: true })}
+              />
+            )
           )}
         </div>
-        <div className="md:w-1/5">
-          <Select
-            label="Category"
-            options={backlog.categories.map((category) => category.name)}
-            {...register("category")}
-          />
-        </div>
+        {view === "page" && (
+          <div className="md:w-1/5">
+            <Select
+              label="Category"
+              options={backlog.categories.map((category) => category.name)}
+              {...register("category")}
+            />
+          </div>
+        )}
       </div>
-      {backlog.modifiers.useTagsSystem && (
+      {isShowTags && (
         <div>
           <DropDown
             onChange={handleTagsChange}
             id={"tags"}
             label={"Tags"}
+            activeItems={defaultValues.tags}
             options={backlog.tags?.map((tag) => tag.name)}
           />
         </div>
@@ -223,7 +243,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
             {backlog.backlogFields.map((field, index) => {
               return (
                 <li
-                  className={`${inputTypes[field.type || "text"]}  w-auto bg-layer-1 p-2 `}
+                  className={`${inputTypes[field.type || "text"]}  w-auto  p-2 `}
                   key={index}
                 >
                   {getFieldInput(field, index)}
@@ -235,7 +255,6 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
       )}
 
       <div className="my-4 flex w-full flex-col md:w-1/4 md:gap-4 ">
-        {" "}
         {isSubmitting ? (
           <LoadingAnimation />
         ) : (

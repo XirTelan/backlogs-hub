@@ -13,16 +13,18 @@ const elevation = {
 };
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, options, layer = 1, variant = "default", ...props }, ref) => {
+    
+    const elevStyle =
+      variant === "default" ? elevation[layer] : "bg-transparent";
+
     return (
       <div className={`${variants[variant]}   flex `}>
         {label && <label className="me-2 h-6   text-white ">{label}</label>}
-        <div
-          className={`${variant === "default" ? elevation[layer] : "bg-transparent"} relative flex items-center `}
-        >
+        <div className={`${elevStyle} relative flex items-center `}>
           <select
             {...props}
             ref={ref}
-            className={` ${variant === "default" ? elevation[layer] : "bg-transparent"}  pe-8 ps-4 text-secondary-text  *:bg-layer-1 hover:cursor-pointer `}
+            className={` ${elevStyle}  pe-8 ps-4 text-secondary-text  *:bg-layer-1 hover:cursor-pointer `}
           >
             {options.map((option, indx) => (
               <option key={indx} value={option}>
@@ -30,7 +32,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               </option>
             ))}
           </select>
-          <IoIosArrowUp className="absolute right-2 pointer-events-none" />
+          <IoIosArrowUp className="pointer-events-none absolute right-2" />
         </div>
       </div>
     );

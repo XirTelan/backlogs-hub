@@ -1,6 +1,7 @@
 "use client";
 import useOutsideClickReg from "@/hooks/useOutsideClickReg";
 import useToggle from "@/hooks/useToggle";
+import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 
 const buttonPosStyles = {
@@ -96,7 +97,11 @@ const SidePanel = ({
     <button
       aria-expanded={isOpen}
       onClick={toggle}
-      className={`${styleButton} ${position === "none" ? "h-12" : "h-[49px]"}  w-12   p-[14px]  hover:bg-subtle-3/15`}
+      className={classNames(
+        styleButton,
+        position === "none" ? "h-12" : "h-[49px]",
+        " w-12   p-[14px]  hover:bg-subtle-3/15",
+      )}
     >
       {icon}
     </button>
@@ -107,7 +112,11 @@ const SidePanel = ({
       {toggleBtn}
       {isOpen && (
         <div
-          className={`${styleDropDownPos} ${directionStyles[direction]} absolute  z-10 w-64 border-b  border-border-1  bg-background py-2   `}
+          className={classNames(
+            styleDropDownPos,
+            directionStyles[direction],
+            "absolute  z-10 w-64 border-b  border-border-1  bg-background py-2",
+          )}
           onClick={handleClosePanel}
           style={
             direction === "side"

@@ -38,7 +38,7 @@ const itemsDoesntExist = (
 );
 
 const Backloglist = ({ id, isOwner }: BackloglistProps) => {
-  const searchParams = new URLSearchParams(useSearchParams());
+  const searchParams = new URLSearchParams(useSearchParams().toString());
   searchParams.append("backlog", id);
   const { user } = useSession();
   const pagination = user?.config?.pagination ?? "bottom";

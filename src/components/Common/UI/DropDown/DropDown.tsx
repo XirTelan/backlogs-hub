@@ -7,6 +7,7 @@ import useOutsideClickReg from "@/hooks/useOutsideClickReg";
 import useToggle from "@/hooks/useToggle";
 import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import cn from "classnames";
 
 const DropDown = ({
   id,
@@ -31,6 +32,18 @@ const DropDown = ({
 
   useOutsideClickReg(isOpen, containerRef, setClose);
 
+  useEffect(() => {
+    if (search === "") {
+      setResults(options ?? []);
+      return;
+    }
+    setResults((prev) => prev.filter((item) => item.startsWith(search)));
+  }, [search, options]);
+
+  useEffect(() => {
+    if (onChange) onChange(Array.from(selected));
+  }, [onChange, selected]);
+
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
@@ -53,17 +66,12 @@ const DropDown = ({
     setClose();
   };
 
-  useEffect(() => {
-    if (search === "") {
-      setResults(options ?? []);
-      return;
-    }
-    setResults((prev) => prev.filter((item) => item.startsWith(search)));
-  }, [search, options]);
-
-  useEffect(() => {
-    if (onChange) onChange(Array.from(selected));
-  }, [onChange, selected]);
+  const inputStyles = cn(
+    styles["drop-input"],
+    inputStyleVariants.layers[1],
+    inputStyleVariants.sizes["medium"],
+    " flex min-w-0 flex-1 grow  pe-10  text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent",
+  );
 
   return (
     <div
@@ -103,7 +111,7 @@ const DropDown = ({
             value={search}
             onChange={handleSearchChange}
             onClick={setOpen}
-            className={`${styles["drop-input"]}  ${inputStyleVariants.layers[1]} ${inputStyleVariants.sizes["medium"]}  flex min-w-0 flex-1 grow  pe-10  text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent `}
+            className={inputStyles}
             style={{
               paddingLeft: selected.size > 0 ? 0 : 16,
             }}
@@ -147,7 +155,12 @@ const DropDown = ({
                   return (
                     <li
                       key={indx}
-                      className={`${isSelected ? " text-primary-text " : " text-secondary-text "} flex w-full cursor-pointer gap-4 border-b border-border-1 px-4  py-2 last:border-b-0 `}
+                      className={cn(
+                        isSelected
+                          ? " text-primary-text "
+                          : " text-secondary-text ",
+                        `flex w-full cursor-pointer gap-4 border-b border-border-1 px-4  py-2 last:border-b-0`,
+                      )}
                       data-tag={tag}
                       onClick={changeTagStatus}
                     >

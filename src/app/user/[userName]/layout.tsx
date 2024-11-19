@@ -2,6 +2,12 @@ import { Session } from "@/providers/sessionProvider";
 import { getCurrentUserData } from "@/services/user";
 import React from "react";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "BacklogsHub | My Backlogs",
+};
+
 export default async function Layout({
   children,
 }: {

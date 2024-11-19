@@ -1,5 +1,6 @@
 "use client";
 import useChangeSearchParams from "@/hooks/useChangeParams";
+import classNames from "classnames";
 import { motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -12,6 +13,8 @@ const Switcher = ({
 }) => {
   const { key, items, callback } = options;
   const [active, setActive] = useState<number>(initial ?? 0);
+  const { changeParams, searchParams } = useChangeSearchParams();
+
   const countMaxItem = useMemo(() => {
     let max = 0;
     items.forEach((item) => {
@@ -20,7 +23,6 @@ const Switcher = ({
     });
     return max;
   }, [items]);
-  const { changeParams, searchParams } = useChangeSearchParams();
 
   useEffect(() => {
     const activeKey = searchParams.get(key);
@@ -43,10 +45,7 @@ const Switcher = ({
             else changeParams(key, item.value);
             setActive(index);
           }}
-          className={`${active === index ? "active " : ""}${index === active - 1 ? "preactive " : ""}  sw-btn group relative  border-b border-t first:rounded-s  
-        first:border-l	last:rounded-e 
-          last:border-r hover:bg-subtle-3 
-          `}
+          className="sw-btn group relative  border-b border-t first:rounded-s first:border-l	last:rounded-e last:border-r hover:bg-subtle-3"
           style={{ width: `calc(${countMaxItem}ch + 3rem)` }}
         >
           {active === index && (
@@ -59,7 +58,10 @@ const Switcher = ({
           )}
           <div className="py-[11px]">
             <p
-              className={`${active === index ? "text-[#161616]" : ""} relative  h-[18px] px-4 text-base leading-4 `}
+              className={classNames(
+                { "text-[#161616]": active === index },
+                "relative  h-[18px] px-4 text-base leading-4 ",
+              )}
             >
               {item.title}
             </p>

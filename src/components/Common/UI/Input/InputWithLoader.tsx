@@ -13,19 +13,25 @@ const InputWithLoader = React.forwardRef<
   HTMLInputElement,
   InputFieldProps & InputWithLoaderProps
 >(({ isLoading, errorMsg, isAvailable, helperText, ...props }, ref) => {
+  
+  const getHelperText = (
+    isLoading: boolean,
+    isAvailable: boolean,
+    helperText: InputFieldProps["helperText"],
+    errorMsg?: string,
+  ): InputFieldProps["helperText"] => {
+    if (isLoading) return undefined;
+    if (isAvailable) return helperText;
+    return {
+      type: "error",
+      message: errorMsg ?? "This name is already taken",
+    };
+  };
+
   return (
     <InputField
       {...props}
-      helperText={
-        isLoading
-          ? undefined
-          : isAvailable
-            ? helperText
-            : {
-                type: "error",
-                message: errorMsg ?? "This name is already taken",
-              }
-      }
+      helperText={getHelperText(isLoading, isAvailable, helperText, errorMsg)}
       ref={ref}
     >
       {isLoading && (

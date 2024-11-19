@@ -1,4 +1,5 @@
 "use client";
+import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -34,7 +35,10 @@ const NavLink = ({
 
   return (
     <li
-      className={`${style[variant][isActive ? "active" : "default"]} relative list-none outline-offset-4 after:w-full hover:bg-subtle-3/15`}
+      className={classNames(
+        "relative list-none outline-offset-4 after:w-full hover:bg-subtle-3/15",
+        style[variant][isActive ? "active" : "default"],
+      )}
     >
       <Link href={href} className={`flex  items-center  ${textSizes[text]}`}>
         {label && (

@@ -1,5 +1,6 @@
 import { btnStyleVariants } from "@/lib/styles";
 import { ButtonBaseProps } from "@/types";
+import classNames from "classnames";
 import React from "react";
 
 /**
@@ -18,16 +19,31 @@ const ButtonBase = ({
     <>
       <button
         {...props}
-        className={`${btnStyleVariants.colors[variant]} ${btnStyleVariants.heights[size]}  relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25 `}
+        className={classNames(
+          "relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25",
+          btnStyleVariants.colors[variant],
+          btnStyleVariants.heights[size],
+        )}
       >
         {text && (
-          <div className={` px-2  ${hideText && "hidden md:block"}`}>
+          <div
+            className={classNames({
+              "px-2": true,
+              "hidden md:block": hideText,
+            })}
+          >
             {text}
           </div>
         )}
         {icon && (
           <div
-            className={`${btnStyleVariants.sizes[size]} ${text && "ms-auto"}  flex min-h-8 items-center justify-center p-1 pointer-events-none `}
+            className={classNames(
+              `pointer-events-none flex min-h-8 items-center justify-center p-1 `,
+              btnStyleVariants.sizes[size],
+              {
+                "ms-auto": text,
+              },
+            )}
           >
             {icon}
           </div>

@@ -8,13 +8,18 @@ import Title from "@/components/Common/Title";
 import { ModalContext } from "@/providers/modalProvider";
 import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
 
-const ModalProvider = createModal(ModalContext, "itemForm", {
-  openerButtton: {
-    hideText: true,
-    text: "Add item",
-    icon: <IoAdd />,
+const ModalProvider = createModal(
+  ModalContext,
+  "itemForm",
+  {
+    openerButtton: {
+      hideText: true,
+      text: "Add item",
+      icon: <IoAdd />,
+    },
   },
-});
+  { styleMain: "fixed top-1/4" },
+);
 
 export const ItemFormModalOpen = ModalProvider.Opener;
 
@@ -28,7 +33,7 @@ const ItemFormModal = () => {
     <>
       <ModalProvider.WithModal>
         <Suspense fallback={<LoadingAnimation />}>
-          <div className="max-h-[90vh] overflow-auto min-w-[90vw] bg-background p-4 text-primary-text ">
+          <div className="container min-w-[90vw] overflow-auto bg-background p-4 text-primary-text md:min-w-[640px] lg:min-w-[768px] xl:min-w-[1024px]">
             <Title variant={2} title={"Create"} />
             <CreateItemForm
               backlogInfo={backlogInfo.backlog}

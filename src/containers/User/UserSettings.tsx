@@ -26,7 +26,7 @@ type UserSettingsProps = {
   tab: TabsType;
 };
 
-export type ModalProps =
+export type SettingModalProps =
   | { isOpen: false }
   | ({ isOpen: true; title: string } & (
       | {
@@ -49,18 +49,18 @@ export type ModalProps =
     ));
 type TabProps = {
   data: Partial<UserDTO>;
-  setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
+  setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 };
 
 const renderTab = (
   TabComponent: React.ComponentType<TabProps>,
   data: Partial<UserDTO>,
-  setModal: React.Dispatch<React.SetStateAction<ModalProps>>,
+  setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>,
 ) => {
   return <TabComponent data={data} setModal={setModal} />;
 };
 
-const defaultValue: ModalProps = {
+const defaultValue: SettingModalProps = {
   isOpen: false,
 };
 
@@ -96,7 +96,7 @@ const modalTypes = {
 };
 
 const UserSettings = ({ data, tab }: UserSettingsProps) => {
-  const [modalData, setModalData] = useState<ModalProps>(defaultValue);
+  const [modalData, setModalData] = useState<SettingModalProps>(defaultValue);
   const [value, setValue] = useState("");
   const handleUpdate = async () => {
     if (!modalData.isOpen || modalData.type !== "text") return;
@@ -119,11 +119,11 @@ const UserSettings = ({ data, tab }: UserSettingsProps) => {
             </Modal>
           ) : (
             <Modal
-              showActions
               action={
                 modalData.type === "confirm" ? modalData.action : handleUpdate
               }
               actionOptions={{
+                showActions: true,
                 confirmBtn: {
                   clrVariant:
                     (modalData.type === "confirm" && modalData.actionType) ||

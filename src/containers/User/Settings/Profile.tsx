@@ -4,7 +4,7 @@ import Setting from "./Setting";
 import { UserDTO } from "@/zodTypes";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { FaChevronRight } from "react-icons/fa6";
-import { ModalProps } from "../UserSettings";
+import { SettingModalProps } from "../UserSettings";
 import ChangeUserName from "./ChangeUserName";
 
 const Profile = ({
@@ -12,7 +12,7 @@ const Profile = ({
   setModal,
 }: {
   data: Partial<UserDTO>;
-  setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
+  setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 }) => {
   return (
     <div>

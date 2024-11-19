@@ -38,7 +38,7 @@ const ItemInfoModal = () => {
   return (
     <>
       <ModalProvider.WithModal>
-        <div className="relative  min-h-40  min-w-[90vw] max-w-[98vw] bg-background p-4 text-primary-text ">
+        <div className="container relative min-h-40  bg-background p-4 text-primary-text md:min-w-[640px] lg:min-w-[768px] xl:min-w-[1024px] ">
           {isLoading ? (
             <div className="absolute inset-0 m-auto flex items-center justify-center">
               <LoadingAnimation />
@@ -91,7 +91,7 @@ const ItemInfoModal = () => {
                     />
                   </div>
                 </div>
-                {data.data.userFields?.length > 0 && (
+                {(backlog?.fields?.length ?? 0) > 0 && (
                   <div className="mt-2">
                     {!isEdit && (
                       <div className="flex justify-between">

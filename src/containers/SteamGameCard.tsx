@@ -21,8 +21,8 @@ const SteamGameCard = ({
   const showScreenshots = () => {
     return (
       <Modal
-        showActions
         actionOptions={{
+          showActions: true,
           align: "top",
           position: "absolute",
           cancelBtn: { text: "Close", clrVariant: "tertiary" },
@@ -57,8 +57,8 @@ const SteamGameCard = ({
   const showMovies = () => {
     return (
       <Modal
-        showActions
         actionOptions={{
+          showActions: true,
           align: "top",
           position: "absolute",
           cancelBtn: { text: "Close", clrVariant: "tertiary" },
@@ -178,4 +178,3 @@ const SteamGameCard = ({
 };
 
 export default SteamGameCard;
-

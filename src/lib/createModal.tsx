@@ -1,4 +1,4 @@
-import Modal from "@/components/Common/Modal";
+import Modal, { BaseModalProps } from "@/components/Common/Modal";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { ButtonBaseProps, ModalContextProps } from "@/types";
 import React, { Context, useContext } from "react";
@@ -7,6 +7,7 @@ export function createModal(
   cntx: Context<ModalContextProps>,
   key: string,
   config?: ConfigType,
+  modalProps?: Partial<BaseModalProps>,
 ) {
   const Opener = ({
     data,
@@ -53,7 +54,13 @@ export function createModal(
     return (
       <>
         {ctx.key === key && ctx.isOpen && (
-          <Modal setClose={ctx.setClose}>
+          <Modal
+            {...modalProps}
+            setClose={ctx.setClose}
+            actionOptions={{
+              position: "absolute",
+            }}
+          >
             <>{children}</>
           </Modal>
         )}

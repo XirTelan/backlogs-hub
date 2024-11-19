@@ -3,27 +3,27 @@ import { createPortal } from "react-dom";
 import ButtonBase from "./UI/ButtonBase";
 import { ButtonBaseProps, ButtonColorVariants } from "@/types";
 import { motion } from "framer-motion";
+import classNames from "classnames";
 
-const DEFAULTS: ModalProps["actionOptions"] = {
+const DEFAULTS: BaseModalProps["actionOptions"] = {
   position: "inherit",
   align: "bottom",
 };
 
 const Modal = ({
+  styleMain,
   action,
-  confirmOptions,
-  showActions,
   actionOptions = DEFAULTS,
   setClose,
   children,
-}: ModalProps) => {
+}: BaseModalProps) => {
   const positions = {
     inherit: "",
-    absolute: "absolute top-0 z-50",
+    absolute: "absolute top-10 z-50 left-10 right-10",
   };
   const ActionsBlock = () => (
     <div
-      className={`flex w-full ${positions[actionOptions.position ?? DEFAULTS.position!]}`}
+      className={`flex  ${positions[actionOptions.position ?? DEFAULTS.position!]} `}
     >
       <ButtonBase
         style={{ width: "100%" }}
@@ -36,7 +36,7 @@ const Modal = ({
           style={{ width: "100%" }}
           variant={actionOptions.confirmBtn?.clrVariant ?? "primary"}
           text={actionOptions.confirmBtn?.text ?? "confirm"}
-          {...confirmOptions}
+          {...actionOptions.confirmBtn?.confirmOptions}
           onClick={async () => {
             if (!action) return;
             action();
@@ -60,20 +60,22 @@ const Modal = ({
       onClick={setClose}
       role="dialog"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 "
-
     >
       <motion.div
-            initial={{ opacity: 0.1, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ease: "easeInOut", duration: 0.125 }}
-        className="absolute  flex flex-col justify-center"
+        initial={{ opacity: 0.1, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ease: "easeInOut", duration: 0.125 }}
+        className={classNames(
+          styleMain,
+          { absolute: styleMain },
+          " flex flex-col justify-center",
+        )}
         onClick={(e) => e.stopPropagation()}
       >
-        {showActions && (actionOptions.align ?? DEFAULTS.align) == "top" && (
-          <ActionsBlock />
-        )}
+        {actionOptions.showActions &&
+          (actionOptions.align ?? DEFAULTS.align) == "top" && <ActionsBlock />}
         <>{children}</>
-        {showActions &&
+        {actionOptions.showActions &&
           (actionOptions.align ?? DEFAULTS.align) === "bottom" && (
             <ActionsBlock />
           )}
@@ -85,14 +87,15 @@ const Modal = ({
 
 export default Modal;
 
-type ModalProps = {
-  confirmOptions?: ButtonBaseProps;
+export type BaseModalProps = {
+  styleMain?: string;
   action?: () => unknown;
-  showActions?: boolean;
   actionOptions?: {
+    showActions?: boolean;
     position?: "inherit" | "absolute";
     align?: "top" | "bottom";
     confirmBtn?: {
+      confirmOptions?: ButtonBaseProps;
       text?: string;
       clrVariant?: ButtonColorVariants;
     };

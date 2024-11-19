@@ -5,7 +5,7 @@ import Title from "@/components/Common/Title";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
 import { FaChevronRight } from "react-icons/fa";
 import { UserDTO } from "@/zodTypes";
-import { ModalProps } from "../UserSettings";
+import { SettingModalProps } from "../UserSettings";
 import { toastCustom } from "@/lib/toast";
 
 import DeleteAccount from "./DeleteAccount";
@@ -35,7 +35,7 @@ const Account = ({
   setModal,
 }: {
   data: Partial<UserDTO>;
-  setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
+  setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 }) => {
   const { accounts } = data;
   const providers = useMemo(() => {

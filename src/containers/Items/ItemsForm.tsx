@@ -28,8 +28,6 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
 }: ItemsFormProps<T>) => {
   const router = useRouter();
   const { mutate } = useSWRConfig();
-
-
   const mapFields = useMemo(
     () =>
       defaultValues.userFields.reduce((mapAcc, field) => {
@@ -162,7 +160,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     },
     [mapFields, register, setValue],
   );
-  const isShowTags = backlog.modifiers.useTagsSystem && view === "page";
+  const isShowTags = backlog.modifiers.useTagsSystem;
   const isLinkedToGame =
     backlog.modifiers?.useSteamSearch && watch("modifiersFields.steamAppId");
 
@@ -205,7 +203,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
               )}
             </div>
           ) : (
-            view === "page" && (
+            type === "create" && (
               <InputField
                 id="title"
                 placeholder="Title"
@@ -216,7 +214,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
             )
           )}
         </div>
-        {view === "page" && (
+        {type === "create" && (
           <div className="md:w-1/5">
             <Select
               label="Category"

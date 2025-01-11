@@ -1,4 +1,5 @@
 import {
+  clamp,
   cleanParamString,
   generateSlug,
   parseSeconds,
@@ -99,5 +100,20 @@ describe("time pasre ", () => {
       mm: 30,
       ss: 10,
     });
+  });
+});
+
+describe("clamp", () => {
+  it("normal", () => {
+    const res = clamp(0, -10, 15);
+    expect(res).toBe(0);
+  });
+  it("min test", () => {
+    const res = clamp(0, 10, 15);
+    expect(res).toBe(10);
+  });
+  it("max test", () => {
+    const res = clamp(50, 10, 15);
+    expect(res).toBe(15);
   });
 });

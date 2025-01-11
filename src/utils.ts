@@ -22,6 +22,10 @@ export const sendMsg = {
   },
 };
 
+export const clamp = (value: number, min: number, max: number) => {
+  return Math.min(Math.max(min, value), max);
+};
+
 export const parseToSeconds = (h: number, m: number, s: number) => {
   return h * 60 * 60 + m * 60 + s;
 };
@@ -76,7 +80,7 @@ export const generateSlug = (name: string): string => {
     .trim()
     .toLowerCase()
     .split("")
-    .map((char) => cyrillicToLatinMap[char] || char) // Use mapping object for replacements
+    .map((char) => cyrillicToLatinMap[char] || char)
     .join("")
     .replace(/[^\w-]/g, ""); // Remove special characters except hyphens
 

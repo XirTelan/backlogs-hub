@@ -8,7 +8,7 @@ import { toastCustom } from "@/lib/toast";
 import { RegistrationSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, } from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowRight } from "react-icons/fa6";
 import { z } from "zod";
@@ -24,7 +24,7 @@ const UserRegisterForm = () => {
     formState: { errors, isValid, isSubmitted },
   } = useForm<FormData>({
     resolver: zodResolver(RegistrationSchema),
-    mode: "onBlur",
+    mode: "onChange",
   });
   const router = useRouter();
 
@@ -87,6 +87,7 @@ const UserRegisterForm = () => {
             label="Username"
             isLoading={isLoading}
             isAvailable={isAvailable}
+            value={userName}
             {...register("username")}
           />
           <InputField
@@ -97,6 +98,7 @@ const UserRegisterForm = () => {
               }
             }
             label="Email"
+            placeholder="example@domain.com"
             {...register("email")}
           />
           <InputField

@@ -136,11 +136,13 @@ export const RegistrationSchema = z
   .object({
     username: z
       .string()
-      .min(4)
+      .min(4, {
+        message: `Username must be at least 4 characters`,
+      })
       .regex(new RegExp(/^[a-zA-Z0-9_=]+$/), {
         message: `Username can only contain letters, numbers and "_"`,
       }),
-    email: z.string().email("Email is required"),
+    email: z.string().email("Email is required. Pattern: example@domain.com"),
     folders: z.string().array().default(["Default"]),
     password: z
       .string()

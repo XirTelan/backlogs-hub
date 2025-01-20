@@ -79,9 +79,10 @@ const ContactsForm = ({
           isSimple
           layer={2}
           variant="small"
-          placeholder="example@mail.com"
+          placeholder="example@mail.com (optional)"
           id="email"
           label="Email"
+          aria-label="email optional"
           {...register("email")}
         />
         <p className="my-2 text-xs text-subtle-3">
@@ -107,8 +108,9 @@ const ContactsForm = ({
         <InputField
           label={
             <span>
-              Confirmation. Please enter{" "}
-              <span className=" text-lg font-bold ">{code}</span> to confirm{" "}
+              Confirmation. Please enter
+              <span className=" mx-2 text-lg font-bold ">{code}</span> to
+              confirm
             </span>
           }
           layer={2}

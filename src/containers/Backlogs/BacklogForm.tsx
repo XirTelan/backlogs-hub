@@ -53,7 +53,7 @@ const BacklogForm = <T extends BacklogFormData>({
   } = useForm<BacklogFormData>({
     resolver: zodResolver(BacklogFormSchema),
     defaultValues,
-    mode: "onBlur",
+    mode: "onChange",
   });
   const handleShowTemplate = () => {
     clearErrors();

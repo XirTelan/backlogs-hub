@@ -2,6 +2,7 @@
 import React from "react";
 import InputField from "./InputField";
 import { InputFieldProps } from "@/types";
+import { FaCheck } from "react-icons/fa6";
 
 type InputWithLoaderProps = {
   isLoading: boolean;
@@ -13,7 +14,6 @@ const InputWithLoader = React.forwardRef<
   HTMLInputElement,
   InputFieldProps & InputWithLoaderProps
 >(({ isLoading, errorMsg, isAvailable, helperText, ...props }, ref) => {
-  
   const getHelperText = (
     isLoading: boolean,
     isAvailable: boolean,
@@ -27,18 +27,22 @@ const InputWithLoader = React.forwardRef<
       message: errorMsg ?? "This name is already taken",
     };
   };
-
   return (
     <InputField
       {...props}
       helperText={getHelperText(isLoading, isAvailable, helperText, errorMsg)}
       ref={ref}
     >
-      {isLoading && (
-        <div className="absolute bottom-0 right-0 top-0 flex   items-center    ">
+      <div className="absolute bottom-0 right-0 top-0 me-4 flex   items-center    ">
+        {isLoading && (
           <div className=" h-6 w-6 animate-spin rounded-full border-4 border-neutral-500 border-t-cyan-500 "></div>
-        </div>
-      )}
+        )}
+        {!isLoading &&
+          isAvailable &&
+          (props?.value?.toString() ?? "").length > 4 && (
+            <FaCheck color="green" />
+          )}
+      </div>
     </InputField>
   );
 });

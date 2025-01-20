@@ -70,9 +70,9 @@ const ModifiersMenu = ({
       {isOpen && (
         <div>
           <Modal
-            showActions
             setClose={setClose}
             actionOptions={{
+              showActions: true,
               cancelBtn: {
                 text: "Close",
               },

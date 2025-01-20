@@ -15,6 +15,7 @@ export default async function Layout({
             <PanelItemsWrapper
               baseUrl="/faq"
               data={[
+                { id: "general", content: "General" },
                 { id: "fields", content: "Backlog Fields Types" },
                 { id: "modifiers", content: "Modifiers" },
               ]}

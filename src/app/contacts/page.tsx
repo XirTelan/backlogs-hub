@@ -11,7 +11,7 @@ const page = async () => {
   return (
     <>
       <TopTitle title="Contacts" />
-      <main className="container self-center px-4 ">
+      <main id="maincontent" className="container self-center px-4 ">
         <div>
           <p>I&apos;d Love to Hear From You</p>
           <p>
@@ -31,7 +31,7 @@ const page = async () => {
               <FaGithub />
               <span>GitHub</span>
             </div>
-              <FaExternalLinkAlt size={12} />
+            <FaExternalLinkAlt size={12} />
           </LinkBase>
         </div>
         <p> Or you can fill form below</p>

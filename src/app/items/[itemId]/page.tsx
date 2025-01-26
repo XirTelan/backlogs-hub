@@ -13,7 +13,7 @@ const Page = async ({ params: { itemId } }: { params: { itemId: string } }) => {
   return (
     <>
       <TopTitle title={`Details "${result.data.title}"`} />
-      <main className="container self-center">
+      <main id="maincontent" className="container self-center">
         <BacklogItem data={result.data} />
       </main>
     </>

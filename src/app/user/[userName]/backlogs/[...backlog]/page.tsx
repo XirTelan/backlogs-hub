@@ -41,7 +41,7 @@ export default async function Backlog({
           )}
         </>
       </TopTitle>
-      <main className="container self-center">
+      <main id="maincontent" className="container self-center">
         <BacklogInfoProvider data={data}>
           {data.modifiers.useBoardType ? (
             <BacklogModalsWrapper>
@@ -57,10 +57,7 @@ export default async function Backlog({
               </section>
               <BacklogModalsWrapper>
                 <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
-                  <Backloglist
-                    isOwner={isOwner}
-                    id={data._id.toString()}
-                  />
+                  <Backloglist isOwner={isOwner} id={data._id.toString()} />
                 </section>
               </BacklogModalsWrapper>
             </>

@@ -48,7 +48,10 @@ export default async function Backlogs({
         <TopTitle title={`${params.userName} backlogs`} />
       )}
 
-      <main className="container flex  w-full flex-col  self-center">
+      <main
+        id="maincontent"
+        className="container flex  w-full flex-col  self-center"
+      >
         <div className="w-full px-4">
           <UserBacklogs user={{ name: params.userName, isOwner }} />
         </div>

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   description: "All backlogs in one place",
 };
 import ProgressBarProvider from "@/components/ProgressBarProvider";
+import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -25,6 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className} `}>
+        <Link
+          href="#maincontent"
+          aria-label="Skip directly to main content"
+          className="absolute left-0 top-0 z-50 -translate-y-full transform bg-blue-500 px-4 py-2 text-white transition focus:translate-y-0 "
+        >
+          Skip to main content
+        </Link>
         <div id="app" className="bg-surface flex flex-col ">
           <Toaster
             reverseOrder={false}

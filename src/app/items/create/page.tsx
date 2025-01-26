@@ -17,7 +17,7 @@ const CreateItem = async ({
   return (
     <>
       <TopTitle title={`Add new item to "${backlogInfo.backlogTitle}"`} />
-      <main className="container self-center px-4">
+      <main id="maincontent" className="container self-center px-4">
         <CreateItemForm backlogInfo={backlogInfo} options={{ view: "page" }} />
       </main>
     </>

@@ -24,7 +24,7 @@ const EditItem = async ({
   return (
     <>
       <TopTitle title="Edit" />
-      <main className=" container self-center px-4">
+      <main id="maincontent" className=" container self-center px-4">
         <ItemsForm
           backlog={{
             backlogFields: backlog.fields || [],

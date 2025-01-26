@@ -10,7 +10,6 @@ import TopTitle from "@/components/Common/UI/TopTitle";
 import Loading from "@/components/Common/UI/Loading/Loading";
 import NotFound from "@/components/Common/NotFound";
 import { apiRoutesList } from "@/lib/routesList";
-import ColorPicker from "@/components/Common/ColorPicker";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const {
@@ -46,8 +45,7 @@ const BacklogEditForm = ({ id }: { id: string }) => {
   return (
     <>
       <TopTitle title={`Editing backlog "${backlogData.backlogTitle}"`} />
-      <main className="container self-center px-4">
-        <ColorPicker />
+      <main id="maincontent" className="container self-center px-4">
         <BacklogForm
           defaultValues={backlogData}
           userFolders={userFolders.data.folders}

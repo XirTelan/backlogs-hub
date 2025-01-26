@@ -9,7 +9,7 @@ export default async function UpdatesPage() {
   return (
     <>
       <TopTitle title={"Updates"} />
-      <main className="container self-center">
+      <main id="maincontent" className="container self-center">
         <UpdatesList data={data} />
       </main>
     </>

@@ -24,7 +24,7 @@ const Page = async ({
 
   return (
     <>
-      <main className="container ">
+      <main id="maincontent" className="container ">
         <UserProfile data={user.data as UserDTO} />
       </main>
     </>

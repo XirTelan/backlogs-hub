@@ -10,7 +10,7 @@ export default async function Layout({
   return (
     <>
       <TopTitle title="Settings" />
-      <main className="container self-center">
+      <main id="maincontent" className="container self-center">
         <ul role="tablist" className="flex">
           <NavLink
             href={"/settings/account"}

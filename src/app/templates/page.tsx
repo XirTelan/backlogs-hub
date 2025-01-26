@@ -17,7 +17,7 @@ const Templates = async ({
           <Title title={"Templates"} />
         </div>
       </div>
-      <main className="container self-center">
+      <main id="maincontent" className="container self-center">
         <div className="mb-4 ms-4">
           <TemplateSwitcher />
         </div>

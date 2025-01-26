@@ -5,7 +5,10 @@ const Page = async () => {
   return (
     <>
       <TopTitle title="Manage" />
-      <main className="container flex w-full flex-col self-center ">
+      <main
+        id="maincontent"
+        className="container flex w-full flex-col self-center "
+      >
         <ManageWrapper />
       </main>
     </>

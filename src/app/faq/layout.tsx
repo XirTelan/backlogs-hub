@@ -25,7 +25,7 @@ export default async function Layout({
       </div>
       <div className=" flex  flex-col ">
         <TopTitle title="FAQ" />
-        <main className=" container self-center px-4">
+        <main id="maincontent" className=" container self-center px-4">
           <div>{children}</div>
         </main>
       </div>

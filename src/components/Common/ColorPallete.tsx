@@ -25,6 +25,7 @@ const ColorPallete = ({
 }) => {
   const [currentColor, setCurrentColor] = useState("#ffffff");
   const { isOpen, setClose, setOpen } = useToggle();
+
   const ref = useRef(null);
 
   useOutsideClickReg(isOpen, ref, setClose);
@@ -46,18 +47,22 @@ const ColorPallete = ({
 
       {isOpen && (
         <div ref={ref} className="absolute inset-0 z-10 flex  w-fit">
-          <div className=" fixed  flex h-auto gap-1  border border-subtle-1 bg-layer-1  p-2">
-            {defaultColors.map((color, index) => (
-              <div
-                key={index}
-                className="z-40 h-6 w-6 cursor-pointer rounded "
-                style={{ backgroundColor: `#${color}` }}
-                onClick={() => {
-                  onChange(`#${color}`);
-                  setClose();
-                }}
-              ></div>
-            ))}
+          <div className=" fixed  border border-subtle-1 bg-layer-1  p-2">
+            {/* <ButtonBase title="asd" text="Custom"></ButtonBase>
+            <ColorPicker /> */}
+            <div className=" flex gap-1">
+              {defaultColors.map((color, index) => (
+                <div
+                  key={index}
+                  className="z-40 h-6 w-6 cursor-pointer rounded "
+                  style={{ backgroundColor: `#${color}` }}
+                  onClick={() => {
+                    onChange(`#${color}`);
+                    setClose();
+                  }}
+                ></div>
+              ))}
+            </div>
           </div>
         </div>
       )}

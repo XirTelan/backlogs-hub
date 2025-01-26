@@ -83,8 +83,8 @@ const BacklogListData = ({ data, isOwner }: Props) => {
       })}
       {isOpen && (
         <Modal
-          showActions
           actionOptions={{
+            showActions: true,
             confirmBtn: {
               clrVariant: "dangerPrimary",
             },

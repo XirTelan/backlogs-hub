@@ -72,8 +72,8 @@ const BacklogManageDnD = ({
     if (!modalData) return;
     return (
       <Modal
-        showActions
         actionOptions={{
+          showActions: true,
           confirmBtn: {
             clrVariant: "dangerPrimary",
           },

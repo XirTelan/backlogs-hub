@@ -1,7 +1,9 @@
 import {
   clamp,
   cleanParamString,
+  colors,
   generateSlug,
+  math,
   parseSeconds,
   parseToSeconds,
   sendMsg,
@@ -115,5 +117,31 @@ describe("clamp", () => {
   it("max test", () => {
     const res = clamp(50, 10, 15);
     expect(res).toBe(15);
+  });
+});
+
+describe("utils.colors", () => {
+  it("rgbStringToArray", () => {
+    const res = colors.rgbStringToArray("rgb(123, 0, 24)");
+    expect(res).toStrictEqual([123, 0, 24]);
+  });
+  it("rgbToHex", () => {
+    const res = colors.rgbToHex("rgb(123, 0, 24)");
+    expect(res).toBe("#7b0018");
+  });
+  it("hexToRgb with length 6", () => {
+    const res = colors.hexToRgb("#7b0018");
+    expect(res).toStrictEqual([123, 0, 24]);
+  });
+  it("hexToRgb with length 3", () => {
+    const res = colors.hexToRgb("#fff");
+    expect(res).toStrictEqual([255, 255, 255]);
+  });
+});
+
+describe("utils.math", () => {
+  it("mapRange", () => {
+    const res = math.mapRange(50, 0, 100, 200, 300);
+    expect(res).toBe(250);
   });
 });

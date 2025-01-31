@@ -8,11 +8,10 @@ import { getCurrentUserInfo } from "@/auth/utils";
 import { getUserData } from "@/services/user";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
-export default async function Backlogs({
-  params,
-}: {
-  params: { userName: string };
+export default async function Backlogs(props: {
+  params: Promise<{ userName: string }>;
 }) {
+  const params = await props.params;
   const user = await getCurrentUserInfo();
   const { data } = await getUserData(params.userName, "config");
   const isOwner = user ? user.username === params.userName : false;

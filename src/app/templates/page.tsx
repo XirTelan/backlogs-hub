@@ -3,11 +3,13 @@ import Title from "@/components/Common/Title";
 import TemplateList from "@/containers/Backlogs/TemplateList";
 import TemplateSwitcher from "@/containers/Templates/TemplateSwitcher";
 
-const Templates = async ({
-  searchParams: { filter },
-}: {
-  searchParams: { filter: string };
+const Templates = async (props: {
+  searchParams: Promise<{ filter: string }>;
 }) => {
+  const searchParams = await props.searchParams;
+
+  const { filter } = searchParams;
+
   const user = await getCurrentUserInfo();
   const query = filter ? `?filter=${filter}` : "";
   return (

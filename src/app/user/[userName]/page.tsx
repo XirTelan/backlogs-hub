@@ -6,11 +6,10 @@ import { getUserData } from "@/services/user";
 import { UserDTO } from "@/zodTypes";
 import React from "react";
 
-const Page = async ({
-  params: { userName },
-}: {
-  params: { userName: string; backlog: string };
-}) => {
+type Params = Promise<{ userName: string; backlog: string }>;
+const Page = async ({ params }: { params: Params }) => {
+  const { userName } = await params;
+
   const [curerntUser, user] = await Promise.all([
     getCurrentUserInfo(),
     getUserData(userName, "all"),

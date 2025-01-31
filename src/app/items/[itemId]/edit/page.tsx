@@ -5,11 +5,11 @@ import { getBacklogItemById } from "@/services/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { redirect } from "next/navigation";
 
-const EditItem = async ({
-  params: { itemId },
-}: {
-  params: { itemId: string };
-}) => {
+const EditItem = async (props: { params: Promise<{ itemId: string }> }) => {
+  const params = await props.params;
+
+  const { itemId } = params;
+
   if (!itemId) redirect("/");
 
   const res = await getBacklogItemById(itemId);

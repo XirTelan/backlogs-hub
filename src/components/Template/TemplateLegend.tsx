@@ -9,65 +9,61 @@ import { FaLock } from "react-icons/fa";
 
 const TemplateLegend = () => {
   const [isMinimized, setIsMinimized] = useState(true);
+  if (isMinimized)
+    return (
+      <button
+        className="absolute bottom-10 left-0 rounded-full bg-neutral-800 p-2 hover:bg-cyan-500"
+        onClick={() => setIsMinimized(false)}
+      >
+        Show legend
+      </button>
+    );
 
   return (
     <>
-      {isMinimized ? (
-        <button
-          className="absolute bottom-10 left-0 rounded-full bg-neutral-800 p-2 hover:bg-cyan-500"
-          onClick={() => setIsMinimized(false)}
-        >
-          Show legend
-        </button>
-      ) : (
-        <>
-          <div className="  absolute bottom-10 left-0 z-30 max-w-80 rounded border border-neutral-700 bg-neutral-800 p-2">
-            <div className="relative mb-2 flex items-center p-2">
-              <h2 className="me-4 font-bold">Legend: Field Types</h2>
-              <button
-                className="absolute right-0 top-0 rounded-full bg-neutral-700 p-2 text-cyan-500 hover:bg-cyan-500 hover:text-white"
-                onClick={() => setIsMinimized(true)}
-              >
-                <TbWindowMinimize size={20} />
-              </button>
-            </div>
+      <div className="  absolute bottom-10 left-0 z-30 max-w-80 rounded border border-neutral-700 bg-neutral-800 p-2">
+        <div className="relative mb-2 flex items-center p-2">
+          <h2 className="me-4 font-bold">Legend: Field Types</h2>
+          <button
+            className="absolute right-0 top-0 rounded-full bg-neutral-700 p-2 text-cyan-500 hover:bg-cyan-500 hover:text-white"
+            onClick={() => setIsMinimized(true)}
+          >
+            <TbWindowMinimize size={20} />
+          </button>
+        </div>
 
-            <div>
-              <IconDescription title="Timer field" text={descriptions.timer}>
-                <IoMdTimer />
-              </IconDescription>
-              <IconDescription title="Text field" text={descriptions.text}>
-                <IoText />
-              </IconDescription>
-              <IconDescription title="Number field" text={descriptions.number}>
-                <AiOutlineFieldNumber />
-              </IconDescription>
-              <IconDescription title="Date field" text={descriptions.date}>
-                <FaCalendarCheck />
-              </IconDescription>
-              <IconDescription title="Date field" text={descriptions.date}>
-                <FaCalendarCheck />
-              </IconDescription>
-              <IconDescription title="Protected field" text={descriptions.lock}>
-                <FaLock />
-              </IconDescription>
-            </div>
-          </div>
-        </>
-      )}
+        <div>
+          <IconDescription title="Timer field" text={descriptions.timer}>
+            <IoMdTimer />
+          </IconDescription>
+          <IconDescription title="Text field" text={descriptions.text}>
+            <IoText />
+          </IconDescription>
+          <IconDescription title="Number field" text={descriptions.number}>
+            <AiOutlineFieldNumber />
+          </IconDescription>
+          <IconDescription title="Date field" text={descriptions.date}>
+            <FaCalendarCheck />
+          </IconDescription>
+          <IconDescription title="Date field" text={descriptions.date}>
+            <FaCalendarCheck />
+          </IconDescription>
+          <IconDescription title="Protected field" text={descriptions.lock}>
+            <FaLock />
+          </IconDescription>
+        </div>
+      </div>
     </>
   );
 };
 
-const IconDescription = ({
-  title,
-  text,
-  children,
-}: {
+type IconDescription = {
   title: string;
   text: string;
   children: React.ReactElement;
-}) => {
+};
+
+const IconDescription = ({ title, text, children }: IconDescription) => {
   return (
     <div className="mb-2">
       <div className="mb-2 flex items-center gap-2">

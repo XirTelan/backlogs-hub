@@ -18,6 +18,7 @@ export const deleteAccount = async (
     await user.save();
     return { success: true, data: null };
   } catch (error) {
+    console.error(error);
     throw new Error("Error");
   }
 };

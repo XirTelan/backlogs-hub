@@ -10,6 +10,7 @@ export const createLogEntry = async (data: LogDTO) => {
     await Log.create(data);
     return { success: true };
   } catch (error) {
+    console.error(error);
     throw new Error("Error");
   }
 };

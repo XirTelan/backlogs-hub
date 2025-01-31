@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useEffect, useState } from "react";
 
 function useDebounce<T>(value: T, ms = 500) {

@@ -46,7 +46,7 @@ const SidePanel = ({
   renderCustomBtn?: (
     toggle: () => void,
     isOpen: boolean,
-    ref: React.RefObject<HTMLDivElement>,
+    ref: React.RefObject<HTMLDivElement | null>,
   ) => React.ReactNode;
 }) => {
   const { isOpen, setOpen, setClose, toggle } = useToggle(false);
@@ -76,7 +76,7 @@ const SidePanel = ({
     ref.current.addEventListener("mouseenter", setOpen);
     ref.current.addEventListener("mouseleave", setClose);
 
-    () => {
+    return () => {
       ref.current?.removeEventListener("mouseenter", setOpen);
       ref.current?.removeEventListener("mouseleave", setClose);
     };

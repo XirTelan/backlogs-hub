@@ -11,10 +11,11 @@ import { BacklogDTOSchema } from "@/zod";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params: { id } }: { params: { id: string } },
-) {
+type Params = Promise<{ id: string }>;
+
+export async function GET(request: NextRequest, props: { params: Params }) {
+  const { id } = await props.params;
+
   try {
     const backlogId = cleanParamString(id);
     const {
@@ -54,10 +55,9 @@ export async function PUT(request: NextRequest) {
     throw new Error(`${error}`);
   }
 }
-export async function DELETE(
-  request: NextRequest,
-  { params: { id } }: { params: { id: string } },
-) {
+export async function DELETE(request: NextRequest, props: { params: Params }) {
+  const { id } = await props.params;
+
   try {
     const { success, message } = await isAuthorizedBacklogOwner(id, "edit");
     if (!success) return sendMsg.error(message || "Not authorized", 403);

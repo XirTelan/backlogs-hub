@@ -6,6 +6,9 @@ import { Toaster } from "react-hot-toast";
 import Header from "@/containers/Header";
 import Footer from "@/containers/Footer";
 
+import ProgressBarProvider from "@/components/ProgressBarProvider";
+import Link from "next/link";
+
 const roboto = Roboto({
   weight: ["400", "500", "700", "900"],
   subsets: ["latin"],
@@ -15,8 +18,6 @@ export const metadata: Metadata = {
   title: "BacklogsHub",
   description: "All backlogs in one place",
 };
-import ProgressBarProvider from "@/components/ProgressBarProvider";
-import Link from "next/link";
 
 export default function RootLayout({
   children,

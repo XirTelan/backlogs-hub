@@ -11,7 +11,8 @@ const isPopulated = (
   return arr.every((item) => typeof item === "object");
 };
 
-const Page = async ({ params }: { params: { tab: [TabsType] } }) => {
+const Page = async (props: { params: Promise<{ tab: [TabsType] }> }) => {
+  const params = await props.params;
   if (!params.tab || !params.tab[0]) redirect(`${routesList.settings}/account`);
   const res = await getCurrentUserData();
   if (!res.success)

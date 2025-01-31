@@ -20,7 +20,7 @@ export const getTokenData = async (token: string) => {
 };
 
 export const getCurrentUserInfo = async (): Promise<TokenData | null> => {
-  const token = cookies().get("access_token")?.value || "";
+  const token = (await cookies()).get("access_token")?.value || "";
   const { payload } = await getTokenData(token);
   if (!payload) return null;
   return payload;
@@ -56,7 +56,7 @@ export const setTokenCookies = async (token: string, url: string) => {
   return response;
 };
 
-export const clearCookiesToken = (request: NextRequest) => {
+export const clearCookiesToken = async (request: NextRequest) => {
   const response = NextResponse.redirect(new URL("/", request.url));
   response.cookies.delete("access_token");
   revalidatePath("/");

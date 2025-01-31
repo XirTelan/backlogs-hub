@@ -10,10 +10,10 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 
-export async function GET(
-  request: NextRequest,
-  { params: { username } }: { params: { username: string } },
-) {
+type Params = Promise<{ username: string }>;
+export async function GET(request: NextRequest, props: { params: Params }) {
+  const { username } = await props.params;
+
   try {
     const res = await isUserNameExist(username);
     return NextResponse.json(res, { status: 200 });
@@ -22,10 +22,9 @@ export async function GET(
   }
 }
 
-export async function PATCH(
-  request: NextRequest,
-  { params: { username } }: { params: { username: string } },
-) {
+export async function PATCH(request: NextRequest, props: { params: Params }) {
+  const { username } = await props.params;
+
   const authCheck = await isAuthorized(username);
   if (!authCheck.success) return authCheck.response;
   const data: string[] = await request.json();
@@ -38,10 +37,9 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params: { username } }: { params: { username: string } },
-) {
+export async function DELETE(request: NextRequest, props: { params: Params }) {
+  const { username } = await props.params;
+
   try {
     const authCheck = await isAuthorized(username);
     if (!authCheck.success) return authCheck.response;

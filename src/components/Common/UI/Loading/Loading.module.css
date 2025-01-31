@@ -5,7 +5,7 @@
   --default-delay: 0.3s;
   background-color: var(--bg-from-clr);
   width: 1rem;
-  height:  var(--maxH);
+  height: var(--maxH);
   animation: spring 2s ease-in-out infinite;
 }
 

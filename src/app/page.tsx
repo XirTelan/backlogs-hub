@@ -7,7 +7,7 @@ import SignInForm from "@/containers/Auth/SignInForm";
 export default async function Home() {
   return (
     <>
-      <main  id="maincontent" className="flex flex-col items-center">
+      <main id="maincontent" className="flex flex-col items-center">
         <section
           className="container  relative min-h-screen-bh "
           style={{

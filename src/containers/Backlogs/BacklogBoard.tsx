@@ -8,7 +8,6 @@ import { DndData, RenderItemProps } from "@/types";
 import { fetcher } from "@/utils";
 import { ItemFormModalOpen } from "../Items/ItemFormModal";
 import SortableItem from "@/components/dnd/SortableItem";
-12;
 import DnDMultList from "../DragAndDrop/DndMultiList";
 import ItemFastRename from "../Items/ItemsFastRename";
 import BacklogItemActions from "./BacklogList/BacklogItemActions";

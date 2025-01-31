@@ -1,14 +1,8 @@
 import defaultTheme from "tailwindcss/defaultTheme";
-import { Config } from "tailwindcss/types/config";
 
-const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/containers/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+/** @type {import('tailwindcss').Config} */
+const config: import("tailwindcss").Config = {
+  content: [".src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       height: {

@@ -3,7 +3,7 @@ import { RefObject, useCallback, useEffect, useState } from "react";
 import useToggle from "./useToggle";
 
 const useCanvasPointer = (
-  canvasRef: RefObject<HTMLCanvasElement>,
+  canvasRef: RefObject<HTMLCanvasElement | null>,
   defaultColor = "#fff",
   isUpdateColorOnPosChange = false,
 ) => {

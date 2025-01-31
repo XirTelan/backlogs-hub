@@ -13,7 +13,6 @@ const elevation = {
 };
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, options, layer = 1, variant = "default", ...props }, ref) => {
-    
     const elevStyle =
       variant === "default" ? elevation[layer] : "bg-transparent";
 

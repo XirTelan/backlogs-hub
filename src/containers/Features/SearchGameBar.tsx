@@ -46,7 +46,6 @@ const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
 
       if (!debounceSearch) return;
       search();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounceSearch]);
 
     const handleAddGame = (id: string, name: string) => {

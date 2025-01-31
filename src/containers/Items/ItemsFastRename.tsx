@@ -6,7 +6,7 @@ import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";
 import { InputFieldProps } from "@/types";
 import { BacklogItemDTO } from "@/zodTypes";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, type JSX } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import { useSWRConfig } from "swr";

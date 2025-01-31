@@ -25,26 +25,29 @@ const Switcher = ({
   }, [items]);
 
   useEffect(() => {
-    const activeKey = searchParams.get(key);
-    let indx = items.findIndex((item) => {
-      item.value === activeKey;
-    });
-    indx = indx === -1 ? 0 : indx;
+    const activeKey = searchParams.get(key) ?? "";
+    const indx = Math.max(
+      0,
+      items.findIndex((item) => item.value === activeKey),
+    );
     setActive(indx);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleClick =
+    (item: Options['items'][0], index: number) =>
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault();
+      if (callback) callback(item.value);
+      else changeParams(key, item.value);
+      setActive(index);
+    };
 
   return (
     <div className=" flex w-full self-center">
       {items.map((item, index) => (
         <button
           key={index}
-          onClick={(e) => {
-            e.preventDefault();
-            if (callback) callback(item.value);
-            else changeParams(key, item.value);
-            setActive(index);
-          }}
+          onClick={handleClick(item, index)}
           className="sw-btn group relative  border-b border-t first:rounded-s first:border-l	last:rounded-e last:border-r hover:bg-subtle-3"
           style={{ width: `calc(${countMaxItem}ch + 3rem)` }}
         >

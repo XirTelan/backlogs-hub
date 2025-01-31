@@ -3,11 +3,13 @@ import React from "react";
 
 export default async function Layout({
   children,
-  params: { userName },
+  params,
 }: {
   children: React.ReactElement;
-  params: { userName: string; backlog: string };
+  params: Promise<{ userName: string; backlog: string }>;
 }) {
+  const { userName } = await params;
+
   return (
     <div className=" grid   md:grid-cols-[auto_1fr]">
       <UserBacklogsSideNav userName={userName} />

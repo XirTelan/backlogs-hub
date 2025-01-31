@@ -3,11 +3,13 @@ import { CreateItemForm } from "@/containers/Items/CreateItemForm";
 import { isAuthorizedBacklogOwner } from "@/services/backlogs";
 import { redirect } from "next/navigation";
 
-const CreateItem = async ({
-  searchParams: { backlog },
-}: {
-  searchParams: { backlog: string };
+const CreateItem = async (props: {
+  searchParams: Promise<{ backlog: string }>;
 }) => {
+  const searchParams = await props.searchParams;
+
+  const { backlog } = searchParams;
+
   const { success, data: backlogInfo } = await isAuthorizedBacklogOwner(
     backlog,
     "edit",

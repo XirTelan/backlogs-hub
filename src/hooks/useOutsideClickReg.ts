@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const useOutsideClickReg = (
   state: boolean,
-  ref: React.RefObject<HTMLDivElement>,
+  ref: React.RefObject<HTMLDivElement | null>,
   handleClick: () => void,
 ) => {
   useEffect(() => {

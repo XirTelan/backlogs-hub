@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 /**
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
  */
-const nextJest = require("next/jest");
+import nextJest from "next/jest";
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
@@ -203,4 +202,4 @@ const config = {
   // watchman: true,
 };
 
-module.exports = createJestConfig(config);
+export default createJestConfig(config);

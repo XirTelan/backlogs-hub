@@ -14,10 +14,11 @@ import bcrypt from "bcrypt";
 
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params: { auth } }: { params: { auth: string | string[] } },
-) {
+type Params = Promise<{ auth: string | string[] }>;
+
+export async function GET(request: NextRequest, props: { params: Params }) {
+  const { auth } = await props.params;
+
   const type = auth[0];
   switch (type) {
     case "session":
@@ -29,10 +30,9 @@ export async function GET(
   }
 }
 
-export async function POST(
-  request: NextRequest,
-  { params: { auth } }: { params: { auth: string | string[] } },
-) {
+export async function POST(request: NextRequest, props: { params: Params }) {
+  const { auth } = await props.params;
+
   const type = auth[0];
   switch (type) {
     case "signIn": {

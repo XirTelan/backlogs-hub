@@ -10,10 +10,11 @@ import { BacklogItemDTO } from "@/zodTypes";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params: { itemId } }: { params: { itemId: string } },
-) {
+type Params = Promise<{ itemId: string }>;
+
+export async function GET(request: NextRequest, props: { params: Params }) {
+  const { itemId } = await props.params;
+
   try {
     const res = await getAndPopulateBacklogItemById(itemId);
     if (!res.success) return sendMsg.error(res.errors);
@@ -23,10 +24,9 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params: { itemId } }: { params: { itemId: string } },
-) {
+export async function DELETE(request: NextRequest, props: { params: Params }) {
+  const { itemId } = await props.params;
+
   try {
     const res = await authorizeAndProceed(itemId, () =>
       deleteBacklogItem(itemId),
@@ -40,10 +40,9 @@ export async function DELETE(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params: { itemId } }: { params: { itemId: string } },
-) {
+export async function PUT(request: NextRequest, props: { params: Params }) {
+  const { itemId } = await props.params;
+
   const data = await request.json();
   try {
     const res = await authorizeAndProceed(itemId, () => putBacklogItem(data));

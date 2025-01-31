@@ -8,31 +8,21 @@ import SteamGameCard from "@/containers/SteamGameCard";
 import { IoMdCreate } from "react-icons/io";
 import { MdOutlineUpdate } from "react-icons/md";
 
-const isHaveSteamData = (
-  data: BacklogItemPopulated,
-): data is BacklogItemWithSteamInfo => {
-  return Object.prototype.hasOwnProperty.call(data, "steamData");
-};
-
 type TimeStamp = {
   value: Date | string;
   icon: React.ReactNode;
   title: string;
 };
-const renderTimeField: (data: TimeStamp) => React.ReactElement = ({
-  value,
-  icon,
-  title,
-}) => {
-  return (
-    <div key={title} title={title} className="flex items-center">
-      {icon}
+type RenderField = {
+  backlogFieldId: string;
+  type: string;
+  value: string;
+};
 
-      {typeof value === "string"
-        ? new Date(value).toDateString()
-        : value.toDateString()}
-    </div>
-  );
+type WrapperProps = {
+  field: RenderField;
+  indx: number;
+  renderField: (field: RenderField) => React.ReactNode;
 };
 
 const BacklogItem = ({
@@ -67,7 +57,7 @@ const BacklogItem = ({
         )}
         <div className=" *:border-t *:border-border-1 *:py-4 ">
           {data.userFields.map((field, indx) => {
-            return withWrap(field, indx, renderFieldValue);
+            return withWrap({ field, indx, renderField: renderFieldValue });
           })}
         </div>
         <div className="flex justify-end text-xs text-secondary-text opacity-50 hover:opacity-100">
@@ -96,11 +86,13 @@ const BacklogItem = ({
 
 export default BacklogItem;
 
-const renderFieldValue = (field: {
-  backlogFieldId: string;
-  type: string;
-  value: string;
-}) => {
+const isHaveSteamData = (
+  data: BacklogItemPopulated,
+): data is BacklogItemWithSteamInfo => {
+  return Object.prototype.hasOwnProperty.call(data, "steamData");
+};
+
+const renderFieldValue = (field: RenderField) => {
   if (field.type === "markdown") {
     return (
       <MDEditor.Markdown
@@ -118,20 +110,23 @@ const renderFieldValue = (field: {
   }
 };
 
-type RenderField = {
-  backlogFieldId: string;
-  type: string;
-  value: string;
+const renderTimeField: (data: TimeStamp) => React.ReactElement = ({
+  value,
+  icon,
+  title,
+}) => {
+  return (
+    <div key={title} title={title} className="flex items-center">
+      {icon}
+
+      {typeof value === "string"
+        ? new Date(value).toDateString()
+        : value.toDateString()}
+    </div>
+  );
 };
-const withWrap = (
-  field: {
-    backlogFieldId: string;
-    type: string;
-    value: string;
-  },
-  indx: number,
-  renderField: (field: RenderField) => React.ReactNode,
-) => {
+
+const withWrap = ({ field, indx, renderField }: WrapperProps) => {
   switch (field.type) {
     case "markdown": {
       return (

@@ -14,11 +14,11 @@ import { MdEdit } from "react-icons/md";
 
 const Board = dynamic(() => import("@/containers/Backlogs/BacklogBoard"));
 
-export default async function Backlog({
-  params: { userName, backlog },
-}: {
-  params: { userName: string; backlog: string };
+export default async function Backlog(props: {
+  params: Promise<{ userName: string; backlog: string }>;
 }) {
+  const { userName, backlog } = await props.params;
+
   const user = await getCurrentUserInfo();
 
   const isOwner = user?.username == userName;

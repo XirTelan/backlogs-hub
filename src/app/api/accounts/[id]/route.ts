@@ -6,8 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   request: NextRequest,
-  { params: { id } }: { params: { id: string } },
+  props: { params: Promise<{ id: string }> },
 ) {
+  const params = await props.params;
+
+  const { id } = params;
+
   try {
     const user = await getCurrentUserInfo();
     if (!user) return sendMsg.error("Not Authorized", 401);

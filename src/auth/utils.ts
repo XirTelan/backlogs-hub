@@ -19,8 +19,15 @@ export const getTokenData = async (token: string) => {
   }
 };
 
-export const getCurrentUserInfo = async (): Promise<TokenData | null> => {
-  const token = (await cookies()).get("access_token")?.value || "";
+export const getCurrentUserInfo = async (
+  request: NextRequest | undefined = undefined,
+): Promise<TokenData | null> => {
+  let token;
+  if (request) token = request.cookies.get("access_token")?.value;
+  else token = (await cookies()).get("access_token")?.value;
+
+  if (!token) return null;
+
   const { payload } = await getTokenData(token);
   if (!payload) return null;
   return payload;

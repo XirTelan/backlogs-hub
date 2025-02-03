@@ -20,7 +20,7 @@ const BacklogItemTr = ({
 
   return (
     <>
-      <tr className=" border-b border-field-2   ">
+      <tr className=" border-b border-border-subtle-2   ">
         <td className={`px-4`}>
           <div className="relative flex items-center justify-between">
             <ItemFastRename
@@ -45,7 +45,7 @@ const BacklogItemTr = ({
                           <span>{item.title}</span>
 
                           {categoryDesignation === "explicit" && (
-                            <span className=" ms-2 text-secondary-text ">
+                            <span className=" ms-2 text-text-secondary ">
                               {`| ${item.category}`}
                             </span>
                           )}

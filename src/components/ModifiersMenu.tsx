@@ -78,7 +78,7 @@ const ModifiersMenu = ({
               },
             }}
           >
-            <div className="bg-background p-4 text-primary-text">
+            <div className="bg-bg-main p-4 text-text-primary">
               <Title variant={2} title="Modifiers" />
               <div className="flex flex-col gap-4 p-4">
                 <MenuItem

@@ -1,34 +1,173 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss";
-/* @import "tailwindcss/preflight.css" layer(base); */
 @import "tailwindcss/utilities.css" layer(utilities);
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root {
-  --bg-main: #161616;
+  color-scheme: dark;
   scrollbar-color: #393939 #242424;
   scroll-behavior: smooth;
+  --background-light: white;
+
+  --clr-gray-100: #161616;
+  --clr-gray-90: #262626;
+  --clr-gray-90-hover: #333333;
+  --clr-gray-80: #393939;
+  --clr-gray-80-hover: #474747;
+  --clr-gray-70: #525252;
+  --clr-gray-70-hover: #636363;
+  --clr-gray-60: #6f6f6f;
+  --clr-gray-60-hover: #5e5e5e;
+  --clr-gray-50: #8d8d8d;
+  --clr-gray-40: #a8a8a8;
+  --clr-gray-30: #c6c6c6;
+  --clr-gray-10: #f4f4f4;
+
+  --clr-blue-60: #0f62fe;
+  --clr-blue-60-hover: #0353e9;
+  --clr-blue-50: #4589ff;
+  --clr-blue-40: #78a9ff;
+  --clr-blue-30: #a6c8ff;
+
+  --clr-red-60: #da1e28;
+  --clr-red-60-hover: #ba1b23;
+  --clr-red-50: #fa4d56;
+  --clr-red-40: #ff8389;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --clr-background-main: var(--clr-gray-100);
+  --clr-background-hover: rgba(from var(--clr-gray-50) r g b / 0.16);
+  --clr-background-active: (var(--background-hover));
+  --clr-background-selected: (var(--background-hover));
+  --clr-background-selected-hover: (var(--background-hover));
+  --clr-background-inverse: (var(--background-hover));
+  --clr-background-inverse-hover: (var(--background-hover));
+  --clr-background-brand: (var(--background-hover));
+
+  --clr-layer-01: var(--clr-gray-90);
+  --clr-layer-02: var(--clr-gray-80);
+  --clr-layer-03: var(--clr-gray-70);
+
+  --clr-layer-accent-01: var(--clr-gray-80);
+  --clr-layer-accent-02: var(--clr-gray-70);
+  --clr-layer-accent-03: var(--clr-gray-60);
+
+  --clr-layer-01-hover: var(--clr-gray-90-hover);
+  --clr-layer-02-hover: var(--clr-gray-80-hover);
+  --clr-layer-03-hover: var(--clr-gray-70-hover);
+
+  --clr-layer-01-active: var(--clr-gray-90);
+  --clr-layer-02-active: var(--clr-gray-90);
+  --clr-layer-03-active: var(--clr-gray-90);
+
+  --clr-layer-01-selected: var(--clr-gray-90);
+  --clr-layer-02-selected: var(--clr-gray-90);
+  --clr-layer-03-selected: var(--clr-gray-90);
+
+  --clr-text-primary: var(--clr-gray-10);
+  --clr-text-secondary: var(--clr-gray-30);
+
+  --clr-field-01: var(--clr-gray-90);
+  --clr-field-02: var(--clr-gray-80);
+  --clr-field-03: var(--clr-gray-70);
+
+  --clr-field-hover-01: var(--clr-gray-90-hover);
+  --clr-field-hover-02: var(--clr-gray-80-hover);
+  --clr-field-hover-03: var(--clr-gray-70-hover);
+
+  --clr-border-subtle-00: var(--clr-gray-80);
+  --clr-border-subtle-01: var(--clr-gray-80);
+  --clr-border-subtle-02: var(--clr-gray-70);
+  --clr-border-subtle-03: var(--clr-gray-60);
+
+  --clr-border-strong-01: var(--clr-gray-60);
+  --clr-border-strong-02: var(--clr-gray-50);
+  --clr-border-strong-03: var(--clr-gray-40);
+
+  --clr-border-interactive: var(--clr-blue-50);
+
+  --clr-text-inverse: var(--clr-gray-100);
+
+  --clr-link-primary: var(--clr-blue-40);
+  --clr-link-primary-hover: var(--clr-blue-30);
+
+  --clr-button-primary: var(--clr-blue-60);
+  --clr-button-primary-hover: var(--clr-blue-60-hover);
+  --clr-button-primary-active: var(--clr-blue-80);
+
+  --clr-button-danger-primary: var(--clr-red-60);
+  --clr-button-danger-secondary: var(--clr-red-50);
+  --clr-button-danger-hover: var(--clr-red-60-hover);
+
+  --clr-button-secondary: var(--clr-gray-60);
+  --clr-button-secondary-hover: var(--clr-gray-60-hover);
+
+  --clr-button-tertiary: white;
+  --clr-button-tertiary-hover: var(--clr-gray-10);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --background-main: var(--background-light);
 }
 
-#app {
-  color: #f4f4f4;
-  background: var(--bg-main);
-  min-height: 100vh;
+@theme {
+  --spacing-screen-1: calc(100svh - 49px);
+  --color-bg-main: var(--clr-background-main);
+  --color-bg-hover: var(--clr-background-hover);
+
+  --color-layer-1: var(--clr-layer-01);
+  --color-layer-2: var(--clr-layer-02);
+  --color-layer-3: var(--clr-layer-03);
+
+  --color-layer-1-hover: var(--clr-layer-01-hover);
+
+  --color-layer-accent-1: var(--clr-layer-accent-01);
+
+  --color-border-subtle-1: var(--clr-border-subtle-01);
+  --color-border-subtle-2: var(--clr-border-subtle-02);
+  --color-border-subtle-3: var(--clr-border-subtle-03);
+
+  --color-border-strong-1: var(--clr-border-strong-01);
+  --color-border-strong-2: var(--clr-border-strong-02);
+  --color-border-strong-3: var(--clr-border-strong-03);
+  --color-border-interactive: var(--clr-border-interactive);
+
+  --color-text-primary: var(--clr-text-primary);
+  --color-text-secondary: var(--clr-text-secondary);
+  --color-text-inverse: var(--clr-text-inverse);
+
+  --color-link-primary: var(--clr-link-primary);
+  --color-link-primary-hover: var(--clr-link-primary-hover);
+
+  --color-field-1: var(--clr-field-01);
+  --color-field-2: var(--clr-field-02);
+  --color-field-3: var(--clr-field-03);
+  --color-field-hover-1: var(--clr-field-hover-01);
+
+  --color-btn-primary: var(--clr-button-primary);
+  --color-btn-primary-hover: var(--clr-button-primary-hover);
+  --color-btn-primary-active: var(--clr-button-primary-active);
+
+  --color-btn-secondary: var(--clr-button-secondary);
+  --color-btn-secondary-hover: var(--clr-button-secondary-hover);
+
+  --color-btn-tertiary: var(--clr-button-tertiary);
+  --color-btn-tertiary-hover: var(--clr-button-tertiary-hover);
+
+  --color-btn-danger-primary: var(--clr-button-danger-primary);
+  --color-btn-danger-secondary: var(--clr-button-danger-secondary);
+  --color-btn-danger-hover: var(--clr-button-danger-hover);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-.modal {
-  overflow: hidden;
-}
 /*
 UI/Switcher
 */
 
-.sw-btn:not(:last-child) p {
+.sw-btn[data-active="false"]:not(:last-child) p {
   border-right: 1px solid #525252;
 }
 .sw-btn.preactive p,

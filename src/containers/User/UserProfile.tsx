@@ -7,7 +7,7 @@ const UserProfile = ({ data }: { data: UserDTO }) => {
     <div className="ml-10 mt-10 ">
       <div className=" bg-layer-1 p-4">
         <p className=" text-3xl ">{data.displayName}</p>
-        <p className=" text-sm text-secondary-text">{`/${data.username}`}</p>
+        <p className=" text-sm text-text-secondary">{`/${data.username}`}</p>
       </div>
       <div className=" grid grid-cols-[80%_20%]   ">
         <div></div>

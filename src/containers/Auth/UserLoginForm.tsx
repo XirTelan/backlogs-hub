@@ -69,7 +69,7 @@ const UserLoginForm = () => {
         label="Password"
         {...register("password")}
       />
-      <span className=" inline-flex w-full items-center text-nowrap border-b border-subtle-1 pb-4 text-secondary-text">
+      <span className=" inline-flex w-full items-center text-nowrap border-b border-border-subtle-1 pb-4 text-text-secondary">
         Don&apos;t have an account?&nbsp;
         <LinkBase href={"/register"}>Create</LinkBase>
       </span>

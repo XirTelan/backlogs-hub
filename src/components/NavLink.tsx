@@ -6,7 +6,7 @@ import React from "react";
 
 const style = {
   line: {
-    default: "md:border-b border-border-1 h-[49px]",
+    default: "md:border-b border-border-subtle-1 h-[49px]",
     active:
       "border-l-[3px] md:border-b-[3px] h-[49px] md:border-0 border-border-interactive",
   },
@@ -20,8 +20,8 @@ const style = {
   },
 };
 const textSizes = {
-  primary: "text-[18px] leading-[18px] text-primary-text",
-  secondary: "text-base text-secondary-text ",
+  primary: "text-[18px] leading-[18px] text-text-primary",
+  secondary: "text-base text-text-secondary ",
 };
 const NavLink = ({
   href,
@@ -36,7 +36,7 @@ const NavLink = ({
   return (
     <li
       className={classNames(
-        "relative list-none outline-offset-4 after:w-full hover:bg-subtle-3/15",
+        "relative list-none outline-offset-4 after:w-full hover:bg-layer-1-hover ",
         style[variant][isActive ? "active" : "default"],
       )}
     >

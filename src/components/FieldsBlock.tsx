@@ -6,7 +6,7 @@ const FieldsBlock = (props: FieldsBlockProps) => {
   return (
     <div className=" flex flex-col">
       {props.title && (
-        <div className="border-b border-subtle-1">
+        <div className="border-b border-border-subtle-1">
           <Title variant={3} style={{ margin: ".5rem 0" }} title={props.title}>
             {props.status == "active" ? (
               <ButtonBase
@@ -20,7 +20,7 @@ const FieldsBlock = (props: FieldsBlockProps) => {
           </Title>
         </div>
       )}
-      <div className="flex-wrap  rounded  py-4">
+      <div className="flex-wrap  rounded-sm  py-4">
         <ul className="grid  gap-4 overflow-auto">{props.children}</ul>
       </div>
     </div>

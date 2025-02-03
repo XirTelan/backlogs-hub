@@ -46,7 +46,7 @@ const Title = ({
           {title}
         </Tag>
         {description && (
-          <p className=" pe-2 text-secondary-text">{description}</p>
+          <p className=" pe-2 text-text-secondary">{description}</p>
         )}
       </div>
       {children && <div className="ms-auto">{children}</div>}

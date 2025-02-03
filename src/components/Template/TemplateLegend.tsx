@@ -67,7 +67,7 @@ const IconDescription = ({ title, text, children }: IconDescription) => {
   return (
     <div className="mb-2">
       <div className="mb-2 flex items-center gap-2">
-        <div className="rounded bg-green-800 p-1">{children}</div>
+        <div className="rounded-sm bg-green-800 p-1">{children}</div>
         <h3 className=" font-bold">{title}</h3>
       </div>
       <p>{text}</p>

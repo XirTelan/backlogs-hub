@@ -60,7 +60,7 @@ const SearchGameBar = React.forwardRef<HTMLInputElement, SearchGameBarProps>(
           <SearchField ref={ref} {...props} onChange={inputHandler} />
 
           {isOpen && (
-            <div className="absolute top-20 z-10 flex  w-60 flex-col bg-background xs:w-80 md:w-3/4">
+            <div className="absolute top-20 z-10 flex  w-60 flex-col bg-bg-main xs:w-80 md:w-3/4">
               <ButtonBase
                 text="Close results"
                 size="small"

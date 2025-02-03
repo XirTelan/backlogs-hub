@@ -51,7 +51,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
         <Table.Head headers={headers}></Table.Head>
         <Table.Body>
           <>
-            <tr className=" border-b border-subtle-1">
+            <tr className=" border-b border-border-subtle-1">
               <td colSpan={2} className="px-4">
                 <InputField
                   value={"Title"}
@@ -60,7 +60,7 @@ const UserFieldsBlock = ({ errors, control, register }: FieldsBlockProps) => {
                   readOnly
                 />
               </td>
-              <td className="px-4 text-secondary-text" colSpan={2}>
+              <td className="px-4 text-text-secondary" colSpan={2}>
                 This field is required and cannot be deleted
               </td>
             </tr>

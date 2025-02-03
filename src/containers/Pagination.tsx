@@ -31,8 +31,8 @@ const Pagination = ({ totalCount }: { totalCount: number }) => {
   );
 
   return (
-    <div className="my-2 flex flex-1 items-center border-t  border-border bg-layer-1   text-sm *:h-10 ">
-      <div className=" hidden  border-e  border-border ps-4 text-primary-text md:flex">
+    <div className="my-2 flex flex-1 items-center border-t  border-border-subtle-1 bg-layer-1   text-sm *:h-10 ">
+      <div className=" hidden  border-e   border-border-subtle-1 ps-4 text-text-primary md:flex">
         <span className="h-auto content-center whitespace-nowrap  text-center ">
           {" "}
           Items per page:
@@ -44,7 +44,7 @@ const Pagination = ({ totalCount }: { totalCount: number }) => {
           onChange={onPageSizeChange}
         />
       </div>
-      <div className="ms-2 flex flex-1 border-e border-border text-secondary-text  *:content-center">
+      <div className="ms-2 flex flex-1 border-e border-border-subtle-1 text-text-secondary  *:content-center">
         <span>
           {page * pageSize - pageSize + 1}-
           {Math.min(page * pageSize, totalCount)} of {totalCount} items
@@ -84,7 +84,7 @@ const Btn = ({
     <button
       disabled={disabled}
       onClick={onClick}
-      className={` relative h-10 w-10 border-s border-border text-primary-text hover:bg-field-hover-1 disabled:cursor-not-allowed disabled:text-neutral-700 disabled:hover:bg-layer-1 `}
+      className={` relative h-10 w-10 border-s border-border-subtle-1 text-text-primary hover:bg-field-hover-1 disabled:cursor-not-allowed disabled:text-neutral-700 disabled:hover:bg-layer-1 `}
     >
       <div className="flex items-center justify-center ">{children}</div>
     </button>

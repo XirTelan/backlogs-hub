@@ -32,7 +32,7 @@ const BacklogItemsTable = ({
       title: (
         <BsThreeDotsVertical
           title="Actions"
-          className="m-auto text-secondary-text"
+          className="m-auto text-text-secondary"
         />
       ),
       width: "64px",

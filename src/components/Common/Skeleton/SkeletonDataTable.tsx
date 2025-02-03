@@ -30,7 +30,7 @@ const SkeletonDataTable = () => {
           <div className=" mb-4 text-xl">
             <div className="h-10 w-40 animate-pulse bg-layer-2"></div>
           </div>
-          <div className=" text-base text-secondary-text">
+          <div className=" text-base text-text-secondary">
             <div className="h-5 w-80 animate-pulse bg-layer-2"></div>
           </div>
         </div>

@@ -31,7 +31,7 @@ const TemplateCard = ({
 }: TemplateCardProps) => {
   const fields = useMemo(() => {
     if (template.fields && template.fields.length === 0)
-      return <span className=" text-secondary-text">No additional fields</span>;
+      return <span className=" text-text-secondary">No additional fields</span>;
     return (
       <ul className="flex flex-wrap gap-2">
         {template.fields!.map((field) => (

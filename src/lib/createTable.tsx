@@ -7,7 +7,7 @@ const createTable = (title = "", description = "") => {
       title && (
         <div className="px-4 pb-6  pt-4">
           <div className=" text-xl">{title}</div>
-          <div className=" text-base text-secondary-text">{description}</div>
+          <div className=" text-base text-text-secondary">{description}</div>
         </div>
       )
     );
@@ -43,7 +43,7 @@ const createTable = (title = "", description = "") => {
             <th
               key={header.id}
               style={{ width: header.width || "auto" }}
-              className="p-4 text-start text-primary-text"
+              className="p-4 text-start text-text-primary"
             >
               {header.title}
             </th>

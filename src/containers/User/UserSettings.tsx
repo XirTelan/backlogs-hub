@@ -132,7 +132,7 @@ const UserSettings = ({ data, tab }: UserSettingsProps) => {
               }}
               setClose={() => setModalData(defaultValue)}
             >
-              <div className=" max-w-sm bg-background p-4 text-white md:max-w-xl">
+              <div className=" max-w-sm bg-bg-main p-4 text-white md:max-w-xl">
                 <Title variant={3} title={modalData.title} />
                 {modalData.type === "confirm"
                   ? modalTypes[modalData.type]()

@@ -25,16 +25,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <body className={`${roboto.className} `}>
         <Link
           href="#maincontent"
           aria-label="Skip directly to main content"
-          className="absolute left-0 top-0 z-50 -translate-y-full transform bg-blue-500 px-4 py-2 text-white transition focus:translate-y-0 "
+          className="absolute  left-0 top-0 z-50 -translate-y-full transform bg-blue-500 px-4 py-2 text-white transition focus:translate-y-0 "
         >
           Skip to main content
         </Link>
-        <div id="app" className="bg-surface flex flex-col ">
+        <div
+          id="app"
+          className="flex flex-col text-text-primary bg-bg-main min-h-screen "
+        >
           <Toaster
             reverseOrder={false}
             toastOptions={{

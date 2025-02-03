@@ -22,7 +22,7 @@ const InputField = React.forwardRef<HTMLInputElement, Props>(
     return (
       <div className="group relative flex  w-full flex-col  ">
         {!isSimple && (
-          <label htmlFor={id} className="h-6 pb-2  text-secondary-text ">
+          <label htmlFor={id} className="h-6 pb-2  text-text-secondary ">
             {label}
           </label>
         )}

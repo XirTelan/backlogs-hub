@@ -30,7 +30,7 @@ const itemsDoesntExist = (
       <td colSpan={2} className=" p-4 text-center">
         <div className="flex w-full flex-col justify-center">
           <p className="mb-4 text-xl">Your backlog is empty yet</p>
-          <p className=" text-secondary-text">Click Add new to get started</p>
+          <p className=" text-text-secondary">Click Add new to get started</p>
         </div>
       </td>
     </tr>

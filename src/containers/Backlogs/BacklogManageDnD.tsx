@@ -85,7 +85,7 @@ const BacklogManageDnD = ({
       >
         <div className="bg-layer-1 p-4 text-white">
           <Title title={modalData.caption} variant={2} />
-          <div className="text-secondary-text">{modalData.text}</div>
+          <div className="text-text-secondary">{modalData.text}</div>
         </div>
       </Modal>
     );

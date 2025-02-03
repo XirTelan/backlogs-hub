@@ -15,7 +15,7 @@ const Accordion = ({
 }) => {
   const [isOpen, setIsOpen] = useState(defaultState);
   return (
-    <div className="border-border-1 w-full border-t last:border-b ">
+    <div className="border-border-subtle-1 w-full border-t  ">
       <button
         type="button"
         id={`accordionId_${id}`}

@@ -44,7 +44,7 @@ const FieldsArrayItem = ({
   if (!field) return <div>error</div>;
   return (
     <>
-      <tr key={index} className=" border-b border-subtle-1">
+      <tr key={index} className=" border-b border-border-subtle-1">
         <td className="text-center">{index + 1}</td>
         <td className="px-4">
           <InputField
@@ -106,7 +106,7 @@ const FieldsArrayItem = ({
               </div>
             </td>
           </tr>
-          <tr className=" border-b border-subtle-1">
+          <tr className=" border-b border-border-subtle-1">
             <td colSpan={2}></td>
             <td colSpan={2}>
               <div className="my-2 flex flex-col gap-2">

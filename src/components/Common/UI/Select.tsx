@@ -7,9 +7,9 @@ const variants = {
   fluid: "",
 };
 const elevation = {
-  1: "bg-field-1 border-b border-strong-1",
-  2: "bg-field-2 border-b border-strong-2",
-  3: "bg-field-3 border-b border-strong-3",
+  1: "bg-field-1 border-b border-border-strong-1",
+  2: "bg-field-2 border-b border-border-strong-2",
+  3: "bg-field-3 border-b border-border-strong-3",
 };
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, options, layer = 1, variant = "default", ...props }, ref) => {
@@ -23,7 +23,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           <select
             {...props}
             ref={ref}
-            className={` ${elevStyle}  pe-8 ps-4 text-secondary-text  *:bg-layer-1 hover:cursor-pointer `}
+            className={` ${elevStyle}  pe-8 ps-4 text-text-secondary  *:bg-layer-1 hover:cursor-pointer `}
           >
             {options.map((option, indx) => (
               <option key={indx} value={option}>

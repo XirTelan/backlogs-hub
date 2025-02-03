@@ -10,8 +10,8 @@ const InputBase = React.forwardRef<HTMLInputElement, InputFielBasedProps>(
       inputStyleVariants.sizes[variant],
       helperText?.type === "error"
         ? "outline-2 -outline-offset-2 outline-error-support"
-        : "border-b border-strong-1",
-      "text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white ",
+        : "border-b border-border-strong-1",
+      "text-text-secondary outline-hidden placeholder:text-strong-1 read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white ",
     );
     return (
       <input type="text" className={inputClass} {...props} ref={ref}>

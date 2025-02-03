@@ -34,7 +34,7 @@ const Switcher = ({
   }, []);
 
   const handleClick =
-    (item: Options['items'][0], index: number) =>
+    (item: Options["items"][0], index: number) =>
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault();
       if (callback) callback(item.value);
@@ -48,7 +48,8 @@ const Switcher = ({
         <button
           key={index}
           onClick={handleClick(item, index)}
-          className="sw-btn group relative  border-b border-t first:rounded-s first:border-l	last:rounded-e last:border-r hover:bg-subtle-3"
+          data-active={active === index}
+          className="sw-btn group relative cursor-pointer  border-b border-t first:rounded-s first:border-l	last:rounded-e last:border-r hover:bg-bg-hover"
           style={{ width: `calc(${countMaxItem}ch + 3rem)` }}
         >
           {active === index && (

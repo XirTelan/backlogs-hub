@@ -12,17 +12,17 @@ export const btnStyleVariants = {
     elarge: "w-12 min-w-12",
   },
   colors: {
-    primary: "bg-primary-btn hover:bg-primary-btn-hover text-white ",
-    secondary: "bg-secondary-btn hover:bg-secondary-btn-hover text-white",
+    primary: "bg-btn-primary hover:bg-btn-primary-hover text-white ",
+    secondary: "bg-btn-secondary hover:bg-btn-secondary-hover text-white",
     accent: "bg-green-800 hover:bg-green-700",
     tertiary:
-      "outline text-white  hover:text-inverse outline-1 -outline-offset-2 outline-white hover:bg-tertiary-btn-hover",
-    ghost: "text-primary-link hover:bg-subtle-3/15",
-    ghostAccent: " text-green-500 hover:text-green-400 hover:bg-subtle-3/15 ",
-    dangerPrimary: "bg-danger-btn hover:bg-danger-btn-hover text-white",
+      "outline text-white   hover:text-text-inverse outline-1 -outline-offset-2 outline-white hover:bg-btn-tertiary-hover",
+    ghost: "text-link-primary hover:bg-layer-1-hover",
+    ghostAccent: " text-green-500 hover:text-green-400 hover:bg-layer-1-hover ",
+    dangerPrimary: "bg-btn-danger-primary hover:bg-btn-danger-hover text-white",
     dangerTertiary: "  ",
     dangerGhost:
-      "text-danger-text hover:bg-danger-btn-hover hover:text-white disabled:bg-transparent",
+      "text-btn-danger-secondary hover:bg-btn-danger-hover hover:text-white disabled:bg-transparent",
   },
 };
 
@@ -37,8 +37,8 @@ export const inputStyleVariants = {
     large: "h-12 p-4",
   },
   layers: {
-    1: "bg-field-1 border-strong-1 ",
-    2: "bg-field-2 border-strong-2",
-    3: "bg-field-3 border-strong-3",
+    1: "bg-field-1 border-border-strong-1 ",
+    2: "bg-field-2 border-border-strong-2",
+    3: "bg-field-3 border-border-strong-3",
   },
 };

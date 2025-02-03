@@ -37,7 +37,7 @@ const page = () => {
       </div>
 
       <ul>
-        <li className=" border-b border-border-1 pb-4 " id="Steam">
+        <li className=" border-b border-border-subtle-1 pb-4 " id="Steam">
           <Title variant={2} title={"Steam Search"} />
 
           <p>
@@ -56,9 +56,7 @@ const page = () => {
             addition to your own fields
           </p>
         </li>
-        <li id="Tags">
-
-        </li>
+        <li id="Tags"></li>
         <li id="Board">
           <Title variant={2} title={"Board"} />
           <p>

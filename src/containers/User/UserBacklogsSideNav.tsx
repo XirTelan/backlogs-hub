@@ -9,15 +9,15 @@ const UserBacklogsSideNav = async ({ userName }: { userName: string }) => {
   if (entries.length === 0) return;
 
   return (
-    <aside className=" hidden h-full min-h-screen-bh w-64 border-e border-border-1 pt-4 md:block">
-      <nav>
+    <aside className="hidden h-full  min-h-screen-1 w-64 border-e border-border-subtle-1 pt-4 md:block">
+      <nav className="fixed w-64 max-w-64 flex flex-col">
         {entries.map(([folder, backlogs]) => {
           if (backlogs.items.length === 0) return;
           return (
             <div key={folder}>
               <div className="flex items-center">
                 <FaFolder className="ms-2" size={12} />
-                <div className="ps-2 text-secondary-text">{folder}</div>
+                <div className="ps-2 text-text-secondary">{folder}</div>
               </div>
               <div className="ps-2">
                 <PanelItemsWrapper

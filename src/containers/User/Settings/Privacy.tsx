@@ -29,7 +29,7 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
       </div>
       <label
         htmlFor="profileVisibility"
-        className="mb-4 text-sm text-secondary-text"
+        className="mb-4 text-sm text-text-secondary"
       >
         If the profile is set to private, then all backlogs will be inaccessible
         for other users regardless of their visibility settings
@@ -48,7 +48,7 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
           </div>
           <label
             htmlFor="profileVisibility"
-            className="mb-4 text-sm text-secondary-text"
+            className="mb-4 text-sm text-text-secondary"
           >
             Other users will see your folder names as &quot;Folder
             1&quot;,&quot;Folder 2&quot;,... etc

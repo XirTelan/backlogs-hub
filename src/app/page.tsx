@@ -9,7 +9,7 @@ export default async function Home() {
     <>
       <main id="maincontent" className="flex flex-col items-center">
         <section
-          className="container  relative min-h-screen-bh "
+          className="container  relative  min-h-screen-1 "
           style={{
             // backgroundImage: `url(${bg.src})`,
             backgroundPositionX: "center",
@@ -19,7 +19,7 @@ export default async function Home() {
         >
           {/* <div className=" absolute bottom-0 h-40 w-full bg-gradient-to-t from-black/60 "></div> */}
           <div className="container md:flex">
-            <div className=" flex bg-background px-10 md:pt-10 ">
+            <div className=" flex bg-bg-main px-10 md:pt-10 ">
               <SignInForm />
             </div>
             <div className="mt-4 flex grow justify-center p-4">

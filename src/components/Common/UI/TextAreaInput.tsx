@@ -12,7 +12,7 @@ const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextArea>(
     return (
       <div className="field group relative w-full  px-0 py-4   ">
         {label && (
-          <label htmlFor={id} className="h-6 pb-2  text-secondary-text ">
+          <label htmlFor={id} className="h-6 pb-2  text-text-secondary ">
             {label}
           </label>
         )}

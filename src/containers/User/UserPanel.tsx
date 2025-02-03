@@ -24,20 +24,18 @@ const UserPanel = async ({ userName }: { userName: string }) => {
     <>
       <SidePanel icon={<VscAccount />}>
         <>
-          <>
-            <div className="flex items-center gap-2 p-4">
-              <div className="flex h-10 w-10 shrink-0 items-center  justify-center rounded-full bg-primary-btn  ">
-                <span>{userName[0].toUpperCase()}</span>
-              </div>
-              <div className=" break-all">{userName}</div>
+          <div className="flex items-center gap-2 p-4">
+            <div className="flex h-10 w-10 shrink-0 items-center  justify-center rounded-full bg-btn-primary  ">
+              <span>{userName[0].toUpperCase()}</span>
             </div>
-            <NavLink
-              text="secondary"
-              variant="simple"
-              href={`/user/${userName}`}
-              label={"View profile"}
-            ></NavLink>
-          </>
+            <div className=" break-all">{userName}</div>
+          </div>
+          <NavLink
+            text="secondary"
+            variant="simple"
+            href={`/user/${userName}`}
+            label={"View profile"}
+          ></NavLink>
           <div className=" h-[1px] w-full  bg-border  "></div>
           <ul>
             {links.map((link, indx) => (

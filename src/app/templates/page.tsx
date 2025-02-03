@@ -1,7 +1,13 @@
 import { getCurrentUserInfo } from "@/auth/utils";
 import Title from "@/components/Common/Title";
-import TemplateList from "@/containers/Backlogs/TemplateList";
-import TemplateSwitcher from "@/containers/Templates/TemplateSwitcher";
+import dynamic from "next/dynamic";
+
+const TemplateSwitcher = dynamic(
+  () => import("@/containers/Templates/TemplateSwitcher"),
+);
+const TemplateList = dynamic(
+  () => import("@/containers/Backlogs/TemplateList"),
+);
 
 const Templates = async (props: {
   searchParams: Promise<{ filter: string }>;

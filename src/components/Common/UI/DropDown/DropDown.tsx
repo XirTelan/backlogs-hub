@@ -70,7 +70,7 @@ const DropDown = ({
     styles["drop-input"],
     inputStyleVariants.layers[1],
     inputStyleVariants.sizes["medium"],
-    " flex min-w-0 flex-1 grow  pe-10  text-secondary-text outline-none placeholder:text-strong-1 read-only:bg-transparent",
+    " flex min-w-0 flex-1 grow  pe-10  text-text-secondary  outline-hidden placeholder:text-strong-1 read-only:bg-transparent",
   );
 
   return (
@@ -117,7 +117,7 @@ const DropDown = ({
             }}
           />
           {search && (
-            <div className="absolute right-8  border-e border-field-3">
+            <div className="absolute right-8  border-e border-border-subtle-3">
               <ButtonBase
                 type="button"
                 variant="ghost"
@@ -157,9 +157,9 @@ const DropDown = ({
                       key={indx}
                       className={cn(
                         isSelected
-                          ? " text-primary-text "
-                          : " text-secondary-text ",
-                        `flex w-full cursor-pointer gap-4 border-b border-border-1 px-4  py-2 last:border-b-0`,
+                          ? " text-text-primary "
+                          : " text-text-secondary ",
+                        `flex w-full cursor-pointer gap-4 border-b border-border-subtle-1 px-4  py-2 last:border-b-0`,
                       )}
                       data-tag={tag}
                       onClick={changeTagStatus}

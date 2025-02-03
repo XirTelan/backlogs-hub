@@ -38,7 +38,7 @@ const ItemInfoModal = () => {
   return (
     <>
       <ModalProvider.WithModal>
-        <div className="container relative min-h-40  bg-background p-4 text-primary-text md:min-w-[640px] lg:min-w-[768px] xl:min-w-[1024px] ">
+        <div className="container relative min-h-40  bg-bg-main p-4 text-text-primary md:min-w-[640px] lg:min-w-[768px] xl:min-w-[1024px] ">
           {isLoading ? (
             <div className="absolute inset-0 m-auto flex items-center justify-center">
               <LoadingAnimation />
@@ -73,7 +73,7 @@ const ItemInfoModal = () => {
                 <div className=" my-2 flex  items-center  gap-2">
                   <div>Category:</div>
 
-                  <div className=" text-secondary-text">
+                  <div className=" text-text-secondary">
                     <ItemChangeCategory
                       backlogItem={data.data}
                       customBtn={(toggle: () => void, isOpen: boolean) => {

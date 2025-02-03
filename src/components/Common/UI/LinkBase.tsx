@@ -9,9 +9,9 @@ const LinkBase = ({
   AnchorHTMLAttributes<HTMLAnchorElement> & { isExternal?: boolean }) => {
   return (
     <Link
-      rel={isExternal ? "noopener nofollow noreferrer" : ""}
+      rel={isExternal ? "noopener nofollow noreferrer" : undefined}
       {...props}
-      className="  flex text-primary-link hover:text-primary-link-hover"
+      className="  flex text-link-primary hover:text-link-primary-hover"
     >
       {children}
     </Link>

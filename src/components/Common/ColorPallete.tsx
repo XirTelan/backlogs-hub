@@ -47,14 +47,14 @@ const ColorPallete = ({
 
       {isOpen && (
         <div ref={ref} className="absolute inset-0 z-10 flex  w-fit">
-          <div className=" fixed  border border-subtle-1 bg-layer-1  p-2">
+          <div className=" fixed  border  border-border-subtle-1 bg-layer-1  p-2">
             {/* <ButtonBase title="asd" text="Custom"></ButtonBase>
             <ColorPicker /> */}
             <div className=" flex gap-1">
               {defaultColors.map((color, index) => (
                 <div
                   key={index}
-                  className="z-40 h-6 w-6 cursor-pointer rounded "
+                  className="z-40 h-6 w-6 cursor-pointer rounded-sm "
                   style={{ backgroundColor: `#${color}` }}
                   onClick={() => {
                     onChange(`#${color}`);

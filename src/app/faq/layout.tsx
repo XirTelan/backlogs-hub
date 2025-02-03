@@ -8,9 +8,9 @@ export default async function Layout({
   children: React.ReactElement;
 }) {
   return (
-    <div className="  grid min-h-screen-bh   md:grid-cols-[256px_1fr]  ">
+    <div className="  grid  min-h-screen-1  md:grid-cols-[256px_1fr]  ">
       <div>
-        <aside className="sticky top-[49px] hidden min-h-screen-bh w-64 border-e border-border-1 bg-background pt-4 md:block">
+        <aside className="sticky top-[49px] hidden  min-h-screen-1  w-64 border-e border-border-subtle-1 bg-bg-main pt-4 md:block">
           <nav>
             <PanelItemsWrapper
               baseUrl="/faq"

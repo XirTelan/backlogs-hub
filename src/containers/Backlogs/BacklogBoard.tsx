@@ -71,7 +71,7 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
 
   const containerTitle = (id: string) => (
-    <div className=" group mb-2 flex w-60 flex-1 justify-between border-b border-border-1 pb-2 text-primary-text  hover:cursor-grab">
+    <div className=" group mb-2 flex w-60 flex-1 justify-between border-b border-border-subtle-1 pb-2 text-text-primary  hover:cursor-grab">
       <Title title={id} variant={3} />
       <div
         onMouseDown={(e) => e.stopPropagation()}

@@ -20,7 +20,7 @@ const ButtonBase = ({
       <button
         {...props}
         className={classNames(
-          "relative flex  w-full  items-center text-nowrap     disabled:bg-layer-3 disabled:text-white/25",
+          "relative flex  w-full  items-center text-nowrap cursor-pointer disabled:bg-layer-3 disabled:text-white/25",
           btnStyleVariants.colors[variant],
           btnStyleVariants.heights[size],
         )}

@@ -52,15 +52,15 @@ const BacklogItem = ({
           <div className=" my-2 flex gap-2">
             <div>Category:</div>
 
-            <div className=" text-secondary-text">{data.category}</div>
+            <div className=" text-text-secondary">{data.category}</div>
           </div>
         )}
-        <div className=" *:border-t *:border-border-1 *:py-4 ">
+        <div className=" *:border-t *:border-border-subtle-1 *:py-4 ">
           {data.userFields.map((field, indx) => {
             return withWrap({ field, indx, renderField: renderFieldValue });
           })}
         </div>
-        <div className="flex justify-end text-xs text-secondary-text opacity-50 hover:opacity-100">
+        <div className="flex justify-end text-xs text-text-secondary opacity-50 hover:opacity-100">
           {timestamps?.map((field) => renderTimeField(field as TimeStamp))}
         </div>
       </>
@@ -105,7 +105,7 @@ const renderFieldValue = (field: RenderField) => {
     return field.value ? (
       field.value
     ) : (
-      <span className=" text-secondary-text">Field empty</span>
+      <span className=" text-text-secondary">Field empty</span>
     );
   }
 };

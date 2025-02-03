@@ -12,7 +12,7 @@ const PanelItem = ({ active, href, children, ...props }: BacklogNavProps) => {
       className={classNames(
         "relative flex h-8 items-center px-4 text-sm  hover:bg-field-hover-1",
         {
-          "bg-subtle-3/25 after:absolute after:left-0 after:h-full after:w-[3px] after:bg-primary-btn":
+          "bg-subtle-3/25 after:absolute after:left-0 after:h-full after:w-[3px] after:bg-btn-primary":
             active,
         },
       )}

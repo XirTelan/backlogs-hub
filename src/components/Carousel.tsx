@@ -26,7 +26,7 @@ const Carousel = <T,>({
   };
   return (
     <div className="m-auto flex h-screen max-w-[1536px] flex-col  items-center justify-center p-4 ">
-      <div className=" relative flex  h-4/5 w-full items-center justify-center shadow ">
+      <div className=" relative flex  h-4/5 w-full items-center justify-center shadow-sm ">
         <div className="absolute inset-0 m-auto flex">
           {renderActive(data[active])}
         </div>
@@ -36,7 +36,7 @@ const Carousel = <T,>({
           {data.map((item, indx) => (
             <button
               key={getKey(item)}
-              className="absolute z-20 flex h-full w-40 items-center justify-center p-4 shadow transition-all duration-300 ease-in-out md:w-80 md:p-8 2xl:w-[480px]  "
+              className="absolute z-20 flex h-full w-40 items-center justify-center p-4 shadow-sm transition-all duration-300 ease-in-out md:w-80 md:p-8 2xl:w-[480px]  "
               style={{
                 transform: `translate( ${(indx - active) * 100}%)`,
                 scale: `${active === indx ? "1.1" : "0.9"}`,

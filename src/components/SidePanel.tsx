@@ -17,8 +17,8 @@ const dropDownStyle = {
 };
 
 const bordersStyles = {
-  open: "border-border-1 border-b border-b-background",
-  close: "border-b border-border-1 border-s border-s-transparent",
+  open: "border-border-subtle-1 border-b border-b-bg-main",
+  close: "border-b border-border-subtle-1 border-s  border-s-transparent",
 };
 
 const directionStyles = {
@@ -100,7 +100,7 @@ const SidePanel = ({
       className={classNames(
         styleButton,
         position === "none" ? "h-12" : "h-[49px]",
-        " w-12   p-[14px]  hover:bg-subtle-3/15",
+        " w-12 cursor-pointer   p-[14px]  hover:bg-layer-1-hover ",
       )}
     >
       {icon}
@@ -115,7 +115,7 @@ const SidePanel = ({
           className={classNames(
             styleDropDownPos,
             directionStyles[direction],
-            "absolute  z-10 w-64 border-b  border-border-1  bg-background py-2",
+            "absolute  z-10 w-64 border-b  border-border-subtle-1 bg-bg-main py-2",
           )}
           onClick={handleClosePanel}
           style={

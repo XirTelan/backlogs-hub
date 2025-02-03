@@ -41,7 +41,7 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
   };
 
   return (
-    <div className="min-w-sm m-auto   bg-background   p-4 text-white ">
+    <div className="min-w-sm m-auto   bg-bg-main   p-4 text-white ">
       <Title title="Creating Template" />
       <div className="flex  flex-col  gap-4 md:flex-row">
         <div className="min-w-[300px]">

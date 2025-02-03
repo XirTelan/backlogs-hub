@@ -21,7 +21,7 @@ const Landing = () => {
           needs`}
         contentBlock={
           <div className="p-4">
-            <p className="mb-4 mt-2 px-2  text-base text-secondary-text ">
+            <p className="mb-4 mt-2 px-2  text-base text-text-secondary ">
               You can create up to 10 categories and as many fields as you need.
               There are different types available for fields{" "}
               <LinkBase href={"/faq#backlogFields"}>
@@ -36,11 +36,11 @@ const Landing = () => {
         textBlock={
           <div>
             <p className=" font-semibold  ">Manage and Organize:</p>
-            <p className=" text-secondary-text">
+            <p className=" text-text-secondary">
               Create folders and arrange your backlogs in the order that makes
               the most sense for you
             </p>
-            <p className=" text-secondary-text">
+            <p className=" text-text-secondary">
               You can change both the order of the backlogs and the folders
               themselves.
             </p>
@@ -108,7 +108,7 @@ const TextBlock = ({
 }) => {
   return (
     <div
-      className={`${dir === "left" ? " col-start-1 col-end-4" : " col-start-10 col-end-13 "} row-start-1  bg-primary-btn-hover`}
+      className={`${dir === "left" ? " col-start-1 col-end-4" : " col-start-10 col-end-13 "} row-start-1  bg-btn-primary-hover`}
     >
       <div className="p-4">{children}</div>
     </div>
@@ -155,7 +155,7 @@ const SectionAnimated = ({
         className={` container top-0 flex w-full  justify-center  text-2xl   `}
         // style={{ position: pos }}
       >
-        <div className="container  bg-background">
+        <div className="container  bg-bg-main">
           <div className="grid-rows-1  md:grid md:grid-cols-12 ">
             <TextBlock dir={dir}>{textBlock}</TextBlock>
             <ContentBlock dir={dir === "left" ? "right" : "left"}>
@@ -172,7 +172,7 @@ const SectionAnimated = ({
           ease: "easeInOut",
           duration: 1,
         }}
-        className={` absolute inset-0 z-10 ${dir === "left" ? "origin-left" : "origin-right"}  bg-primary-btn-hover`}
+        className={` absolute inset-0 z-10 ${dir === "left" ? "origin-left" : "origin-right"}  bg-btn-primary-hover`}
       ></motion.div>
     </motion.section>
   );

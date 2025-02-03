@@ -74,7 +74,7 @@ const UserRegisterForm = () => {
   return (
     <div className="ms-12 h-full w-80 self-start pt-10">
       <h1 className=" font-semibol mb-2 text-3xl">Create Your Account</h1>
-      <div className="mb-4 mt-10 border-t border-subtle-1 " />
+      <div className="mb-4 mt-10 border-t border-border-subtle-1 " />
       <div className="flex flex-col gap-4 ">
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputWithLoader

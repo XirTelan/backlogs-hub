@@ -7,7 +7,7 @@ const SignOutButton = () => {
   const router = useRouter();
   return (
     <button
-      className="flex h-12 w-full items-center justify-between hover:bg-subtle-3/15 "
+      className="flex h-12 w-full items-center justify-between hover:bg-layer-1-hover "
       onClick={async () => {
         await fetch("/api/auth/signOut", {
           method: "POST",
@@ -17,7 +17,7 @@ const SignOutButton = () => {
         router.refresh();
       }}
     >
-      <div className="mx-4 text-secondary-text">Sign Out</div>
+      <div className="mx-4 text-text-secondary">Sign Out</div>
       <GrLogout size={18} className="me-3" />
     </button>
   );

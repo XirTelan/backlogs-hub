@@ -12,9 +12,9 @@ const BlockWrapper = ({
   description: React.ReactNode;
   children: React.ReactNode;
 }) => (
-  <div id={id ?? title} className="w-fit text-primary-text">
+  <div id={id ?? title} className="w-fit text-text-primary">
     <Title variant={3} title={title} />
-    <div className=" text-secondary-text">{description}</div>
+    <div className=" text-text-secondary">{description}</div>
     <DemoBlock>{children}</DemoBlock>
   </div>
 );

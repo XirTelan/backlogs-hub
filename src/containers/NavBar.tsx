@@ -33,19 +33,19 @@ const NavBar = ({ userName }: { userName: string }) => {
   );
   return (
     <nav className="flex items-center">
-      <span className=" flex md:hidden">
+      <div className=" flex md:hidden">
         <SidePanel position="left" icon={<GiHamburgerMenu />}>
           {navList}
         </SidePanel>
         <HomeLink />
-      </span>
-      <span className=" hidden md:flex md:items-center">
+      </div>
+      <div className=" hidden md:flex md:items-center">
         <HomeLink />
         <div className="flex py-3 pe-4">
-          <div className="bg-border-1  h-6 w-[1px] grow "></div>
+          <div className="bg-border-subtle-1  h-6 w-[1px] grow "></div>
         </div>
         {navList}
-      </span>
+      </div>
     </nav>
   );
 };

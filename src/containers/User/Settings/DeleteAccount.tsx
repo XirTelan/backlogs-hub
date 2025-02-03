@@ -19,7 +19,7 @@ const DeleteAccount = () => {
     }
   };
   return (
-    <div className=" max-w-sm bg-background p-4 text-white md:max-w-xl">
+    <div className=" max-w-sm bg-bg-main p-4 text-white md:max-w-xl">
       <Title variant={2} title={"Delete account"} />
       <p className="my-4">
         Once you delete your account, your profile and username are permanently

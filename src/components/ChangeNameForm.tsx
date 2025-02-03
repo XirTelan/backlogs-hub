@@ -41,7 +41,7 @@ const ChangeNameForm = () => {
 
   const { isLoading, isAvailable } = useLoaderValue(value, isUserExist);
   return (
-    <div className=" bg-background p-4 text-white">
+    <div className=" bg-bg-main p-4 text-white">
       <Title variant={2} title={"Change user name"}></Title>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputWithLoader

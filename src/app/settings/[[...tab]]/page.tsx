@@ -1,7 +1,8 @@
-import UserSettings, { TabsType } from "@/containers/User/UserSettings";
+import { TabsType } from "@/containers/User/UserSettings";
 import { routesList } from "@/lib/routesList";
 import { Session } from "@/providers/sessionProvider";
 import { getCurrentUserData } from "@/services/user";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -10,6 +11,8 @@ const isPopulated = (
 ): arr is { _id: string; email: string; provider: string }[] => {
   return arr.every((item) => typeof item === "object");
 };
+
+const UserSettings = dynamic(() => import("@/containers/User/UserSettings"));
 
 const Page = async (props: { params: Promise<{ tab: [TabsType] }> }) => {
   const params = await props.params;

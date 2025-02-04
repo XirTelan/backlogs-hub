@@ -50,7 +50,7 @@ const Carousel = <T,>({
         {active != 0 && (
           <button
             onClick={decrease}
-            className="absolute bottom-0 left-0 top-0 z-40 h-12 w-12  animate-pulse text-primary-btn"
+            className="absolute bottom-0 left-0 top-0 z-40 h-12 w-12  animate-pulse text-btn-primary"
           >
             <FaChevronLeft className="absolute inset-0 " size={48} />
           </button>
@@ -58,7 +58,7 @@ const Carousel = <T,>({
         {active < n - 1 && (
           <button
             onClick={increase}
-            className="absolute bottom-0 right-0 top-0 z-40 h-12 w-12 animate-pulse text-primary-btn"
+            className="absolute bottom-0 right-0 top-0 z-40 h-12 w-12 animate-pulse text-btn-primary"
           >
             <FaChevronRight className="absolute inset-0 " size={48} />
           </button>

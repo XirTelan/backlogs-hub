@@ -8,7 +8,7 @@ import rehypeSanitize from "rehype-sanitize";
 const UpdatesList = ({ data }: { data: NewsType[] }) => {
   if (!data || data.length === 0) return <div>Updates doesnot found</div>;
   return (
-    <div>
+    <div data-color-mode={localStorage?.getItem("theme") ?? "dark"}>
       {data.map((news, indx) => (
         <Accordion
           defaultState={indx === 0 ? true : false}
@@ -17,9 +17,8 @@ const UpdatesList = ({ data }: { data: NewsType[] }) => {
           title={news.title}
         >
           <MDEditor.Markdown
-            style={{ background: "#161616" }}
             rehypePlugins={[rehypeSanitize]}
-            className="flex-1 "
+            className="flex-1"
             source={news.text}
           />
         </Accordion>

@@ -7,7 +7,7 @@ const SignInForm = () => {
   return (
     <div className="h-full pt-10 lg:mx-4 lg:mb-4 lg:w-80">
       <h1 className=" font-semibol mb-2 text-3xl text-text-primary">
-        <span className=" text-primary-link"> Sign In</span> to BacklogsHub
+        <span className=" text-link-primary"> Sign In</span> to BacklogsHub
       </h1>
       <div className="mb-4 mt-10 border-t border-border-subtle-1 " />
       <div className="flex flex-col gap-4 ">

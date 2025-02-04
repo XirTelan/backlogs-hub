@@ -20,7 +20,7 @@ const ButtonBase = ({
       <button
         {...props}
         className={classNames(
-          "relative flex  w-full  items-center text-nowrap cursor-pointer disabled:bg-layer-3 disabled:text-white/25",
+          "relative flex not-disabled:cursor-pointer  w-full  items-center text-nowrap disabled:bg-layer-3 disabled:text-text-on-color-disabled",
           btnStyleVariants.colors[variant],
           btnStyleVariants.heights[size],
         )}
@@ -42,6 +42,7 @@ const ButtonBase = ({
               btnStyleVariants.sizes[size],
               {
                 "ms-auto": text,
+                "text-icon-primary": !text && variant === "ghost",
               },
             )}
           >

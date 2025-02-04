@@ -16,7 +16,7 @@ export const btnStyleVariants = {
     secondary: "bg-btn-secondary hover:bg-btn-secondary-hover text-white",
     accent: "bg-green-800 hover:bg-green-700",
     tertiary:
-      "outline text-white   hover:text-text-inverse outline-1 -outline-offset-2 outline-white hover:bg-btn-tertiary-hover",
+      "outline text-btn-tertiary   hover:text-text-inverse outline-1 -outline-offset-2 outline-btn-tertiary hover:bg-btn-tertiary-hover",
     ghost: "text-link-primary hover:bg-layer-1-hover",
     ghostAccent: " text-green-500 hover:text-green-400 hover:bg-layer-1-hover ",
     dangerPrimary: "bg-btn-danger-primary hover:bg-btn-danger-hover text-white",

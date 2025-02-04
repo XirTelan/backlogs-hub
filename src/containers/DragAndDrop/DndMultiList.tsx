@@ -20,13 +20,10 @@ import {
 } from "@dnd-kit/sortable";
 import { Item } from "@/components/dnd/Item";
 import DroppableContainer from "../DragAndDrop/DroppableContainer";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
-import AddItem from "@/components/dnd/AddItem";
-import { IoMdAdd } from "react-icons/io";
 
 import useDragAndDrop from "@/hooks/useDragAndDrop";
 import { DndListProps } from "@/types";
-import useToggle from "@/hooks/useToggle";
+import ActionsBlock from "./ActionsBlock";
 
 type BaseItem = {
   _id: string;
@@ -268,41 +265,4 @@ const dropAnimation: DropAnimation = {
       },
     },
   }),
-};
-
-function ActionsBlock({
-  addNewItem,
-  disabled,
-  handleSave,
-  saveStrategy,
-}: ActionsBlockProps) {
-  const { isOpen, setOpen, setClose } = useToggle(false);
-
-  if (isOpen)
-    return (
-      <div>
-        <AddItem action={addNewItem} close={setClose} disabled={disabled} />
-      </div>
-    );
-
-  return (
-    <div className="group flex h-fit items-center">
-      <ButtonBase
-        variant="secondary"
-        size="medium"
-        onClick={setOpen}
-        icon={<IoMdAdd />}
-      />
-      {saveStrategy === "manual" && (
-        <ButtonBase text="Save changes" size="medium" onClick={handleSave} />
-      )}
-    </div>
-  );
-}
-
-type ActionsBlockProps = {
-  saveStrategy: "manual" | "onChange";
-  disabled: (value: string) => boolean;
-  addNewItem: (newItem: string) => void;
-  handleSave: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };

@@ -191,7 +191,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
                 {...register("title", { required: true })}
               />
               {isLinkedToGame && (
-                <div className="absolute bottom-0 right-0 top-0 mt-6  text-primary-btn-hover">
+                <div className="absolute bottom-0 right-0 top-0 mt-6 text-btn-primary-hover ">
                   <ButtonBase
                     variant="ghost"
                     type="button"

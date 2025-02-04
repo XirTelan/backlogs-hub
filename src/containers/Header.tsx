@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import { getCurrentUserInfo } from "@/auth/utils";
 import UserPanel from "./User/UserPanel";
 import HomeLink from "@/components/HomeLink";
+import ThemeSwitch from "@/components/ThemeSwitch";
 
 const Header = async () => {
   const user = await getCurrentUserInfo();
@@ -13,12 +14,16 @@ const Header = async () => {
         {user ? (
           <div className="flex  w-full items-center justify-between">
             <NavBar userName={user.username!} />
-            <UserPanel userName={user.username!} />
+            <div className="flex">
+              <ThemeSwitch />
+              <UserPanel userName={user.username!} />
+            </div>
           </div>
         ) : (
           <>
             <HomeLink />
-            <div className="ms-auto">
+            <div className="ms-auto flex">
+              <ThemeSwitch />
               <SignInButton />
             </div>
           </>

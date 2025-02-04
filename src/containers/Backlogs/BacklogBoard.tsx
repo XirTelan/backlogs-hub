@@ -71,7 +71,7 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
   if (!data) return <div> Backlog doesnt exist or you dont have access </div>;
 
   const containerTitle = (id: string) => (
-    <div className=" group mb-2 flex w-60 flex-1 justify-between border-b border-border-subtle-1 pb-2 text-text-primary  hover:cursor-grab">
+    <div className=" group mb-2 flex w-60 flex-1 justify-between border-b border-border-subtle-1 pb-2   hover:cursor-grab">
       <Title title={id} variant={3} />
       <div
         onMouseDown={(e) => e.stopPropagation()}
@@ -80,9 +80,8 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
       >
         <ItemFormModalOpen
           btnOptions={{
-            variant: "ghost",
+            variant: "secondary",
             hideText: true,
-            text: "",
             title: "Create item",
           }}
         />
@@ -103,7 +102,8 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
           containersOptions={{
             handle: false,
             style: {
-              background: "rgb(0 0 0)",
+              background: "black",
+              color: "var(--color-text-on-color)",
               padding: "1rem",
             },
             customTitle: containerTitle,
@@ -128,7 +128,7 @@ function renderDndItem({ item, isSortingContainer, ...rest }: RenderItemProps) {
       {...rest}
       handle={false}
     >
-      <div className="flex  h-12 flex-1 cursor-grab items-center justify-between  ps-2 text-sm hover:active:cursor-grabbing  ">
+      <div className="flex  h-12 flex-1 cursor-grab items-center bg-layer-1 text-text-primary justify-between  ps-2 text-sm hover:active:cursor-grabbing  ">
         <div onMouseDown={(e) => e.stopPropagation()}>
           <ItemFastRename
             type="button"
@@ -145,7 +145,9 @@ function renderDndItem({ item, isSortingContainer, ...rest }: RenderItemProps) {
                       style={{ color: "#fff" }}
                       onClick={handle}
                     >
-                      <p className=" text-left ">{item.title}</p>
+                      <p className=" text-left text-text-primary ">
+                        {item.title}
+                      </p>
                     </button>
                   )}
                 />

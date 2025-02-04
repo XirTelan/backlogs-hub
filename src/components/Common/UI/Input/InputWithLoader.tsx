@@ -10,10 +10,14 @@ type InputWithLoaderProps = {
   errorMsg?: string;
 };
 
-const InputWithLoader = React.forwardRef<
-  HTMLInputElement,
-  InputFieldProps & InputWithLoaderProps
->(({ isLoading, errorMsg, isAvailable, helperText, ...props }, ref) => {
+const InputWithLoader = ({
+  isLoading,
+  errorMsg,
+  isAvailable,
+  helperText,
+  ref,
+  ...props
+}: InputFieldProps & InputWithLoaderProps) => {
   const getHelperText = (
     isLoading: boolean,
     isAvailable: boolean,
@@ -45,6 +49,5 @@ const InputWithLoader = React.forwardRef<
       </div>
     </InputField>
   );
-});
-InputWithLoader.displayName = "InputWithLoader";
+};
 export default InputWithLoader;

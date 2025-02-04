@@ -5,10 +5,8 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root {
-  color-scheme: dark;
-  scrollbar-color: #393939 #242424;
+  color-scheme: dark light;
   scroll-behavior: smooth;
-  --background-light: white;
 
   --clr-gray-100: #161616;
   --clr-gray-90: #262626;
@@ -22,13 +20,21 @@
   --clr-gray-50: #8d8d8d;
   --clr-gray-40: #a8a8a8;
   --clr-gray-30: #c6c6c6;
+  --clr-gray-20: #e0e0e0;
   --clr-gray-10: #f4f4f4;
+  --clr-gray-10-hover: #e8e8e8;
 
+  --clr-blue-70: #0043ce;
   --clr-blue-60: #0f62fe;
   --clr-blue-60-hover: #0353e9;
   --clr-blue-50: #4589ff;
   --clr-blue-40: #78a9ff;
   --clr-blue-30: #a6c8ff;
+
+  --clr-yellow-30: #f1c21b;
+
+  --clr-green-50: #24a148;
+  --clr-green-40: #42be65;
 
   --clr-red-60: #da1e28;
   --clr-red-60-hover: #ba1b23;
@@ -37,15 +43,16 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
+  scrollbar-color: #393939 #242424;
 
   --clr-background-main: var(--clr-gray-100);
   --clr-background-hover: rgba(from var(--clr-gray-50) r g b / 0.16);
-  --clr-background-active: (var(--background-hover));
-  --clr-background-selected: (var(--background-hover));
-  --clr-background-selected-hover: (var(--background-hover));
-  --clr-background-inverse: (var(--background-hover));
-  --clr-background-inverse-hover: (var(--background-hover));
-  --clr-background-brand: (var(--background-hover));
+  --clr-background-active: rgba(from var(--clr-gray-50) r g b / 0.4);
+  --clr-background-selected: rgba(from var(--clr-gray-50) r g b / 0.24);
+  --clr-background-selected-hover: rgba(from var(--clr-gray-50) r g b / 0.32);
+  --clr-background-inverse: var(--clr-gray-10);
+  --clr-background-inverse-hover: var(--clr-gray-10-hover);
+  --clr-background-brand: (var(--clr-blue-60));
 
   --clr-layer-01: var(--clr-gray-90);
   --clr-layer-02: var(--clr-gray-80);
@@ -67,8 +74,7 @@
   --clr-layer-02-selected: var(--clr-gray-90);
   --clr-layer-03-selected: var(--clr-gray-90);
 
-  --clr-text-primary: var(--clr-gray-10);
-  --clr-text-secondary: var(--clr-gray-30);
+  --clr-layer-selected-inverse: var(--clr-gray-10);
 
   --clr-field-01: var(--clr-gray-90);
   --clr-field-02: var(--clr-gray-80);
@@ -89,7 +95,12 @@
 
   --clr-border-interactive: var(--clr-blue-50);
 
+  --clr-text-primary: var(--clr-gray-10);
+  --clr-text-secondary: var(--clr-gray-30);
   --clr-text-inverse: var(--clr-gray-100);
+  --clr-text-on-color: white;
+  --clr-text-on-color-disabled: rgb(255, 255, 255, 0.25);
+  --clr-text-error: var(--clr-red-40);
 
   --clr-link-primary: var(--clr-blue-40);
   --clr-link-primary-hover: var(--clr-blue-30);
@@ -107,11 +118,112 @@
 
   --clr-button-tertiary: white;
   --clr-button-tertiary-hover: var(--clr-gray-10);
+
+  --clr-icon-primary: var(--clr-gray-10);
+
+  --clr-focus: white;
+  --clr-focus-inset: var(--clr-gray-100);
+  --clr-focus-inverse: var(--clr-blue-60);
+
+  --clr-support-error: var(--clr-red-50);
+  --clr-support-success: var(--clr-green-40);
+  --clr-support-warning: var(--clr-yellow-30);
+  --clr-support-info: var(--clr-blue-50);
 }
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --background-main: var(--background-light);
+  --clr-background-main: white;
+  --clr-background-hover: rgba(from var(--clr-gray-50) r g b / 0.12);
+  --clr-background-active: rgba(from var(--clr-gray-50) r g b / 0.5);
+  --clr-background-selected: rgba(from var(--clr-gray-50) r g b / 0.2);
+  --clr-background-selected-hover: rgba(from var(--clr-gray-50) r g b / 0.32);
+  --clr-background-inverse: var(--clr-gray-80);
+  --clr-background-inverse-hover: var(--clr-gray-80-hover);
+  --clr-background-brand: var(--clr-blue-60);
+
+  --clr-layer-01: var(--clr-gray-10);
+  --clr-layer-02: white;
+  --clr-layer-03: var(--clr-gray-10);
+
+  --clr-layer-accent-01: var(--clr-gray-20);
+  --clr-layer-accent-02: var(--clr-gray-20);
+  --clr-layer-accent-03: var(--clr-gray-20);
+
+  --clr-layer-01-hover: var(--clr-gray-10-hover);
+  --clr-layer-02-hover: var(--clr-gray-10-hover);
+  --clr-layer-03-hover: var(--clr-gray-10-hover);
+
+  --clr-layer-01-active: var(--clr-gray-30);
+  --clr-layer-02-active: var(--clr-gray-30);
+  --clr-layer-03-active: var(--clr-gray-30);
+
+  --clr-layer-01-selected: var(--clr-gray-20);
+  --clr-layer-02-selected: var(--clr-gray-20);
+  --clr-layer-03-selected: var(--clr-gray-20);
+
+  --clr-layer-selected-inverse: var(--clr-gray-100);
+
+  --clr-field-01: var(--clr-gray-10);
+  --clr-field-02: white;
+  --clr-field-03: var(--clr-gray-10);
+
+  --clr-field-hover-01: var(--clr-gray-10-hover);
+  --clr-field-hover-02: var(--clr-gray-10-hover);
+  --clr-field-hover-03: var(--clr-gray-10-hover);
+
+  --clr-border-subtle-00: var(--clr-gray-20);
+  --clr-border-subtle-01: var(--clr-gray-30);
+  --clr-border-subtle-02: var(--clr-gray-20);
+  --clr-border-subtle-03: var(--clr-gray-30);
+
+  --clr-border-strong-01: var(--clr-gray-50);
+  --clr-border-strong-02: var(--clr-gray-50);
+  --clr-border-strong-03: var(--clr-gray-50);
+
+  --clr-border-interactive: var(--clr-blue-60);
+
+  --clr-text-primary: var(--clr-gray-100);
+  --clr-text-secondary: var(--clr-gray-70);
+  --clr-text-inverse: white;
+  --clr-text-on-color: white;
+  --clr-text-on-color-disabled: var(--clr-gray-50);
+  --clr-text-error: var(--clr-red-60);
+
+  --clr-link-primary: var(--clr-blue-60);
+  --clr-link-primary-hover: var(--clr-blue-70);
+
+  --clr-button-primary: var(--clr-blue-60);
+  --clr-button-primary-hover: var(--clr-blue-60-hover);
+  --clr-button-primary-active: var(--clr-blue-80);
+
+  --clr-button-danger-primary: var(--clr-red-60);
+  --clr-button-danger-secondary: var(--clr-red-60);
+  --clr-button-danger-hover: var(--clr-red-60-hover);
+
+  --clr-button-secondary: var(--clr-gray-80);
+  --clr-button-secondary-hover: var(--clr-gray-80-hover);
+
+  --clr-button-tertiary: var(--clr-blue-60);
+  --clr-button-tertiary-hover: var(--clr-blue-60-hover);
+
+  --clr-icon-primary: var(--clr-gray-100);
+
+  --clr-focus: var(--clr-blue-60);
+  --clr-focus-inset: white;
+  --clr-focus-inverse: white;
+
+  --clr-support-error: var(--clr-red-60);
+  --clr-support-success: var(--clr-green-50);
+  --clr-support-warning: var(--clr-yellow-30);
+  --clr-support-info: var(--clr-blue-70);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-color-mode*="dark"] .wmde-markdown,
+  [data-color-mode*="dark"] .wmde-markdown-var {
+    --color-canvas-default: var(--clr-background-main);
+  }
 }
 
 @theme {
@@ -127,6 +239,8 @@
 
   --color-layer-accent-1: var(--clr-layer-accent-01);
 
+  --color-layer-selected-inverse: var(--clr-layer-selected-inverse);
+
   --color-border-subtle-1: var(--clr-border-subtle-01);
   --color-border-subtle-2: var(--clr-border-subtle-02);
   --color-border-subtle-3: var(--clr-border-subtle-03);
@@ -139,6 +253,8 @@
   --color-text-primary: var(--clr-text-primary);
   --color-text-secondary: var(--clr-text-secondary);
   --color-text-inverse: var(--clr-text-inverse);
+  --color-text-on-color: var(--clr-text-on-color);
+  --color-text-error: var(--clr-text-error);
 
   --color-link-primary: var(--clr-link-primary);
   --color-link-primary-hover: var(--clr-link-primary-hover);
@@ -161,31 +277,16 @@
   --color-btn-danger-primary: var(--clr-button-danger-primary);
   --color-btn-danger-secondary: var(--clr-button-danger-secondary);
   --color-btn-danger-hover: var(--clr-button-danger-hover);
-}
 
-/*
-UI/Switcher
-*/
+  --color-icon-primary: var(--clr-icon-primary);
 
-.sw-btn[data-active="false"]:not(:last-child) p {
-  border-right: 1px solid #525252;
-}
-.sw-btn.preactive p,
-.sw-btn.active p {
-  border: none;
-}
+  --color-focus: var(--clr-focus);
+  --color-focus-inset: var(--clr-focus-inset);
+  --color-focus-inverse: var(--clr-focus-inverse);
 
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  padding: 0 1em 0 0;
-  margin: 0;
-  width: 100%;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: inherit;
-  line-height: inherit;
-  outline: none;
+  --color-support-error: var(--clr-support-error);
+  --color-support-success: var(--clr-support-success);
+  --color-support-warning: var(--clr-support-warning);
+  --color-support-info: var(--clr-support-info);
+  --color-text-on-color-disabled: var(--clr-text-on-color-disabled);
 }

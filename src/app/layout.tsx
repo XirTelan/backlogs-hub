@@ -54,7 +54,7 @@ export default function RootLayout({
 
           <Header />
           <ProgressBarProvider>
-            <div className="mt-[49px] flex flex-col">{children}</div>
+            <div className="mt-12 flex flex-col">{children}</div>
           </ProgressBarProvider>
 
           <Footer />

@@ -105,9 +105,6 @@ const ItemChangeCategory = ({
                       }}
                     ></div>
                   }
-                  style={{
-                    color: "#fff",
-                  }}
                 >
                   {category.name}
                 </ButtonBase>

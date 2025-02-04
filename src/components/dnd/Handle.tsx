@@ -1,23 +1,21 @@
-import React, { CSSProperties, ReactElement, forwardRef } from "react";
+import React, { CSSProperties, JSX, ReactElement } from "react";
 
-type Props = {
+export type HandleProps = {
   children: ReactElement;
   style: CSSProperties;
+} & JSX.IntrinsicElements["button"];
+
+const Handle = ({ children, style, ref, ...props }: HandleProps) => {
+  return (
+    <button
+      ref={ref}
+      type={"button"}
+      className=" touch-none   items-center  border-y border-l border-neutral-700  bg-neutral-800 p-2  hover:cursor-grab "
+      style={style}
+      {...props}
+    >
+      {children}
+    </button>
+  );
 };
-const Handle = forwardRef<HTMLButtonElement, Props>(
-  ({ children, style, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        type="button"
-        className=" touch-none   items-center  border-y border-l border-neutral-700  bg-neutral-800 p-2  hover:cursor-grab "
-        style={style}
-        {...props}
-      >
-        {children}
-      </button>
-    );
-  },
-);
-Handle.displayName = "Handle";
 export default Handle;

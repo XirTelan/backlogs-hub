@@ -8,11 +8,20 @@ import {
   ConfigType,
 } from "./zodTypes";
 import { btnStyleVariants } from "./lib/styles";
-import React, { ComponentPropsWithRef, ComponentType, ReactNode } from "react";
+import React, { ComponentType, ReactNode } from "react";
 import { UniqueIdentifier } from "@dnd-kit/core";
 type Layer = 1 | 2 | 3;
 
-export type InputFielBasedProps = {
+export type InputBaseProps = {
+  layer?: Layer;
+  isError?: boolean;
+  variant?: "small" | "medium" | "large";
+} & React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
+
+export type InputFieldBaseProps = {
   layer?: Layer;
   helperText?: { message: string; type: "text" | "error" };
   variant?: "small" | "medium" | "large";
@@ -21,7 +30,7 @@ export type InputFielBasedProps = {
   HTMLInputElement
 >;
 
-export type InputFieldProps = InputFielBasedProps & {
+export type InputFieldProps = InputFieldBaseProps & {
   label?: React.ReactNode;
   error?: string;
   isSimple?: boolean;
@@ -74,11 +83,16 @@ export type SortableItemProps = {
   index: number;
   title: string;
   handle: boolean;
-  handpleProps?: ComponentPropsWithRef<"button">;
+  handpleProps?: HandleProps;
   disabled?: boolean;
   style?: React.CSSProperties;
   renderItem?: () => React.ReactElement;
 };
+
+export type HandleProps = {
+  children: ReactElement;
+  style: CSSProperties;
+} & JSX.IntrinsicElements["button"];
 
 export type FieldsBlockProps = {
   errors?:

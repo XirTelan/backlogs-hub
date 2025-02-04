@@ -42,7 +42,7 @@ const BacklogFolder = ({
                     {backlog.totalCount > 0 ? (
                       <div className="flex items-center justify-between">
                         <span>In the backlog:</span>
-                        <span className=" text-primary-link">
+                        <span className="text-link-primary">
                           {backlog.totalCount}
                         </span>
                       </div>

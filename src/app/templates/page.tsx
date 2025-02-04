@@ -1,5 +1,5 @@
 import { getCurrentUserInfo } from "@/auth/utils";
-import Title from "@/components/Common/Title";
+import TopTitle from "@/components/Common/UI/TopTitle";
 import dynamic from "next/dynamic";
 
 const TemplateSwitcher = dynamic(
@@ -20,18 +20,14 @@ const Templates = async (props: {
   const query = filter ? `?filter=${filter}` : "";
   return (
     <>
-      <div className="mb-4 flex w-full  justify-center bg-black">
-        <div className="container">
-          <Title title={"Templates"} />
-        </div>
-      </div>
+      <TopTitle title={"Templates"}></TopTitle>
       <main id="maincontent" className="container self-center">
         <div className="mb-4 ms-4">
           <TemplateSwitcher />
         </div>
         <TemplateList userName={user?.username || ""} search={query} />
       </main>
-    </>
+  </>
   );
 };
 

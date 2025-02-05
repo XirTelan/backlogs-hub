@@ -16,11 +16,11 @@ const Setting = ({
       <div className=" flex w-full  items-center justify-between">
         <div className=" text-text-secondary">
           <label className=" text-text-primary">{label}</label>
-          <p className=" text-text-secondary">{description}</p>
+          <p className=" text-sm text-text-secondary pe-4">{description}</p>
         </div>
         <div className="flex items-center">
           {value && <div className="">{value}</div>}
-          <div>{children}</div>
+          <>{children}</>
         </div>
       </div>
     </div>

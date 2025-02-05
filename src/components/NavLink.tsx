@@ -21,7 +21,7 @@ const style = {
 };
 const textSizes = {
   primary: "text-[18px] leading-[18px] text-text-primary",
-  secondary: "text-base text-text-secondary ",
+  secondary: "text-sm leading-4 text-text-secondary ",
 };
 const NavLink = ({
   href,
@@ -36,17 +36,17 @@ const NavLink = ({
   return (
     <li
       className={classNames(
-        "relative list-none outline-offset-4 after:w-full hover:bg-layer-1-hover ",
+        "relative list-none outline-offset-4  after:w-full hover:bg-layer-1-hover ",
         style[variant][isActive ? "active" : "default"],
       )}
     >
       <Link href={href} className={`flex  items-center  ${textSizes[text]}`}>
         {label && (
-          <div
+          <span
             className={`px-4 ${variant === "simple" ? "py-2 " : "py-[15px]"}`}
           >
             {label}
-          </div>
+          </span>
         )}
         {children && <div className="ms-auto w-12 p-[14px]">{children}</div>}
       </Link>

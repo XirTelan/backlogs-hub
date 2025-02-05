@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
 const variants = {
   default: "flex-col pb-2",
@@ -28,7 +28,7 @@ const Select = ({
         <select
           {...props}
           ref={ref}
-          className={` ${elevStyle}  pe-8 ps-4 text-text-secondary appearance-none outline-none m-0  *:bg-layer-1 hover:cursor-pointer `}
+          className={` ${elevStyle} w-full pe-8 ps-4 text-text-secondary appearance-none outline-none m-0  *:bg-layer-1 hover:cursor-pointer `}
         >
           {options.map((option, indx) => (
             <option key={indx} value={option}>
@@ -36,7 +36,7 @@ const Select = ({
             </option>
           ))}
         </select>
-        <IoIosArrowUp className="pointer-events-none absolute right-2" />
+        <IoIosArrowDown className="pointer-events-none absolute right-2" />
       </div>
     </div>
   );

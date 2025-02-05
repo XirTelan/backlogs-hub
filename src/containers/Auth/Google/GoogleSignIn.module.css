@@ -37,6 +37,11 @@
   display: block;
 }
 
+:root[data-theme="light"] .gsi-material-button {
+  background-color: var(--color-background-main);
+  color: var(--color-text-primary);
+}
+
 .gsi-material-button .gsi-material-button-icon {
   height: 20px;
   margin-right: 12px;

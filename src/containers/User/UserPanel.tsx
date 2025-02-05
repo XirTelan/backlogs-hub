@@ -5,6 +5,7 @@ import NavLink from "@/components/NavLink";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { routesList } from "@/lib/routesList";
+import Divider from "@/components/Common/UI/Divider";
 
 const links = [
   {
@@ -22,10 +23,13 @@ const links = [
 const UserPanel = async ({ userName }: { userName: string }) => {
   return (
     <>
-      <SidePanel icon={<VscAccount />}>
+      <SidePanel
+        icon={<VscAccount />}
+        buttonProps={{ "aria-label": "Right menu toggle" }}
+      >
         <>
-          <div className="flex items-center gap-2 p-4 ">
-            <div className="flex h-10 w-10 shrink-0 items-center   justify-center rounded-full bg-btn-primary  ">
+          <div className="flex items-center gap-2 p-2 ">
+            <div className="flex h-8 w-8 shrink-0 items-center   justify-center rounded-full bg-btn-primary  ">
               <span>{userName[0].toUpperCase()}</span>
             </div>
             <div className=" break-all">{userName}</div>
@@ -36,7 +40,7 @@ const UserPanel = async ({ userName }: { userName: string }) => {
             href={`/user/${userName}`}
             label={"View profile"}
           ></NavLink>
-          <div className=" h-[1px] w-full  bg-border  "></div>
+          <Divider />
           <ul>
             {links.map((link, indx) => (
               <NavLink
@@ -47,7 +51,7 @@ const UserPanel = async ({ userName }: { userName: string }) => {
                 label={link.label}
               ></NavLink>
             ))}
-            <div className=" h-[1px] w-full  bg-border  "></div>
+            <Divider />
             <SignOutButton />
           </ul>
         </>

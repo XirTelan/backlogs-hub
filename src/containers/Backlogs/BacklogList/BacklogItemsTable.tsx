@@ -6,14 +6,20 @@ import SearchFilter from "@/containers/SearchFilter";
 
 const Table = createTable();
 
-export const BacklogItemsTableToolbar = () => {
+export const BacklogItemsTableToolbar = ({
+  showFilters = true,
+  showAction = true,
+}: {
+  showFilters?: boolean;
+  showAction?: boolean;
+}) => {
   return (
     <Table.ToolBar
       search
       customButton={
         <div className="flex">
-          <SearchFilter />
-          <ItemFormModalOpen />
+          {showFilters && <SearchFilter />}
+          {showAction && <ItemFormModalOpen />}
         </div>
       }
     />

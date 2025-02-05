@@ -20,7 +20,7 @@ const SignInButton = () => {
       />
       {showForm ? (
         <Modal setClose={() => setShowForm(false)}>
-          <div className="px-4 pb-4" style={{ background: "#161616" }}>
+          <div className="px-4 pb-4 bg-bg-main">
             <SignInForm />
           </div>
         </Modal>

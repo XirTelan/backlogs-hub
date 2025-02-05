@@ -27,6 +27,7 @@ const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
       </Setting>
       <Setting label="Pagination">
         <Select
+          layer={2}
           defaultValue={config.pagination}
           options={["bottom", "top", "both"]}
           onChange={async (e) => {
@@ -36,6 +37,7 @@ const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
       </Setting>
       <Setting label="Category filter block view">
         <Select
+          layer={2}
           defaultValue={config.categoryBlockView}
           onChange={async (e) => {
             const res = await updateUserInfo(
@@ -50,6 +52,7 @@ const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
 
       <Setting label="Items Category designation">
         <Select
+          layer={2}
           defaultValue={config.categoryDesignation}
           onChange={async (e) => {
             const res = await updateUserInfo(

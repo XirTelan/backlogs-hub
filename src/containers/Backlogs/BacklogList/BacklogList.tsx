@@ -49,7 +49,7 @@ const Backloglist = ({ id, isOwner }: BackloglistProps) => {
 
   return (
     <>
-      <BacklogItemsTableToolbar />
+      <BacklogItemsTableToolbar showAction={!!user?._id} />
       {isLoading ? (
         <SkeletonDataTable />
       ) : (

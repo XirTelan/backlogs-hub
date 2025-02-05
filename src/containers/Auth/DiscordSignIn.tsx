@@ -5,7 +5,7 @@ const DiscordSignIn = () => {
   return (
     <Link
       href={process.env.NEXT_PUBLIC_DISCORDOAUTH!}
-      className="flex items-center justify-between rounded border border-neutral-600 bg-neutral-900 p-2 hover:bg-neutral-700"
+      className="flex items-center justify-between rounded border border-border-subtle-1 bg-bg-main p-2 hover:border-border-subtle-2"
     >
       <svg
         width="25"

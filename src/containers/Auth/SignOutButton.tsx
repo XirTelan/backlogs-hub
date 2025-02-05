@@ -7,7 +7,7 @@ const SignOutButton = () => {
   const router = useRouter();
   return (
     <button
-      className="flex h-12 w-full items-center justify-between hover:bg-layer-1-hover "
+      className="flex h-8 w-full items-center justify-between hover:bg-layer-1-hover hover:not-[:disabled]:cursor-pointer "
       onClick={async () => {
         await fetch("/api/auth/signOut", {
           method: "POST",

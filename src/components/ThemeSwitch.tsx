@@ -32,6 +32,7 @@ const ThemeSwitch = () => {
         variant="ghost"
         onClick={handleToggle}
         icon={theme == "dark" ? <LuMoonStar /> : <IoSunnyOutline size={18} />}
+        aria-label="Switch theme"
       />
     </div>
   );

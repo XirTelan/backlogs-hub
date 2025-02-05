@@ -35,20 +35,8 @@ const SidePanel = ({
   keepOpen = false,
   onHover = false,
   renderCustomBtn,
-}: {
-  position?: "left" | "right" | "none";
-  direction?: "side" | "bottom";
-  icon: React.ReactNode;
-  borders?: boolean;
-  children: React.ReactNode | React.ReactNode[];
-  keepOpen?: boolean;
-  onHover?: boolean;
-  renderCustomBtn?: (
-    toggle: () => void,
-    isOpen: boolean,
-    ref: React.RefObject<HTMLDivElement | null>,
-  ) => React.ReactNode;
-}) => {
+  buttonProps,
+}: SidePanelProps) => {
   const { isOpen, setOpen, setClose, toggle } = useToggle(false);
 
   const [offset, setOffset] = useState("-100%");
@@ -102,6 +90,7 @@ const SidePanel = ({
         position === "none" ? "h-12" : "h-[49px]",
         " w-12 cursor-pointer   p-[14px]  hover:bg-layer-1-hover ",
       )}
+      {...buttonProps}
     >
       {icon}
     </button>
@@ -135,3 +124,19 @@ const SidePanel = ({
 };
 
 export default SidePanel;
+
+type SidePanelProps = {
+  position?: "left" | "right" | "none";
+  direction?: "side" | "bottom";
+  icon: React.ReactNode;
+  borders?: boolean;
+  children: React.ReactNode | React.ReactNode[];
+  keepOpen?: boolean;
+  onHover?: boolean;
+  buttonProps?: React.ComponentProps<"button">;
+  renderCustomBtn?: (
+    toggle: () => void,
+    isOpen: boolean,
+    ref: React.RefObject<HTMLDivElement | null>,
+  ) => React.ReactNode;
+};

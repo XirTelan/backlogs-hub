@@ -60,8 +60,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const data: BacklogItemDTO = await request.json();
   try {
+    const data: BacklogItemDTO = await request.json();
+    const { success, message } = await isAuthorizedBacklogOwner(
+      data.backlogId,
+      "edit",
+    );
+    if (!success) return sendMsg.error(message, 401);
+
     const res = await addBacklogItem(data);
     if (!res.success) return sendMsg.error(res.erors);
 

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export const sendMsg = {
   success: (message: string = "success", status: number = 200) => {
-    return NextResponse.json({ message: message }, { status: status });
+    return NextResponse.json({ message }, { status });
   },
   error: (
     error: unknown,
@@ -15,10 +15,7 @@ export const sendMsg = {
     } else if (typeof error === "string") {
       message = error;
     }
-    return NextResponse.json(
-      { message: message, error: data },
-      { status: status },
-    );
+    return NextResponse.json({ message, error: data }, { status });
   },
 };
 

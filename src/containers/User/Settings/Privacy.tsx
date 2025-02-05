@@ -5,17 +5,20 @@ import { toastCustom } from "@/lib/toast";
 import { updateUserInfo } from "@/services/user";
 import { UserDTO } from "@/zodTypes";
 import React from "react";
+import Setting from "./Setting";
 
 const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
   const { config } = data;
   return (
     <div className="flex flex-col">
-      <div className=" flex items-center justify-between">
+      <Setting
+        label={"Profile Visability"}
+        description="If the profile is set to private, then all backlogs will be
+            inaccessible for other users regardless of their visibility settings"
+      >
         <Select
           defaultValue={config?.profileVisibility}
           layer={2}
-          variant="inline"
-          label="Profile Visability"
           id="profileVisibility"
           options={["public", "private"]}
           onChange={async (e) => {
@@ -26,18 +29,15 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
             if (res.success) toastCustom.success("Option changed");
           }}
         />
-      </div>
-      <label
-        htmlFor="profileVisibility"
-        className="mb-4 text-sm text-text-secondary"
-      >
-        If the profile is set to private, then all backlogs will be inaccessible
-        for other users regardless of their visibility settings
-      </label>
+      </Setting>
+
       {config?.profileVisibility === "public" && (
         <>
-          <div className="flex justify-between">
-            <span>Hide folders name:</span>
+          <Setting
+            label={"Hide folders name:"}
+            description='  Other users will see your folder names as "Folder
+            1","Folder 2",... etc'
+          >
             <Toggle
               defaultValue={config?.showEmptyFolders || false}
               action={async (state) => {
@@ -45,14 +45,7 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
                 if (res.success) toastCustom.success("Option changed");
               }}
             />
-          </div>
-          <label
-            htmlFor="profileVisibility"
-            className="mb-4 text-sm text-text-secondary"
-          >
-            Other users will see your folder names as &quot;Folder
-            1&quot;,&quot;Folder 2&quot;,... etc
-          </label>
+          </Setting>
         </>
       )}
     </div>

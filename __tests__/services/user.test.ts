@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import dbConnect from "@/lib/dbConnect";
 import { getUserData } from "@/services/user";
 import { describe } from "node:test";

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import {
   clamp,
   cleanParamString,
@@ -126,16 +130,32 @@ describe("utils.colors", () => {
     expect(res).toStrictEqual([123, 0, 24]);
   });
   it("rgbToHex", () => {
-    const res = colors.rgbToHex("rgb(123, 0, 24)");
+    const res = colors.rgbToHex({ r: 123, g: 0, b: 24 });
     expect(res).toBe("#7b0018");
+  });
+  it("rgbToHsl", () => {
+    const { h, s, l } = colors.rgbToHsl({ r: 123, g: 0, b: 24 });
+    expect(h).toBeCloseTo(348, 0);
+    expect(s).toBeCloseTo(100, 0);
+    expect(l).toBeCloseTo(24.1, 0);
+  });
+  it("rgbToHsv", () => {
+    const { hue, sat, v } = colors.rgbToHsv({ r: 123, g: 0, b: 24 });
+    expect(hue).toBeCloseTo(348, 0);
+    expect(sat).toBeCloseTo(100, 0);
+    expect(v).toBeCloseTo(48.2, 0);
   });
   it("hexToRgb with length 6", () => {
     const res = colors.hexToRgb("#7b0018");
-    expect(res).toStrictEqual([123, 0, 24]);
+    expect(res).toStrictEqual({ r: 123, g: 0, b: 24 });
   });
   it("hexToRgb with length 3", () => {
     const res = colors.hexToRgb("#fff");
-    expect(res).toStrictEqual([255, 255, 255]);
+    expect(res).toStrictEqual({ r: 255, g: 255, b: 255 });
+  });
+  it("hsvToRgb", () => {
+    const res = colors.hsvToRgb({ h: 254, s: 0.78, v: 0.45 });
+    expect(res.map((val) => Math.round(val))).toStrictEqual([46, 25, 115]);
   });
 });
 

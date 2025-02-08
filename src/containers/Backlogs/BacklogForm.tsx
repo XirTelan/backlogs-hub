@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import ModifiersMenu from "@/components/ModifiersMenu";
 import Switcher from "@/components/Common/UI/Switcher";
 import useToggle from "@/hooks/useToggle";
+import { FaEye, FaEyeSlash, FaFolder } from "react-icons/fa6";
 
 const MODIFIERS_DEFAULT: ModifiersType = {
   useSteamSearch: false,
@@ -44,6 +45,7 @@ const BacklogForm = <T extends BacklogFormData>({
 
   const {
     register,
+    setValue,
     handleSubmit,
     watch,
     control,
@@ -102,42 +104,72 @@ const BacklogForm = <T extends BacklogFormData>({
       <form onSubmit={handleSubmit(onSubmitInternal)}>
         <div className="flex flex-col md:flex-row   md:items-center md:gap-2">
           <div className="field grow py-2  ">
-            <InputField
-              autoFocus
-              variant="medium"
-              helperText={
-                errors.backlogTitle && {
-                  message: errors.backlogTitle.message!,
-                  type: "error",
+            <span className="w-full inline-flex items-center">
+              <span className="flex w-fit text-text-secondary ">
+                Backlog Title (required){" "}
+              </span>
+              <div
+                title="Select backlog folder"
+                className="flex ms-auto items-center"
+              >
+                <div className="flex items-center">
+                  <FaFolder />
+                  <Select
+                    variant="inline"
+                    aria-label="Select backlog folder"
+                    options={userFolders}
+                    {...register("folder")}
+                  />
+                </div>
+                <div>
+                  <ButtonBase
+                    type="button"
+                    variant="ghost"
+                    {...register("visibility")}
+                    size="medium"
+                    aria-label={`Visability: ${watchAllFields.visibility === "public" ? "Public" : "Private"}`}
+                    title={`Visability: ${watchAllFields.visibility === "public" ? "Public" : "Private"}`}
+                    icon={
+                      watchAllFields.visibility === "public" ? (
+                        <FaEye />
+                      ) : (
+                        <FaEyeSlash />
+                      )
+                    }
+                    onClick={() => {
+                      setValue(
+                        "visibility",
+                        watchAllFields.visibility === "public"
+                          ? "private"
+                          : "public",
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </span>
+            <div className="flex">
+              <InputField
+                autoFocus
+                variant="medium"
+                isSimple
+                helperText={
+                  errors.backlogTitle && {
+                    message: errors.backlogTitle.message!,
+                    type: "error",
+                  }
                 }
-              }
-              id="backlogTitle"
-              label="Backlog Title (required)"
-              {...register(`backlogTitle`, { required: true })}
-              style={{ marginTop: "6px" }}
-            />
-          </div>
-          <div className="md:*:w-min-fit flex  min-w-fit gap-2   md:mb-2 md:items-center ">
-            <div className="w-full">
-              <Select
-                label="Folder"
-                options={userFolders}
-                {...register("folder")}
+                id="backlogTitle"
+                {...register(`backlogTitle`, { required: true })}
               />
-            </div>
-            <div className="w-full">
-              <Select
-                label="Visibility"
-                options={["public", "private"]}
-                {...register("visibility")}
-              />
-            </div>
-            <div className="mt-4 self-center">
               <ModifiersMenu
                 defaultValues={modifiers}
                 setValue={setModifiers}
               />
             </div>
+          </div>
+          <div className="md:*:w-min-fit flex  min-w-fit gap-2  md:items-center ">
+            <div className="self-center"></div>
           </div>
         </div>
 

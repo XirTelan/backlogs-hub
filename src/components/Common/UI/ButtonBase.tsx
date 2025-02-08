@@ -13,6 +13,7 @@ const ButtonBase = ({
   size = "large",
   variant = "primary",
   icon,
+  children,
   ...props
 }: ButtonBaseProps) => {
   return (
@@ -20,11 +21,12 @@ const ButtonBase = ({
       <button
         {...props}
         className={classNames(
-          "relative flex not-disabled:cursor-pointer  w-full  items-center text-nowrap disabled:bg-layer-3 disabled:text-text-on-color-disabled",
+          "relative flex not-disabled:cursor-pointer  w-full  items-center text-nowrap disabled:bg-button-disabled disabled:text-text-on-color-disabled",
           btnStyleVariants.colors[variant],
           btnStyleVariants.heights[size],
         )}
       >
+        {children}
         {text && (
           <div
             className={classNames({

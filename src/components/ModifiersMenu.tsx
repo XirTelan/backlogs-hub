@@ -1,12 +1,12 @@
 "use client";
 import useToggle from "@/hooks/useToggle";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import Modal from "./Common/Modal";
 import ButtonBase from "./Common/UI/ButtonBase";
 import Toggle from "./Common/UI/Toggle";
 import { ModifiersType } from "@/zodTypes";
-import { BsFillWrenchAdjustableCircleFill } from "react-icons/bs";
 import Title from "./Common/Title";
+import { IoMdOptions } from "react-icons/io";
 
 const ModifiersMenu = ({
   defaultValues,
@@ -16,11 +16,6 @@ const ModifiersMenu = ({
   setValue: React.Dispatch<React.SetStateAction<ModifiersType>>;
 }) => {
   const { isOpen, setClose, toggle } = useToggle();
-
-  const activeModifiers = useMemo(
-    () => Object.values(defaultValues).filter((val) => !!val).length,
-    [defaultValues],
-  );
 
   const changeModifierState = useCallback(
     (modifier: keyof ModifiersType) => {
@@ -57,14 +52,14 @@ const ModifiersMenu = ({
   return (
     <>
       <ButtonBase
-        title="Modifiers"
+        aria-label="Open Backlog options modal"
+        title="Backlog options"
         style={{ width: "fit-content" }}
-        variant="accent"
+        variant="secondary"
         type="button"
-        text={`Mods (${activeModifiers})`}
         size="medium"
         hideText
-        icon={<BsFillWrenchAdjustableCircleFill />}
+        icon={<IoMdOptions />}
         onClick={toggle}
       />
       {isOpen && (

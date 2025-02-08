@@ -5,8 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { toastStyle } from "@/components/Common/UI/Notification";
 
 const renderToastContent =
-  // eslint-disable-next-line react/display-name, @typescript-eslint/no-explicit-any
-  (text: string, type: "success" | "error" | "info") => (t: any) => (
+  // eslint-disable-next-line react/display-name
+  (text: string, type: "success" | "error" | "info") => (t: Toast) => (
     <AnimatePresence>
       {t.visible && (
         <motion.div
@@ -29,7 +29,6 @@ const renderToastContent =
       )}
     </AnimatePresence>
   );
-
 export const toastCustom = {
   success: (text: string, options?: toastProps) =>
     toast.custom(renderToastContent(text, "success"), options),

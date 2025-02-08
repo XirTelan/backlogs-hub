@@ -13,7 +13,8 @@ export const btnStyleVariants = {
   },
   colors: {
     primary: "bg-btn-primary hover:bg-btn-primary-hover text-white ",
-    secondary: "bg-btn-secondary hover:bg-btn-secondary-hover text-white",
+    secondary:
+      "bg-btn-secondary hover:bg-btn-secondary-hover text-text-on-color ",
     accent: "bg-green-800 hover:bg-green-700",
     tertiary:
       "outline text-btn-tertiary   hover:text-text-inverse outline-1 -outline-offset-2 outline-btn-tertiary hover:bg-btn-tertiary-hover",

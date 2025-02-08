@@ -23,7 +23,7 @@ const Select = ({
 
   return (
     <div className={`${variants[variant]}   flex `}>
-      {label && <label className="me-2 h-6   text-white ">{label}</label>}
+      {label && <label className="me-2 h-6   text-text-primary ">{label}</label>}
       <div className={`${elevStyle} relative flex items-center `}>
         <select
           {...props}

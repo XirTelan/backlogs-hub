@@ -93,6 +93,10 @@
   --clr-border-strong-02: var(--clr-gray-50);
   --clr-border-strong-03: var(--clr-gray-40);
 
+  --clr-border-tile-01: var(--clr-gray-70);
+  --clr-border-tile-02: var(--clr-gray-60);
+  --clr-border-tile-03: var(--clr-gray-50);
+
   --clr-border-interactive: var(--clr-blue-50);
 
   --clr-text-primary: var(--clr-gray-10);
@@ -104,7 +108,7 @@
 
   --clr-link-primary: var(--clr-blue-40);
   --clr-link-primary-hover: var(--clr-blue-30);
-
+  /* Button */
   --clr-button-primary: var(--clr-blue-60);
   --clr-button-primary-hover: var(--clr-blue-60-hover);
   --clr-button-primary-active: var(--clr-blue-80);
@@ -119,7 +123,11 @@
   --clr-button-tertiary: white;
   --clr-button-tertiary-hover: var(--clr-gray-10);
 
+  --clr-button-disabled: var(--clr-gray-70);
+  /* Icons */
   --clr-icon-primary: var(--clr-gray-10);
+  --clr-icon-on-color: white;
+  --clr-icon-on-color-disabled: rgba(from white r g b / 0.25);
 
   --clr-focus: white;
   --clr-focus-inset: var(--clr-gray-100);
@@ -129,6 +137,10 @@
   --clr-support-success: var(--clr-green-40);
   --clr-support-warning: var(--clr-yellow-30);
   --clr-support-info: var(--clr-blue-50);
+
+  /* Miscellaneous */
+
+  --clr-toggle-off: var(--clr-gray-60);
 }
 :root[data-theme="light"] {
   color-scheme: light;
@@ -181,6 +193,10 @@
   --clr-border-strong-02: var(--clr-gray-50);
   --clr-border-strong-03: var(--clr-gray-50);
 
+  --clr-border-tile-01: var(--clr-gray-30);
+  --clr-border-tile-02: var(--clr-gray-40);
+  --clr-border-tile-03: var(--clr-gray-30);
+
   --clr-border-interactive: var(--clr-blue-60);
 
   --clr-text-primary: var(--clr-gray-100);
@@ -207,7 +223,11 @@
   --clr-button-tertiary: var(--clr-blue-60);
   --clr-button-tertiary-hover: var(--clr-blue-60-hover);
 
+  --clr-button-disabled: var(--clr-gray-20);
+
   --clr-icon-primary: var(--clr-gray-100);
+  --clr-icon-on-color: white;
+  --clr-icon-on-color-disabled: var(--clr-gray-50);
 
   --clr-focus: var(--clr-blue-60);
   --clr-focus-inset: white;
@@ -217,6 +237,9 @@
   --clr-support-success: var(--clr-green-50);
   --clr-support-warning: var(--clr-yellow-30);
   --clr-support-info: var(--clr-blue-70);
+  /* Miscellaneous */
+
+  --clr-toggle-off: var(--clr-gray-50);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -250,6 +273,10 @@
   --color-border-strong-3: var(--clr-border-strong-03);
   --color-border-interactive: var(--clr-border-interactive);
 
+  --color-border-tile-1: var(--clr-border-tile-01);
+  --color-border-tile-2: var(--clr-border-tile-02);
+  --color-border-tile-3: var(--clr-border-tile-03);
+
   --color-text-primary: var(--clr-text-primary);
   --color-text-secondary: var(--clr-text-secondary);
   --color-text-inverse: var(--clr-text-inverse);
@@ -278,7 +305,11 @@
   --color-btn-danger-secondary: var(--clr-button-danger-secondary);
   --color-btn-danger-hover: var(--clr-button-danger-hover);
 
+  --color-button-disabled: var(--clr-button-disabled);
+
   --color-icon-primary: var(--clr-icon-primary);
+  --color-icon-on-color: var(--clr-icon-on-color);
+  --color-icon-on-color-disabled: var(--clr-icon-on-color-disabled);
 
   --color-focus: var(--clr-focus);
   --color-focus-inset: var(--clr-focus-inset);
@@ -289,4 +320,7 @@
   --color-support-warning: var(--clr-support-warning);
   --color-support-info: var(--clr-support-info);
   --color-text-on-color-disabled: var(--clr-text-on-color-disabled);
+  /* Miscellaneous */
+
+  --color-toggle-off: var(--clr-toggle-off);
 }

@@ -13,14 +13,14 @@ const Toggle = ({
     <div
       role="switch"
       aria-checked={state}
-      className={`${state ? " bg-green-500" : " bg-strong-1"} flex h-6 w-12 items-center rounded-xl hover:cursor-pointer  `}
+      className={`${state ? "bg-support-success" : " bg-toggle-off"} flex h-6 w-12 items-center rounded-xl hover:cursor-pointer  `}
       onClick={() => {
         action(!state);
         setState((prev) => !prev);
       }}
     >
       <div
-        className={`${state ? " translate-x-6 " : " translate-x-1"} h-[18px] w-[18px]  rounded-full bg-white transition-transform`}
+        className={`${state ? " translate-x-6 " : " translate-x-1"} h-[18px] w-[18px]  rounded-full bg-icon-on-color transition-transform`}
       ></div>
     </div>
   );

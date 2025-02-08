@@ -1,9 +1,11 @@
 import useCanvasPointer from "@/hooks/useCanvasPointer";
-import useToggle from "@/hooks/useToggle";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ColorRgbField from "./ColorRgbField";
-import { clamp, colors, math } from "@/utils";
+import { colors, math } from "@/utils";
 import HexFielld from "./HexFielld";
+import { ColorRGB } from "@/types";
+import { TbSwitchVertical } from "react-icons/tb";
+import ButtonBase from "../ButtonBase";
 
 type ColorType = "RGB" | "HEX";
 
@@ -17,30 +19,37 @@ const COLOR_STOPS = [
   { val: 0.99, hsl: "hsl(0,100%,50%)", color: "#f00", rgb: [255, 0, 0] },
 ];
 
-const ColorPicker = () => {
-  const { isOpen } = useToggle(true); //wip
+const ColorPicker = ({
+  value,
+  onChange,
+}: {
+  value: ColorRGB;
+  onChange: (value: string) => void;
+}) => {
   const [colorTypeSwitch, setColorTypeSwitch] = useState<ColorType>("RGB");
   const colorCanvas = useRef<HTMLCanvasElement>(null);
-  const {
-    color: selectedColor,
-    setColor,
-    pos: selectedPos,
-    setPos: setSelectedPos,
-    changePos: changeSelectedPos,
-    register: registerSelectedClr,
-  } = useCanvasPointer(colorCanvas);
   const hueCanvas = useRef<HTMLCanvasElement>(null);
+
   const {
     color: hueColor,
-    pos: huePos,
+    isTrack: hueTrack,
+    setAll: setHueAll,
     changePos: changeHuePos,
-    setPos: setHuePos,
     register: registerHueClr,
-  } = useCanvasPointer(hueCanvas, undefined, false);
+  } = useCanvasPointer(hueCanvas, { r: 255, g: 0, b: 0 });
+
+  const {
+    color: selectedColor,
+    isTrack: colorTrack,
+    setAll,
+    updateColor,
+    changePos: changeSelectedPos,
+    register: registerSelectedClr,
+  } = useCanvasPointer(colorCanvas, { r: 255, g: 255, b: 255 });
 
   const drawSelectedClrCanvas = useCallback(
-    (cntx: CanvasRenderingContext2D) => {
-      if (!isOpen || !colorCanvas.current) return;
+    (cntx: CanvasRenderingContext2D, hueColor: ColorRGB) => {
+      if (!colorCanvas.current) return;
       const gradientV = cntx.createLinearGradient(0, 0, 0, cntx.canvas.height);
       cntx.clearRect(0, 0, cntx.canvas.width, cntx.canvas.height);
       gradientV.addColorStop(0.01, "rgba(0,0,0,0)");
@@ -50,14 +59,21 @@ const ColorPicker = () => {
       cntx.globalCompositeOperation = "multiply";
       const gradientH = cntx.createLinearGradient(0, 0, cntx.canvas.width, 0);
       gradientH.addColorStop(0.01, "#fff");
-      gradientH.addColorStop(0.99, hueColor);
+      const { r, g, b } = hueColor;
+      gradientH.addColorStop(0.99, `rgb(${r},${g},${b})`);
       cntx.fillStyle = gradientH;
       cntx.fillRect(0, 0, cntx.canvas.width, cntx.canvas.height);
     },
-    [hueColor, isOpen],
+    [hueColor],
   );
+  const redrawSelectColorCanvas = useCallback((hueColor: ColorRGB) => {
+    if (!colorCanvas?.current) return;
+    const cntx = colorCanvas.current.getContext("2d");
+    if (!cntx) return;
+    drawSelectedClrCanvas(cntx, hueColor);
+  }, []);
 
-  const drawBaseClrBar = useCallback((cntx: CanvasRenderingContext2D) => {
+  const drawHueClrBar = useCallback((cntx: CanvasRenderingContext2D) => {
     const gradientH = cntx.createLinearGradient(0, 0, cntx.canvas.width, 0);
     COLOR_STOPS.forEach(({ val, hsl }) => {
       gradientH.addColorStop(val, hsl);
@@ -68,83 +84,116 @@ const ColorPicker = () => {
   }, []);
 
   useEffect(() => {
-    if (!colorCanvas?.current) return;
-    const cntx = colorCanvas.current.getContext("2d");
-    if (!cntx) return;
-    drawSelectedClrCanvas(cntx);
-  }, [hueColor, drawSelectedClrCanvas, isOpen]);
+    if (colorTrack || hueTrack) return;
+
+    onChange(colors.rgbToHex(selectedColor.color));
+  }, [selectedColor.color, colorTrack, hueTrack]);
+
+  useEffect(() => {
+    updatePositionsOnCanvas(value);
+  }, []);
+
+  useEffect(() => {
+    const handle = window.requestAnimationFrame(() => {
+      redrawSelectColorCanvas(hueColor.color);
+      if (!["input", "init"].includes(hueColor.initiator)) {
+        updateColor("hueChange");
+      }
+    });
+
+    return () => {
+      window.cancelAnimationFrame(handle);
+    };
+  }, [hueColor.color, drawSelectedClrCanvas]);
+
+  useEffect(() => {}, [hueColor.color, drawSelectedClrCanvas]);
 
   useEffect(() => {
     if (!hueCanvas.current) return;
     const cntxBar = hueCanvas.current.getContext("2d");
     if (!cntxBar) return;
-    drawBaseClrBar(cntxBar);
-  }, [drawBaseClrBar]);
+    drawHueClrBar(cntxBar);
+  }, [drawHueClrBar]);
 
   function switchColorType() {
     setColorTypeSwitch((prev) => (prev === "RGB" ? "HEX" : "RGB"));
   }
 
-  function colorChangeByRGBInput(value: string, part: string) {
-    setColor((prev) => {
-      const newColor = colors.rgbStringToArray(prev);
-      newColor[Number(part)] = clamp(Number(value), 0, 255);
-      calcDistance(newColor);
-      return `rgb(${newColor.join(",")})`;
-    });
-  }
-
   function renderTextColorInput(colorType: ColorType) {
     switch (colorType) {
       case "HEX":
-        return <HexFielld selectedColor={selectedColor} />;
+        return (
+          <HexFielld
+            selectedColor={selectedColor}
+            hueColor={hueColor}
+            onChange={updatePositionsOnCanvas}
+          />
+        );
         break;
       case "RGB":
         {
-          const colorArr = selectedColor
-            .slice(4, selectedColor.length - 1)
-            .split(",");
           return (
-            <ColorRgbField color={colorArr} onChange={colorChangeByRGBInput} />
+            <ColorRgbField
+              color={selectedColor.color}
+              onChange={updatePositionsOnCanvas}
+            />
           );
         }
         break;
     }
   }
 
-  async function calcDistance(e: number[]) {
-    const newColor = e;
-    const { h, s, l } = colors.rgbToHsl(newColor);
-    const xPos = math.mapRange(s, 0, 100, 0, 230);
-    const yPos = math.mapRange(l, 0, 100, 0, 150);
-    const huePos2 = (math.mapRange(h, 0, 360, 0, 150) + 150) % 150;
-    setHuePos((prev) => [150 - huePos2, prev[1]]);
-    setSelectedPos([xPos, 150 - yPos]);
+  function getCanvasSize(canvas: React.RefObject<HTMLCanvasElement | null>) {
+    if (!canvas.current) return { width: 0, height: 0 };
+    const { width, height } = canvas.current.getBoundingClientRect();
+    return { width, height };
+  }
+
+  function updatePositionsOnCanvas(color: ColorRGB) {
+    if (!color) return;
+    const { hue, sat, v } = colors.rgbToHsv(color);
+
+    const canvasSize = getCanvasSize(colorCanvas);
+    const { width: hueCanvasWidth } = getCanvasSize(hueCanvas);
+
+    const xPos = canvasSize.width * (sat / 100);
+    const yPos = canvasSize.height * (v / 100);
+    const huePos =
+      (math.mapRange(hue, 0, 360, 0, hueCanvasWidth) + hueCanvasWidth) %
+      hueCanvasWidth;
+    const newHueColor = colors.hsvToRgb({ h: hue, s: 1, v: 1 });
+
+    setHueAll(
+      { r: newHueColor[0], g: newHueColor[1], b: newHueColor[2] },
+      [hueCanvasWidth - huePos, 0],
+      "input",
+    );
+    setAll(color, [xPos, canvasSize.height - yPos], "input");
   }
 
   return (
-    <div className="max-w-64">
-      <div className="relative flex w-60" {...registerSelectedClr}>
+    <div className=" w-fit rounded-t-lg overflow-hidden ">
+      <div className="relative flex " {...registerSelectedClr}>
         <canvas
           ref={colorCanvas}
-          height="150"
-          width={"230"}
+          height="120"
+          width={"220"}
           id="selectedcolor_canvas"
           onClick={changeSelectedPos}
         ></canvas>
         <div
           className=" absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white  bg-transparent  "
           style={{
-            background: `${selectedColor}`,
-            transform: `translate(calc(${selectedPos[0]}px - 50%), calc(${selectedPos[1]}px - 50%))`,
+            background: `rgb(${selectedColor.color.r},${selectedColor.color.g},${selectedColor.color.b})`,
+            transform: `translate(calc(${selectedColor.pos[0]}px), calc(${selectedColor.pos[1]}px))`,
           }}
         ></div>
       </div>
-      <div className="mt-4 flex w-60 items-center gap-4">
+      <div className="mt-4 flex  items-center justify-center gap-4">
         <div
-          className="h-8 w-8 rounded-full border border-white "
+          className="h-6 w-6 rounded-full border border-white "
           style={{
-            backgroundColor: `${selectedColor}`,
+            backgroundColor: `rgb(${selectedColor.color.r},${selectedColor.color.g},${selectedColor.color.b})`,
           }}
         ></div>
         <div className="relative " {...registerHueClr}>
@@ -152,25 +201,31 @@ const ColorPicker = () => {
             ref={hueCanvas}
             onClick={changeHuePos}
             width="150px"
-            height="20px"
+            height="10px"
             id="basecolor_canvas"
           ></canvas>
           <div
-            className=" absolute top-0 h-full w-1 -translate-x-1/2  rounded bg-transparent  "
+            className=" absolute top-0 h-full w-1 -translate-x-1/2  rounded   "
             style={{
-              transform: `translate(${huePos[0]}px)`,
+              background: `rgb(${hueColor.color.r},${hueColor.color.g},${hueColor.color.b})`,
+              transform: `translate(${hueColor.pos[0]}px)`,
               boxShadow: "0 0 0 1px white, 0 0 0 2px black",
             }}
           />
         </div>
       </div>
-      <div>
-        {renderTextColorInput(colorTypeSwitch)}
-        <button
-          type="button"
-          onClick={switchColorType}
-          className=" flex w-full justify-evenly bg-white text-black"
-        >
+      <div className="justify-center flex">
+        <div className="w-[176px] mb-4 mt-2">
+          {renderTextColorInput(colorTypeSwitch)}
+        </div>
+      </div>
+      <ButtonBase
+        size="small"
+        type="button"
+        variant="secondary"
+        onClick={switchColorType}
+      >
+        <div className="flex pointer-events-none justify-evenly relative w-full">
           {colorTypeSwitch === "RGB" ? (
             <>
               <p>{colorTypeSwitch[0]}</p>
@@ -180,8 +235,11 @@ const ColorPicker = () => {
           ) : (
             <p>{colorTypeSwitch}</p>
           )}
-        </button>
-      </div>
+          <div className="absolute my-auto right-0 me-2 top-0 bottom-0 content-center">
+            <TbSwitchVertical />
+          </div>
+        </div>
+      </ButtonBase>
     </div>
   );
 };

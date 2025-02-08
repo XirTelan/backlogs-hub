@@ -1,61 +1,22 @@
 import { clamp } from "@/utils";
-import { RefObject, useCallback, useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import useToggle from "./useToggle";
+import { produce } from "immer";
+
+import { ColorPickerValue, ColorRGB } from "@/types";
 
 const useCanvasPointer = (
   canvasRef: RefObject<HTMLCanvasElement | null>,
-  defaultColor = "#fff",
-  isUpdateColorOnPosChange = false,
+  startColor: ColorRGB,
 ) => {
-  const [color, setColor] = useState(defaultColor);
+  const [colorState, setColorState] = useState<ColorPickerValue>({
+    color: startColor,
+    pos: [0, 0],
+    initiator: "init",
+  });
+
   const [cntx, setCntx] = useState<CanvasRenderingContext2D>();
   const { isOpen: isTrack, setOpen: trackOn, setClose: trackOff } = useToggle();
-  const [pos, setPos] = useState([0, 0]);
-
-  function changePos({
-    clientX,
-    clientY,
-  }: {
-    clientX: number;
-    clientY: number;
-  }) {
-    if (!canvasRef?.current) return;
-    const { left, top, width, height } =
-      canvasRef.current.getBoundingClientRect();
-
-    const leftClamp = clamp(clientX - left, 0, width - 1);
-    const topClamp = clamp(clientY - top, 0, height);
-    if (leftClamp !== pos[0] || topClamp !== pos[1])
-      window.requestAnimationFrame(() => setPos([leftClamp, topClamp]));
-  }
-
-  function getColor(cntx: CanvasRenderingContext2D, x: number, y: number) {
-    const pixel = cntx.getImageData(x, y, 1, 1)["data"];
-    return Array.from(pixel);
-  }
-
-  function getColorByPos(x: number, y: number) {
-    if (!cntx) return [0, 0, 0];
-    return getColor(cntx, x, y);
-  }
-
-  const updateColor = useCallback(() => {
-    if (!cntx || isNaN(pos[0]) || isNaN(pos[1])) return;
-    const newColor = getColor(cntx, pos[0], pos[1]);
-    const rgbString = `rgb(${newColor[0]},${newColor[1]},${newColor[2]})`;
-    setColor((prev) => (prev === rgbString ? prev : rgbString));
-  }, [cntx, pos]);
-
-  function handleMouseMove(e: React.MouseEvent<unknown>) {
-    if (!isTrack) return;
-    changePos(e);
-    updateColor();
-  }
-
-  useEffect(() => {
-    if (!isUpdateColorOnPosChange) return;
-    updateColor();
-  }, [canvasRef, isUpdateColorOnPosChange, pos, updateColor]);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -66,14 +27,84 @@ const useCanvasPointer = (
     setCntx(cntx);
   }, [canvasRef]);
 
+  function getColorByPos(x: number, y: number) {
+    if (!cntx) return [0, 0, 0];
+    const pixel = cntx.getImageData(x, y, 1, 1)["data"];
+    return Array.from(pixel);
+  }
+
+  function setPos(
+    x: number,
+    y: number,
+    initiator: ColorPickerValue["initiator"] = "pointer",
+  ) {
+    setColorState(
+      produce((draft) => {
+        draft.pos = [x, y];
+        const [r, g, b] = getColorByPos(x, y);
+
+        if (draft.initiator !== "input") draft.color = { r, g, b };
+
+        draft.initiator = initiator;
+      }),
+    );
+  }
+
+  function changePos({
+    clientX,
+    clientY,
+  }: {
+    clientX: number;
+    clientY: number;
+  }) {
+    if (!canvasRef?.current) return;
+    
+    const { left, top, width, height } =
+      canvasRef.current.getBoundingClientRect();
+
+    const leftClamp = clamp(clientX - left, 0, width - 1);
+    const topClamp = clamp(clientY - top, 0, height);
+
+    if (leftClamp === colorState.pos[0] && topClamp === colorState.pos[1])
+      return;
+    setPos(leftClamp, topClamp, "pointer");
+  }
+
+  function updateColor(initiator: ColorPickerValue["initiator"]) {
+    setColorState(
+      produce((draft) => {
+        const [r, g, b] = getColorByPos(draft.pos[0], draft.pos[1]);
+        draft.color = { r, g, b };
+        draft.initiator = initiator;
+      }),
+    );
+  }
+
+  function setAll(
+    color: ColorRGB,
+    pos: [number, number],
+    initiator: ColorPickerValue["initiator"],
+  ) {
+    setColorState(
+      produce((draft) => {
+        draft.color = color;
+        draft.pos = pos;
+        draft.initiator = initiator;
+      }),
+    );
+  }
+
+  function handleMouseMove(e: React.MouseEvent<unknown>) {
+    if (!isTrack) return;
+    changePos(e);
+  }
+
   return {
-    color,
-    setColor,
-    getColorByPos,
+    color: colorState,
+    isTrack,
+    setAll,
     updateColor,
-    pos,
     changePos,
-    setPos,
     register: {
       onMouseDown: trackOn,
       onMouseUp: trackOff,

@@ -85,7 +85,7 @@ const ContactsForm = ({
           aria-label="email optional"
           {...register("email")}
         />
-        <p className="my-2 text-xs text-subtle-3">
+        <p className="my-2 text-xs text-text-secondary">
           Privacy Notice: If an email address is provided, it will only be used
           to respond to your message.
         </p>
@@ -109,10 +109,11 @@ const ContactsForm = ({
           label={
             <span>
               Confirmation. Please enter
-              <span className=" mx-2 text-lg font-bold ">{code}</span> to
+              <span className=" mx-2 text-lg font-bold text-text-primary ">{code}</span>to
               confirm
             </span>
           }
+          variant="small"
           layer={2}
           {...register("code", {
             validate: {

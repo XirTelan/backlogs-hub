@@ -68,6 +68,7 @@ const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
             <InputField
               label="Template Title (required)"
               placeholder="Template Title"
+              variant="medium"
               helperText={
                 errors.templateTitle && {
                   message: errors.templateTitle.message!,

@@ -47,7 +47,12 @@ const Notification = ({
       <div className={`ms-4 ${toastStyle[type].text} `}>
         {toastStyle[type].icon}
       </div>
-      <div className="flex w-full flex-wrap">{text}</div>
+      <label
+        aria-label={`notification. Type: ${type}`}
+        className="flex w-full flex-wrap"
+      >
+        {text}
+      </label>
       {options.showBtn && (
         <ButtonBase
           variant="ghost"

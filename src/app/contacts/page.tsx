@@ -26,12 +26,12 @@ const page = async () => {
           <LinkBase
             isExternal
             href={"https://github.com/XirTelan/backlogs-hub/issues"}
+            icon={<FaExternalLinkAlt size={12} />}
           >
-            <div className="flex items-center gap-2 ">
+            <div className="flex items-center gap-1 ">
               <FaGithub />
               <span>GitHub</span>
             </div>
-            <FaExternalLinkAlt size={12} />
           </LinkBase>
         </div>
         <p> Or you can fill form below</p>

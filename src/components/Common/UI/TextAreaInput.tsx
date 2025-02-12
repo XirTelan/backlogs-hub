@@ -2,9 +2,9 @@ import { TextArea } from "@/types";
 import React from "react";
 
 const elevation = {
-  1: "bg-field-1 border-b-strong-1",
-  2: "bg-field-2 border-b-strong-2",
-  3: "bg-field-3 border-b-strong-3",
+  1: "bg-field-1 border-b-border-strong-1",
+  2: "bg-field-2 border-b-border-strong-2",
+  3: "bg-field-3 border-b-border-strong-3",
 };
 
 const TextAreaInput = ({
@@ -25,7 +25,7 @@ const TextAreaInput = ({
       )}
       <textarea
         type="input"
-        className={`peer w-full border-0 border-b ${elevation[layer]}  p-4 outline-0 transition-colors `}
+        className={`peer w-full border-0   border-b ${elevation[layer]}  p-4 outline-0 transition-colors `}
         placeholder={placeholder}
         name={id}
         id={id}

@@ -79,13 +79,13 @@ const SearchFilter = () => {
             <ButtonBase
               onClick={resetFilters}
               size="small"
-              variant="secondary"
+              variant="ghost"
               text="Reset"
             />
             <ButtonBase
               onClick={applyFilters}
               size="small"
-              variant="accent"
+              variant="secondary"
               text="Apply"
             />
           </div>

@@ -89,14 +89,12 @@ const DropDown = ({
       >
         <div className="flex  items-center">
           <div
-            className={`${selected.size === 0 ? "hidden" : "flex"} me-2 ms-4 flex h-6 items-center rounded-full  bg-primary-text `}
+            className={`${selected.size === 0 ? "hidden" : "flex"} me-2 ms-4 flex h-6 items-center rounded-full  bg-text-primary text-text-inverse `}
           >
-            <span className=" ps-2 text-xs text-neutral-900">
-              {selected.size}
-            </span>
+            <span className=" ps-2 text-xs ">{selected.size}</span>
             <button
               type="button"
-              className=" flex h-6 w-6 items-center justify-center rounded-full text-neutral-900 hover:bg-neutral-300"
+              className=" flex h-6 w-6 items-center justify-center rounded-full hover:text-icon-primary  hover:bg-layer-1-hover hover:cursor-pointer"
               onMouseDown={(e) => e.preventDefault()}
               onClick={clearTags}
             >

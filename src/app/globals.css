@@ -324,3 +324,7 @@
 
   --color-toggle-off: var(--clr-toggle-off);
 }
+
+button:not(:disabled) {
+  cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import BacklogEditForm from "@/containers/Backlogs/BacklogEditForm";
+import BacklogEditForm from "@/containers/Backlogs/Form/BacklogEditForm";
 export const dynamic = "force-dynamic";
 
 const EditBacklog = async (props: { params: Promise<{ id: string }> }) => {

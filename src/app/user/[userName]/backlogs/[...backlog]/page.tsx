@@ -2,7 +2,7 @@ import { getCurrentUserInfo } from "@/auth/utils";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
-import Backloglist from "@/containers/Backlogs/BacklogList/BacklogList";
+import BacklogDefaultView from "@/containers/Backlogs/Views/Default/BacklogDefaultView";
 import BacklogModalsWrapper from "@/containers/Backlogs/BacklogModalsWrapper";
 import FilterBlock from "@/containers/FilterBlock";
 import { routesList } from "@/lib/routesList";
@@ -12,7 +12,9 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { MdEdit } from "react-icons/md";
 
-const Board = dynamic(() => import("@/containers/Backlogs/BacklogBoard"));
+const BoardView = dynamic(
+  () => import("@/containers/Backlogs/Views/Board/BacklogBoard"),
+);
 
 export default async function Backlog(props: {
   params: Promise<{ userName: string; backlog: string }>;
@@ -25,6 +27,38 @@ export default async function Backlog(props: {
   const data = await getUserBacklogBySlug(userName, backlog, isOwner);
   if (!data)
     return <div> ???Backlog doesnt exist or you dont have access </div>;
+
+  function renderBacklogView() {
+    if (!data) return;
+    switch (data.view) {
+      case "Board":
+        return (
+          <BacklogModalsWrapper>
+            <BoardView backlogId={data._id} />
+          </BacklogModalsWrapper>
+        );
+      case "Default":
+      default:
+        return (
+          <>
+            <section className="me-auto flex justify-center  rounded-sm px-4 lg:m-0 lg:justify-start">
+              <FilterBlock
+                backlogSlug={data.slug}
+                backlogCategories={data.categories}
+              />
+            </section>
+            <BacklogModalsWrapper>
+              <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
+                <BacklogDefaultView
+                  isOwner={isOwner}
+                  id={data._id.toString()}
+                />
+              </section>
+            </BacklogModalsWrapper>
+          </>
+        );
+    }
+  }
 
   return (
     <div className="flex flex-col">
@@ -43,25 +77,7 @@ export default async function Backlog(props: {
       </TopTitle>
       <main id="maincontent" className="container self-center">
         <BacklogInfoProvider data={data}>
-          {data.modifiers.useBoardType ? (
-            <BacklogModalsWrapper>
-              <Board backlogId={data._id} />
-            </BacklogModalsWrapper>
-          ) : (
-            <>
-              <section className="me-auto flex justify-center  rounded-sm px-4 lg:m-0 lg:justify-start">
-                <FilterBlock
-                  backlogSlug={data.slug}
-                  backlogCategories={data.categories}
-                />
-              </section>
-              <BacklogModalsWrapper>
-                <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
-                  <Backloglist isOwner={isOwner} id={data._id.toString()} />
-                </section>
-              </BacklogModalsWrapper>
-            </>
-          )}
+          {renderBacklogView()}
         </BacklogInfoProvider>
       </main>
     </div>

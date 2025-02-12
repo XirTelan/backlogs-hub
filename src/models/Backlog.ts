@@ -69,6 +69,11 @@ const BacklogSchema = new mongoose.Schema<BacklogDTO>(
       type: Number,
       default: 0,
     },
+    view: {
+      type: String,
+      required: true,
+      default: "Default",
+    },
   },
   {
     timestamps: true,

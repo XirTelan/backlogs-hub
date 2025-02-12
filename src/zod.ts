@@ -61,6 +61,8 @@ export const BacklogFormSchema = z.object({
   slug: z.string(),
   backlogTitle: z.string().trim().min(1, "This field cannot be empty"),
   description: z.string().optional().default(""),
+  view: z.enum(["Default", "Board", "Notes"]).default("Default"),
+
   visibility: z.enum(["public", "private"]).default("private"),
 });
 
@@ -246,9 +248,9 @@ const uniqueArray = <T>(
   ctx: z.RefinementCtx,
   getter: (val: T) => string,
 ) => {
-  const set = new Map();
+  const hashMap = new Map();
   items.forEach((item, indx) => {
-    if (set.has(getter(item))) {
+    if (hashMap.has(getter(item))) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `No duplicates allowed.`,
@@ -257,10 +259,10 @@ const uniqueArray = <T>(
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `No duplicates allowed.`,
-        path: [set.get(getter(item)), "name"],
+        path: [hashMap.get(getter(item)), "name"],
       });
     }
-    set.set(getter(item), indx);
+    hashMap.set(getter(item), indx);
   });
 };
 

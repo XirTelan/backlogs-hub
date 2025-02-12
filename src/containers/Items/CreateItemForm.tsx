@@ -22,7 +22,6 @@ export const CreateItemForm = ({
         })),
     modifiersFields: {},
   };
-
   return (
     <ItemsForm
       backlog={{

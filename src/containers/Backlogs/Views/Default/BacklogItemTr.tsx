@@ -34,7 +34,7 @@ const BacklogItemTr = ({
                     data={item._id}
                     render={(handle) => (
                       <button
-                        className="hover:underline "
+                        className="hover:underline"
                         style={{
                           color:
                             categoryDesignation === "color" ? color : "#F4F4F4",

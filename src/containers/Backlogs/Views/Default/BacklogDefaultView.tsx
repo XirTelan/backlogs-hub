@@ -37,7 +37,7 @@ const itemsDoesntExist = (
   </>
 );
 
-const Backloglist = ({ id, isOwner }: BackloglistProps) => {
+const BacklogDefaultView = ({ id, isOwner }: BackloglistProps) => {
   const searchParams = new URLSearchParams(useSearchParams().toString());
   searchParams.append("backlog", id);
   const { user } = useSession();
@@ -75,7 +75,7 @@ const Backloglist = ({ id, isOwner }: BackloglistProps) => {
     </>
   );
 };
-export default Backloglist;
+export default BacklogDefaultView;
 
 interface BackloglistProps {
   id: string;

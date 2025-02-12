@@ -34,7 +34,6 @@ const InputField = ({
         </label>
       )}
       <InputBase
-        variant={"large"}
         layer={1}
         name={id}
         id={id}

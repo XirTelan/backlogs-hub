@@ -106,7 +106,6 @@ const ColorPicker = ({
     };
   }, [hueColor.color, drawSelectedClrCanvas]);
 
-  useEffect(() => {}, [hueColor.color, drawSelectedClrCanvas]);
 
   useEffect(() => {
     if (!hueCanvas.current) return;

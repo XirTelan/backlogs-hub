@@ -105,8 +105,7 @@ export type FieldsBlockProps = {
       >
     | undefined;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: Control<BacklogFormData, any>;
+  control: Control<BacklogFormData>;
   register: UseFormRegister<BacklogFormData>;
 };
 export type ResponseData<T> = {

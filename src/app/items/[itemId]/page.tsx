@@ -1,13 +1,13 @@
 import BacklogItem from "@/components/Backlog/BacklogItem";
 import TopTitle from "@/components/Common/UI/TopTitle";
-import { getAndPopulateBacklogItemById } from "@/services/backlogItem";
+import { populateBacklogItem } from "@/services/backlogItem";
 
 const Page = async (props: { params: Promise<{ itemId: string }> }) => {
   const params = await props.params;
 
   const { itemId } = params;
 
-  const result = await getAndPopulateBacklogItemById(itemId);
+  const result = await populateBacklogItem(itemId);
 
   if (!result.success) {
     console.error(result.errors);

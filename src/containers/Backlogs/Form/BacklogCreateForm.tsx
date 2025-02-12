@@ -47,6 +47,7 @@ const BacklogCreateForm = () => {
     folder: userFolders.data.data.folders[0],
     slug: "",
     visibility: "public",
+    view: "Default",
     categories: defaultCategories,
     fields: [],
     modifiers: {

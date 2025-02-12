@@ -10,7 +10,7 @@ import {
   BacklogItemPopUserField,
   BacklogItemWithSteamInfo,
 } from "@/zodTypes";
-import { isAuthorizedBacklogOwner } from "./backlogs";
+import { getBacklogById } from "./backlogs";
 import { getSteamGameInfo } from "./steamSearch";
 import { Document, Query, SortOrder, UpdateWriteOpResult } from "mongoose";
 import { BacklogItemCreationSchema, BacklogItemSchema } from "@/zod";
@@ -253,12 +253,14 @@ function isSteamData(
   return typeof data.modifiersFields.steamAppId === "string";
 }
 
-export const getAndPopulateBacklogItemById = async (
+export const populateBacklogItem = async (
   itemId: string,
 ): Promise<ResponseData<BacklogItemPopulated | BacklogItemWithSteamInfo>> => {
   const res = await getBacklogItemById(itemId);
   if (!res.success) return { success: false, errors: "Wrong ItemId" };
+
   const newFields = await populateUserFields(res.data);
+
   if (!newFields.success) return { success: false, errors: newFields.errors };
   if (res.data.modifiersFields?.steamAppId) {
     const steamInfo = await getSteamGameInfo(
@@ -281,12 +283,10 @@ export const getAndPopulateBacklogItemById = async (
 const populateUserFields = async (
   backlogItem: BacklogItemDTO,
 ): Promise<ResponseData<BacklogItemPopUserField[]>> => {
-  const backlogData = await isAuthorizedBacklogOwner(
-    backlogItem.backlogId,
-    "read",
-  );
-  if (!backlogData.success) return { success: false, errors: "Not Authorized" };
-  const map = backlogData.data.fields?.reduce((acc, item) => {
+  const backlogData = await getBacklogById(backlogItem.backlogId);
+  if (!backlogData) return { success: false, data: null };
+
+  const map = backlogData.fields?.reduce((acc, item) => {
     acc.set(item._id, item);
     return acc;
   }, new Map());

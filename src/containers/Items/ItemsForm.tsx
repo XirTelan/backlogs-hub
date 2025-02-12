@@ -39,6 +39,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
 
   const onSubmit = useCallback(
     async (data: BacklogItemCreationDTO & { _id?: string }) => {
+
       const url = `/api/items${type === "edit" ? `/${data._id}` : ""}`;
       const options = {
         method: type === "edit" ? "PUT" : "POST",
@@ -113,7 +114,6 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
   const getFieldInput = useCallback(
     (field: Field, index: number) => {
       const fieldValue = mapFields?.get(field._id || "") || "";
-
       const commonProps = {
         label: field.name,
         defaultValue: fieldValue,

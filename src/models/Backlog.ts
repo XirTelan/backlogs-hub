@@ -6,7 +6,6 @@ const backlogModifiersSchema = new mongoose.Schema<ModifiersType>(
     useSteamSearch: { type: Boolean, default: false },
     useSteamImport: { type: Boolean, default: false },
     useTagsSystem: { type: Boolean, default: false },
-    useBoardType: { type: Boolean, default: false },
   },
   { _id: false },
 );

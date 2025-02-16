@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
   };
   try {
     let res;
-    if (backlog.modifiers.useBoardType) {
+    if (backlog.view === "Board") {
       res = await getItemsGroupedByCategory(backlog);
     } else {
       res = await getBacklogItemsData(categories, searchOptions, backlog._id);

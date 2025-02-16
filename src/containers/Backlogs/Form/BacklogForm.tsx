@@ -12,24 +12,17 @@ import Modal from "@/components/Common/Modal";
 import TemplatePreview from "@/components/Template/TemplatePreview";
 import UserFieldsBlock from "./UserFieldsBlock";
 import ButtonBase from "@/components/Common/UI/ButtonBase";
-import { BacklogFormData, ModifiersType } from "@/zodTypes";
+import { BacklogFormData } from "@/zodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
 import Select from "@/components/Common/UI/Select";
 import { routesList } from "@/lib/routesList";
 import { usePathname } from "next/navigation";
-import ModifiersMenu from "@/components/ModifiersMenu";
+import BacklogOptionsMenu from "@/components/Backlog/BacklogOptionsMenu";
 import Switcher from "@/components/Common/UI/Switcher";
 import useToggle from "@/hooks/useToggle";
 import { FaEye, FaEyeSlash, FaFolder } from "react-icons/fa6";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
-
-const MODIFIERS_DEFAULT: ModifiersType = {
-  useSteamSearch: false,
-  useSteamImport: false,
-  useTagsSystem: false,
-  useBoardType: false,
-};
 
 const BacklogForm = <T extends BacklogFormData>({
   defaultValues,
@@ -43,10 +36,6 @@ const BacklogForm = <T extends BacklogFormData>({
   const pathname = usePathname();
   const [showTemplate, setShowTemplate] = useState(false);
   const { isOpen: showTags, setOpen, setClose } = useToggle();
-  const [modifiers, setModifiers] = useState({
-    ...MODIFIERS_DEFAULT,
-    ...defaultValues.modifiers,
-  });
 
   const methods = useForm<BacklogFormData>({
     resolver: zodResolver(BacklogFormSchema),
@@ -84,8 +73,6 @@ const BacklogForm = <T extends BacklogFormData>({
     }
   };
   const onSubmitInternal = (data: BacklogFormData) => {
-    data.modifiers = modifiers;
-
     data.backlogTitle = data.backlogTitle.trim();
 
     if (!data.modifiers.useTagsSystem) {
@@ -171,10 +158,7 @@ const BacklogForm = <T extends BacklogFormData>({
                   id="backlogTitle"
                   {...register(`backlogTitle`, { required: true })}
                 />
-                <ModifiersMenu
-                  defaultValues={modifiers}
-                  setValue={setModifiers}
-                />
+                <BacklogOptionsMenu />
               </div>
             </div>
             <div className="md:*:w-min-fit flex  min-w-fit gap-2  md:items-center ">
@@ -184,7 +168,7 @@ const BacklogForm = <T extends BacklogFormData>({
 
           <div className="flex flex-col lg:flex-row lg:gap-4 ">
             <section>
-              {modifiers.useTagsSystem && (
+              {watchAllFields.modifiers.useTagsSystem && (
                 <Switcher
                   initial={showTags ? 1 : 0}
                   options={{
@@ -206,7 +190,7 @@ const BacklogForm = <T extends BacklogFormData>({
                   }}
                 />
               )}
-              {modifiers.useTagsSystem && showTags ? (
+              {watchAllFields.modifiers.useTagsSystem && showTags ? (
                 <CategoriesFieldsBlock
                   errors={errors.tags}
                   data={tagsArray}

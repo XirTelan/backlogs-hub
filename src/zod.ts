@@ -37,7 +37,6 @@ export const ModifiersSchema = z.object({
   useSteamSearch: z.boolean().default(false),
   useSteamImport: z.boolean().default(false),
   useTagsSystem: z.boolean().default(false),
-  useBoardType: z.boolean().default(false),
 });
 
 export const BacklogFormSchema = z.object({
@@ -51,7 +50,6 @@ export const BacklogFormSchema = z.object({
   modifiers: ModifiersSchema.default({
     useSteamImport: false,
     useSteamSearch: false,
-    useBoardType: false,
     useTagsSystem: false,
   }),
   folder: z.string().default("Default"),

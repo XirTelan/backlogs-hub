@@ -1,26 +1,21 @@
-import React, { useState } from "react";
-
 const Toggle = ({
-  defaultValue,
+  value,
   action,
 }: {
-  defaultValue: boolean;
+  value: boolean;
   action: (state: boolean) => void;
 }) => {
-  const [state, setState] = useState<boolean>(defaultValue);
-
   return (
     <div
       role="switch"
-      aria-checked={state}
-      className={`${state ? "bg-support-success" : " bg-toggle-off"} flex h-6 w-12 items-center rounded-xl hover:cursor-pointer  `}
+      aria-checked={value}
+      className={`${value ? "bg-support-success" : " bg-toggle-off"} flex h-6 w-12 items-center rounded-xl hover:cursor-pointer  `}
       onClick={() => {
-        action(!state);
-        setState((prev) => !prev);
+        action(!value);
       }}
     >
       <div
-        className={`${state ? " translate-x-6 " : " translate-x-1"} h-[18px] w-[18px]  rounded-full bg-icon-on-color transition-transform`}
+        className={`${value ? " translate-x-6 " : " translate-x-1"} h-[18px] w-[18px]  rounded-full bg-icon-on-color transition-transform`}
       ></div>
     </div>
   );

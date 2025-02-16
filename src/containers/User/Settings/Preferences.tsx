@@ -19,7 +19,7 @@ const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
     <div>
       <Setting label={"Show empty folders in the backlogs:"}>
         <Toggle
-          defaultValue={config.showEmptyFolders || false}
+          value={config.showEmptyFolders || false}
           action={async (state) => {
             await handleUpdate("showEmptyFolders", state);
           }}

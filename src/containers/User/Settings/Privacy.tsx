@@ -39,7 +39,7 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
             1","Folder 2",... etc'
           >
             <Toggle
-              defaultValue={config?.showEmptyFolders || false}
+              value={config?.hideFolderNames || false}
               action={async (state) => {
                 const res = await updateUserInfo("hideFolderNames", state);
                 if (res.success) toastCustom.success("Option changed");

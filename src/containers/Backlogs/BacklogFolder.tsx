@@ -4,7 +4,7 @@ import React from "react";
 import Title from "@/components/Common/Title";
 import { FaFolder } from "react-icons/fa6";
 import Accordion from "@/components/Common/UI/Accordion";
-import { routesList } from "@/lib/routesList";
+
 const BacklogFolder = ({
   folderName,
   userName,
@@ -26,28 +26,32 @@ const BacklogFolder = ({
           </div>
         }
       >
-        <div className="flex w-full justify-center md:justify-normal">
-          <div className="flex max-w-[80vw] gap-4  self-center   overflow-auto pb-6   md:flex-wrap ">
+        <div className="flex w-full justify-center md:justify-normal bg-layer-1 p-4">
+          <div className="flex max-w-[80vw] gap-4  self-center   overflow-auto  md:flex-wrap ">
             {backlogs.map((backlog) => (
               <BacklogCard
                 href={`/user/${userName}/backlogs/${backlog.slug}`}
-                createLink={`${routesList.itemsCreate}/?backlog=${backlog._id}`}
+                backlogId={backlog._id}
                 key={backlog._id}
               >
                 <>
                   <div>
-                    <Title variant={3} title={backlog.backlogTitle} />
+                    <Title variant={4} title={backlog.backlogTitle} />
                   </div>
-                  <div className="text-sm font-light text-text-secondary	 ">
+                  <div>
                     {backlog.totalCount > 0 ? (
-                      <div className="flex items-center justify-between">
-                        <span>In the backlog:</span>
-                        <span className="text-link-primary">
+                      <div className=" items-center ">
+                        <div className="text-text-primary text-xl  font-mono py-1">
                           {backlog.totalCount}
-                        </span>
+                        </div>
+                        <div className=" text-text-secondary text-sm">
+                          Items
+                        </div>
                       </div>
                     ) : (
-                      "Empty backlog"
+                      <div className=" text-text-secondary text-sm mt-4">
+                        Empty backlog
+                      </div>
                     )}
                   </div>
                 </>

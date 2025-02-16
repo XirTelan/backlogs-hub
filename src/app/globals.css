@@ -243,8 +243,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  [data-color-mode*="dark"] .wmde-markdown,
-  [data-color-mode*="dark"] .wmde-markdown-var {
+  :root[data-theme="dark"] .wmde-markdown {
     --color-canvas-default: var(--clr-background-main);
   }
 }
@@ -327,4 +326,10 @@
 
 button:not(:disabled) {
   cursor: pointer;
+}
+
+.wmde-markdown img[alt="image"] {
+  border: 1px solid var(--clr-border-subtle-02);
+  background-color: var(--clr-layer-01);
+  padding: 0.25rem;
 }

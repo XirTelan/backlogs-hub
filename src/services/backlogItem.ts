@@ -106,6 +106,7 @@ export const getBacklogItemsByQuery = async ({
 
 export const getItemsGroupedByCategory = async (backlog: BacklogDTO) => {
   try {
+    await dbConnect();
     const hashMap = new Map<
       string,
       { order: number; items: BacklogItemDTO[] }
@@ -295,7 +296,7 @@ const populateUserFields = async (
 
     return {
       ...item,
-      backlogFieldId: curItem?.name ?? item.backlogFieldId,
+      title: curItem?.name ?? "Unknown",
       type: curItem?.type,
     };
   });

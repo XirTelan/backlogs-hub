@@ -1,6 +1,10 @@
 "use client";
 import React from "react";
-import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/zodTypes";
+import {
+  BacklogItemPopulated,
+  BacklogItemPopUserField,
+  BacklogItemWithSteamInfo,
+} from "@/zodTypes";
 import MDEditor from "@uiw/react-md-editor/nohighlight";
 import Accordion from "../Common/UI/Accordion";
 import rehypeSanitize from "rehype-sanitize";
@@ -13,16 +17,11 @@ type TimeStamp = {
   icon: React.ReactNode;
   title: string;
 };
-type RenderField = {
-  backlogFieldId: string;
-  type: string;
-  value: string;
-};
 
 type WrapperProps = {
-  field: RenderField;
+  field: BacklogItemPopUserField;
   indx: number;
-  renderField: (field: RenderField) => React.ReactNode;
+  renderField: (field: BacklogItemPopUserField) => React.ReactNode;
 };
 
 const BacklogItem = ({
@@ -92,7 +91,7 @@ const isHaveSteamData = (
   return Object.prototype.hasOwnProperty.call(data, "steamData");
 };
 
-const renderFieldValue = (field: RenderField) => {
+const renderFieldValue = (field: BacklogItemPopUserField) => {
   if (field.type === "markdown") {
     return (
       <MDEditor.Markdown
@@ -133,7 +132,7 @@ const withWrap = ({ field, indx, renderField }: WrapperProps) => {
         <Accordion
           key={indx}
           id={field.backlogFieldId}
-          title={field.backlogFieldId}
+          title={field.title}
         >
           {renderField(field)}
         </Accordion>
@@ -142,7 +141,7 @@ const withWrap = ({ field, indx, renderField }: WrapperProps) => {
     default: {
       return (
         <div key={indx} className="flex justify-between">
-          <div className="me-2"> {field.backlogFieldId}</div>
+          <div className="me-2"> {field.title}</div>
           <div> {renderField(field)}</div>
         </div>
       );

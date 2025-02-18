@@ -82,6 +82,7 @@ export const BacklogCreationSchema = BacklogDTOSchema.omit({
 });
 export const BacklogItemPopUserFieldSchema = z.object({
   backlogFieldId: z.string(),
+  title: z.string(),
   type: z.string(),
   value: z.string(),
 });

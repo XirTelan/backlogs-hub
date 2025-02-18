@@ -11,6 +11,7 @@ import { getUserBacklogBySlug } from "@/services/backlogs";
 import dynamic from "next/dynamic";
 import React from "react";
 import { MdEdit } from "react-icons/md";
+import BacklogNotesView from "@/containers/Backlogs/Views/Notes/BacklogNotesView";
 
 const BoardView = dynamic(
   () => import("@/containers/Backlogs/Views/Board/BacklogBoard"),
@@ -36,6 +37,22 @@ export default async function Backlog(props: {
           <BacklogModalsWrapper>
             <BoardView backlogId={data._id} />
           </BacklogModalsWrapper>
+        );
+      case "Notes":
+        return (
+          <>
+            <section className="me-auto flex justify-center  rounded-sm px-4 lg:m-0 lg:justify-start">
+              <FilterBlock
+                backlogSlug={data.slug}
+                backlogCategories={data.categories}
+              />
+            </section>
+            <BacklogModalsWrapper>
+              <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
+                <BacklogNotesView backlogId={data._id} />
+              </section>
+            </BacklogModalsWrapper>
+          </>
         );
       case "Default":
       default:

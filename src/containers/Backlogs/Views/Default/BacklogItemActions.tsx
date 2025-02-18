@@ -16,6 +16,7 @@ const BacklogItemActions = ({
   item: BacklogItemDTO;
   onDelete?: (id: string) => void;
 }) => {
+  
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     const itemId = e.currentTarget.dataset["itemid"];
     if (!itemId) return;

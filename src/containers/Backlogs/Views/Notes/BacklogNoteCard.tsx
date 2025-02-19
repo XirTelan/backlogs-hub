@@ -6,15 +6,14 @@ import useToggle from "@/hooks/useToggle";
 import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";
 import { fetcher } from "@/utils";
-import {
-  BacklogItemDTO,
-  BacklogItemPopulated,
-} from "@/zodTypes";
+import { BacklogItemDTO, BacklogItemPopulated } from "@/zodTypes";
 import MDEditor from "@uiw/react-md-editor";
 import React, { useRef } from "react";
 import rehypeSanitize from "rehype-sanitize";
 import useSWR from "swr";
 import BacklogItemActions from "../Default/BacklogItemActions";
+import SkeletonBacklogNoteCard from "@/components/Common/Skeleton/SkeletonBacklogNoteCard";
+import NotFound from "@/components/Common/NotFound";
 
 type BacklogNoteCardProps = {
   item: BacklogItemDTO;
@@ -25,7 +24,6 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
 
   const { isOpen: isEdit, toggle } = useToggle();
 
-  console.log(url);
 
   const [value, setValue] = React.useState("");
   const ref = useRef(null);
@@ -38,16 +36,13 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
   }>(url, fetcher, {
     onSuccess: ({ data }) => {
       const noteField = data.userFields.find((val) => val.type === "markdown");
-      console.log("onSuccess", noteField);
       setValue(noteField?.value ?? "");
     },
   });
 
-  console.log("value", value);
+  if (isLoading) return <SkeletonBacklogNoteCard />;
 
-  if (isLoading) return <div>Skeleton</div>;
-  if (!data?.status) return <div> Empty</div>;
-  console.log("data ", data);
+  if (!data?.status) return <NotFound />;
 
   const handleSubmit = async (data: BacklogItemDTO) => {
     try {
@@ -83,7 +78,6 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
     toggle();
     if (noteField?.value === value) return;
 
-    console.log("newItem", newItem);
     handleSubmit(newItem);
   }
 

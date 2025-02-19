@@ -28,23 +28,33 @@ const BacklogNotesView = ({ backlogId }: { backlogId: string }) => {
 
   const { data, isLoading } = useSWR<items>(requstUrl, fetcher);
 
-  if (isLoading) return <LoadingAnimation />;
+  const FilterBlock = () => (
+    <div className=" flex">
+      <SearchBar />
+      <SearchFilter />
+      <ItemFormModalOpen btnOptions={{ style: { width: "25%" } }} />
+    </div>
+  );
+
+  if (isLoading)
+    return (
+      <>
+        <FilterBlock />
+        <LoadingAnimation />
+      </>
+    );
 
   if (!data || !("items" in data)) return <p>Empty</p>;
 
   return (
-    <div>
-      <div className=" flex">
-        <SearchBar />
-        <SearchFilter />
-        <ItemFormModalOpen btnOptions={{ style: { width: "25%" } }} />
-      </div>
+    <>
+      <FilterBlock />
       <div className="flex gap-4 p-4 flex-wrap">
         {data.items.map((item) => {
           return <BacklogNoteCard item={item} key={item._id} />;
         })}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -46,8 +46,10 @@ export function createModal(
 
   const WithModal = ({
     children,
+    options,
   }: {
     children: React.ReactNode | React.ReactNode[];
+    options?: Partial<BaseModalProps>;
   }) => {
     const ctx = useContext(cntx);
 
@@ -55,11 +57,12 @@ export function createModal(
       <>
         {ctx.key === key && ctx.isOpen && (
           <Modal
-            {...modalProps}
-            setClose={ctx.setClose}
             actionOptions={{
               position: "absolute",
             }}
+            {...modalProps}
+            {...options}
+            setClose={ctx.setClose}
           >
             <>{children}</>
           </Modal>

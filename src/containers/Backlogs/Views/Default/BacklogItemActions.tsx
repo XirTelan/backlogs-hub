@@ -1,28 +1,15 @@
-import ButtonBase from "@/components/Common/UI/ButtonBase";
 import Divider from "@/components/Common/UI/Divider";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import SidePanel from "@/components/SidePanel";
 import ItemChangeCategory from "@/containers/Items/ItemChangeCategory";
+import { ItemDeleteModalOpen } from "@/containers/Items/ItemDeleteModal";
 import { BacklogItemDTO } from "@/zodTypes";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaFileLines } from "react-icons/fa6";
-import { MdEdit, MdDeleteForever } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 
-const BacklogItemActions = ({
-  item,
-  onDelete,
-}: {
-  item: BacklogItemDTO;
-  onDelete?: (id: string) => void;
-}) => {
-  
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const itemId = e.currentTarget.dataset["itemid"];
-    if (!itemId) return;
-    if (onDelete) onDelete(itemId);
-  };
-
+const BacklogItemActions = ({ item }: { item: BacklogItemDTO }) => {
   return (
     <SidePanel position="none" borders={false} icon={<BsThreeDotsVertical />}>
       <ItemChangeCategory backlogItem={item} />
@@ -47,15 +34,7 @@ const BacklogItemActions = ({
           Edit
         </LinkWithBtnStyle>
         <Divider />
-        <ButtonBase
-          title="Delete item"
-          text="Delete"
-          size="small"
-          variant="dangerGhost"
-          data-itemid={item._id}
-          icon={<MdDeleteForever size={24} />}
-          onClick={handleDelete}
-        />
+        <ItemDeleteModalOpen data={{ id: item._id, title: item.title }} />
       </>
     </SidePanel>
   );

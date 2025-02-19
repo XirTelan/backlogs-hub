@@ -13,10 +13,29 @@ const BacklogItemTr = ({
   color,
   showActions,
   tags,
-  onDelete,
 }: BacklogItemTrProps) => {
   const { user } = useSession();
   const categoryDesignation = user?.config?.categoryDesignation ?? "color";
+
+  const renderHandle = (handle: () => void) => (
+    <button
+      className="hover:underline"
+      style={{
+        color: categoryDesignation === "color" ? color : "#F4F4F4",
+      }}
+      onClick={handle}
+    >
+      <p className=" text-left">
+        <span>{item.title}</span>
+
+        {categoryDesignation === "explicit" && (
+          <span className=" ms-2 text-text-secondary ">
+            {`| ${item.category}`}
+          </span>
+        )}
+      </p>
+    </button>
+  );
 
   return (
     <>
@@ -30,29 +49,7 @@ const BacklogItemTr = ({
               textProps={{
                 tag: "p",
                 render: (
-                  <ItemInfoModalOpen
-                    data={item._id}
-                    render={(handle) => (
-                      <button
-                        className="hover:underline"
-                        style={{
-                          color:
-                            categoryDesignation === "color" ? color : "#F4F4F4",
-                        }}
-                        onClick={handle}
-                      >
-                        <p className=" text-left">
-                          <span>{item.title}</span>
-
-                          {categoryDesignation === "explicit" && (
-                            <span className=" ms-2 text-text-secondary ">
-                              {`| ${item.category}`}
-                            </span>
-                          )}
-                        </p>
-                      </button>
-                    )}
-                  />
+                  <ItemInfoModalOpen data={item._id} render={renderHandle} />
                 ),
               }}
             />
@@ -81,7 +78,7 @@ const BacklogItemTr = ({
         </td>
         <td className={`ms-auto flex p-2 `}>
           {showActions ? (
-            <BacklogItemActions item={item} onDelete={onDelete} />
+            <BacklogItemActions item={item} />
           ) : (
             <DetailsButton id={item._id} text={""} />
           )}
@@ -101,7 +98,6 @@ type BacklogItemTrProps = {
     name: string;
     color: string;
   }[];
-  onDelete: (id: string) => void;
 };
 const DetailsButton = ({ text, id }: { text: string; id: string }) => {
   return (

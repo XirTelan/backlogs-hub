@@ -2,6 +2,7 @@ import { ModalProvider } from "@/providers/modalProvider";
 import React from "react";
 import ItemFormModal from "../Items/ItemFormModal";
 import ItemInfoModal from "../Items/ItemInfoModal";
+import ItemDeleteModal from "../Items/ItemDeleteModal";
 
 const BacklogModalsWrapper = ({
   children,
@@ -9,13 +10,14 @@ const BacklogModalsWrapper = ({
   children: React.ReactNode | React.ReactNode[];
 }) => {
   return (
-    <div>
+    <>
       <ModalProvider>
         <>{children}</>
         <ItemFormModal />
         <ItemInfoModal />
+        <ItemDeleteModal />
       </ModalProvider>
-    </div>
+    </>
   );
 };
 

@@ -19,7 +19,9 @@ import useToggle from "@/hooks/useToggle";
 import { EditItemForm } from "./EditItemForm";
 import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/zodTypes";
 
-const ModalProvider = createModal(ModalContext, "ItemInfo", {
+const KEY = "ItemInfo";
+
+const ModalProvider = createModal(ModalContext, KEY, {
   openerButtton: {
     hideText: true,
     text: "Add item",
@@ -51,7 +53,7 @@ const ItemInfoModal = () => {
   const { data, isLoading } = useSWR<{
     status?: "success";
     data: BacklogItemPopulated | BacklogItemWithSteamInfo;
-  }>(cntx.data ? url : null, fetcher);
+  }>(cntx.key === KEY && cntx.isOpen && cntx.data ? url : null, fetcher);
 
   if (!backlog) return;
   if (isLoading)

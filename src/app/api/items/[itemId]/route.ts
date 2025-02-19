@@ -29,7 +29,7 @@ export async function GET(request: NextRequest, props: { params: Params }) {
     if (!res.success) return sendMsg.error(res.errors);
     return NextResponse.json({ status: "success", data: res.data });
   } catch (error) {
-    sendMsg.error(error);
+    return sendMsg.error(error);
   }
 }
 

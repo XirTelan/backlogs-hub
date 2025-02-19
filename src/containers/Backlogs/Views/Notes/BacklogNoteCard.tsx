@@ -24,7 +24,6 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
 
   const { isOpen: isEdit, toggle } = useToggle();
 
-
   const [value, setValue] = React.useState("");
   const ref = useRef(null);
 
@@ -38,6 +37,7 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
       const noteField = data.userFields.find((val) => val.type === "markdown");
       setValue(noteField?.value ?? "");
     },
+    revalidateOnFocus: false,
   });
 
   if (isLoading) return <SkeletonBacklogNoteCard />;

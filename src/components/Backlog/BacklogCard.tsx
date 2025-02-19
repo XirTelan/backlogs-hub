@@ -2,6 +2,7 @@ import React from "react";
 import { getCurrentUserInfo } from "@/auth/utils";
 import LinkBase from "../Common/UI/LinkBase";
 import { routesList } from "@/lib/routesList";
+import Divider from "../Common/UI/Divider";
 
 const BacklogCard = async ({ children, href, backlogId }: BacklogCardProps) => {
   const user = await getCurrentUserInfo();
@@ -16,9 +17,11 @@ const BacklogCard = async ({ children, href, backlogId }: BacklogCardProps) => {
             <LinkBase href={`${routesList.itemsCreate}/?backlog=${backlogId}`}>
               Add item
             </LinkBase>
+            <Divider layer={2} />
             <LinkBase href={`${routesList.backlogEdit}/${backlogId}`}>
               Edit backlog
             </LinkBase>
+            <Divider layer={2}/>
             <LinkBase href={href}>View</LinkBase>
           </>
         )}

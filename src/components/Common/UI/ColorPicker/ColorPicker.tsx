@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import ColorRgbField from "./ColorRgbField";
 import { colors, math } from "@/utils";
 import HexFielld from "./HexFielld";
-import { ColorRGB } from "@/types";
+import { ColorPickerValue, ColorRGB } from "@/types";
 import { TbSwitchVertical } from "react-icons/tb";
 import ButtonBase from "../ButtonBase";
 
@@ -106,7 +106,6 @@ const ColorPicker = ({
     };
   }, [hueColor.color, drawSelectedClrCanvas]);
 
-
   useEffect(() => {
     if (!hueCanvas.current) return;
     const cntxBar = hueCanvas.current.getContext("2d");
@@ -116,30 +115,6 @@ const ColorPicker = ({
 
   function switchColorType() {
     setColorTypeSwitch((prev) => (prev === "RGB" ? "HEX" : "RGB"));
-  }
-
-  function renderTextColorInput(colorType: ColorType) {
-    switch (colorType) {
-      case "HEX":
-        return (
-          <HexFielld
-            selectedColor={selectedColor}
-            hueColor={hueColor}
-            onChange={updatePositionsOnCanvas}
-          />
-        );
-        break;
-      case "RGB":
-        {
-          return (
-            <ColorRgbField
-              color={selectedColor.color}
-              onChange={updatePositionsOnCanvas}
-            />
-          );
-        }
-        break;
-    }
   }
 
   function getCanvasSize(canvas: React.RefObject<HTMLCanvasElement | null>) {
@@ -215,7 +190,12 @@ const ColorPicker = ({
       </div>
       <div className="justify-center flex">
         <div className="w-[176px] mb-4 mt-2">
-          {renderTextColorInput(colorTypeSwitch)}
+          {renderTextColorInput(
+            colorTypeSwitch,
+            selectedColor,
+            hueColor,
+            updatePositionsOnCanvas,
+          )}
         </div>
       </div>
       <ButtonBase
@@ -244,3 +224,27 @@ const ColorPicker = ({
 };
 
 export default ColorPicker;
+
+function renderTextColorInput(
+  colorType: ColorType,
+  selectedColor: ColorPickerValue,
+  hueColor: ColorPickerValue,
+  onChange: (color: ColorRGB) => void,
+) {
+  switch (colorType) {
+    case "HEX":
+      return (
+        <HexFielld
+          selectedColor={selectedColor}
+          hueColor={hueColor}
+          onChange={onChange}
+        />
+      );
+    case "RGB":
+      {
+        return (
+          <ColorRgbField color={selectedColor.color} onChange={onChange} />
+        );
+      }
+  }
+}

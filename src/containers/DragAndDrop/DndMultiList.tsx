@@ -43,6 +43,7 @@ export default function DnDMultList<T extends BaseItem>({
   actions,
   renderItem,
 }: DndListProps<T>) {
+  
   const backlogs = useMemo(() => {
     return Object.fromEntries(
       Object.entries(data)
@@ -215,46 +216,46 @@ export default function DnDMultList<T extends BaseItem>({
             {activeId
               ? containers.includes(activeId)
                 ? renderContainerDragOverlay(activeId)
-                : renderSortableItemDragOverlay()
+                : renderSortableItemDragOverlay(overlayTitle)
               : null}
           </DragOverlay>
         </DndContext>
       </section>
     </>
   );
+}
 
-  function renderSortableItemDragOverlay() {
-    return (
-      <Item
-        dragOverlay
-        transform={{
-          x: 0,
-          y: 0,
-          scaleX: 0,
-          scaleY: 0,
-        }}
-        style={{ height: "48px" }}
-      >
-        <span className="ms-2">{overlayTitle}</span>
-      </Item>
-    );
-  }
+function renderSortableItemDragOverlay(overlayTitle: string) {
+  return (
+    <Item
+      dragOverlay
+      transform={{
+        x: 0,
+        y: 0,
+        scaleX: 0,
+        scaleY: 0,
+      }}
+      style={{ height: "48px" }}
+    >
+      <span className="ms-2">{overlayTitle}</span>
+    </Item>
+  );
+}
 
-  function renderContainerDragOverlay(containerId: UniqueIdentifier) {
-    return (
-      <Item
-        transform={{
-          x: 0,
-          y: 0,
-          scaleX: 0,
-          scaleY: 0,
-        }}
-        handle={false}
-      >
-        <span>{containerId}</span>
-      </Item>
-    );
-  }
+function renderContainerDragOverlay(containerId: UniqueIdentifier) {
+  return (
+    <Item
+      transform={{
+        x: 0,
+        y: 0,
+        scaleX: 0,
+        scaleY: 0,
+      }}
+      handle={false}
+    >
+      <span>{containerId}</span>
+    </Item>
+  );
 }
 
 const dropAnimation: DropAnimation = {

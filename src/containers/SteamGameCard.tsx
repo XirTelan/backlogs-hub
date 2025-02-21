@@ -18,80 +18,77 @@ const SteamGameCard = ({
 }) => {
   const [status, setStatus] = useState("none");
 
-  const showScreenshots = () => {
-    return (
-      <Modal
-        actionOptions={{
-          showActions: true,
-          align: "top",
-          position: "absolute",
-          cancelBtn: { text: "Close", clrVariant: "tertiary" },
-        }}
-        setClose={() => setStatus("none")}
-      >
-        <Carousel
-          data={data.screenshots}
-          getKey={(item) => item.id}
-          renderActive={(item) => (
-            <Image
-              src={item.path_full}
-              fill
-              alt={""}
-              style={{ objectFit: "contain" }}
-            />
-          )}
-          renderThumbnail={(item) => (
-            <Image
-              src={item.path_thumbnail}
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "80%", height: "auto", objectFit: "contain" }}
-              alt={""}
-            />
-          )}
-        />
-      </Modal>
-    );
-  };
-  const showMovies = () => {
-    return (
-      <Modal
-        actionOptions={{
-          showActions: true,
-          align: "top",
-          position: "absolute",
-          cancelBtn: { text: "Close", clrVariant: "tertiary" },
-        }}
-        setClose={() => setStatus("none")}
-      >
-        <Carousel
-          data={data.movies}
-          getKey={(item) => item.id}
-          renderActive={(item) => (
-            <Clip
-              width={"90%"}
-              controls
-              videoSrc={{
-                webm: item.webm.max,
-                mp4: item.mp4.max,
-              }}
-              className="m-auto"
-            />
-          )}
-          renderThumbnail={(item) => (
-            <Clip
-              width={"320px"}
-              videoSrc={{
-                webm: item.webm.max,
-                mp4: item.mp4.max,
-              }}
-            />
-          )}
-        />
-      </Modal>
-    );
-  };
+  const showScreenshots = (
+    <Modal
+      actionOptions={{
+        showActions: true,
+        align: "top",
+        position: "absolute",
+        cancelBtn: { text: "Close", clrVariant: "tertiary" },
+      }}
+      setClose={() => setStatus("none")}
+    >
+      <Carousel
+        data={data.screenshots}
+        getKey={(item) => item.id}
+        renderActive={(item) => (
+          <Image
+            src={item.path_full}
+            fill
+            alt={""}
+            style={{ objectFit: "contain" }}
+          />
+        )}
+        renderThumbnail={(item) => (
+          <Image
+            src={item.path_thumbnail}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "80%", height: "auto", objectFit: "contain" }}
+            alt={""}
+          />
+        )}
+      />
+    </Modal>
+  );
+
+  const showMovies = (
+    <Modal
+      actionOptions={{
+        showActions: true,
+        align: "top",
+        position: "absolute",
+        cancelBtn: { text: "Close", clrVariant: "tertiary" },
+      }}
+      setClose={() => setStatus("none")}
+    >
+      <Carousel
+        data={data.movies}
+        getKey={(item) => item.id}
+        renderActive={(item) => (
+          <Clip
+            width={"90%"}
+            controls
+            videoSrc={{
+              webm: item.webm.max,
+              mp4: item.mp4.max,
+            }}
+            className="m-auto"
+          />
+        )}
+        renderThumbnail={(item) => (
+          <Clip
+            width={"320px"}
+            videoSrc={{
+              webm: item.webm.max,
+              mp4: item.mp4.max,
+            }}
+          />
+        )}
+      />
+    </Modal>
+  );
 
   return (
     <div
@@ -171,8 +168,8 @@ const SteamGameCard = ({
         )}
       </div>
       {children && <div className="pb-2">{children}</div>}
-      {status === "img" && showScreenshots()}
-      {status === "vid" && showMovies()}
+      {status === "img" && showScreenshots}
+      {status === "vid" && showMovies}
     </div>
   );
 };

@@ -21,15 +21,20 @@ const BacklogOptionsMenu = () => {
     title: string;
     modifier: keyof ModifiersType;
   }) => {
+    
+    const renderControllerField = ({
+      field: { onChange, value },
+    }: {
+      field: { onChange: (state: boolean) => void; value: boolean };
+    }) => <Toggle value={value} action={onChange} />;
+
     return (
       <div className="flex justify-between">
         <p className=" me-4 ">{title}</p>
         <Controller
           control={control}
           name={`modifiers.${modifier}`}
-          render={({ field: { onChange, value } }) => (
-            <Toggle value={value} action={onChange} />
-          )}
+          render={renderControllerField}
         ></Controller>
       </div>
     );

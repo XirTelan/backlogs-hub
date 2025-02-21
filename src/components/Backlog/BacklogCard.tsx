@@ -21,10 +21,10 @@ const BacklogCard = async ({ children, href, backlogId }: BacklogCardProps) => {
             <LinkBase href={`${routesList.backlogEdit}/${backlogId}`}>
               Edit backlog
             </LinkBase>
-            <Divider layer={2}/>
-            <LinkBase href={href}>View</LinkBase>
+            <Divider layer={2} />
           </>
         )}
+        <LinkBase href={href}>View</LinkBase>
       </div>
     </div>
   );

@@ -29,6 +29,7 @@ const renderToastContent =
       )}
     </AnimatePresence>
   );
+  
 export const toastCustom = {
   success: (text: string, options?: toastProps) =>
     toast.custom(renderToastContent(text, "success"), options),

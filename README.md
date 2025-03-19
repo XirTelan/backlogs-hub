@@ -2,9 +2,12 @@ WIP
 
 
 
+
 # General
 
 BacklogHub - project where you have one space to create,customize  and manage your own backlogs just the way you want.
+
+Tech stack: NextJs, Tailwind, FramerMotion, React Hook Forms,Zod,Swr, mongoose, Jest
 
 
 ![image](https://github.com/user-attachments/assets/014383dc-afac-4114-a35b-f2c75deebf58)

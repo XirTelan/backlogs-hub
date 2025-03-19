@@ -1,4 +1,3 @@
-// import bg from "../../public/untitled.png";
 
 import LinkBase from "@/components/Common/UI/LinkBase";
 import Notification from "@/components/Common/UI/Notification";
@@ -26,12 +25,9 @@ export default async function Home() {
             <div className="mt-4 flex grow justify-center p-4">
               <div className="flex flex-col gap-2">
                 <p className=" text-4xl font-bold">
-                  Welcome to{" "}
-                  <span className=" text-link-primary  "> BacklogsHub </span> -{" "}
-                  <span className="font-normal">
-                    {" "}
-                    All backlogs in one place
-                  </span>
+                  Welcome to
+                  <span className=" text-link-primary  ">BacklogsHub</span>-
+                  <span className="font-normal">All backlogs in one place</span>
                 </p>
                 <p>
                   Hello there! BacklogsHub it`&apos;s a personal project where
@@ -40,7 +36,7 @@ export default async function Home() {
                 </p>
                 <p>
                   Scroll down if you want find out more about this project. And
-                  if you have any questions about how to use BacklogsHub, visit{" "}
+                  if you have any questions about how to use BacklogsHub, visit
                   <LinkBase href={"/faq"}> FAQ section.</LinkBase>
                 </p>
                 <Notification
@@ -50,7 +46,7 @@ export default async function Home() {
                       <p>
                         Just a heads-up. The app is still under active
                         development. Not all features have been implemented and
-                        there are some bugs in places.{" "}
+                        there are some bugs in places.
                       </p>
                       <LinkBase href={"/contacts"}>
                         Appreciate any feedback

@@ -1,5 +1,6 @@
 WIP
 
+[RU VERSION](README_RU.md)
 
 
 
@@ -18,6 +19,11 @@ Tech stack: NextJs, Tailwind, FramerMotion, React Hook Forms,Zod,Swr, mongoose, 
 # Creating backlogs
 
 ![CreatingBacklogDemo)](https://github.com/user-attachments/assets/9cec4a09-fbe5-4a90-8643-4a8657a9be42)
+
+# Backlog View
+
+![image](https://github.com/user-attachments/assets/eb1bf82a-cf35-48bf-9e40-f22b2812f0c1)
+
 
 
 # Manage

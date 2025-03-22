@@ -28,7 +28,7 @@
     "immer": "^10.1.1",
     "jose": "^5.9.6",
     "mongoose": "^8.9.6",
-    "next": "15.1.6",
+    "next": "15.2.3",
     "next-nprogress-bar": "^2.4.4",
     "postcss": "^8.5.1",
     "react": "19.0.0",

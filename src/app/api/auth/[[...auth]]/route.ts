@@ -1,10 +1,14 @@
-import { handleCallback, handleSession, signInWithLogin } from "@/auth/core";
+import {
+  handleCallback,
+  handleSession,
+  signInWithLogin,
+} from "@/features/auth/core";
 import {
   clearCookiesToken,
   generateAccessToken,
   getCurrentUserInfo,
   setTokenCookies,
-} from "@/auth/utils";
+} from "@/features/auth/utils";
 import User from "@/models/User";
 
 import { createUser } from "@/services/user";
@@ -73,7 +77,7 @@ const handleRegister = async (request: NextRequest) => {
   if (!result.success) return sendMsg.error(result.message);
   return NextResponse.json(
     { message: "Created", data: result.data },
-    { status: 201 },
+    { status: 201 }
   );
 };
 

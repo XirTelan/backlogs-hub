@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import Backlog from "@/models/Backlog";
 import { updateMany } from "@/services/backlogItem";
 import { sendMsg } from "@/utils";

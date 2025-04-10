@@ -1,12 +1,12 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import TopTitle from "@/components/Common/UI/TopTitle";
 import dynamic from "next/dynamic";
 
 const TemplateSwitcher = dynamic(
-  () => import("@/containers/Templates/TemplateSwitcher"),
+  () => import("@/containers/Templates/TemplateSwitcher")
 );
 const TemplateList = dynamic(
-  () => import("@/containers/Backlogs/TemplateList"),
+  () => import("@/containers/Backlogs/TemplateList")
 );
 
 const Templates = async (props: {
@@ -27,7 +27,7 @@ const Templates = async (props: {
         </div>
         <TemplateList userName={user?.username || ""} search={query} />
       </main>
-  </>
+    </>
   );
 };
 

@@ -4,7 +4,7 @@ import React from "react";
 import { MdOutlineManageSearch } from "react-icons/md";
 
 import { IoAdd } from "react-icons/io5";
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import { getUserData } from "@/services/user";
 import TopTitle from "@/components/Common/UI/TopTitle";
 

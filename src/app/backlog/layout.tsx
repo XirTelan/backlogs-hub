@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import { Session } from "@/providers/sessionProvider";
 import { redirect } from "next/navigation";
 import React from "react";

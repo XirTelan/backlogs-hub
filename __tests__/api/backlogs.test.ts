@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import { GET, PATCH, POST } from "../../src/app/api/backlogs/route"; // Import your API route handler
 import { NextRequest } from "next/server";
 

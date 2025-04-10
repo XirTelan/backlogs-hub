@@ -1,12 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getTokenData } from "./auth/utils";
+import { getTokenData } from "./features/auth/utils";
 import { routesCategories } from "./lib/routesList";
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value || "";
   const curPath = request.nextUrl.pathname;
   const isProtected = routesCategories.protectedRoutes.some((elem) =>
-    curPath.includes(elem),
+    curPath.includes(elem)
   );
 
   let userData = null;
@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
     userData
   ) {
     return NextResponse.redirect(
-      new URL(`/user/${userData.username}/backlogs`, request.nextUrl),
+      new URL(`/user/${userData.username}/backlogs`, request.nextUrl)
     );
   }
 }

@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import { getUserData } from "@/services/user";
 import { sendMsg } from "@/utils";
 import { NextResponse } from "next/server";
@@ -17,7 +17,7 @@ export async function GET() {
           folders: res.data.folders,
         },
       },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     return sendMsg.error(error);

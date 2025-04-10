@@ -1,4 +1,4 @@
-import { getCurrentUserInfo, TokenData } from "@/auth/utils";
+import { getCurrentUserInfo, TokenData } from "@/features/auth/utils";
 import { getBacklogItemsByQuery } from "@/services/backlogItem";
 import {
   createBacklog,
@@ -32,7 +32,7 @@ const isType = (value: unknown): value is Types => {
 
 const checkIsOwner = (
   curUser: TokenData | null,
-  reqUser: string | undefined,
+  reqUser: string | undefined
 ) => {
   if (curUser && reqUser === undefined) return true;
   return curUser ? curUser.username === reqUser : false;
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     resultData.backlog = await getUserBacklogBySlug(
       userName,
       backlogSlug,
-      isOwner,
+      isOwner
     );
   }
   return NextResponse.json(resultData, { status: 200 });
@@ -130,7 +130,7 @@ const handleTypeGet = async (
   resultData: GetResult,
   userName: string,
   backlogSlug: string | undefined,
-  isOwner: boolean,
+  isOwner: boolean
 ) => {
   switch (queryType) {
     case "withData":
@@ -140,7 +140,7 @@ const handleTypeGet = async (
         resultData.backlog = await getUserBacklogBySlug(
           userName,
           backlogSlug,
-          isOwner,
+          isOwner
         );
 
         if (!resultData.backlog || !resultData.backlog._id)
@@ -155,7 +155,7 @@ const handleTypeGet = async (
       {
         resultData.backlog = await getBacklogsBaseInfoByUserName(
           userName,
-          isOwner,
+          isOwner
         );
       }
       break;

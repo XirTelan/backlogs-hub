@@ -11,12 +11,12 @@ import {
   setTokenCookies,
   getCurrentUserInfo,
 } from "./utils";
-import { getUserData as getDiscordUser } from "@/auth/providers/discordProvirer";
-import { getUserData as getGoogleUser } from "@/auth/providers/googleProvider";
+import { getUserData as getDiscordUser } from "@/features/auth/providers/discordProvirer";
+import { getUserData as getGoogleUser } from "@/features/auth/providers/googleProvider";
 import { OAuthProps } from "@/zodTypes";
 import { ResponseData } from "@/types";
 import { SignInSchema, isEmailSchema } from "@/zod";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import Account from "@/models/Account";
 
 export const handleSession = async (request: NextRequest) => {
@@ -40,7 +40,7 @@ const createAccountAndUser = async (oauthData: OAuthProps, url: string) => {
 const createAndLinkAccount = async (
   oauthData: OAuthProps,
   id: string,
-  url: string,
+  url: string
 ) => {
   const user = await User.findById(id);
   if (!user) {
@@ -57,7 +57,7 @@ const createAndLinkAccount = async (
 
 export const handleCallback = async (
   request: NextRequest,
-  provider: string,
+  provider: string
 ) => {
   if (!provider) return sendMsg.error("Provider is required");
 
@@ -103,7 +103,7 @@ export const handleCallback = async (
     if (account) {
       return NextResponse.json(
         { message: "Already linked to another user" },
-        { status: 400 },
+        { status: 400 }
       );
     }
     return await createAndLinkAccount(oauthData, currentUser.id, request.url);
@@ -138,7 +138,7 @@ export const handleCallback = async (
 };
 
 export const signInWithLogin = async (
-  data: unknown,
+  data: unknown
 ): Promise<ResponseData<string>> => {
   const error: ResponseData<string> = {
     success: false,

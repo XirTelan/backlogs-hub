@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import NotAvailable from "@/components/Common/NotAvailable";
 import NotFound from "@/components/Common/NotFound";
 import UserProfile from "@/containers/User/UserProfile";

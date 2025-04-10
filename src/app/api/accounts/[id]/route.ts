@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import Account from "@/models/Account";
 import { deleteAccount } from "@/services/account";
 import { sendMsg } from "@/utils";
@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   request: NextRequest,
-  props: { params: Promise<{ id: string }> },
+  props: { params: Promise<{ id: string }> }
 ) {
   const params = await props.params;
 

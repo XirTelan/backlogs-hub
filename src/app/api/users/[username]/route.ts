@@ -1,4 +1,8 @@
-import { clearCookiesToken, getCurrentUserInfo, TokenData } from "@/auth/utils";
+import {
+  clearCookiesToken,
+  getCurrentUserInfo,
+  TokenData,
+} from "@/features/auth/utils";
 import {
   deleteUser,
   isUserNameExist,

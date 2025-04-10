@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
@@ -14,7 +14,7 @@ import { MdEdit } from "react-icons/md";
 import BacklogNotesView from "@/containers/Backlogs/Views/Notes/BacklogNotesView";
 
 const BoardView = dynamic(
-  () => import("@/containers/Backlogs/Views/Board/BacklogBoard"),
+  () => import("@/containers/Backlogs/Views/Board/BacklogBoard")
 );
 
 export default async function Backlog(props: {

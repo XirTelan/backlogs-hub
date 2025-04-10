@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import { searchSteamGame } from "@/services/steamSearch";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";

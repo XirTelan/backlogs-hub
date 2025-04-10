@@ -2,7 +2,7 @@
 import useChangeSearchParams from "@/shared/hooks/useChangeParams";
 import classNames from "classnames";
 import { motion } from "framer-motion";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 const Switcher = ({
   initial,
@@ -12,8 +12,16 @@ const Switcher = ({
   options: Options;
 }) => {
   const { key, items, callback } = options;
-  const [active, setActive] = useState<number>(initial ?? 0);
   const { changeParams, searchParams } = useChangeSearchParams();
+
+  const activeKey = searchParams.get(key) ?? "";
+  const indx = activeKey
+    ? items.findIndex((item) => item.value === activeKey)
+    : -1;
+
+  const [active, setActive] = useState<number>(
+    indx > 0 ? indx : (initial ?? 0)
+  );
 
   const countMaxItem = useMemo(() => {
     let max = 0;
@@ -23,15 +31,6 @@ const Switcher = ({
     });
     return max;
   }, [items]);
-
-  useEffect(() => {
-    const activeKey = searchParams.get(key) ?? "";
-    const indx = Math.max(
-      0,
-      items.findIndex((item) => item.value === activeKey)
-    );
-    setActive(indx);
-  }, []);
 
   const handleClick =
     (item: Options["items"][0], index: number) =>

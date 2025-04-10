@@ -1,8 +1,8 @@
-import { InputFieldProps as Props } from "@/types";
 import React from "react";
 import { inputStyleVariants } from "@/lib/styles";
 import { FaCircleExclamation } from "react-icons/fa6";
 import InputBase from "./InputBase";
+import { InputFieldProps } from "@/shared/types";
 
 const InputField = ({
   id,
@@ -12,7 +12,7 @@ const InputField = ({
   isSimple = false,
   ref,
   ...props
-}: Props) => {
+}: InputFieldProps) => {
   const helperTextBlock = () => {
     if (!helperText) return <div className="h-5 pt-1" />;
     return (

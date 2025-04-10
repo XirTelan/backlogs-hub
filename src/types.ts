@@ -1,48 +1,37 @@
-import { FieldError } from "react-hook-form";
+import {
+  Control,
+  FieldError,
+  FieldErrorsImpl,
+  UseFormRegister,
+} from "react-hook-form";
 import {
   BacklogCategory,
   ModifiersType,
   Field,
-  UserDTO,
-  DndData,
+  UserDB,
   ConfigType,
+  BacklogFormData,
+  BacklogItemDTO,
 } from "./zodTypes";
+import { LinkProps } from "next/link";
 import { btnStyleVariants } from "./lib/styles";
-import React, { ComponentType, ReactNode } from "react";
-import { UniqueIdentifier } from "@dnd-kit/core";
-type Layer = 1 | 2 | 3;
-
-export type InputBaseProps = {
-  layer?: Layer;
-  isError?: boolean;
-  variant?: "small" | "medium" | "large";
-} & React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
-
-export type InputFieldBaseProps = {
-  layer?: Layer;
-  helperText?: { message: string; type: "text" | "error" };
-  variant?: "small" | "medium" | "large";
-} & React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
-
-export type InputFieldProps = InputFieldBaseProps & {
-  label?: React.ReactNode;
-  error?: string;
-  isSimple?: boolean;
-  children?: React.ReactNode;
-} & React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  >;
-export type SearchBar = {
-  layer?: Layer;
-  variant?: "small" | "medium" | "large";
-} & React.HTMLProps<HTMLInputElement>;
+import React, {
+  AnchorHTMLAttributes,
+  ComponentType,
+  CSSProperties,
+  Dispatch,
+  JSX,
+  ReactElement,
+  ReactNode,
+  SetStateAction,
+} from "react";
+import {
+  CancelDrop,
+  KeyboardCoordinateGetter,
+  Modifiers,
+  UniqueIdentifier,
+} from "@dnd-kit/core";
+import { SortingStrategy } from "@dnd-kit/sortable";
 
 export type ItemsFormBacklogProp = {
   backlogFields: Field[];
@@ -59,23 +48,12 @@ export type ItemsFormProps<T> = {
   btnCancel?: () => void;
 };
 
-export type TextArea = {
-  label?: string;
-  layer?: Layer;
-} & React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLTextAreaElement>,
-  HTMLTextAreaElement
->;
-
 export type BacklogNavProps = {
+  active: boolean;
   activeBacklog: boolean;
   backlogSlug: string;
 } & LinkProps &
   AnchorHTMLAttributes<HTMLAnchorElement>;
-
-export type ListItemInput = {
-  onDelete: () => void;
-} & InputFieldProps;
 
 export type SortableItemProps = {
   children?: React.ReactNode | ReactNode[];
@@ -96,13 +74,8 @@ export type HandleProps = {
 
 export type FieldsBlockProps = {
   errors?:
-    | Merge<
-        FieldError,
-        (
-          | Merge<FieldError, FieldErrorsImpl<Field | BacklogCategory>>
-          | undefined
-        )[]
-      >
+    | (FieldError &
+        ((FieldError & FieldErrorsImpl<Field | BacklogCategory>) | undefined)[])
     | undefined;
 
   control: Control<BacklogFormData>;
@@ -123,7 +96,7 @@ export type ResponseData<T> = {
     }
 );
 
-export type UserCreationDTO = Pick<UserDTO, "username" | "email" | "provider">;
+export type UserCreationDTO = Pick<UserDB, "username" | "email" | "provider">;
 
 export type ColorRGB = { r: number; g: number; b: number };
 export type ColorPickerValue = {
@@ -153,9 +126,9 @@ type RenderItemProps = {
   item: BacklogItemDTO;
   isSortingContainer: boolean;
   containerId: UniqueIdentifier;
-  index;
+  index: string;
   handle: boolean;
-  getIndex;
+  getIndex: () => string;
 };
 export type DndListProps<T> = {
   data: Record<string, { order: number; items: T[] }>;
@@ -169,7 +142,7 @@ export type DndListProps<T> = {
     CustomAction?: ComponentType;
   };
   itemCount?: number;
-  items?: Items;
+  items?: T;
   view?: "full" | "compact";
   handle?: boolean;
   strategy?: SortingStrategy;

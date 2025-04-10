@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import InputField from "./InputField";
-import { InputFieldProps } from "@/types";
 import { FaCheck } from "react-icons/fa6";
+import { InputFieldProps } from "@/shared/types";
 
 type InputWithLoaderProps = {
   isLoading: boolean;
@@ -22,7 +22,7 @@ const InputWithLoader = ({
     isLoading: boolean,
     isAvailable: boolean,
     helperText: InputFieldProps["helperText"],
-    errorMsg?: string,
+    errorMsg?: string
   ): InputFieldProps["helperText"] => {
     if (isLoading) return undefined;
     if (isAvailable) return helperText;

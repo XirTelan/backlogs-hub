@@ -11,8 +11,8 @@ import MDEditor from "@uiw/react-md-editor";
 import React, { useRef } from "react";
 import rehypeSanitize from "rehype-sanitize";
 import useSWR from "swr";
-import BacklogItemActions from "../Default/BacklogItemActions";
-import SkeletonBacklogNoteCard from "@/components/Common/Skeleton/SkeletonBacklogNoteCard";
+import BacklogItemActions from "../../../containers/Backlogs/Views/Default/BacklogItemActions";
+import SkeletonBacklogNoteCard from "@/widgets/BacklogsNotesView/ui/SkeletonBacklogNoteCard";
 import NotFound from "@/components/Common/NotFound";
 
 type BacklogNoteCardProps = {

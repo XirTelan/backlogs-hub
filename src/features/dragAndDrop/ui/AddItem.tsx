@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
-import ButtonBase from "../../shared/ui/ButtonBase";
+import ButtonBase from "../../../shared/ui/ButtonBase";
 import { MdCheck, MdClose } from "react-icons/md";
-import InputField from "../Common/UI/Input/InputField";
+import InputField from "../../../shared/ui/Input/InputField";
 
 type AddItemProps = {
   action: (value: string) => void;

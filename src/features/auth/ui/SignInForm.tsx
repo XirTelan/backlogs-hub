@@ -1,5 +1,5 @@
 import React from "react";
-import { GoogleSignIn } from "./Google/GoogleSignIn";
+import { GoogleSignIn } from "./GoogleSignIn/GoogleSignIn";
 import DiscordSignIn from "./DiscordSignIn";
 import UserLoginForm from "./UserLoginForm";
 

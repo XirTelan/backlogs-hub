@@ -3,14 +3,19 @@ import { Table, TableHeader, TableHead, TableBody } from "@/shared/ui/table";
 import InputField from "@/shared/ui/Input/InputField";
 import FieldsArrayItem from "./FieldsArrayItem";
 import Notification from "@/shared/ui/Notification";
-import { Field } from "@/zodTypes";
+import { BacklogFormData, Field } from "@/zodTypes";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { UseFieldArrayRemove, UseFieldArrayUpdate } from "react-hook-form";
+import {
+  FieldValues,
+  UseFieldArrayRemove,
+  UseFieldArrayUpdate,
+} from "react-hook-form";
+import { FieldWithId } from "@/types";
 
-type UserFieldsTableProps = {
-  userFields: (Field & { id: string })[];
+type UserFieldsTableProps<T extends FieldValues, U extends FieldValues> = {
+  userFields: T[];
   remove: UseFieldArrayRemove;
-  update: UseFieldArrayUpdate<any>;
+  update: UseFieldArrayUpdate<U>;
 };
 
 const headers = [
@@ -24,7 +29,7 @@ export default function UserFieldsTable({
   userFields,
   remove,
   update,
-}: UserFieldsTableProps) {
+}: UserFieldsTableProps<FieldWithId<Field>, BacklogFormData>) {
   return (
     <Table>
       <TableHeader>

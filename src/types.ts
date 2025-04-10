@@ -11,12 +11,9 @@ import {
   UserDB,
   ConfigType,
   BacklogFormData,
-  BacklogItemDTO,
 } from "./zodTypes";
-import { LinkProps } from "next/link";
 import { btnStyleVariants } from "./lib/styles";
 import React, {
-  AnchorHTMLAttributes,
   ComponentType,
   CSSProperties,
   Dispatch,
@@ -131,7 +128,7 @@ export type DndListProps<T> = {
   containersOptions?: {
     style?: React.CSSProperties;
     handle?: boolean;
-    customTitle?: (id: string) => React.ReactNode | React.ReactNode[];
+    customTitle?: React.FC<{ id: string }>;
     CustomAction?: ComponentType;
   };
   itemCount?: number;
@@ -199,3 +196,5 @@ export type ModalContextProps = {
 export type UserPrefsProps = {
   userPrefs: ConfigType;
 };
+
+export type FieldWithId<T> = T & { id: string };

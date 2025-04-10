@@ -1,5 +1,5 @@
 import { VscAccount } from "react-icons/vsc";
-import SignOutButton from "../Auth/SignOutButton";
+import SignOutButton from "../../features/auth/ui/SignOutButton";
 import SidePanel from "@/components/SidePanel";
 import NavLink from "@/components/NavLink";
 import { MdOutlineManageSearch } from "react-icons/md";

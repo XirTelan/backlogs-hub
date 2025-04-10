@@ -22,7 +22,7 @@ type Props = {
   scrollable?: boolean;
   onRename: (value: string) => void;
   onRemove: () => void;
-  customTitle?: (id: string) => React.ReactNode | React.ReactNode[];
+  customTitle?: React.FC<{ id: string }>;
 };
 
 const DroppableContainer = <T,>({
@@ -38,7 +38,7 @@ const DroppableContainer = <T,>({
   handleProps,
   onRename,
   onRemove,
-  customTitle,
+  customTitle: CustomTitle,
   ...props
 }: Props & {
   disabled?: boolean;
@@ -90,8 +90,8 @@ const DroppableContainer = <T,>({
         {...(!handle ? listeners : undefined)}
       >
         <div className="flex items-center">
-          {customTitle ? (
-            customTitle(String(id))
+          {CustomTitle ? (
+            <CustomTitle id={String(id)} />
           ) : (
             <>
               <FaFolder className="mx-2" />

@@ -1,7 +1,6 @@
 "use server";
 
 import dbConnect from "@/lib/dbConnect";
-import UserDB from "@/models/User";
 import { createUser } from "@/services/user";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -18,7 +17,6 @@ import { ResponseData } from "@/types";
 import { SignInSchema, isEmailSchema } from "@/zod";
 import bcrypt from "bcryptjs";
 import Account from "@/models/Account";
-import { ObjectId } from "mongoose";
 import User from "@/models/User";
 
 export const handleSession = async (request: NextRequest) => {

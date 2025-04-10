@@ -52,7 +52,7 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
       });
       if (res.ok) {
         toastCustom.success("Saved");
-        mutate();
+        await mutate();
       }
     } catch (error) {
       console.error(error);

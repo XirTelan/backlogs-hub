@@ -13,12 +13,7 @@ import {
 import { updateStat, updateUserFolders } from "@/services/user";
 import { generateSlug, sendMsg } from "@/utils";
 import { BacklogCreationSchema, BacklogFormSchema } from "@/zod";
-import {
-  BacklogCreationDTO,
-  BacklogDTO,
-  BacklogFormData,
-  BacklogItemDTO,
-} from "@/zodTypes";
+import { BacklogCreationDTO, BacklogDTO, BacklogItemDTO } from "@/zodTypes";
 import { Types } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";

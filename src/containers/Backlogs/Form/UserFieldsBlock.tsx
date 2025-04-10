@@ -1,6 +1,6 @@
 import React from "react";
 import { useFieldArray } from "react-hook-form";
-import { FieldsBlockProps } from "@/types";
+import { FieldsBlockProps, FieldWithId } from "@/types";
 import ButtonBase from "@/shared/ui/ButtonBase";
 import Title from "@/components/Common/Title";
 import { BacklogFormData, Field } from "@/zodTypes";
@@ -9,7 +9,7 @@ import UserFieldsTable from "./UserFieldsTable";
 
 const FieldsTable = withWrap(UserFieldsTable);
 
-const UserFieldsBlock = ({ errors, control }: FieldsBlockProps) => {
+const UserFieldsBlock = ({ control }: FieldsBlockProps) => {
   const { fields, append, remove, update } = useFieldArray<
     BacklogFormData,
     "fields",
@@ -19,7 +19,7 @@ const UserFieldsBlock = ({ errors, control }: FieldsBlockProps) => {
     control,
   });
 
-  const userFields = fields as (Field & { id: string })[];
+  const userFields = fields as unknown as FieldWithId<Field>[];
 
   return (
     <section>

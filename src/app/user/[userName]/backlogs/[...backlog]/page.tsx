@@ -2,7 +2,7 @@ import { getCurrentUserInfo } from "@/features/auth/utils";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
-import BacklogDefaultView from "@/containers/Backlogs/Views/Default/BacklogDefaultView";
+import BacklogDefaultView from "@/widgets/BacklogTableView/BacklogDefaultView";
 import BacklogModalsWrapper from "@/containers/Backlogs/BacklogModalsWrapper";
 import FilterBlock from "@/containers/FilterBlock";
 import { routesList } from "@/lib/routesList";

@@ -1,5 +1,5 @@
 import React from "react";
-import SignInButton from "./Auth/SignInButton";
+import SignInButton from "../features/auth/ui/SignInButton";
 import NavBar from "./NavBar";
 import { getCurrentUserInfo } from "@/features/auth/utils";
 import UserPanel from "./User/UserPanel";

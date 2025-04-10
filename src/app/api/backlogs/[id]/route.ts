@@ -13,7 +13,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 type Params = Promise<{ id: string }>;
 
-export async function GET(request: NextRequest, props: { params: Params }) {
+export async function GET(_request: NextRequest, props: { params: Params }) {
   const { id } = await props.params;
 
   try {
@@ -55,7 +55,7 @@ export async function PUT(request: NextRequest) {
     throw error;
   }
 }
-export async function DELETE(request: NextRequest, props: { params: Params }) {
+export async function DELETE(_request: NextRequest, props: { params: Params }) {
   const { id } = await props.params;
 
   try {

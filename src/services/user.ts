@@ -96,7 +96,11 @@ export async function createUser(
             canChangeUserName: true,
           }
         : DEFAULT_CONFIG;
-    const { password, _id, ...newUser } = (await User.create(data)).toObject();
+    const {
+      password: _,
+      _id,
+      ...newUser
+    } = (await User.create(data)).toObject();
     return {
       success: true,
       data: { ...newUser, _id: _id.toString() },

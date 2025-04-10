@@ -4,7 +4,6 @@ import { updateMany } from "@/services/backlogItem";
 import { sendMsg } from "@/utils";
 import { BacklogCategory, BacklogItemDTO } from "@/zodTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { use } from "react";
 
 export async function PUT(request: NextRequest) {
   const {
@@ -26,7 +25,6 @@ export async function PUT(request: NextRequest) {
       userId: 1,
     });
     if (!backlog) return sendMsg.error("Backlog was not found");
-    console.log("badasd", backlog.userId, user, user.id);
     if (backlog.userId != user.id)
       return sendMsg.error("You dont have rights", 403);
 

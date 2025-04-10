@@ -27,7 +27,7 @@ const HexFielld = ({
       setHexValue(colors.rgbToHex(selectedColor.color))
     );
     return () => window.cancelAnimationFrame(handle);
-  }, [selectedColor.color]);
+  }, [selectedColor.color, selectedColor.initiator]);
 
   useEffect(() => {
     if (hueColor.initiator === "hueChange" || hueColor.initiator == "input")
@@ -36,7 +36,7 @@ const HexFielld = ({
       setHexValue(colors.rgbToHex(selectedColor.color))
     );
     return () => window.cancelAnimationFrame(handle);
-  }, [hueColor.color]);
+  }, [hueColor.color, hueColor.initiator, selectedColor.color]);
 
   return (
     <InputField

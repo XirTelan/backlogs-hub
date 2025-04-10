@@ -39,7 +39,7 @@ const ColorPallete = ({
     if (!refContainer.current) return;
     const container = refContainer.current.getBoundingClientRect();
     setPos([container.right, container.top + window.scrollY]);
-  }, [refContainer.current]);
+  }, []);
 
   return (
     <div ref={refContainer} className="">

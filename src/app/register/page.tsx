@@ -1,4 +1,4 @@
-import UserRegisterForm from "@/containers/Auth/UserRegisterForm";
+import UserRegisterForm from "@/features/auth/ui/UserRegisterForm";
 import React from "react";
 
 const Register = () => {

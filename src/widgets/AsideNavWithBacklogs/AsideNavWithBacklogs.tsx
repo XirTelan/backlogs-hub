@@ -1,9 +1,9 @@
-import PanelItemsWrapper from "@/components/Common/UI/PanelItemsWrapper";
+import PanelItemsWrapper from "@/widgets/AsideNavWithBacklogs/ui/PanelItemsWrapper";
 import { getBacklogsByFolder } from "@/services/backlogs";
 import React from "react";
 import { FaFolder } from "react-icons/fa6";
 
-const UserBacklogsSideNav = async ({ userName }: { userName: string }) => {
+const AsideNavWithBacklogs = async ({ userName }: { userName: string }) => {
   const data = await getBacklogsByFolder(userName);
   const entries = Object.entries(data).sort((a, b) => a[1].order - b[1].order);
   if (entries.length === 0) return;
@@ -35,4 +35,4 @@ const UserBacklogsSideNav = async ({ userName }: { userName: string }) => {
   );
 };
 
-export default UserBacklogsSideNav;
+export default AsideNavWithBacklogs;

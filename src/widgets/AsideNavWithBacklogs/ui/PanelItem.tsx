@@ -1,8 +1,8 @@
 "use client";
-import { BacklogNavProps } from "@/types";
 import classNames from "classnames";
 import Link from "next/link";
 import React from "react";
+import { BacklogNavProps } from "../types/types";
 
 const PanelItem = ({ active, href, children, ...props }: BacklogNavProps) => {
   return (

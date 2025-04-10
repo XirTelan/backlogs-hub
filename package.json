@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "set NODE_OPTIONS='--inspect' && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -20,7 +20,7 @@
     "@tailwindcss/postcss": "^4.0.17",
     "@types/cheerio": "^0.22.35",
     "@uiw/react-md-editor": "^4.0.5",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "cheerio": "1.0.0",
     "classnames": "^2.5.1",
     "dotenv": "^16.4.7",

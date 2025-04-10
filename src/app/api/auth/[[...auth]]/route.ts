@@ -10,7 +10,7 @@ import User from "@/models/User";
 import { createUser } from "@/services/user";
 import { sendMsg } from "@/utils";
 import { RegistrationSchema } from "@/zod";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 import { NextRequest, NextResponse } from "next/server";
 

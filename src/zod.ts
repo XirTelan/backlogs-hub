@@ -1,3 +1,4 @@
+import { ObjectId, Types } from "mongoose";
 import { z } from "zod";
 
 // Backlog
@@ -16,7 +17,7 @@ export const FieldSchema = z
         type: z.literal("select"),
         data: z.string().array(),
       }),
-    ]),
+    ])
   );
 
 export const BacklogTagsSchema = z.object({
@@ -72,7 +73,7 @@ export const BacklogDTOSchema = BacklogFormSchema.merge(
     createdAt: z.string(),
     updatedAt: z.string(),
     totalCount: z.number().default(0),
-  }),
+  })
 );
 
 export const BacklogCreationSchema = BacklogDTOSchema.omit({
@@ -111,7 +112,7 @@ export const BacklogItemSchema = BacklogItemCreationSchema.merge(
     _id: z.string(),
     createdAt: z.date().or(z.string()).optional(),
     updatedAt: z.date().or(z.string()).optional(),
-  }),
+  })
 );
 
 export const BacklogItemPopSchema = BacklogItemSchema.omit({
@@ -119,7 +120,7 @@ export const BacklogItemPopSchema = BacklogItemSchema.omit({
 }).merge(
   z.object({
     userFields: BacklogItemPopUserFieldSchema.array(),
-  }),
+  })
 );
 
 //Account
@@ -191,7 +192,14 @@ export const ConfigSchema = z.object({
 });
 
 export const UserBase = z.object({
-  _id: z.string(),
+  _id: z.custom<ObjectId>(
+    (val) => {
+      return Types.ObjectId.isValid(val);
+    },
+    {
+      message: "Invalid ObjectId",
+    }
+  ),
   username: z
     .string()
     .min(4)
@@ -211,7 +219,7 @@ export const UserSchema = UserBase.merge(
     email: z.string().email(),
     config: ConfigSchema,
     stats: StatsSchema,
-  }),
+  })
 );
 
 export const rawPasswordSchema = z.string().min(6);
@@ -228,7 +236,7 @@ export const TemplateDTOSchema = BacklogFormSchema.omit({
     templateTitle: z.string(),
     author: z.string(),
     userId: z.string(),
-  }),
+  })
 );
 export const TemplateCreateSchema = TemplateDTOSchema.omit({ _id: true });
 
@@ -245,7 +253,7 @@ export const NewsSchema = z.object({
 const uniqueArray = <T>(
   items: T[],
   ctx: z.RefinementCtx,
-  getter: (val: T) => string,
+  getter: (val: T) => string
 ) => {
   const hashMap = new Map();
   items.forEach((item, indx) => {
@@ -276,5 +284,5 @@ export const LogDataDTOSchema = LogDataSchema.merge(
   z.object({
     code: z.string(),
     confirmCode: z.string(),
-  }),
+  })
 );

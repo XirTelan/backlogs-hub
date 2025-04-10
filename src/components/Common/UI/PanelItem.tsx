@@ -14,7 +14,7 @@ const PanelItem = ({ active, href, children, ...props }: BacklogNavProps) => {
         {
           "bg-subtle-3/25 after:absolute after:left-0 after:h-full after:w-[3px] after:bg-btn-primary":
             active,
-        },
+        }
       )}
     >
       <>{children}</>

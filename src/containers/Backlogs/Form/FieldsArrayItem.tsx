@@ -1,5 +1,5 @@
 import ButtonBase from "@/shared/ui/ButtonBase";
-import InputField from "@/components/Common/UI/Input/InputField";
+import InputField from "@/shared/ui/Input/InputField";
 import Select from "@/shared/ui/Select";
 import { Field } from "@/zodTypes";
 import classNames from "classnames";

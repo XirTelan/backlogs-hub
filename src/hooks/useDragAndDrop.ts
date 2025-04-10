@@ -18,13 +18,13 @@ type BaseItem = {
 };
 const useDragAndDrop = <T extends BaseItem>(
   data: DndData<T>,
-  defaultContainers?: string[],
+  defaultContainers?: string[]
 ) => {
   const [items, setItems] = useState(data);
   const [clonedItems, setClonedItems] = useState<typeof data | null>(null);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [containers, setContainers] = useState(
-    defaultContainers ?? (Object.keys(items) as UniqueIdentifier[]),
+    defaultContainers ?? (Object.keys(items) as UniqueIdentifier[])
   );
   const [overlayTitle, setOverlayTitle] = useState("");
   const recentlyMovedToNewContainer = useRef(false);
@@ -58,7 +58,7 @@ const useDragAndDrop = <T extends BaseItem>(
         return closestCenter({
           ...args,
           droppableContainers: args.droppableContainers.filter(
-            (container) => container.id in items,
+            (container) => container.id in items
           ),
         });
       }
@@ -84,7 +84,7 @@ const useDragAndDrop = <T extends BaseItem>(
               droppableContainers: args.droppableContainers.filter(
                 (container) =>
                   container.id !== overId &&
-                  containerItems.some((item) => item._id === container.id),
+                  containerItems.some((item) => item._id === container.id)
               ),
             })[0]?.id;
           }
@@ -106,7 +106,7 @@ const useDragAndDrop = <T extends BaseItem>(
       // If no droppable is matched, return the last match
       return lastOverId.current ? [{ id: lastOverId.current }] : [];
     },
-    [activeId, items],
+    [activeId, items]
   );
 
   const handleDragStart = ({ active }: DragStartEvent) => {
@@ -135,7 +135,7 @@ const useDragAndDrop = <T extends BaseItem>(
         const overItems = items[overContainer];
         const overIndex = overItems.findIndex((items) => items._id === overId);
         const activeIndex = activeItems.findIndex(
-          (item) => item._id === active.id,
+          (item) => item._id === active.id
         );
 
         let newIndex: number;
@@ -160,14 +160,14 @@ const useDragAndDrop = <T extends BaseItem>(
         return {
           ...items,
           [activeContainer]: items[activeContainer].filter(
-            (item) => item._id !== active.id,
+            (item) => item._id !== active.id
           ),
           [overContainer]: [
             ...items[overContainer].slice(0, newIndex),
             items[activeContainer][activeIndex],
             ...items[overContainer].slice(
               newIndex,
-              items[overContainer].length,
+              items[overContainer].length
             ),
           ],
         };
@@ -202,10 +202,10 @@ const useDragAndDrop = <T extends BaseItem>(
 
     if (overContainer) {
       const activeIndex = items[activeContainer].findIndex(
-        (item) => item._id === active.id,
+        (item) => item._id === active.id
       );
       const overIndex = items[overContainer].findIndex(
-        (item) => item._id === overId,
+        (item) => item._id === overId
       );
 
       if (activeIndex !== overIndex) {
@@ -214,7 +214,7 @@ const useDragAndDrop = <T extends BaseItem>(
           [overContainer]: arrayMove(
             items[overContainer],
             activeIndex,
-            overIndex,
+            overIndex
           ),
         }));
       }
@@ -252,7 +252,7 @@ const useDragAndDrop = <T extends BaseItem>(
           newValue,
         ],
         containers.length - 1,
-        indx,
+        indx
       );
     });
     setItems((prev) => {
@@ -267,7 +267,7 @@ const useDragAndDrop = <T extends BaseItem>(
     }
 
     return Object.keys(items).find((key) =>
-      items[key].some((item) => item._id == id),
+      items[key].some((item) => item._id == id)
     );
   };
   const getIndex = (id: UniqueIdentifier) => {

@@ -1,6 +1,6 @@
 "use client";
 import ButtonBase from "@/shared/ui/ButtonBase";
-import AddItem from "@/components/dnd/AddItem";
+import AddItem from "@/features/dragAndDrop/ui/AddItem";
 import useToggle from "@/shared/hooks/useToggle";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";

@@ -1,5 +1,5 @@
 "use client";
-import InputField from "@/components/Common/UI/Input/InputField";
+import InputField from "@/shared/ui/Input/InputField";
 import { useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";

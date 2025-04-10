@@ -1,5 +1,3 @@
-import { fail } from "assert";
-
 type ContentBlockProps = {
   dir: "left" | "right";
   children: React.ReactNode;

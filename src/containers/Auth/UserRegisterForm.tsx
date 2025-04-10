@@ -1,7 +1,7 @@
 "use client";
 import ButtonBase from "@/shared/ui/ButtonBase";
-import InputField from "@/components/Common/UI/Input/InputField";
-import InputWithLoader from "@/components/Common/UI/Input/InputWithLoader";
+import InputField from "@/shared/ui/Input/InputField";
+import InputWithLoader from "@/shared/ui/Input/InputWithLoader";
 import { apiRoutesList } from "@/lib/routesList";
 import useLoaderValue from "@/hooks/useLoaderValue";
 import { toastCustom } from "@/lib/toast";

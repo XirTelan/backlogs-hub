@@ -1,7 +1,6 @@
 "use server";
 import { getCurrentUserInfo } from "@/features/auth/utils";
 import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
 import { ResponseData } from "@/types";
 import { ConfigType, StatsType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";
@@ -11,6 +10,7 @@ import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import Account from "@/models/Account";
 import Template from "@/models/Template";
+import User from "@/models/User";
 
 const userDataTypes = {
   folders: { folders: 1, config: 1 },
@@ -32,7 +32,7 @@ type UserDataTypes = keyof typeof userDataTypes;
 export async function getUserData(
   username: string,
   select: UserDataTypes
-): Promise<ResponseData<Partial<UserDTO>>> {
+): Promise<ResponseData<UserDTO>> {
   try {
     await dbConnect();
     const user = await User.findOne(
@@ -43,9 +43,8 @@ export async function getUserData(
       .populate({ path: "accounts", select: "provider email " })
       .lean();
     if (!user) return { success: false };
-    user._id = user._id.toString();
     if (select !== "all") user.accounts = [];
-    return { success: true, data: user };
+    return { success: true, data: { ...user, _id: user._id.toString() } };
   } catch (error) {
     throw new Error(`Error: ${error}`);
   }
@@ -53,7 +52,7 @@ export async function getUserData(
 
 export async function getCurrentUserData(
   type: UserDataTypes = "all"
-): Promise<ResponseData<Partial<UserDTO>>> {
+): Promise<ResponseData<UserDTO>> {
   try {
     const user = await getCurrentUserInfo();
     if (!user) return { success: false };
@@ -97,11 +96,10 @@ export async function createUser(
             canChangeUserName: true,
           }
         : DEFAULT_CONFIG;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...newUser } = (await User.create(data)).toObject();
+    const { password, _id, ...newUser } = (await User.create(data)).toObject();
     return {
       success: true,
-      data: newUser,
+      data: { ...newUser, _id: _id.toString() },
     };
   } catch (error) {
     console.error(error);

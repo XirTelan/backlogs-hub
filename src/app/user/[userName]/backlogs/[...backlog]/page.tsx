@@ -11,7 +11,7 @@ import { getUserBacklogBySlug } from "@/services/backlogs";
 import dynamic from "next/dynamic";
 import React from "react";
 import { MdEdit } from "react-icons/md";
-import BacklogNotesView from "@/containers/Backlogs/Views/Notes/BacklogNotesView";
+import BacklogNotesView from "@/widgets/BacklogsNotesView/ui/BacklogNotesView";
 
 const BoardView = dynamic(
   () => import("@/containers/Backlogs/Views/Board/BacklogBoard")

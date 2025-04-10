@@ -52,7 +52,10 @@ export async function POST(request: NextRequest, props: { params: Params }) {
       const tokenData = await getCurrentUserInfo();
       const user = await User.findById(tokenData?.id).select("username").lean();
       if (!user) return NextResponse.json(null);
-      const access_token = await generateAccessToken(user);
+      const access_token = await generateAccessToken(
+        user._id.toString(),
+        user.username
+      );
       return await setTokenCookies(access_token, request.url);
     }
   }
@@ -60,7 +63,7 @@ export async function POST(request: NextRequest, props: { params: Params }) {
 }
 
 const handleRegister = async (request: NextRequest) => {
-  const data = await request.json();
+  const data: unknown = await request.json();
   const parsedCredentials = RegistrationSchema.safeParse(data);
   if (!parsedCredentials.success)
     return sendMsg.error("Unexpected error. Try again later");

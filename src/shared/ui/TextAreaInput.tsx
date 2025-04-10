@@ -1,5 +1,5 @@
-import { TextArea } from "@/types";
 import React from "react";
+import { TextArea } from "../types";
 
 const elevation = {
   1: "bg-field-1 border-b-border-strong-1",

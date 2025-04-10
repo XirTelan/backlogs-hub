@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import TemplateCard from "./TemplateCard";
-import InputField from "../Common/UI/Input/InputField";
+import InputField from "../../shared/ui/Input/InputField";
 import TextAreaInput from "../../shared/ui/TextAreaInput";
 import { BacklogFormData, TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";

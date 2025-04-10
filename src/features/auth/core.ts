@@ -1,7 +1,7 @@
 "use server";
 
 import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
+import UserDB from "@/models/User";
 import { createUser } from "@/services/user";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -18,6 +18,8 @@ import { ResponseData } from "@/types";
 import { SignInSchema, isEmailSchema } from "@/zod";
 import bcrypt from "bcryptjs";
 import Account from "@/models/Account";
+import { ObjectId } from "mongoose";
+import User from "@/models/User";
 
 export const handleSession = async (request: NextRequest) => {
   const token = request.cookies.get("access_token")?.value || "";
@@ -32,8 +34,8 @@ export const handleSession = async (request: NextRequest) => {
 
 const createAccountAndUser = async (oauthData: OAuthProps, url: string) => {
   const res = await createUser({ ...oauthData, provider: "oauth" });
-  if (!res.success) return undefined;
-  await createAndLinkAccount(oauthData, res.data._id, url);
+  if (!res.success || !res.data._id) return undefined;
+  await createAndLinkAccount(oauthData, res.data._id.toString(), url);
   return res.data;
 };
 
@@ -117,7 +119,11 @@ export const handleCallback = async (
       .populate({ path: "accounts", select: "provider email " })
       .lean();
     if (userWithSameEmail) {
-      await createAndLinkAccount(oauthData, userWithSameEmail._id, request.url);
+      await createAndLinkAccount(
+        oauthData,
+        userWithSameEmail._id.toString(),
+        request.url
+      );
       user = userWithSameEmail;
       //we have user with same email as new Oauth Account
     } else {
@@ -128,12 +134,12 @@ export const handleCallback = async (
     user = await User.findById(account.userId).lean();
     //its signIn for exist user
   }
-  if (!user) return sendMsg.error("Unkonw");
+  if (!user || !user._id || !user.username) return sendMsg.error("Unkonw");
 
-  const access_token = await generateAccessToken({
-    _id: user._id,
-    username: user.username,
-  });
+  const access_token = await generateAccessToken(
+    user._id.toString(),
+    user.username
+  );
   return await setTokenCookies(access_token, request.url);
 };
 
@@ -158,7 +164,10 @@ export const signInWithLogin = async (
   if (!user || !user.password) return error;
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) return error;
-  const access_token = await generateAccessToken(user);
+  const access_token = await generateAccessToken(
+    user._id.toString(),
+    user.username
+  );
   return { success: true, data: access_token };
 };
 

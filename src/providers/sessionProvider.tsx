@@ -1,9 +1,9 @@
 "use client";
-import { UserDTO } from "@/zodTypes";
+import { UserDB } from "@/zodTypes";
 import { createContext, useContext, useState } from "react";
 
 const defaultValue: {
-  user: Partial<UserDTO> | null;
+  user: Partial<UserDB> | null;
 } = { user: null };
 
 const SessionContext = createContext(defaultValue);

@@ -65,7 +65,7 @@ const BacklogManageDnD = ({
         console.error(error);
       }
     },
-    [mutate],
+    [mutate]
   );
 
   const showModal = useCallback(() => {

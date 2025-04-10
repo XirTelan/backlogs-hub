@@ -1,6 +1,6 @@
 "use client";
 import ColorPallete from "@/features/colorPallete/ui/ColorPallete";
-import InputField from "@/components/Common/UI/Input/InputField";
+import InputField from "@/shared/ui/Input/InputField";
 import { Controller, UseFieldArrayReturn } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 

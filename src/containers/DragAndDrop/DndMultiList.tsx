@@ -18,7 +18,7 @@ import {
   verticalListSortingStrategy,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Item } from "@/components/dnd/Item";
+import { Item } from "@/features/dragAndDrop/ui/Item";
 import DroppableContainer from "../DragAndDrop/DroppableContainer";
 
 import useDragAndDrop from "@/hooks/useDragAndDrop";
@@ -43,14 +43,13 @@ export default function DnDMultList<T extends BaseItem>({
   actions,
   renderItem,
 }: DndListProps<T>) {
-  
   const backlogs = useMemo(() => {
     return Object.fromEntries(
       Object.entries(data)
         .sort((a, b) => a[1].order - b[1].order)
         .map((item) => {
           return [item[0], item[1].items];
-        }),
+        })
     );
   }, [data]);
 
@@ -101,7 +100,7 @@ export default function DnDMultList<T extends BaseItem>({
       if (actions.saveStrategy === "manual")
         actions.handleSave(containers as string[], items);
     },
-    [actions, containers, items],
+    [actions, containers, items]
   );
 
   const autoSave = useCallback(
@@ -109,7 +108,7 @@ export default function DnDMultList<T extends BaseItem>({
       handleDragEnd(e);
       if (actions.saveStrategy === "onChange") setIsDirty(true);
     },
-    [actions.saveStrategy, handleDragEnd],
+    [actions.saveStrategy, handleDragEnd]
   );
   useEffect(() => {
     if (actions.saveStrategy === "manual" || !isDirty || !actions.handleSave)

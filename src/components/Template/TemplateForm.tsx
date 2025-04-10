@@ -1,6 +1,6 @@
 "use client";
 import { useCallback } from "react";
-import InputWithLoader from "../Common/UI/Input/InputWithLoader";
+import InputWithLoader from "../../shared/ui/Input/InputWithLoader";
 import ButtonBase from "../../shared/ui/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Common/Title";

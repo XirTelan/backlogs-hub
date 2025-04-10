@@ -12,7 +12,7 @@ import { sendMsg } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
+import UserDB from "@/models/User";
 
 type Params = Promise<{ username: string }>;
 export async function GET(request: NextRequest, props: { params: Params }) {

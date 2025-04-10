@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Setting from "./Setting";
-import { UserDTO } from "@/zodTypes";
+import { UserDB } from "@/zodTypes";
 import ButtonBase from "@/shared/ui/ButtonBase";
 import { FaChevronRight } from "react-icons/fa6";
 import { SettingModalProps } from "../UserSettings";
@@ -11,7 +11,7 @@ const Profile = ({
   data,
   setModal,
 }: {
-  data: Partial<UserDTO>;
+  data: Partial<UserDB>;
   setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 }) => {
   return (

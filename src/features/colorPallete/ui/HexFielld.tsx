@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InputField from "../../../components/Common/UI/Input/InputField";
+import InputField from "../../../shared/ui/Input/InputField";
 import { colors } from "@/utils";
 import { ColorPickerValue, ColorRGB } from "@/types";
 import { FiHash } from "react-icons/fi";
@@ -45,7 +45,7 @@ const HexFielld = ({
       layer={2}
       maxLength={6}
       value={hexValue.replace("#", "")}
-      onChange={(e) => {
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         setHexValue(e.target.value);
         const hex = colors.hexToRgb(e.target.value);
         if (Object.values(hex).some(isNaN)) return;

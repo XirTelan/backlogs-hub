@@ -4,7 +4,7 @@ import User from "@/models/User";
 import { ResponseData } from "@/types";
 
 export const deleteAccount = async (
-  id: string,
+  id: string
 ): Promise<ResponseData<null>> => {
   try {
     await dbConnect();

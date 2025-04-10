@@ -1,8 +1,8 @@
 import Title from "@/components/Common/Title";
-import { UserDTO } from "@/zodTypes";
+import { UserDB } from "@/zodTypes";
 import React from "react";
 
-const UserProfile = ({ data }: { data: UserDTO }) => {
+const UserProfile = ({ data }: { data: UserDB }) => {
   return (
     <div className="ml-10 mt-10 ">
       <div className=" bg-layer-1 p-4">

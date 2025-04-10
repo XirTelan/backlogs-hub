@@ -1,6 +1,6 @@
 "use client";
 
-import InputField from "@/components/Common/UI/Input/InputField";
+import InputField from "@/shared/ui/Input/InputField";
 import React, { useState } from "react";
 import {
   SubmitHandler,

@@ -1,5 +1,5 @@
 "use client";
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { BLOCKS } from "../config/blocks";
 import { LandingBlock } from "./LangingBlock";
 import { SectionAnimated } from "./SectionAnimation";

@@ -1,5 +1,5 @@
 import React from "react";
-import InputField from "../../../components/Common/UI/Input/InputField";
+import InputField from "../../../shared/ui/Input/InputField";
 import { ColorRGB } from "@/types";
 import { clamp } from "@/utils";
 

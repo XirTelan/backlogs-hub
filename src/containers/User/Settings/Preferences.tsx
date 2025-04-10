@@ -3,11 +3,11 @@ import Toggle from "@/shared/ui/Toggle";
 import React from "react";
 import { updateUserInfo } from "@/services/user";
 import { toastCustom } from "@/lib/toast";
-import { UserDTO } from "@/zodTypes";
+import { UserDB } from "@/zodTypes";
 import Select from "@/shared/ui/Select";
 import Setting from "./Setting";
 
-const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
+const Preferences = ({ data }: { data: Partial<UserDB> }) => {
   const { config } = data;
   if (!config) return <div>Error</div>;
   const handleUpdate = async (key: string, state: boolean | string) => {

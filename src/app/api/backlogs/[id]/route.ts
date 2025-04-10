@@ -37,7 +37,7 @@ export async function GET(request: NextRequest, props: { params: Params }) {
 
 export async function PUT(request: NextRequest) {
   const { data, success, error } = BacklogDTOSchema.partial().safeParse(
-    await request.json(),
+    await request.json()
   );
   if (!success || !data._id)
     return sendMsg.error(error ?? "Incorrect data", 400);
@@ -52,7 +52,7 @@ export async function PUT(request: NextRequest) {
 
     return sendMsg.success();
   } catch (error) {
-    throw new Error(`${error}`);
+    throw error;
   }
 }
 export async function DELETE(request: NextRequest, props: { params: Params }) {

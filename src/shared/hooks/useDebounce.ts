@@ -11,7 +11,7 @@ function useDebounce<T>(value: T, ms = 500) {
     return () => {
       clearTimeout(handler);
     };
-  }, [value]);
+  }, [value, ms]);
 
   return devouncedValue;
 }

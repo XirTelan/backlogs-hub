@@ -1,7 +1,7 @@
 "use server";
 
 import { ResponseData } from "@/types";
-import { OAuthProps, UserDTO } from "@/zodTypes";
+import { OAuthProps, UserDB } from "@/zodTypes";
 import { JWTPayload, decodeJwt } from "jose";
 
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -38,14 +38,14 @@ export const getGoogleToken = async (code: string) => {
 export const getRedirectOauthLink = async () => {};
 
 export const getUserData = async (
-  code: string,
+  code: string
 ): Promise<ResponseData<OAuthProps>> => {
   const token = await getGoogleToken(code);
   if (!token.id_token) {
     console.error(token);
     return { success: false, message: "" };
   }
-  const userData: Partial<UserDTO> & JWTPayload = decodeJwt(token.id_token);
+  const userData: Partial<UserDB> & JWTPayload = decodeJwt(token.id_token);
   return {
     success: true,
     data: {

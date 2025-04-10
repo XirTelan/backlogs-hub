@@ -35,7 +35,7 @@ export const getTemplates = async (currentUserName: string, except = false) => {
 
 export const getTemplatesByUser = async (
   user: string,
-  type: "username" | "userid" = "username",
+  type: "username" | "userid" = "username"
 ) => {
   try {
     await dbConnect();
@@ -60,7 +60,7 @@ export const createTemplate = async (data: Omit<TemplateDTO, "_id">) => {
 
 export const deleteTemplate = async (
   id: string,
-  userName: string | undefined,
+  userName: string | undefined
 ): Promise<ResponseData<number | undefined>> => {
   try {
     await dbConnect();

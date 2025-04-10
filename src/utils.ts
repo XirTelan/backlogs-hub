@@ -5,11 +5,7 @@ export const sendMsg = {
   success: (message: string = "success", status: number = 200) => {
     return NextResponse.json({ message }, { status });
   },
-  error: (
-    error: unknown,
-    status: number = 400,
-    data: unknown | undefined = undefined,
-  ) => {
+  error: (error: unknown, status: number = 400, data: unknown = {}) => {
     let message = "Unknown error";
     if (error instanceof Error) {
       message = error.message;
@@ -219,7 +215,7 @@ export const math = {
     low1: number,
     high1: number,
     low2: number,
-    high2: number,
+    high2: number
   ) {
     return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
   },

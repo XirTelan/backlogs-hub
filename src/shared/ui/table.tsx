@@ -56,7 +56,7 @@ const TableCell = (props: React.ComponentProps<"td">) => {
   return <td {...props} />;
 };
 
-const Table = ({ className, ...props }: React.ComponentProps<"table">) => {
+const Table = ({ ...props }: React.ComponentProps<"table">) => {
   return <table className="w-full table-fixed " {...props} />;
 };
 

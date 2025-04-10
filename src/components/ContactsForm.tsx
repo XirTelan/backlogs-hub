@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import ButtonBase from "../shared/ui/ButtonBase";
-import InputField from "./Common/UI/Input/InputField";
+import InputField from "../shared/ui/Input/InputField";
 import Select from "../shared/ui/Select";
 import TextAreaInput from "../shared/ui/TextAreaInput";
 import { TokenData } from "@/features/auth/utils";

@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { DndData, RenderItemProps } from "@/types";
 import { fetcher } from "@/utils";
 import { ItemFormModalOpen } from "../../../Items/ItemFormModal";
-import SortableItem from "@/components/dnd/SortableItem";
+import SortableItem from "@/features/dragAndDrop/ui/SortableItem";
 import DnDMultList from "../../../DragAndDrop/DndMultiList";
 import ItemFastRename from "../../../Items/ItemsFastRename";
 import BacklogItemActions from "../Default/BacklogItemActions";
@@ -19,7 +19,7 @@ import { ItemInfoModalOpen } from "../../../Items/ItemInfoModal";
 const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
   const { data, isLoading, mutate } = useSWR(
     `${apiRoutesList.items}?backlog=${backlogId}`,
-    fetcher,
+    fetcher
   );
 
   const handleBacklogsSave = useCallback(
@@ -63,7 +63,7 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
         console.error(error);
       }
     },
-    [backlogId, mutate],
+    [backlogId, mutate]
   );
 
   if (isLoading) return <LoadingAnimation />;

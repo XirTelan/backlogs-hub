@@ -3,7 +3,7 @@ import NotAvailable from "@/components/Common/NotAvailable";
 import NotFound from "@/components/Common/NotFound";
 import UserProfile from "@/containers/User/UserProfile";
 import { getUserData } from "@/services/user";
-import { UserDTO } from "@/zodTypes";
+import { UserDB } from "@/zodTypes";
 import React from "react";
 
 type Params = Promise<{ userName: string; backlog: string }>;
@@ -24,7 +24,7 @@ const Page = async ({ params }: { params: Params }) => {
   return (
     <>
       <main id="maincontent" className="container ">
-        <UserProfile data={user.data as UserDTO} />
+        <UserProfile data={user.data as UserDB} />
       </main>
     </>
   );

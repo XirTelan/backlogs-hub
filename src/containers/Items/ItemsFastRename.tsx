@@ -1,6 +1,6 @@
 "use client";
 import ButtonBase from "@/shared/ui/ButtonBase";
-import InputField from "@/components/Common/UI/Input/InputField";
+import InputField from "@/shared/ui/Input/InputField";
 import useToggle from "@/shared/hooks/useToggle";
 import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";

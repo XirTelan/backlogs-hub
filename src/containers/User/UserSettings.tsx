@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import Privacy from "./Settings/Privacy";
 import Account from "./Settings/Account";
 import Preferences from "./Settings/Preferences";
-import { UserDTO } from "@/zodTypes";
+import { UserDB } from "@/zodTypes";
 import Profile from "./Settings/Profile";
 import Modal from "@/components/Common/Modal";
 import { updateUserInfo } from "@/services/user";
-import InputField from "@/components/Common/UI/Input/InputField";
+import InputField from "@/shared/ui/Input/InputField";
 import { toastCustom } from "@/lib/toast";
 import Title from "@/components/Common/Title";
 import TextAreaInput from "@/shared/ui/TextAreaInput";
@@ -22,7 +22,7 @@ const TABS = {
 export type TabsType = keyof typeof TABS;
 
 type UserSettingsProps = {
-  data: Partial<UserDTO>;
+  data: Partial<UserDB>;
   tab: TabsType;
 };
 
@@ -48,13 +48,13 @@ export type SettingModalProps =
         }
     ));
 type TabProps = {
-  data: Partial<UserDTO>;
+  data: Partial<UserDB>;
   setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 };
 
 const renderTab = (
   TabComponent: React.ComponentType<TabProps>,
-  data: Partial<UserDTO>,
+  data: Partial<UserDB>,
   setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>
 ) => {
   return <TabComponent data={data} setModal={setModal} />;

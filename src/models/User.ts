@@ -1,4 +1,4 @@
-import { ConfigType, UserDTO } from "@/zodTypes";
+import { ConfigType, UserDB } from "@/zodTypes";
 import mongoose, { Schema } from "mongoose";
 import Account from "./Account";
 const userConfigSchema = new mongoose.Schema<ConfigType>(
@@ -12,10 +12,10 @@ const userConfigSchema = new mongoose.Schema<ConfigType>(
     categoryDesignation: { type: String, default: "color" },
     categoryBlockView: { type: String, default: "buttons" },
   },
-  { _id: false },
+  { _id: false }
 );
 
-const UserSchema = new mongoose.Schema<UserDTO>(
+const UserSchema = new mongoose.Schema<UserDB>(
   {
     username: {
       type: String,
@@ -57,9 +57,9 @@ const UserSchema = new mongoose.Schema<UserDTO>(
   },
   {
     timestamps: true,
-  },
+  }
 );
-const User: mongoose.Model<UserDTO> =
+const User: mongoose.Model<UserDB> =
   mongoose.models.User || mongoose.model("User", UserSchema);
 
 export default User;

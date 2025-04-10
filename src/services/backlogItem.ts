@@ -16,7 +16,7 @@ import { Document, Query, SortOrder, UpdateWriteOpResult } from "mongoose";
 import { BacklogItemCreationSchema, BacklogItemSchema } from "@/zod";
 
 export const getBacklogItemById = async (
-  itemId: string,
+  itemId: string
 ): Promise<ResponseData<BacklogItemDTO>> => {
   try {
     await dbConnect();
@@ -71,7 +71,7 @@ export const getBacklogItemsByQuery = async ({
     if (search) {
       const regex = new RegExp(
         search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-        "i",
+        "i"
       );
       stage.match({ title: regex });
     }
@@ -114,7 +114,7 @@ export const getItemsGroupedByCategory = async (backlog: BacklogDTO) => {
 
     backlog.categories.sort((a, b) => a.order - b.order);
     backlog.categories.forEach((category) =>
-      hashMap.set(category.name, { order: category.order, items: [] }),
+      hashMap.set(category.name, { order: category.order, items: [] })
     );
     const data = await BacklogItem.find({ backlogId: backlog._id })
       .sort("modifiersFields.order")
@@ -161,7 +161,7 @@ export const updateMany = async (backlogId: string, data: BacklogItemDTO[]) => {
       if (item.backlogId != backlogId) return;
       if (!parsing.success) return;
       updates.push(
-        BacklogItem.updateOne({ _id: parsing.data._id }, parsing.data),
+        BacklogItem.updateOne({ _id: parsing.data._id }, parsing.data)
       );
     });
     await Promise.all(updates);
@@ -172,7 +172,7 @@ export const updateMany = async (backlogId: string, data: BacklogItemDTO[]) => {
   }
 };
 export const putBacklogItem = async (
-  data: BacklogItemDTO,
+  data: BacklogItemDTO
 ): Promise<ResponseData<boolean>> => {
   try {
     await dbConnect();
@@ -210,7 +210,7 @@ export const getBacklogItemsData = async (
     pageSize?: string | null;
     tags?: string[] | null;
   },
-  backlogId: string,
+  backlogId: string
 ): Promise<ResponseData<{ totalCount: number; items: BacklogItemDTO[] }>> => {
   const { term, tags, sort, order, page, pageSize } = searchOptions;
   let backlogData;
@@ -249,13 +249,13 @@ export const getBacklogItemsData = async (
 
 //type guard
 function isSteamData(
-  data: BacklogItemDTO | BacklogItemPopulated,
+  data: BacklogItemDTO | BacklogItemPopulated
 ): data is BacklogItemWithSteamInfo {
   return typeof data.modifiersFields.steamAppId === "string";
 }
 
 export const populateBacklogItem = async (
-  itemId: string,
+  itemId: string
 ): Promise<ResponseData<BacklogItemPopulated | BacklogItemWithSteamInfo>> => {
   const res = await getBacklogItemById(itemId);
   if (!res.success) return { success: false, errors: "Wrong ItemId" };
@@ -265,7 +265,7 @@ export const populateBacklogItem = async (
   if (!newFields.success) return { success: false, errors: newFields.errors };
   if (res.data.modifiersFields?.steamAppId) {
     const steamInfo = await getSteamGameInfo(
-      res.data.modifiersFields.steamAppId,
+      res.data.modifiersFields.steamAppId
     );
     if (steamInfo.success && isSteamData(res.data)) {
       const backlogWithSteamData: BacklogItemWithSteamInfo = {
@@ -282,7 +282,7 @@ export const populateBacklogItem = async (
 };
 
 const populateUserFields = async (
-  backlogItem: BacklogItemDTO,
+  backlogItem: BacklogItemDTO
 ): Promise<ResponseData<BacklogItemPopUserField[]>> => {
   const backlogData = await getBacklogById(backlogItem.backlogId);
   if (!backlogData) return { success: false, data: null };

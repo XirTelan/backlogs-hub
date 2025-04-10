@@ -43,7 +43,7 @@ export const getAuthInformation = async (token: string) => {
 };
 
 export const getUserData = async (
-  code: string,
+  code: string
 ): Promise<ResponseData<OAuthProps>> => {
   const token = await getDiscordToken(code);
   if (!token) return { success: false, message: "wrong token" };

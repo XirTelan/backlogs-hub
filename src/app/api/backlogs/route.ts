@@ -12,7 +12,7 @@ import {
 } from "@/services/backlogs";
 import { updateStat, updateUserFolders } from "@/services/user";
 import { generateSlug, sendMsg } from "@/utils";
-import { BacklogCreationSchema } from "@/zod";
+import { BacklogCreationSchema, BacklogFormSchema } from "@/zod";
 import {
   BacklogCreationDTO,
   BacklogDTO,
@@ -78,7 +78,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const data: BacklogFormData = await request.json();
+  const uknownData = await request.json();
+  const { success, data } = BacklogFormSchema.safeParse(uknownData);
+  if (!success) return sendMsg.error("Incorrect data", 400);
+
   const user = await getCurrentUserInfo();
 
   if (!data.backlogTitle) return sendMsg.error("Incorrect data", 400);

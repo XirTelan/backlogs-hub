@@ -54,7 +54,8 @@ export type OAuthProps = z.infer<typeof OauthSchema>;
 export type TemplateDTO = z.infer<typeof TemplateDTOSchema>;
 
 export type UserBase = z.infer<typeof UserBase>;
-export type UserDTO = z.infer<typeof UserSchema>;
+export type UserDB = z.infer<typeof UserSchema>;
+export type UserDTO = Partial<Omit<UserDB, "_id"> & { _id: string }>;
 export type ConfigType = z.infer<typeof ConfigSchema>;
 export type StatsType = z.infer<typeof StatsSchema>;
 

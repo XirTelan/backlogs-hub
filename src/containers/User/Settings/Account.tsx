@@ -4,7 +4,7 @@ import Setting from "./Setting";
 import Title from "@/components/Common/Title";
 import ButtonBase from "@/shared/ui/ButtonBase";
 import { FaChevronRight } from "react-icons/fa";
-import { UserDTO } from "@/zodTypes";
+import { UserDB } from "@/zodTypes";
 import { SettingModalProps } from "../UserSettings";
 import { toastCustom } from "@/lib/toast";
 
@@ -34,7 +34,7 @@ const Account = ({
   data,
   setModal,
 }: {
-  data: Partial<UserDTO>;
+  data: Partial<UserDB>;
   setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 }) => {
   const { accounts } = data;

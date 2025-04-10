@@ -1,6 +1,7 @@
 "use server";
 
 import { JWTPayload, JWTVerifyResult, SignJWT, jwtVerify } from "jose";
+import { ObjectId } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,7 +12,7 @@ export const getTokenData = async (token: string) => {
   try {
     const tokenData: JWTVerifyResult<JWTPayload & TokenData> = await jwtVerify(
       token,
-      new TextEncoder().encode(process.env.AUTH_SECRET!),
+      new TextEncoder().encode(process.env.AUTH_SECRET!)
     );
     return tokenData;
   } catch (error) {
@@ -20,7 +21,7 @@ export const getTokenData = async (token: string) => {
 };
 
 export const getCurrentUserInfo = async (
-  request: NextRequest | undefined = undefined,
+  request: NextRequest | undefined = undefined
 ): Promise<TokenData | null> => {
   let token;
   if (request) token = request.cookies.get("access_token")?.value;
@@ -33,12 +34,9 @@ export const getCurrentUserInfo = async (
   return payload;
 };
 
-export const generateAccessToken = async (user: {
-  _id: string;
-  username: string;
-}) => {
+export const generateAccessToken = async (_id: string, username: string) => {
   const secret = new TextEncoder().encode(process.env.AUTH_SECRET!);
-  const tokenData = { id: user._id, username: user.username };
+  const tokenData = { id: _id, username };
   const access_token = await new SignJWT(tokenData)
     .setProtectedHeader({
       alg: "HS256",

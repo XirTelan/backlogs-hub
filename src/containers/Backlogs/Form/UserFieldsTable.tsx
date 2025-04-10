@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, TableHeader, TableHead, TableBody } from "@/shared/ui/table";
-import InputField from "@/components/Common/UI/Input/InputField";
+import InputField from "@/shared/ui/Input/InputField";
 import FieldsArrayItem from "./FieldsArrayItem";
 import Notification from "@/shared/ui/Notification";
 import { Field } from "@/zodTypes";

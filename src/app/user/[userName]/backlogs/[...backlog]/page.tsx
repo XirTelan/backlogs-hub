@@ -14,7 +14,7 @@ import { MdEdit } from "react-icons/md";
 import BacklogNotesView from "@/widgets/BacklogsNotesView/ui/BacklogNotesView";
 
 const BoardView = dynamic(
-  () => import("@/containers/Backlogs/Views/Board/BacklogBoard")
+  () => import("@/widgets/BacklogBoardView/BacklogBoard")
 );
 
 export default async function Backlog(props: {

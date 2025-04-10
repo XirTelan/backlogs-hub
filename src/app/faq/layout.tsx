@@ -1,4 +1,4 @@
-import PanelItemsWrapper from "@/components/Common/UI/PanelItemsWrapper";
+import PanelItemsWrapper from "@/widgets/AsideNavWithBacklogs/ui/PanelItemsWrapper";
 import TopTitle from "@/components/Common/UI/TopTitle";
 import React from "react";
 

@@ -47,7 +47,7 @@ const CategoriesFieldsBlock = ({
                 helperText={
                   errors &&
                   errors[index] && {
-                    message: errors[index].name.message,
+                    message: errors[index].name?.message ?? "",
                     type: "error",
                   }
                 }

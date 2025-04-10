@@ -1,4 +1,4 @@
-import UserBacklogsSideNav from "@/containers/User/UserBacklogsSideNav";
+import AsideNavWithBacklogs from "@/widgets/AsideNavWithBacklogs/AsideNavWithBacklogs";
 import React from "react";
 
 export default async function Layout({
@@ -12,7 +12,7 @@ export default async function Layout({
 
   return (
     <div className=" grid   md:grid-cols-[auto_1fr]">
-      <UserBacklogsSideNav userName={userName} />
+      <AsideNavWithBacklogs userName={userName} />
       <>{children}</>
     </div>
   );

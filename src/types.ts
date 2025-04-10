@@ -48,13 +48,6 @@ export type ItemsFormProps<T> = {
   btnCancel?: () => void;
 };
 
-export type BacklogNavProps = {
-  active: boolean;
-  activeBacklog: boolean;
-  backlogSlug: string;
-} & LinkProps &
-  AnchorHTMLAttributes<HTMLAnchorElement>;
-
 export type SortableItemProps = {
   children?: React.ReactNode | ReactNode[];
   id: UniqueIdentifier;
@@ -122,13 +115,13 @@ export type ButtonBaseProps = {
 
 export type DndData<T> = Record<string, T[]>;
 
-type RenderItemProps = {
-  item: BacklogItemDTO;
+export type RenderItemProps<T> = {
+  item: T;
   isSortingContainer: boolean;
   containerId: UniqueIdentifier;
-  index: string;
+  index: number;
   handle: boolean;
-  getIndex: () => string;
+  getIndex: (id: UniqueIdentifier) => number;
 };
 export type DndListProps<T> = {
   data: Record<string, { order: number; items: T[] }>;
@@ -157,7 +150,7 @@ export type DndListProps<T> = {
     saveStrategy: "manual" | "onChange";
     handleSave: (containers: UniqueIdentifier[], items: DndData<T>) => void;
   };
-  renderItem?: (args: RenderItemProps) => React.ReactNode;
+  renderItem?: (args: RenderItemProps<T>) => React.ReactNode;
 };
 
 export type SteamApp = {

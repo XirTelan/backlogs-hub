@@ -11,7 +11,7 @@ import { DndData } from "@/types";
 import { toastCustom } from "@/lib/toast";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
-import DnDMultList from "../DragAndDrop/DndMultiList";
+import DnDMultList from "../../features/dragAndDrop/ui/DndMultiList";
 import { UniqueIdentifier } from "@dnd-kit/core";
 
 const BacklogManageDnD = ({

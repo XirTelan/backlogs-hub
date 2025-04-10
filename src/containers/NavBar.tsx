@@ -1,7 +1,7 @@
 import HomeLink from "@/components/HomeLink";
 import NavLink from "@/components/NavLink";
 import SidePanel from "@/components/SidePanel";
-import { routesList } from "@/lib/routesList";
+import { routesList } from "@/shared/lib/routesList";
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 

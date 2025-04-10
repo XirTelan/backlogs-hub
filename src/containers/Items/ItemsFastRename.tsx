@@ -2,8 +2,8 @@
 import ButtonBase from "@/shared/ui/ButtonBase";
 import InputField from "@/shared/ui/Input/InputField";
 import useToggle from "@/shared/hooks/useToggle";
-import { apiRoutesList } from "@/lib/routesList";
-import { toastCustom } from "@/lib/toast";
+import { apiRoutesList } from "@/shared/lib/routesList";
+import { toastCustom } from "@/shared/lib/toast";
 import { InputFieldProps } from "@/types";
 import { BacklogItemDTO } from "@/zodTypes";
 import React, { ReactElement, useState, type JSX } from "react";

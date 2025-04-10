@@ -16,7 +16,7 @@ import { BacklogFormData } from "@/zodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
 import Select from "@/shared/ui/Select";
-import { routesList } from "@/lib/routesList";
+import { routesList } from "@/shared/lib/routesList";
 import { usePathname } from "next/navigation";
 import BacklogOptionsMenu from "@/components/Backlog/BacklogOptionsMenu";
 import Switcher from "@/shared/ui/Switcher";

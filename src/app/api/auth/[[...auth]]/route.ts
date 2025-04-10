@@ -11,7 +11,7 @@ import {
 } from "@/features/auth/utils";
 import User from "@/models/User";
 
-import { createUser } from "@/services/user";
+import { createUser } from "@/shared/services/api/user";
 import { sendMsg } from "@/utils";
 import { RegistrationSchema } from "@/zod";
 import bcrypt from "bcryptjs";

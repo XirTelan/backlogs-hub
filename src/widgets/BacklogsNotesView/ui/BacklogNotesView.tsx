@@ -2,7 +2,7 @@
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import SearchBar from "@/components/SearchBar";
 import SearchFilter from "@/containers/SearchFilter";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
 import { BacklogItemDTO } from "@/zodTypes";
 import { useSearchParams } from "next/navigation";

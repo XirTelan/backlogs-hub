@@ -1,4 +1,4 @@
-import BacklogCard from "@/components/Backlog/BacklogCard";
+import BacklogCard from "@/widgets/UserBacklogs/ui/BacklogCard";
 import { BacklogDTO } from "@/zodTypes";
 import React from "react";
 import Title from "@/components/Common/Title";

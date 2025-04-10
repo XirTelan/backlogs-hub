@@ -1,5 +1,5 @@
 "use client";
-import useOutsideClickReg from "@/hooks/useOutsideClickReg";
+import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
 import useToggle from "@/shared/hooks/useToggle";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";

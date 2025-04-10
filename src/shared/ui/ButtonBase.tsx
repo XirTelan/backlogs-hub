@@ -1,4 +1,4 @@
-import { btnStyleVariants } from "@/lib/styles";
+import { btnStyleVariants } from "@/shared/lib/styles";
 import { ButtonBaseProps } from "@/types";
 import classNames from "classnames";
 import React from "react";

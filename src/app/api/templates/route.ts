@@ -3,7 +3,7 @@ import {
   createTemplate,
   getTemplates,
   getTemplatesByUser,
-} from "@/services/template";
+} from "@/shared/services/api/template";
 import { sendMsg } from "@/utils";
 import { TemplateCreateSchema } from "@/zod";
 import { NextRequest, NextResponse } from "next/server";

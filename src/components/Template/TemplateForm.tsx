@@ -4,8 +4,8 @@ import InputWithLoader from "../../shared/ui/Input/InputWithLoader";
 import ButtonBase from "../../shared/ui/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Common/Title";
-import useLoaderValue from "@/hooks/useLoaderValue";
-import { toastCustom } from "@/lib/toast";
+import useLoaderValue from "@/shared/hooks/useLoaderValue";
+import { toastCustom } from "@/shared/lib/toast";
 import Select from "../../shared/ui/Select";
 import { BacklogCreationDTO, TemplateDTO } from "@/zodTypes";
 

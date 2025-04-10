@@ -4,10 +4,10 @@ import { SubmitHandler } from "react-hook-form";
 import BacklogForm from "./BacklogForm";
 import { fetcher, generateSlug } from "@/utils";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
-import { toastCustom } from "@/lib/toast";
+import { toastCustom } from "@/shared/lib/toast";
 import useSWR from "swr";
 import Loading from "@/components/Common/UI/Loading/Loading";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 
 const BacklogCreateForm = () => {
   const router = useRouter();

@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 import { ButtonBaseProps } from "@/types";
-import { btnStyleVariants } from "@/lib/styles";
+import { btnStyleVariants } from "@/shared/lib/styles";
 import classNames from "classnames";
 
 const LinkWithBtnStyle = ({

@@ -1,7 +1,7 @@
 "use client";
 import ToggleButton from "@/components/Common/UI/ToggleButton";
 import useChangeSearchParams from "@/shared/hooks/useChangeParams";
-import { useSession } from "@/providers/sessionProvider";
+import { useSession } from "@/shared/providers/sessionProvider";
 import React, { useState } from "react";
 import DropDown from "@/shared/ui/DropDown/DropDown";
 

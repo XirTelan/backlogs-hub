@@ -1,6 +1,6 @@
 import TopTitle from "@/components/Common/UI/TopTitle";
 import UpdatesList from "@/components/UpdatesList";
-import { getNews } from "@/services/news";
+import { getNews } from "@/shared/services/api/news";
 import React from "react";
 
 export default async function UpdatesPage() {

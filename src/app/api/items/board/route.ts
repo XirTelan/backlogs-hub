@@ -1,6 +1,6 @@
 import { getCurrentUserInfo } from "@/features/auth/utils";
 import Backlog from "@/models/Backlog";
-import { updateMany } from "@/services/backlogItem";
+import { updateMany } from "@/shared/services/api/backlogItem";
 import { sendMsg } from "@/utils";
 import { BacklogCategory, BacklogItemDTO } from "@/zodTypes";
 import { NextRequest, NextResponse } from "next/server";

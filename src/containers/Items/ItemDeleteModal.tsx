@@ -1,12 +1,12 @@
 "use client";
-import { createModal } from "@/lib/createModal";
+import { createModal } from "@/shared/lib/createModal";
 import React, { useContext } from "react";
-import { ModalContext } from "@/providers/modalProvider";
-import { apiRoutesList } from "@/lib/routesList";
+import { ModalContext } from "@/shared/providers/modalProvider";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import { useSWRConfig } from "swr";
 import { MdDeleteForever } from "react-icons/md";
 import Title from "@/components/Common/Title";
-import { toastCustom } from "@/lib/toast";
+import { toastCustom } from "@/shared/lib/toast";
 
 const ModalProvider = createModal(ModalContext, "ItemDelete", {
   openerButtton: {
@@ -42,7 +42,7 @@ const ItemDeleteModal = () => {
       toastCustom.success(`${data.title ?? ""} Deleted`);
       mutate(
         (key) =>
-          typeof key === "string" && key.startsWith(`${apiRoutesList.items}`),
+          typeof key === "string" && key.startsWith(`${apiRoutesList.items}`)
       );
     } else {
       const { message } = await res.json();

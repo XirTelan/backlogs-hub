@@ -3,7 +3,7 @@
 import BacklogListData from "../../containers/Backlogs/Views/Default/BacklogListData";
 
 import useSWR from "swr";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
 import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
 import BacklogItemsTable, {
@@ -11,7 +11,7 @@ import BacklogItemsTable, {
 } from "../../containers/Backlogs/Views/Default/BacklogItemsTable";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/containers/Pagination";
-import { useSession } from "@/providers/sessionProvider";
+import { useSession } from "@/shared/providers/sessionProvider";
 
 const itemsNotFound = (
   <>

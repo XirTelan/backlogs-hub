@@ -1,6 +1,6 @@
 "use server";
 
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/shared/lib/dbConnect";
 import Log from "@/models/Log";
 import { LogDTO } from "@/zodTypes";
 

@@ -7,11 +7,11 @@ import {
   deleteUser,
   isUserNameExist,
   updateUserFolders,
-} from "@/services/user";
+} from "@/shared/services/api/user";
 import { sendMsg } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/shared/lib/dbConnect";
 import UserDB from "@/models/User";
 
 type Params = Promise<{ username: string }>;

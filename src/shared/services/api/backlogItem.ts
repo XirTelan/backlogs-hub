@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/shared/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import { ResponseData } from "@/types";

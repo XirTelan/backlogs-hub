@@ -2,8 +2,8 @@
 import ButtonBase from "@/shared/ui/ButtonBase";
 import InputField from "@/shared/ui/Input/InputField";
 import LinkBase from "@/shared/ui/LinkBase";
-import { apiRoutesList } from "@/lib/routesList";
-import { toastCustom } from "@/lib/toast";
+import { apiRoutesList } from "@/shared/lib/routesList";
+import { toastCustom } from "@/shared/lib/toast";
 import { SignInSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

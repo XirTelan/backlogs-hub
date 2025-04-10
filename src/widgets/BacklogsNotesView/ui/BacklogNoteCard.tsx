@@ -1,10 +1,10 @@
 "use client";
 import Divider from "@/shared/ui/Divider";
 import ItemFastRename from "@/containers/Items/ItemsFastRename";
-import useOutsideClickReg from "@/hooks/useOutsideClickReg";
+import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
 import useToggle from "@/shared/hooks/useToggle";
-import { apiRoutesList } from "@/lib/routesList";
-import { toastCustom } from "@/lib/toast";
+import { apiRoutesList } from "@/shared/lib/routesList";
+import { toastCustom } from "@/shared/lib/toast";
 import { fetcher } from "@/utils";
 import { BacklogItemDTO, BacklogItemPopulated } from "@/zodTypes";
 import MDEditor from "@uiw/react-md-editor";

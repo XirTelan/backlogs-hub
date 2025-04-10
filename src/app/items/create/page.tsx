@@ -1,6 +1,6 @@
 import TopTitle from "@/components/Common/UI/TopTitle";
 import { CreateItemForm } from "@/containers/Items/CreateItemForm";
-import { isAuthorizedBacklogOwner } from "@/services/backlogs";
+import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
 import { redirect } from "next/navigation";
 
 const CreateItem = async (props: {
@@ -12,7 +12,7 @@ const CreateItem = async (props: {
 
   const { success, data: backlogInfo } = await isAuthorizedBacklogOwner(
     backlog,
-    "edit",
+    "edit"
   );
   if (!success) redirect("/");
 

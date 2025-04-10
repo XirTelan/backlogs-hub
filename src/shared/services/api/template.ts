@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/shared/lib/dbConnect";
 import Template from "@/models/Template";
 import { ResponseData } from "@/types";
 import { TemplateDTO } from "@/zodTypes";

@@ -7,7 +7,7 @@ import TextAreaInput from "../shared/ui/TextAreaInput";
 import { TokenData } from "@/features/auth/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
-import { toastCustom } from "@/lib/toast";
+import { toastCustom } from "@/shared/lib/toast";
 
 const DEFAULT: LogDTO = {
   name: "",

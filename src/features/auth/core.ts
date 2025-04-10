@@ -1,7 +1,7 @@
 "use server";
 
-import dbConnect from "@/lib/dbConnect";
-import { createUser } from "@/services/user";
+import dbConnect from "@/shared/lib/dbConnect";
+import { createUser } from "@/shared/services/api/user";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 import {

@@ -9,7 +9,7 @@ import { fetcher } from "@/utils";
 import TopTitle from "@/components/Common/UI/TopTitle";
 import Loading from "@/components/Common/UI/Loading/Loading";
 import NotFound from "@/components/Common/NotFound";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const {
@@ -19,7 +19,7 @@ const BacklogEditForm = ({ id }: { id: string }) => {
   } = useSWR<BacklogDTO>(`${apiRoutesList.backlogs}/${id}`, fetcher);
   const { isLoading: foldersIsLoading, data: userFolders } = useSWR(
     `/api/users/`,
-    fetcher,
+    fetcher
   );
   const router = useRouter();
 

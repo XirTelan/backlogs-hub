@@ -6,8 +6,8 @@ import Modal from "@/components/Common/Modal";
 import TemplateForm from "@/components/Template/TemplateForm";
 import { useState } from "react";
 import { TemplateDTO } from "@/zodTypes";
-import { toastCustom } from "@/lib/toast";
-import { apiRoutesList } from "@/lib/routesList";
+import { toastCustom } from "@/shared/lib/toast";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import Loading from "@/components/Common/UI/Loading/Loading";
 
 const isEmpty = <div>Its empty</div>;
@@ -21,7 +21,7 @@ const TemplateList = ({
 }) => {
   const [isShow, setIsShow] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateDTO | null>(
-    null,
+    null
   );
   const { data, isLoading } = useSWR(`/api/templates${search}`, fetcher);
   if (isLoading) return <Loading />;

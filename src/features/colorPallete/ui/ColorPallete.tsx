@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosColorPalette } from "react-icons/io";
 import ButtonBase from "../../../shared/ui/ButtonBase";
-import useOutsideClickReg from "@/hooks/useOutsideClickReg";
+import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
 import useToggle from "@/shared/hooks/useToggle";
 import ColorPicker from "./ColorPicker";
 import { colors } from "@/utils";

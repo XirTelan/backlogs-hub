@@ -4,7 +4,7 @@ import SidePanel from "@/components/SidePanel";
 import NavLink from "@/components/NavLink";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
-import { routesList } from "@/lib/routesList";
+import { routesList } from "@/shared/lib/routesList";
 import Divider from "@/shared/ui/Divider";
 
 const links = [

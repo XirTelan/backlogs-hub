@@ -1,12 +1,12 @@
-import { getBacklogsByFolder } from "@/services/backlogs";
+import { getBacklogsByFolder } from "@/shared/services/api/backlogs";
 import React from "react";
-import BacklogFolder from "../Backlogs/BacklogFolder";
+import BacklogFolder from "./BacklogFolder";
 import { BacklogDTO } from "@/zodTypes";
-import { getConfigOptions } from "@/services/user";
+import { getConfigOptions } from "@/shared/services/api/user";
 import dynamic from "next/dynamic";
 
 const EmptyBacklogList = dynamic(
-  () => import("../../components/Backlog/EmptyBacklogList"),
+  () => import("../../../components/Backlog/EmptyBacklogList")
 );
 const UserBacklogs = async ({
   user,
@@ -15,7 +15,7 @@ const UserBacklogs = async ({
 }) => {
   const data: [string, { order: number; items: BacklogDTO[] }][] =
     Object.entries(await getBacklogsByFolder(user.name)).sort(
-      (a, b) => a[1].order - b[1].order,
+      (a, b) => a[1].order - b[1].order
     );
   const isHaveData = data.some(([, backlogs]) => backlogs.items.length !== 0);
   const config = await getConfigOptions();

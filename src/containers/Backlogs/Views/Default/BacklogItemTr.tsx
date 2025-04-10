@@ -6,7 +6,7 @@ import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import ItemFastRename from "@/containers/Items/ItemsFastRename";
 import BacklogItemActions from "./BacklogItemActions";
 import { ItemInfoModalOpen } from "@/containers/Items/ItemInfoModal";
-import { useSession } from "@/providers/sessionProvider";
+import { useSession } from "@/shared/providers/sessionProvider";
 
 const BacklogItemTr = ({
   item,

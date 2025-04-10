@@ -1,7 +1,7 @@
 import Title from "@/components/Common/Title";
 import ButtonBase from "@/shared/ui/ButtonBase";
-import { toastCustom } from "@/lib/toast";
-import { useSession } from "@/providers/sessionProvider";
+import { toastCustom } from "@/shared/lib/toast";
+import { useSession } from "@/shared/providers/sessionProvider";
 import { useRouter } from "next/navigation";
 import React from "react";
 

@@ -1,5 +1,5 @@
 import { getCurrentUserInfo, TokenData } from "@/features/auth/utils";
-import { getBacklogItemsByQuery } from "@/services/backlogItem";
+import { getBacklogItemsByQuery } from "@/shared/services/api/backlogItem";
 import {
   createBacklog,
   getBacklogsByUserName,
@@ -9,8 +9,8 @@ import {
   isBacklogExist,
   isPrivateProfile,
   getBacklogsByFolder,
-} from "@/services/backlogs";
-import { updateStat, updateUserFolders } from "@/services/user";
+} from "@/shared/services/api/backlogs";
+import { updateStat, updateUserFolders } from "@/shared/services/api/user";
 import { generateSlug, sendMsg } from "@/utils";
 import { BacklogCreationSchema, BacklogFormSchema } from "@/zod";
 import { BacklogCreationDTO, BacklogDTO, BacklogItemDTO } from "@/zodTypes";

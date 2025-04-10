@@ -3,8 +3,8 @@ import {
   getBacklogItemById,
   putBacklogItem,
   populateBacklogItem,
-} from "@/services/backlogItem";
-import { isAuthorizedBacklogOwner } from "@/services/backlogs";
+} from "@/shared/services/api/backlogItem";
+import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
 import { sendMsg } from "@/utils";
 
 import { revalidateTag } from "next/cache";
@@ -66,7 +66,7 @@ const authorize = async (itemId: string) => {
   if (!res.success) return { success: false, message: res.errors, status: 400 };
   const { success } = await isAuthorizedBacklogOwner(
     res.data.backlogId,
-    "edit",
+    "edit"
   );
   if (!success)
     return { success: false, message: "Not authorized", status: 401 };

@@ -1,6 +1,6 @@
 import BacklogItem from "@/components/Backlog/BacklogItem";
 import TopTitle from "@/components/Common/UI/TopTitle";
-import { populateBacklogItem } from "@/services/backlogItem";
+import { populateBacklogItem } from "@/shared/services/api/backlogItem";
 
 const Page = async (props: { params: Promise<{ itemId: string }> }) => {
   const params = await props.params;

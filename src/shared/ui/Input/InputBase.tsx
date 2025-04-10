@@ -1,4 +1,4 @@
-import { inputStyleVariants } from "@/lib/styles";
+import { inputStyleVariants } from "@/shared/lib/styles";
 import { InputBaseProps } from "@/shared/types";
 import classNames from "classnames";
 import React from "react";
@@ -21,7 +21,7 @@ const InputBase = ({
     "text-text-secondary outline-hidden placeholder:text-strong-1  read-only:bg-transparent focus:outline-2 focus:-outline-offset-2 focus:outline-white "
   );
   return (
-    <input  type="text" className={inputClass} {...props} ref={ref}>
+    <input type="text" className={inputClass} {...props} ref={ref}>
       {children}
     </input>
   );

@@ -1,6 +1,6 @@
 "use server";
 import { getCurrentUserInfo } from "@/features/auth/utils";
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/shared/lib/dbConnect";
 import { ResponseData } from "@/types";
 import { ConfigType, StatsType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";

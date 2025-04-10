@@ -4,7 +4,7 @@ import React from "react";
 import ItemsForm from "./ItemsForm";
 import { ItemsFormProps } from "@/types";
 import useSWR from "swr";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 

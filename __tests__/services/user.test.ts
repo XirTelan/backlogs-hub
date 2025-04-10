@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import dbConnect from "@/lib/dbConnect";
-import { getUserData } from "@/services/user";
+import dbConnect from "@/shared/lib/dbConnect";
+import { getUserData } from "@/shared/services/api/user";
 import { describe } from "node:test";
 
 describe("getData", () => {

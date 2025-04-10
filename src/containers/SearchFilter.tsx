@@ -3,7 +3,7 @@ import ButtonBase from "@/shared/ui/ButtonBase";
 import Select from "@/shared/ui/Select";
 import SidePanel from "@/components/SidePanel";
 import useChangeSearchParams from "@/shared/hooks/useChangeParams";
-import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
+import { BacklogInfoContext } from "@/shared/providers/backlogInfoProvider";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import DropDown from "@/shared/ui/DropDown/DropDown";

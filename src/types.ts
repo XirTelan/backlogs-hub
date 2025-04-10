@@ -12,7 +12,7 @@ import {
   ConfigType,
   BacklogFormData,
 } from "./zodTypes";
-import { btnStyleVariants } from "./lib/styles";
+import { btnStyleVariants } from "./shared/lib/styles";
 import React, {
   ComponentType,
   CSSProperties,

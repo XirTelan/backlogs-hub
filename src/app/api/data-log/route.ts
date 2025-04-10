@@ -1,4 +1,4 @@
-import { createLogEntry } from "@/services/dataLog";
+import { createLogEntry } from "@/shared/services/api/dataLog";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 

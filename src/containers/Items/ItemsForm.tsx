@@ -8,14 +8,14 @@ import Select from "@/shared/ui/Select";
 import { BacklogItemCreationDTO, Field } from "@/zodTypes";
 import { useCallback, useMemo } from "react";
 import ProgressTimer from "@/features/progressTimer/ProgressTimer";
-import { toastCustom } from "@/lib/toast";
+import { toastCustom } from "@/shared/lib/toast";
 
 import MarkdownEditor from "../../features/markdownEditor/MarkdownEditor";
 import SearchGameBar from "../../features/searchGameBar/SearchGameBar";
 import { ItemsFormProps } from "@/types";
 import { FaSteam } from "react-icons/fa6";
 import { useSWRConfig } from "swr";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import DropDown from "@/shared/ui/DropDown/DropDown";
 

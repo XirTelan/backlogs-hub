@@ -1,6 +1,6 @@
 "use client";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import DnDMultList from "../../features/dragAndDrop/ui/DndMultiList";

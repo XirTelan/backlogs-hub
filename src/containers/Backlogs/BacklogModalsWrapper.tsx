@@ -1,4 +1,4 @@
-import { ModalProvider } from "@/providers/modalProvider";
+import { ModalProvider } from "@/shared/providers/modalProvider";
 import React from "react";
 import ItemFormModal from "../Items/ItemFormModal";
 import ItemInfoModal from "../Items/ItemInfoModal";

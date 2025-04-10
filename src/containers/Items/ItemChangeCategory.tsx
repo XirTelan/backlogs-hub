@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useContext } from "react";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import { BacklogItemDTO } from "@/zodTypes";
-import { toastCustom } from "@/lib/toast";
+import { toastCustom } from "@/shared/lib/toast";
 import { useSWRConfig } from "swr";
-import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
+import { BacklogInfoContext } from "@/shared/providers/backlogInfoProvider";
 import SidePanel from "@/components/SidePanel";
 import ButtonBase from "@/shared/ui/ButtonBase";
 import { IoMdSwap } from "react-icons/io";

@@ -2,18 +2,17 @@
 import { BacklogItemDTO } from "@/zodTypes";
 import BacklogItemTr from "./BacklogItemTr";
 import { useContext, useMemo } from "react";
-import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
+import { BacklogInfoContext } from "@/shared/providers/backlogInfoProvider";
 
 const BacklogListData = ({ data, isOwner }: Props) => {
-
   const { backlog } = useContext(BacklogInfoContext);
 
   const categoriesMap = useMemo(
     () =>
       new Map(
-        backlog?.categories.map((category) => [category.name, category.color]),
+        backlog?.categories.map((category) => [category.name, category.color])
       ),
-    [backlog?.categories],
+    [backlog?.categories]
   );
   const tagsMap = useMemo(() => {
     if (!backlog?.tags) return undefined;
@@ -34,7 +33,7 @@ const BacklogListData = ({ data, isOwner }: Props) => {
               });
               return arr;
             },
-            [],
+            []
           );
         }
 

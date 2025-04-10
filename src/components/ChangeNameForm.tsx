@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
 import ButtonBase from "../shared/ui/ButtonBase";
-import useLoaderValue from "@/hooks/useLoaderValue";
+import useLoaderValue from "@/shared/hooks/useLoaderValue";
 import InputWithLoader from "../shared/ui/Input/InputWithLoader";
-import { changeUserName } from "@/services/user";
+import { changeUserName } from "@/shared/services/api/user";
 import { useForm } from "react-hook-form";
 import Title from "./Common/Title";
-import { apiRoutesList } from "@/lib/routesList";
-import { toastCustom } from "@/lib/toast";
+import { apiRoutesList } from "@/shared/lib/routesList";
+import { toastCustom } from "@/shared/lib/toast";
 import { useRouter } from "next/navigation";
 
 type Form = { userName: string };

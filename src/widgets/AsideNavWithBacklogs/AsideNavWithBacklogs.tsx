@@ -1,5 +1,5 @@
 import PanelItemsWrapper from "@/widgets/AsideNavWithBacklogs/ui/PanelItemsWrapper";
-import { getBacklogsByFolder } from "@/services/backlogs";
+import { getBacklogsByFolder } from "@/shared/services/api/backlogs";
 import React from "react";
 import { FaFolder } from "react-icons/fa6";
 

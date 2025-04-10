@@ -1,13 +1,13 @@
 import { TabsType } from "@/containers/User/UserSettings";
-import { routesList } from "@/lib/routesList";
-import { Session } from "@/providers/sessionProvider";
-import { getCurrentUserData } from "@/services/user";
+import { routesList } from "@/shared/lib/routesList";
+import { Session } from "@/shared/providers/sessionProvider";
+import { getCurrentUserData } from "@/shared/services/api/user";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import React from "react";
 
 const isPopulated = (
-  arr: unknown[],
+  arr: unknown[]
 ): arr is { _id: string; email: string; provider: string }[] => {
   return arr.every((item) => typeof item === "object");
 };

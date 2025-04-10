@@ -2,9 +2,9 @@ import {
   addBacklogItem,
   getBacklogItemsData,
   getItemsGroupedByCategory,
-} from "@/services/backlogItem";
+} from "@/shared/services/api/backlogItem";
 
-import { isAuthorizedBacklogOwner } from "@/services/backlogs";
+import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
 import { BacklogItemDTO } from "@/zodTypes";
 import { sendMsg } from "@/utils";
 import { revalidateTag } from "next/cache";
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     const data: BacklogItemDTO = await request.json();
     const { success, message } = await isAuthorizedBacklogOwner(
       data.backlogId,
-      "edit",
+      "edit"
     );
     if (!success) return sendMsg.error(message, 401);
 

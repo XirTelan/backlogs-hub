@@ -7,7 +7,7 @@ import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";
 
 import useSWR from "swr";
-import { apiRoutesList } from "@/lib/routesList";
+import { apiRoutesList } from "@/shared/lib/routesList";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import { fetcher } from "@/utils";
 

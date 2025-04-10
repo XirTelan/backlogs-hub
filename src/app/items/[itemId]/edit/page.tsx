@@ -1,8 +1,8 @@
 import NotFound from "@/components/Common/NotFound";
 import TopTitle from "@/components/Common/UI/TopTitle";
 import ItemsForm from "@/containers/Items/ItemsForm";
-import { getBacklogItemById } from "@/services/backlogItem";
-import { isAuthorizedBacklogOwner } from "@/services/backlogs";
+import { getBacklogItemById } from "@/shared/services/api/backlogItem";
+import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
 import { redirect } from "next/navigation";
 
 const EditItem = async (props: { params: Promise<{ itemId: string }> }) => {
@@ -17,7 +17,7 @@ const EditItem = async (props: { params: Promise<{ itemId: string }> }) => {
 
   const { success, data: backlog } = await isAuthorizedBacklogOwner(
     res.data.backlogId,
-    "edit",
+    "edit"
   );
   if (!success) return <NotFound />;
 

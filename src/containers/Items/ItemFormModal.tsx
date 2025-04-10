@@ -1,12 +1,12 @@
 "use client";
-import { createModal } from "@/lib/createModal";
+import { createModal } from "@/shared/lib/createModal";
 import React, { Suspense, useContext } from "react";
 import { IoAdd } from "react-icons/io5";
 import { CreateItemForm } from "./CreateItemForm";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import Title from "@/components/Common/Title";
-import { ModalContext } from "@/providers/modalProvider";
-import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
+import { ModalContext } from "@/shared/providers/modalProvider";
+import { BacklogInfoContext } from "@/shared/providers/backlogInfoProvider";
 
 const ModalProvider = createModal(
   ModalContext,
@@ -18,7 +18,7 @@ const ModalProvider = createModal(
       icon: <IoAdd />,
     },
   },
-  { styleMain: "fixed top-1/4" },
+  { styleMain: "fixed top-1/4" }
 );
 
 export const ItemFormModalOpen = ModalProvider.Opener;

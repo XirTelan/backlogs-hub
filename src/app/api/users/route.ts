@@ -1,5 +1,5 @@
 import { getCurrentUserInfo } from "@/features/auth/utils";
-import { getUserData } from "@/services/user";
+import { getUserData } from "@/shared/services/api/user";
 import { sendMsg } from "@/utils";
 import { NextResponse } from "next/server";
 

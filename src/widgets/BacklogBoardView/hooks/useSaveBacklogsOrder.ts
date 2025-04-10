@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { KeyedMutator } from "swr";
 import { FormattedData } from "../types/types";
 import { putBoard } from "../api/api";
-import { toastCustom } from "@/lib/toast";
+import { toastCustom } from "@/shared/lib/toast";
 
 export function useSaveBacklogsOrder(
   backlogId: string,

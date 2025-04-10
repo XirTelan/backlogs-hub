@@ -1,11 +1,11 @@
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
-import UserBacklogs from "@/containers/User/UserBacklogs";
+import UserBacklogs from "@/widgets/UserBacklogs/ui/UserBacklogs";
 import React from "react";
 import { MdOutlineManageSearch } from "react-icons/md";
 
 import { IoAdd } from "react-icons/io5";
 import { getCurrentUserInfo } from "@/features/auth/utils";
-import { getUserData } from "@/services/user";
+import { getUserData } from "@/shared/services/api/user";
 import TopTitle from "@/components/Common/UI/TopTitle";
 
 export default async function Backlogs(props: {

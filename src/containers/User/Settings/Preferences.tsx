@@ -1,8 +1,8 @@
 "use client";
 import Toggle from "@/shared/ui/Toggle";
 import React from "react";
-import { updateUserInfo } from "@/services/user";
-import { toastCustom } from "@/lib/toast";
+import { updateUserInfo } from "@/shared/services/api/user";
+import { toastCustom } from "@/shared/lib/toast";
 import { UserDB } from "@/zodTypes";
 import Select from "@/shared/ui/Select";
 import Setting from "./Setting";

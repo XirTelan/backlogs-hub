@@ -2,9 +2,9 @@
 import ButtonBase from "@/shared/ui/ButtonBase";
 import InputField from "@/shared/ui/Input/InputField";
 import InputWithLoader from "@/shared/ui/Input/InputWithLoader";
-import { apiRoutesList } from "@/lib/routesList";
-import useLoaderValue from "@/hooks/useLoaderValue";
-import { toastCustom } from "@/lib/toast";
+import { apiRoutesList } from "@/shared/lib/routesList";
+import useLoaderValue from "@/shared/hooks/useLoaderValue";
+import { toastCustom } from "@/shared/lib/toast";
 import { RegistrationSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,5 @@
-import { Session } from "@/providers/sessionProvider";
-import { getCurrentUserData } from "@/services/user";
+import { Session } from "@/shared/providers/sessionProvider";
+import { getCurrentUserData } from "@/shared/services/api/user";
 import React from "react";
 
 import { Metadata } from "next";

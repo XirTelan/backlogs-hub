@@ -1,14 +1,14 @@
 "use server";
 import { getCurrentUserInfo } from "@/features/auth/utils";
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/shared/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import { BacklogDTO, BacklogCreationDTO } from "@/zodTypes";
-import { getUserData } from "./user";
 import { BacklogCreationSchema } from "@/zod";
 import { z } from "zod";
 import { ResponseData } from "@/types";
 import { generateSlug } from "@/utils";
+import { getUserData } from "./user";
 
 //GET SECTION
 export const getBacklogById = async (

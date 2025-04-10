@@ -19,11 +19,11 @@ import {
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { Item } from "@/features/dragAndDrop/ui/Item";
-import DroppableContainer from "../DragAndDrop/DroppableContainer";
 
-import useDragAndDrop from "@/hooks/useDragAndDrop";
+import useDragAndDrop from "@/features/dragAndDrop/hooks/useDragAndDrop";
 import { DndListProps } from "@/types";
 import ActionsBlock from "./ActionsBlock";
+import DroppableContainer from "./DroppableContainer";
 
 type BaseItem = {
   _id: string;

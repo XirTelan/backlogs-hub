@@ -1,11 +1,11 @@
-import useCanvasPointer from "@/hooks/useCanvasPointer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import ColorRgbField from "./ColorRgbField";
 import { colors, math } from "@/utils";
-import HexFielld from "./HexFielld";
 import { ColorPickerValue, ColorRGB } from "@/types";
 import { TbSwitchVertical } from "react-icons/tb";
-import ButtonBase from "../ButtonBase";
+import ButtonBase from "../../../shared/ui/ButtonBase";
+import useCanvasPointer from "../hooks/useCanvasPointer";
+import ColorRgbField from "./ColorRgbField";
+import HexFielld from "./HexFielld";
 
 type ColorType = "RGB" | "HEX";
 
@@ -19,6 +19,7 @@ const COLOR_STOPS = [
   { val: 0.99, hsl: "hsl(0,100%,50%)", color: "#f00", rgb: [255, 0, 0] },
 ];
 
+//[TODO:REFACTOR]
 const ColorPicker = ({
   value,
   onChange,
@@ -64,7 +65,7 @@ const ColorPicker = ({
       cntx.fillStyle = gradientH;
       cntx.fillRect(0, 0, cntx.canvas.width, cntx.canvas.height);
     },
-    [hueColor],
+    [hueColor]
   );
   const redrawSelectColorCanvas = useCallback((hueColor: ColorRGB) => {
     if (!colorCanvas?.current) return;
@@ -140,7 +141,7 @@ const ColorPicker = ({
     setHueAll(
       { r: newHueColor[0], g: newHueColor[1], b: newHueColor[2] },
       [hueCanvasWidth - huePos, 0],
-      "input",
+      "input"
     );
     setAll(color, [xPos, canvasSize.height - yPos], "input");
   }
@@ -194,7 +195,7 @@ const ColorPicker = ({
             colorTypeSwitch,
             selectedColor,
             hueColor,
-            updatePositionsOnCanvas,
+            updatePositionsOnCanvas
           )}
         </div>
       </div>
@@ -229,7 +230,7 @@ function renderTextColorInput(
   colorType: ColorType,
   selectedColor: ColorPickerValue,
   hueColor: ColorPickerValue,
-  onChange: (color: ColorRGB) => void,
+  onChange: (color: ColorRGB) => void
 ) {
   switch (colorType) {
     case "HEX":
@@ -240,11 +241,8 @@ function renderTextColorInput(
           onChange={onChange}
         />
       );
-    case "RGB":
-      {
-        return (
-          <ColorRgbField color={selectedColor.color} onChange={onChange} />
-        );
-      }
+    case "RGB": {
+      return <ColorRgbField color={selectedColor.color} onChange={onChange} />;
+    }
   }
 }

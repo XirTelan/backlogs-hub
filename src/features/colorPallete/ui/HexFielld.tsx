@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InputField from "../Input/InputField";
+import InputField from "../../../components/Common/UI/Input/InputField";
 import { colors } from "@/utils";
 import { ColorPickerValue, ColorRGB } from "@/types";
 import { FiHash } from "react-icons/fi";
@@ -14,7 +14,7 @@ const HexFielld = ({
   onChange: (color: ColorRGB) => void;
 }) => {
   const [hexValue, setHexValue] = useState(
-    colors.rgbToHex(selectedColor.color),
+    colors.rgbToHex(selectedColor.color)
   );
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const HexFielld = ({
     )
       return;
     const handle = window.requestAnimationFrame(() =>
-      setHexValue(colors.rgbToHex(selectedColor.color)),
+      setHexValue(colors.rgbToHex(selectedColor.color))
     );
     return () => window.cancelAnimationFrame(handle);
   }, [selectedColor.color]);
@@ -33,11 +33,11 @@ const HexFielld = ({
     if (hueColor.initiator === "hueChange" || hueColor.initiator == "input")
       return;
     const handle = window.requestAnimationFrame(() =>
-      setHexValue(colors.rgbToHex(selectedColor.color)),
+      setHexValue(colors.rgbToHex(selectedColor.color))
     );
     return () => window.cancelAnimationFrame(handle);
   }, [hueColor.color]);
-  
+
   return (
     <InputField
       isSimple

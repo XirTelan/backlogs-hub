@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonBase from "./ButtonBase";
+import ButtonBase from "../../../shared/ui/ButtonBase";
 import { ButtonBaseProps } from "@/types";
 
 type ToggleButtonProps = {

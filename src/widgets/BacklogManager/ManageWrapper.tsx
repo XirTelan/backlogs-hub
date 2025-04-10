@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Title from "@/components/Common/Title";
-import BacklogDnDMultList from "../Backlogs/BacklogManageDnD";
+import BacklogDnDMultList from "./ui/BacklogManageDnD";
 import Switcher from "@/shared/ui/Switcher";
 import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";

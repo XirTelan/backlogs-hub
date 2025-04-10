@@ -6,12 +6,12 @@ import Modal from "@/components/Common/Modal";
 import Title from "@/components/Common/Title";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
-import BacklogDndItem from "./BacklogDndItem";
+import BacklogDndItem from "../../../containers/Backlogs/BacklogDndItem";
 import { DndData } from "@/types";
 import { toastCustom } from "@/lib/toast";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
-import DnDMultList from "../../features/dragAndDrop/ui/DndMultiList";
+import DnDMultList from "../../../features/dragAndDrop/ui/DndMultiList";
 import { UniqueIdentifier } from "@dnd-kit/core";
 
 const BacklogManageDnD = ({

@@ -1,6 +1,6 @@
 import React, { JSX, useEffect, useMemo, useState } from "react";
 import InputField from "../../shared/ui/Input/InputField";
-import Timer from "./Timer";
+import Timer from "./ui/Timer";
 import { parseSeconds, parseToSeconds } from "@/utils";
 import ButtonBase from "../../shared/ui/ButtonBase";
 import { RxLapTimer } from "react-icons/rx";

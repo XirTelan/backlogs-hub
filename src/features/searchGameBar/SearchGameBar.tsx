@@ -5,10 +5,10 @@ import Loading from "@/components/Common/UI/Loading/Loading";
 import SearchField from "@/components/Common/UI/SearchField";
 import useDebounce from "@/shared/hooks/useDebounce";
 import useToggle from "@/shared/hooks/useToggle";
-import { SearchBar } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { SearchBar } from "@/shared/types";
 
 const SearchGameBar = ({
   labelText,
@@ -50,7 +50,7 @@ const SearchGameBar = ({
 
     if (!debounceSearch) return;
     search();
-  }, [debounceSearch]);
+  }, [debounceSearch, setOpen]);
 
   const handleAddGame = (id: string, name: string) => {
     addGame(id, name);

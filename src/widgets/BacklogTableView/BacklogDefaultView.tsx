@@ -1,6 +1,6 @@
 "use client";
 
-import BacklogListData from "./BacklogListData";
+import BacklogListData from "../../containers/Backlogs/Views/Default/BacklogListData";
 
 import useSWR from "swr";
 import { apiRoutesList } from "@/lib/routesList";
@@ -8,7 +8,7 @@ import { fetcher } from "@/utils";
 import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
 import BacklogItemsTable, {
   BacklogItemsTableToolbar,
-} from "./BacklogItemsTable";
+} from "../../containers/Backlogs/Views/Default/BacklogItemsTable";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/containers/Pagination";
 import { useSession } from "@/providers/sessionProvider";

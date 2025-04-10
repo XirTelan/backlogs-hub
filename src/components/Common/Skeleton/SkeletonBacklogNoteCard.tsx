@@ -1,5 +1,5 @@
 import React from "react";
-import Divider from "../UI/Divider";
+import Divider from "../../../shared/ui/Divider";
 
 const SkeletonBacklogNoteCard = () => {
   return (

@@ -3,11 +3,11 @@ import React from "react";
 import BlockWrapper from "./BlockWrapper";
 import InputField from "./UI/Input/InputField";
 import ProgressTimer from "../../containers/Fields/ProgressTimer";
-import Divider from "./UI/Divider";
+import Divider from "../../shared/ui/Divider";
 import { RxLapTimer } from "react-icons/rx";
-import Select from "./UI/Select";
+import Select from "../../shared/ui/Select";
 import MarkdownEditor from "@/containers/Fields/MarkdownEditor";
-import LinkBase from "./UI/LinkBase";
+import LinkBase from "../../shared/ui/LinkBase";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 const InputsDemoPage = () => {

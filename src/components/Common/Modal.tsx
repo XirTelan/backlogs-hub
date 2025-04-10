@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-import ButtonBase from "./UI/ButtonBase";
+import ButtonBase from "../../shared/ui/ButtonBase";
 import { ButtonBaseProps, ButtonColorVariants } from "@/types";
 import { motion } from "framer-motion";
 import classNames from "classnames";
@@ -68,7 +68,7 @@ const Modal = ({
         className={classNames(
           styleMain,
           { absolute: styleMain },
-          " flex flex-col justify-center",
+          " flex flex-col justify-center"
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -81,7 +81,7 @@ const Modal = ({
           )}
       </motion.div>
     </div>,
-    document.body,
+    document.body
   );
 };
 

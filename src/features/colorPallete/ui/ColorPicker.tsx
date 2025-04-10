@@ -65,14 +65,17 @@ const ColorPicker = ({
       cntx.fillStyle = gradientH;
       cntx.fillRect(0, 0, cntx.canvas.width, cntx.canvas.height);
     },
-    [hueColor]
+    []
   );
-  const redrawSelectColorCanvas = useCallback((hueColor: ColorRGB) => {
-    if (!colorCanvas?.current) return;
-    const cntx = colorCanvas.current.getContext("2d");
-    if (!cntx) return;
-    drawSelectedClrCanvas(cntx, hueColor);
-  }, []);
+  const redrawSelectColorCanvas = useCallback(
+    (hueColor: ColorRGB) => {
+      if (!colorCanvas?.current) return;
+      const cntx = colorCanvas.current.getContext("2d");
+      if (!cntx) return;
+      drawSelectedClrCanvas(cntx, hueColor);
+    },
+    [drawSelectedClrCanvas]
+  );
 
   const drawHueClrBar = useCallback((cntx: CanvasRenderingContext2D) => {
     const gradientH = cntx.createLinearGradient(0, 0, cntx.canvas.width, 0);
@@ -88,11 +91,11 @@ const ColorPicker = ({
     if (colorTrack || hueTrack) return;
 
     onChange(colors.rgbToHex(selectedColor.color));
-  }, [selectedColor.color, colorTrack, hueTrack]);
+  }, [selectedColor.color, colorTrack, hueTrack, onChange]);
 
   useEffect(() => {
     updatePositionsOnCanvas(value);
-  }, []);
+  }, [value]);
 
   useEffect(() => {
     const handle = window.requestAnimationFrame(() => {
@@ -105,7 +108,13 @@ const ColorPicker = ({
     return () => {
       window.cancelAnimationFrame(handle);
     };
-  }, [hueColor.color, drawSelectedClrCanvas]);
+  }, [
+    hueColor.color,
+    drawSelectedClrCanvas,
+    redrawSelectColorCanvas,
+    hueColor.initiator,
+    updateColor,
+  ]);
 
   useEffect(() => {
     if (!hueCanvas.current) return;
@@ -116,34 +125,6 @@ const ColorPicker = ({
 
   function switchColorType() {
     setColorTypeSwitch((prev) => (prev === "RGB" ? "HEX" : "RGB"));
-  }
-
-  function getCanvasSize(canvas: React.RefObject<HTMLCanvasElement | null>) {
-    if (!canvas.current) return { width: 0, height: 0 };
-    const { width, height } = canvas.current.getBoundingClientRect();
-    return { width, height };
-  }
-
-  function updatePositionsOnCanvas(color: ColorRGB) {
-    if (!color) return;
-    const { hue, sat, v } = colors.rgbToHsv(color);
-
-    const canvasSize = getCanvasSize(colorCanvas);
-    const { width: hueCanvasWidth } = getCanvasSize(hueCanvas);
-
-    const xPos = canvasSize.width * (sat / 100);
-    const yPos = canvasSize.height * (v / 100);
-    const huePos =
-      (math.mapRange(hue, 0, 360, 0, hueCanvasWidth) + hueCanvasWidth) %
-      hueCanvasWidth;
-    const newHueColor = colors.hsvToRgb({ h: hue, s: 1, v: 1 });
-
-    setHueAll(
-      { r: newHueColor[0], g: newHueColor[1], b: newHueColor[2] },
-      [hueCanvasWidth - huePos, 0],
-      "input"
-    );
-    setAll(color, [xPos, canvasSize.height - yPos], "input");
   }
 
   return (
@@ -226,6 +207,12 @@ const ColorPicker = ({
 
 export default ColorPicker;
 
+function getCanvasSize(canvas: React.RefObject<HTMLCanvasElement | null>) {
+  if (!canvas.current) return { width: 0, height: 0 };
+  const { width, height } = canvas.current.getBoundingClientRect();
+  return { width, height };
+}
+
 function renderTextColorInput(
   colorType: ColorType,
   selectedColor: ColorPickerValue,
@@ -245,4 +232,32 @@ function renderTextColorInput(
       return <ColorRgbField color={selectedColor.color} onChange={onChange} />;
     }
   }
+}
+
+function updatePositionsOnCanvas(
+  color: ColorRGB,
+  colorCanvas,
+  hueCanvas,
+  setHueAll,
+  setAll
+) {
+  if (!color) return;
+  const { hue, sat, v } = colors.rgbToHsv(color);
+
+  const canvasSize = getCanvasSize(colorCanvas);
+  const { width: hueCanvasWidth } = getCanvasSize(hueCanvas);
+
+  const xPos = canvasSize.width * (sat / 100);
+  const yPos = canvasSize.height * (v / 100);
+  const huePos =
+    (math.mapRange(hue, 0, 360, 0, hueCanvasWidth) + hueCanvasWidth) %
+    hueCanvasWidth;
+  const newHueColor = colors.hsvToRgb({ h: hue, s: 1, v: 1 });
+
+  setHueAll(
+    { r: newHueColor[0], g: newHueColor[1], b: newHueColor[2] },
+    [hueCanvasWidth - huePos, 0],
+    "input"
+  );
+  setAll(color, [xPos, canvasSize.height - yPos], "input");
 }

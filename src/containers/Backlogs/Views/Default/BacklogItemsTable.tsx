@@ -1,10 +1,9 @@
-import createTable from "@/lib/createTable";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ItemFormModalOpen } from "@/containers/Items/ItemFormModal";
+import { TableBody, TableHeader, ToolBar } from "@/components/Common/UI/table";
 import SearchFilter from "@/containers/SearchFilter";
-
-const Table = createTable();
+import withWrap from "@/hoc/withWrap";
 
 export const BacklogItemsTableToolbar = ({
   showFilters = true,
@@ -14,7 +13,7 @@ export const BacklogItemsTableToolbar = ({
   showAction?: boolean;
 }) => {
   return (
-    <Table.ToolBar
+    <ToolBar
       search
       customButton={
         <div className="flex">
@@ -47,12 +46,18 @@ const BacklogItemsTable = ({
 
   return (
     <>
-      <Table.Wrap>
-        <Table.Head headers={headers}></Table.Head>
-        <Table.Body>{children}</Table.Body>
-      </Table.Wrap>
+      <TableHeader>
+        <>
+          {headers.map((header) => (
+            <TableHeader key={header.id}>
+              {header.title}
+            </TableHeader>
+          ))}
+        </>
+      </TableHeader>
+      <TableBody>{children}</TableBody>
     </>
   );
 };
 
-export default BacklogItemsTable;
+export default withWrap(BacklogItemsTable);

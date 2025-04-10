@@ -150,7 +150,7 @@ export type ButtonBaseProps = {
 export type DndData<T> = Record<string, T[]>;
 
 type RenderItemProps = {
-  item: T;
+  item: BacklogItemDTO;
   isSortingContainer: boolean;
   containerId: UniqueIdentifier;
   index;

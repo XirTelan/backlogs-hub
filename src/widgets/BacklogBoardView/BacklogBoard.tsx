@@ -6,15 +6,15 @@ import React, { useCallback } from "react";
 import useSWR from "swr";
 import { DndData, RenderItemProps } from "@/types";
 import { fetcher } from "@/utils";
-import { ItemFormModalOpen } from "../../../Items/ItemFormModal";
+import { ItemFormModalOpen } from "../../containers/Items/ItemFormModal";
 import SortableItem from "@/features/dragAndDrop/ui/SortableItem";
-import DnDMultList from "../../../DragAndDrop/DndMultiList";
-import ItemFastRename from "../../../Items/ItemsFastRename";
-import BacklogItemActions from "../Default/BacklogItemActions";
+import DnDMultList from "../../features/dragAndDrop/ui/DndMultiList";
+import ItemFastRename from "../../containers/Items/ItemsFastRename";
+import BacklogItemActions from "../../containers/Backlogs/Views/Default/BacklogItemActions";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { toastCustom } from "@/lib/toast";
 import Title from "@/components/Common/Title";
-import { ItemInfoModalOpen } from "../../../Items/ItemInfoModal";
+import { ItemInfoModalOpen } from "../../containers/Items/ItemInfoModal";
 
 const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
   const { data, isLoading, mutate } = useSWR(
@@ -117,7 +117,11 @@ const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
 
 export default BacklogBoard;
 
-function renderDndItem({ item, isSortingContainer, ...rest }: RenderItemProps) {
+function renderDndItem({
+  item,
+  isSortingContainer,
+  ...rest
+}: RenderItemProps<BacklogItemDTO>) {
   return (
     <SortableItem
       key={item._id}

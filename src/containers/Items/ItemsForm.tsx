@@ -3,8 +3,8 @@ import InputField from "@/components/Common/UI/Input/InputField";
 import { useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
-import Select from "@/components/Common/UI/Select";
+import ButtonBase from "@/shared/ui/ButtonBase";
+import Select from "@/shared/ui/Select";
 import { BacklogItemCreationDTO, Field } from "@/zodTypes";
 import { useCallback, useMemo } from "react";
 import ProgressTimer from "@/containers/Fields/ProgressTimer";
@@ -16,8 +16,8 @@ import { ItemsFormProps } from "@/types";
 import { FaSteam } from "react-icons/fa6";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/lib/routesList";
-import DropDown from "@/components/Common/UI/DropDown/DropDown";
 import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
+import DropDown from "@/shared/ui/DropDown/DropDown";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,
@@ -34,12 +34,11 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         mapAcc.set(field.backlogFieldId, field.value);
         return mapAcc;
       }, new Map()),
-    [defaultValues.userFields],
+    [defaultValues.userFields]
   );
 
   const onSubmit = useCallback(
     async (data: BacklogItemCreationDTO & { _id?: string }) => {
-
       const url = `/api/items${type === "edit" ? `/${data._id}` : ""}`;
       const options = {
         method: type === "edit" ? "PUT" : "POST",
@@ -59,7 +58,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         }
         mutate(
           (key) =>
-            typeof key === "string" && key.startsWith(`${apiRoutesList.items}`),
+            typeof key === "string" && key.startsWith(`${apiRoutesList.items}`)
         );
         return true;
       } catch (error) {
@@ -67,7 +66,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
         throw error;
       }
     },
-    [mutate, type],
+    [mutate, type]
   );
 
   const {
@@ -158,7 +157,7 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
           );
       }
     },
-    [mapFields, register, setValue],
+    [mapFields, register, setValue]
   );
   const isShowTags = backlog.modifiers.useTagsSystem;
   const isLinkedToGame =

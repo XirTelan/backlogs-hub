@@ -1,7 +1,6 @@
-
-import LinkBase from "@/components/Common/UI/LinkBase";
-import Notification from "@/components/Common/UI/Notification";
-import Landing from "@/components/Landing";
+import LinkBase from "@/shared/ui/LinkBase";
+import Notification from "@/shared/ui/Notification";
+import Landing from "@/widgets/landing/ui/Landing";
 import SignInForm from "@/containers/Auth/SignInForm";
 
 export default async function Home() {

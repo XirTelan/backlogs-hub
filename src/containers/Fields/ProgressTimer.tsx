@@ -2,7 +2,7 @@ import React, { JSX, useEffect, useMemo, useState } from "react";
 import InputField from "../../components/Common/UI/Input/InputField";
 import Timer from "./Timer";
 import { parseSeconds, parseToSeconds } from "@/utils";
-import ButtonBase from "../../components/Common/UI/ButtonBase";
+import ButtonBase from "../../shared/ui/ButtonBase";
 import { RxLapTimer } from "react-icons/rx";
 
 const ProgressTimer = ({
@@ -29,7 +29,7 @@ const ProgressTimer = ({
         mm,
         ss,
       };
-    }, [defaultValue]),
+    }, [defaultValue])
   );
 
   const handleTimer = (value: number) => {
@@ -51,7 +51,7 @@ const ProgressTimer = ({
   useEffect(() => {
     setValue(
       name,
-      `${time.hh < 10 ? `0${time.hh}` : time.hh}:${time.mm < 10 ? `0${time.mm}` : time.mm}:${time.ss < 10 ? `0${time.ss}` : time.ss}`,
+      `${time.hh < 10 ? `0${time.hh}` : time.hh}:${time.mm < 10 ? `0${time.mm}` : time.mm}:${time.ss < 10 ? `0${time.ss}` : time.ss}`
     );
   }, [name, setValue, time]);
 

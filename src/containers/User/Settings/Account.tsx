@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import Setting from "./Setting";
 import Title from "@/components/Common/Title";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { FaChevronRight } from "react-icons/fa";
 import { UserDTO } from "@/zodTypes";
 import { SettingModalProps } from "../UserSettings";
@@ -91,7 +91,7 @@ const Account = ({
 const providerButton = (
   providers: Map<string, string>,
   provider: string,
-  label: string,
+  label: string
 ) => {
   const button = providers?.has(provider) ? (
     <Setting label={label}>

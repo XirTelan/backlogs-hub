@@ -1,7 +1,7 @@
 import Title from "@/components/Common/Title";
-import Divider from "@/components/Common/UI/Divider";
-import LinkBase from "@/components/Common/UI/LinkBase";
-import Notification from "@/components/Common/UI/Notification";
+import Divider from "@/shared/ui/Divider";
+import LinkBase from "@/shared/ui/LinkBase";
+import Notification from "@/shared/ui/Notification";
 import React from "react";
 
 const page = () => {

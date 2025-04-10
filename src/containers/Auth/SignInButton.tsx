@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SignInForm from "./SignInForm";
 import Modal from "@/components/Common/Modal";
 import { usePathname } from "next/navigation";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { GrLogin } from "react-icons/gr";
 
 const SignInButton = () => {

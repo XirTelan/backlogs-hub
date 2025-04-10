@@ -2,7 +2,7 @@
 import React from "react";
 import Setting from "./Setting";
 import { UserDTO } from "@/zodTypes";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { FaChevronRight } from "react-icons/fa6";
 import { SettingModalProps } from "../UserSettings";
 import ChangeUserName from "./ChangeUserName";

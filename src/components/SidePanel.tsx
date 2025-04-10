@@ -1,6 +1,6 @@
 "use client";
 import useOutsideClickReg from "@/hooks/useOutsideClickReg";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/shared/hooks/useToggle";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -53,7 +53,7 @@ const SidePanel = ({
     : "";
 
   const handleClosePanel = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     if (keepOpen) e.stopPropagation();
   };
@@ -88,7 +88,7 @@ const SidePanel = ({
       className={classNames(
         styleButton,
         position === "none" ? "h-12" : "h-[49px]",
-        " w-12 cursor-pointer   p-[14px]  hover:bg-layer-1-hover ",
+        " w-12 cursor-pointer   p-[14px]  hover:bg-layer-1-hover "
       )}
       {...buttonProps}
     >
@@ -104,7 +104,7 @@ const SidePanel = ({
           className={classNames(
             styleDropDownPos,
             directionStyles[direction],
-            "absolute  z-10 w-64 border-b  border-border-subtle-1 bg-bg-main py-2",
+            "absolute  z-10 w-64 border-b  border-border-subtle-1 bg-bg-main py-2"
           )}
           onClick={handleClosePanel}
           style={
@@ -137,6 +137,6 @@ type SidePanelProps = {
   renderCustomBtn?: (
     toggle: () => void,
     isOpen: boolean,
-    ref: React.RefObject<HTMLDivElement | null>,
+    ref: React.RefObject<HTMLDivElement | null>
   ) => React.ReactNode;
 };

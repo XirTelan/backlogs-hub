@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import ButtonBase from "../Common/UI/ButtonBase";
+import ButtonBase from "../../shared/ui/ButtonBase";
 import { MdCheck, MdClose } from "react-icons/md";
 import InputField from "../Common/UI/Input/InputField";
 

@@ -1,5 +1,5 @@
-import Divider from "@/components/Common/UI/Divider";
-import LinkBase from "@/components/Common/UI/LinkBase";
+import Divider from "@/shared/ui/Divider";
+import LinkBase from "@/shared/ui/LinkBase";
 import { routesList } from "@/lib/routesList";
 import React from "react";
 

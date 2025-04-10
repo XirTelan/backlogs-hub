@@ -1,13 +1,13 @@
 "use client";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import ButtonBase from "../ButtonBase";
 import { inputStyleVariants } from "@/lib/styles";
 import styles from "./DropDown.module.css";
 import useOutsideClickReg from "@/hooks/useOutsideClickReg";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/shared/hooks/useToggle";
 import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import cn from "classnames";
+import ButtonBase from "@/shared/ui/ButtonBase";
 
 const DropDown = ({
   id,
@@ -70,7 +70,7 @@ const DropDown = ({
     styles["drop-input"],
     inputStyleVariants.layers[1],
     inputStyleVariants.sizes["medium"],
-    " flex min-w-0 flex-1 grow  pe-10  text-text-secondary  outline-hidden placeholder:text-strong-1 read-only:bg-transparent",
+    " flex min-w-0 flex-1 grow  pe-10  text-text-secondary  outline-hidden placeholder:text-strong-1 read-only:bg-transparent"
   );
 
   return (
@@ -157,7 +157,7 @@ const DropDown = ({
                         isSelected
                           ? " text-text-primary "
                           : " text-text-secondary ",
-                        `flex w-full cursor-pointer gap-4 border-b border-border-subtle-1 px-4  py-2 last:border-b-0`,
+                        `flex w-full cursor-pointer gap-4 border-b border-border-subtle-1 px-4  py-2 last:border-b-0`
                       )}
                       data-tag={tag}
                       onClick={changeTagStatus}

@@ -1,14 +1,14 @@
 "use client";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/shared/hooks/useToggle";
 import React from "react";
 import Modal from "../Common/Modal";
-import ButtonBase from "../Common/UI/ButtonBase";
-import Toggle from "../Common/UI/Toggle";
+import ButtonBase from "../../shared/ui/ButtonBase";
+import Toggle from "../../shared/ui/Toggle";
 import { ModifiersType } from "@/zodTypes";
 import Title from "../Common/Title";
 import { IoMdOptions } from "react-icons/io";
 import { Controller, useFormContext } from "react-hook-form";
-import Select from "../Common/UI/Select";
+import Select from "../../shared/ui/Select";
 
 const BacklogOptionsMenu = () => {
   const { isOpen, setClose, toggle } = useToggle();
@@ -21,7 +21,6 @@ const BacklogOptionsMenu = () => {
     title: string;
     modifier: keyof ModifiersType;
   }) => {
-    
     const renderControllerField = ({
       field: { onChange, value },
     }: {

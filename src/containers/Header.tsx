@@ -1,7 +1,7 @@
 import React from "react";
 import SignInButton from "./Auth/SignInButton";
 import NavBar from "./NavBar";
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import UserPanel from "./User/UserPanel";
 import HomeLink from "@/components/HomeLink";
 import ThemeSwitch from "@/components/ThemeSwitch";

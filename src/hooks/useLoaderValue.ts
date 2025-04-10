@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import useDebounce from "./useDebounce";
+import useDebounce from "../shared/hooks/useDebounce";
 
 const useLoaderValue = (
   value: string,
-  checker: (value: string) => Promise<boolean>,
+  checker: (value: string) => Promise<boolean>
 ) => {
   const [isAvailable, setIsAvailable] = useState(true);
   const [isLoading, setIsLoading] = useState(false);

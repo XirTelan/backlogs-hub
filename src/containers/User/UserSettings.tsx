@@ -10,7 +10,7 @@ import { updateUserInfo } from "@/services/user";
 import InputField from "@/components/Common/UI/Input/InputField";
 import { toastCustom } from "@/lib/toast";
 import Title from "@/components/Common/Title";
-import TextAreaInput from "@/components/Common/UI/TextAreaInput";
+import TextAreaInput from "@/shared/ui/TextAreaInput";
 import { ButtonBaseProps } from "@/types";
 
 const TABS = {
@@ -55,7 +55,7 @@ type TabProps = {
 const renderTab = (
   TabComponent: React.ComponentType<TabProps>,
   data: Partial<UserDTO>,
-  setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>,
+  setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>
 ) => {
   return <TabComponent data={data} setModal={setModal} />;
 };
@@ -70,7 +70,7 @@ const modalTypes = {
   },
   text: (
     defaultValue: string,
-    setValue: React.Dispatch<React.SetStateAction<string>>,
+    setValue: React.Dispatch<React.SetStateAction<string>>
   ) => {
     return (
       <InputField
@@ -84,7 +84,7 @@ const modalTypes = {
   },
   textArea: (
     defaultValue: string,
-    setValue: React.Dispatch<React.SetStateAction<string>>,
+    setValue: React.Dispatch<React.SetStateAction<string>>
   ) => {
     return (
       <TextAreaInput
@@ -103,7 +103,7 @@ const UserSettings = ({ data, tab }: UserSettingsProps) => {
     const res = await updateUserInfo(
       modalData.option.name,
       value,
-      modalData.option.optionType,
+      modalData.option.optionType
     );
     if (res.success) toastCustom.success("Changed");
     else toastCustom.error("Nope");

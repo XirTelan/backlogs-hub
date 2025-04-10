@@ -3,7 +3,7 @@ import { BacklogDTO } from "@/zodTypes";
 import React from "react";
 import Title from "@/components/Common/Title";
 import { FaFolder } from "react-icons/fa6";
-import Accordion from "@/components/Common/UI/Accordion";
+import Accordion from "@/shared/ui/Accordion";
 
 const BacklogFolder = ({
   folderName,

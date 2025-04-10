@@ -2,13 +2,13 @@
 import React from "react";
 import TemplateCard from "./TemplateCard";
 import InputField from "../Common/UI/Input/InputField";
-import TextAreaInput from "../Common/UI/TextAreaInput";
+import TextAreaInput from "../../shared/ui/TextAreaInput";
 import { BacklogFormData, TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
 import Title from "../Common/Title";
-import ButtonBase from "../Common/UI/ButtonBase";
+import ButtonBase from "../../shared/ui/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Select from "../Common/UI/Select";
+import Select from "../../shared/ui/Select";
 import { useSession } from "@/providers/sessionProvider";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
   const { user } = useSession();

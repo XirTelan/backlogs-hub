@@ -1,4 +1,4 @@
-import Switcher from "@/components/Common/UI/Switcher";
+import Switcher from "@/shared/ui/Switcher";
 import React from "react";
 
 const TemplateSwitcher = () => {

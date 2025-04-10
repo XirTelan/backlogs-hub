@@ -1,8 +1,8 @@
 import InputsDemoPage from "@/components/Common/InputsDemoPage";
 import Title from "@/components/Common/Title";
-import Accordion from "@/components/Common/UI/Accordion";
-import Divider from "@/components/Common/UI/Divider";
-import LinkBase from "@/components/Common/UI/LinkBase";
+import Accordion from "@/shared/ui/Accordion";
+import Divider from "@/shared/ui/Divider";
+import LinkBase from "@/shared/ui/LinkBase";
 import React from "react";
 
 const page = () => {

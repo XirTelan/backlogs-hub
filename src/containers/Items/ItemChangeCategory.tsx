@@ -7,7 +7,7 @@ import { toastCustom } from "@/lib/toast";
 import { useSWRConfig } from "swr";
 import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
 import SidePanel from "@/components/SidePanel";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { IoMdSwap } from "react-icons/io";
 
 const ItemChangeCategory = ({
@@ -33,7 +33,7 @@ const ItemChangeCategory = ({
         toastCustom.success("Category changed");
         mutate(
           (key) =>
-            typeof key === "string" && key.startsWith(`${apiRoutesList.items}`),
+            typeof key === "string" && key.startsWith(`${apiRoutesList.items}`)
         );
       }
     });

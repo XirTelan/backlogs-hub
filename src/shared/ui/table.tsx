@@ -52,8 +52,20 @@ const TableBody = (props: React.ComponentProps<"tbody">) => {
   return <tbody {...props} />;
 };
 
+const TableCell = (props: React.ComponentProps<"td">) => {
+  return <td {...props} />;
+};
+
 const Table = ({ className, ...props }: React.ComponentProps<"table">) => {
   return <table className="w-full table-fixed " {...props} />;
 };
 
-export { Table, TableHeader, TableHead, TableTitle, ToolBar, TableBody };
+export {
+  Table,
+  TableHeader,
+  TableHead,
+  TableCell,
+  TableTitle,
+  ToolBar,
+  TableBody,
+};

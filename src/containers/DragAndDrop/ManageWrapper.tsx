@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Title from "@/components/Common/Title";
 import BacklogDnDMultList from "../Backlogs/BacklogManageDnD";
-import Switcher from "@/components/Common/UI/Switcher";
+import Switcher from "@/shared/ui/Switcher";
 import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";
 
@@ -16,7 +16,7 @@ const ManageWrapper = () => {
 
   const { data: items, isLoading } = useSWR(
     `${apiRoutesList.backlogs}?type=byFolder`,
-    fetcher,
+    fetcher
   );
 
   return (

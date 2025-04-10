@@ -2,7 +2,7 @@
 
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
-import Accordion from "./Common/UI/Accordion";
+import Accordion from "../shared/ui/Accordion";
 import { NewsType } from "@/zodTypes";
 import rehypeSanitize from "rehype-sanitize";
 

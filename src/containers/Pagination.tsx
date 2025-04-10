@@ -1,6 +1,6 @@
 "use client";
-import Select from "@/components/Common/UI/Select";
-import useChangeSearchParams from "@/hooks/useChangeParams";
+import Select from "@/shared/ui/Select";
+import useChangeSearchParams from "@/shared/hooks/useChangeParams";
 import React from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
@@ -27,7 +27,7 @@ const Pagination = ({ totalCount }: { totalCount: number }) => {
   };
 
   const selectOptions = Array.from({ length: pageCount }).map((_, indx) =>
-    String(indx + 1),
+    String(indx + 1)
   );
 
   return (

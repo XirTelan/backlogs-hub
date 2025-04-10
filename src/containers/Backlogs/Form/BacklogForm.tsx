@@ -11,16 +11,16 @@ import {
 import Modal from "@/components/Common/Modal";
 import TemplatePreview from "@/components/Template/TemplatePreview";
 import UserFieldsBlock from "./UserFieldsBlock";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { BacklogFormData } from "@/zodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
-import Select from "@/components/Common/UI/Select";
+import Select from "@/shared/ui/Select";
 import { routesList } from "@/lib/routesList";
 import { usePathname } from "next/navigation";
 import BacklogOptionsMenu from "@/components/Backlog/BacklogOptionsMenu";
-import Switcher from "@/components/Common/UI/Switcher";
-import useToggle from "@/hooks/useToggle";
+import Switcher from "@/shared/ui/Switcher";
+import useToggle from "@/shared/hooks/useToggle";
 import { FaEye, FaEyeSlash, FaFolder } from "react-icons/fa6";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
 
@@ -137,7 +137,7 @@ const BacklogForm = <T extends BacklogFormData>({
                           "visibility",
                           watchAllFields.visibility === "public"
                             ? "private"
-                            : "public",
+                            : "public"
                         );
                       }}
                     />

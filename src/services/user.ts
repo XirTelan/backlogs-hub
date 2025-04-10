@@ -1,12 +1,12 @@
 "use server";
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { ResponseData } from "@/types";
 import { ConfigType, StatsType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
 import Account from "@/models/Account";
@@ -31,13 +31,13 @@ type UserDataTypes = keyof typeof userDataTypes;
 
 export async function getUserData(
   username: string,
-  select: UserDataTypes,
+  select: UserDataTypes
 ): Promise<ResponseData<Partial<UserDTO>>> {
   try {
     await dbConnect();
     const user = await User.findOne(
       { username: username },
-      userDataTypes[select],
+      userDataTypes[select]
     )
       .collation({ locale: "en", strength: 2 })
       .populate({ path: "accounts", select: "provider email " })
@@ -52,7 +52,7 @@ export async function getUserData(
 }
 
 export async function getCurrentUserData(
-  type: UserDataTypes = "all",
+  type: UserDataTypes = "all"
 ): Promise<ResponseData<Partial<UserDTO>>> {
   try {
     const user = await getCurrentUserInfo();
@@ -75,7 +75,7 @@ export async function isUserNameExist(username: string) {
 }
 //PUT/PATCH
 export async function createUser(
-  data: Partial<UserDTO>,
+  data: Partial<UserDTO>
 ): Promise<ResponseData<Omit<UserDTO, "password">>> {
   try {
     await dbConnect();
@@ -162,7 +162,7 @@ export async function getConfigOptions(): Promise<ResponseData<ConfigType>> {
 export async function updateUserInfo(
   option: string,
   value: unknown,
-  type: "general" | "config" = "config",
+  type: "general" | "config" = "config"
 ) {
   try {
     const user = await getCurrentUserInfo();
@@ -214,11 +214,11 @@ export async function changeUserName(username: string) {
         username: username,
         config: { ...userData.config, canChangeUserName: false },
       },
-      { returnDocument: "after" },
+      { returnDocument: "after" }
     ).lean();
     await Backlog.updateMany(
       { userId: userData._id },
-      { userName: updatedOne?.username },
+      { userName: updatedOne?.username }
     );
 
     return { success: true };
@@ -232,7 +232,7 @@ export async function updateStat(
   id: string,
   option: keyof StatsType,
   type: "increment" | "decrement" = "increment",
-  defVal = 1,
+  defVal = 1
 ) {
   try {
     await dbConnect();

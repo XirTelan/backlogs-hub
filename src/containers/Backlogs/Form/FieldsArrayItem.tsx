@@ -1,6 +1,6 @@
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import InputField from "@/components/Common/UI/Input/InputField";
-import Select from "@/components/Common/UI/Select";
+import Select from "@/shared/ui/Select";
 import { Field } from "@/zodTypes";
 import classNames from "classnames";
 import { produce } from "immer";
@@ -45,7 +45,7 @@ const FieldsArrayItem = ({
   const handleUpdateField = (
     index: number,
     field: Field,
-    action: "add" | "remove",
+    action: "add" | "remove"
   ) => {
     if (field.type !== "select") return;
 
@@ -55,7 +55,7 @@ const FieldsArrayItem = ({
         draft.data ??= [];
         if (action === "add") draft.data.push("");
         else draft.data.pop();
-      }),
+      })
     );
   };
 

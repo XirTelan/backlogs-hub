@@ -1,7 +1,7 @@
 import React from "react";
 import { useFieldArray } from "react-hook-form";
 import { FieldsBlockProps } from "@/types";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import Title from "@/components/Common/Title";
 import { BacklogFormData, Field } from "@/zodTypes";
 import withWrap from "@/hoc/withWrap";

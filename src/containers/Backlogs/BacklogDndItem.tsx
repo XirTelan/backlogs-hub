@@ -1,4 +1,4 @@
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import SortableItem from "@/components/dnd/SortableItem";
 import { routesList } from "@/lib/routesList";

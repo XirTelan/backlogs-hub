@@ -5,7 +5,7 @@ import NavLink from "@/components/NavLink";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { routesList } from "@/lib/routesList";
-import Divider from "@/components/Common/UI/Divider";
+import Divider from "@/shared/ui/Divider";
 
 const links = [
   {

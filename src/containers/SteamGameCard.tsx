@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
-import LinkBase from "@/components/Common/UI/LinkBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
+import LinkBase from "@/shared/ui/LinkBase";
 import { FaImages, FaSteam } from "react-icons/fa6";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";

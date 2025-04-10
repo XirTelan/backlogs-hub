@@ -1,5 +1,5 @@
 "use client";
-import useChangeSearchParams from "@/hooks/useChangeParams";
+import useChangeSearchParams from "@/shared/hooks/useChangeParams";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
@@ -28,7 +28,7 @@ const Switcher = ({
     const activeKey = searchParams.get(key) ?? "";
     const indx = Math.max(
       0,
-      items.findIndex((item) => item.value === activeKey),
+      items.findIndex((item) => item.value === activeKey)
     );
     setActive(indx);
   }, []);
@@ -54,7 +54,7 @@ const Switcher = ({
             onClick={handleClick(item, index)}
             data-active={isActive}
             className={classNames(
-              "sw-btn group relative cursor-pointer overflow-hidden focus:border-focus focus:border border-b border-t first:rounded-s first:border-l	last:rounded-e last:border-r hover:bg-bg-hover",
+              "sw-btn group relative cursor-pointer overflow-hidden focus:border-focus focus:border border-b border-t first:rounded-s first:border-l	last:rounded-e last:border-r hover:bg-bg-hover"
             )}
             style={{ width: `calc(${countMaxItem}ch + 3rem)` }}
           >
@@ -74,7 +74,7 @@ const Switcher = ({
                   {
                     "border-r border-border-subtle-1":
                       !isActive && index < len && len > 2,
-                  },
+                  }
                 )}
               >
                 {item.title}

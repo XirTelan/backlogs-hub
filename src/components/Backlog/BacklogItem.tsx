@@ -6,7 +6,7 @@ import {
   BacklogItemWithSteamInfo,
 } from "@/zodTypes";
 import MDEditor from "@uiw/react-md-editor/nohighlight";
-import Accordion from "../Common/UI/Accordion";
+import Accordion from "../../shared/ui/Accordion";
 import rehypeSanitize from "rehype-sanitize";
 import SteamGameCard from "@/containers/SteamGameCard";
 import { IoMdCreate } from "react-icons/io";
@@ -86,7 +86,7 @@ const BacklogItem = ({
 export default BacklogItem;
 
 const isHaveSteamData = (
-  data: BacklogItemPopulated,
+  data: BacklogItemPopulated
 ): data is BacklogItemWithSteamInfo => {
   return Object.prototype.hasOwnProperty.call(data, "steamData");
 };
@@ -129,11 +129,7 @@ const withWrap = ({ field, indx, renderField }: WrapperProps) => {
   switch (field.type) {
     case "markdown": {
       return (
-        <Accordion
-          key={indx}
-          id={field.backlogFieldId}
-          title={field.title}
-        >
+        <Accordion key={indx} id={field.backlogFieldId} title={field.title}>
           {renderField(field)}
         </Accordion>
       );

@@ -1,5 +1,5 @@
 import Title from "@/components/Common/Title";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import AddItem from "@/components/dnd/AddItem";
 import Handle from "@/components/dnd/Handle";
 import { UniqueIdentifier } from "@dnd-kit/core";

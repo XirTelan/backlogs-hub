@@ -1,6 +1,6 @@
 "use client";
-import Select from "@/components/Common/UI/Select";
-import Toggle from "@/components/Common/UI/Toggle";
+import Select from "@/shared/ui/Select";
+import Toggle from "@/shared/ui/Toggle";
 import { toastCustom } from "@/lib/toast";
 import { updateUserInfo } from "@/services/user";
 import { UserDTO } from "@/zodTypes";
@@ -24,7 +24,7 @@ const Privacy = ({ data }: { data: Partial<UserDTO> }) => {
           onChange={async (e) => {
             const res = await updateUserInfo(
               "profileVisibility",
-              e.target.value,
+              e.target.value
             );
             if (res.success) toastCustom.success("Option changed");
           }}

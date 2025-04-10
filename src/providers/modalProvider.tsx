@@ -1,5 +1,5 @@
 "use client";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/shared/hooks/useToggle";
 import { ModalContextProps } from "@/types";
 import { createContext, useState } from "react";
 

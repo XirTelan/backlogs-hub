@@ -1,10 +1,10 @@
 "use client";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import Loading from "@/components/Common/UI/Loading/Loading";
 import SearchField from "@/components/Common/UI/SearchField";
-import useDebounce from "@/hooks/useDebounce";
-import useToggle from "@/hooks/useToggle";
+import useDebounce from "@/shared/hooks/useDebounce";
+import useToggle from "@/shared/hooks/useToggle";
 import { SearchBar } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -42,7 +42,7 @@ const SearchGameBar = ({
       setOpen();
       const data = await fetch(
         `/api/game-search?game=${debounceSearch}`,
-        {},
+        {}
       ).then((res) => res.json());
       setResults(data);
       setLoading(false);

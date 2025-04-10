@@ -1,10 +1,10 @@
 "use client";
-import Toggle from "@/components/Common/UI/Toggle";
+import Toggle from "@/shared/ui/Toggle";
 import React from "react";
 import { updateUserInfo } from "@/services/user";
 import { toastCustom } from "@/lib/toast";
 import { UserDTO } from "@/zodTypes";
-import Select from "@/components/Common/UI/Select";
+import Select from "@/shared/ui/Select";
 import Setting from "./Setting";
 
 const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
@@ -42,7 +42,7 @@ const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
           onChange={async (e) => {
             const res = await updateUserInfo(
               "categoryBlockView",
-              e.target.value,
+              e.target.value
             );
             if (res.success) toastCustom.success("Option changed");
           }}
@@ -57,7 +57,7 @@ const Preferences = ({ data }: { data: Partial<UserDTO> }) => {
           onChange={async (e) => {
             const res = await updateUserInfo(
               "categoryDesignation",
-              e.target.value,
+              e.target.value
             );
             if (res.success) toastCustom.success("Option changed");
           }}

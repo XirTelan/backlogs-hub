@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import ButtonBase from "./Common/UI/ButtonBase";
+import ButtonBase from "../shared/ui/ButtonBase";
 import InputField from "./Common/UI/Input/InputField";
-import Select from "./Common/UI/Select";
-import TextAreaInput from "./Common/UI/TextAreaInput";
-import { TokenData } from "@/auth/utils";
+import Select from "../shared/ui/Select";
+import TextAreaInput from "../shared/ui/TextAreaInput";
+import { TokenData } from "@/features/auth/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
 import { toastCustom } from "@/lib/toast";
@@ -109,8 +109,10 @@ const ContactsForm = ({
           label={
             <span>
               Confirmation. Please enter
-              <span className=" mx-2 text-lg font-bold text-text-primary ">{code}</span>to
-              confirm
+              <span className=" mx-2 text-lg font-bold text-text-primary ">
+                {code}
+              </span>
+              to confirm
             </span>
           }
           variant="small"

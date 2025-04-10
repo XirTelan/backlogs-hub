@@ -1,12 +1,12 @@
 "use client";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
-import DropDown from "@/components/Common/UI/DropDown/DropDown";
-import Select from "@/components/Common/UI/Select";
+import ButtonBase from "@/shared/ui/ButtonBase";
+import Select from "@/shared/ui/Select";
 import SidePanel from "@/components/SidePanel";
-import useChangeSearchParams from "@/hooks/useChangeParams";
+import useChangeSearchParams from "@/shared/hooks/useChangeParams";
 import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { FiFilter } from "react-icons/fi";
+import DropDown from "@/shared/ui/DropDown/DropDown";
 
 const ORDER = ["ascending", "descending"];
 const SORT = ["Title", "Created", "Updated"];
@@ -16,11 +16,11 @@ const SearchFilter = () => {
   const { backlog } = useContext(BacklogInfoContext);
   const backlogTags = useMemo(
     () => backlog?.tags?.map((tag) => tag.name) ?? [],
-    [backlog],
+    [backlog]
   );
   const isShowTagsFilter =
     backlog?.modifiers.useTagsSystem && backlogTags?.length > 0;
-    
+
   const [order, setOrder] = useState(searchParams.get("order") ?? ORDER[0]);
   const [sort, setSort] = useState(searchParams.get("sort") ?? SORT[0]);
   const tagsInitial = searchParams.get("tags")?.split("-") ?? [];
@@ -35,7 +35,7 @@ const SearchFilter = () => {
   const applyFilters = () => {
     changeParams(
       ["order", "sort", "tags"],
-      [order, sort, selectedTags.join("-")],
+      [order, sort, selectedTags.join("-")]
     );
   };
   const changeOrder = (e: React.ChangeEvent<HTMLSelectElement>) => {

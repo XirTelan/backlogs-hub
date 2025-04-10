@@ -1,12 +1,12 @@
 "use client";
-import ColorPallete from "@/components/Common/ColorPallete";
+import ColorPallete from "@/features/colorPallete/ui/ColorPallete";
 import InputField from "@/components/Common/UI/Input/InputField";
 import { Controller, UseFieldArrayReturn } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 
 import FieldsBlock from "../../../components/FieldsBlock";
 import { FieldsBlockProps } from "@/types";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { BacklogFormData } from "@/zodTypes";
 
 const CategoriesFieldsBlock = ({
@@ -23,7 +23,6 @@ const CategoriesFieldsBlock = ({
   placeholder: string;
   data: UseFieldArrayReturn<BacklogFormData, "categories" | "tags", "id">;
 }) => {
-
   const handleAppend = () => {
     return {
       name: "",

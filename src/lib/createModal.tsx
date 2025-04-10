@@ -1,5 +1,5 @@
 import Modal, { BaseModalProps } from "@/components/Common/Modal";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { ButtonBaseProps, ModalContextProps } from "@/types";
 import React, { Context, useContext } from "react";
 
@@ -7,7 +7,7 @@ export function createModal(
   cntx: Context<ModalContextProps>,
   key: string,
   config?: ConfigType,
-  modalProps?: Partial<BaseModalProps>,
+  modalProps?: Partial<BaseModalProps>
 ) {
   const Opener = ({
     data,

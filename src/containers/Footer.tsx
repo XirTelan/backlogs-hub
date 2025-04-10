@@ -1,4 +1,4 @@
-import LinkBase from "@/components/Common/UI/LinkBase";
+import LinkBase from "@/shared/ui/LinkBase";
 import { routesList } from "@/lib/routesList";
 import React from "react";
 

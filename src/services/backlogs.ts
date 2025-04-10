@@ -1,5 +1,5 @@
 "use server";
-import { getCurrentUserInfo } from "@/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils";
 import dbConnect from "@/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
@@ -12,7 +12,7 @@ import { generateSlug } from "@/utils";
 
 //GET SECTION
 export const getBacklogById = async (
-  id: string,
+  id: string
 ): Promise<BacklogDTO | null> => {
   try {
     const isMongoId = id.match(new RegExp(/^[0-9a-f]{24}$/));
@@ -35,7 +35,7 @@ export const getBacklogById = async (
 
 export const getBacklogsBaseInfoByUserName = async (
   userName: string,
-  isOwner: boolean,
+  isOwner: boolean
 ): Promise<BacklogDTO[]> => {
   try {
     await dbConnect();
@@ -85,7 +85,7 @@ export const getBacklogsByFolder = async (userName: string) => {
         (hashMap[isHideFoldersName ? `Folder ${indx}` : folder] = {
           order: indx,
           items: [],
-        }),
+        })
     );
 
     const updatePromises = [];
@@ -99,7 +99,7 @@ export const getBacklogsByFolder = async (userName: string) => {
         backlog.folder = user.folders[0];
         if (isOwner) {
           updatePromises.push(
-            updateBacklogById({ _id: backlog._id, folder: user.folders[0] }),
+            updateBacklogById({ _id: backlog._id, folder: user.folders[0] })
           );
         }
       }
@@ -125,7 +125,7 @@ export const isPrivateProfile = async (userName: string, isOwner: boolean) => {
 export const getUserBacklogBySlug = async (
   userName: string,
   backlogSlug: string,
-  isOwner: boolean,
+  isOwner: boolean
 ): Promise<BacklogDTO | null> => {
   try {
     await dbConnect();
@@ -161,7 +161,7 @@ export const getUserBacklogBySlug = async (
 
 export const getBacklogsByUserName = async (
   userName: string,
-  isOwner: boolean,
+  isOwner: boolean
 ): Promise<BacklogDTO[]> => {
   try {
     await dbConnect();
@@ -213,7 +213,7 @@ export const updateBacklogsOrderById = async (data: Partial<BacklogDTO[]>) => {
           userId: z.string(),
           folder: z.string(),
           order: z.number(),
-        }),
+        })
       )
       .safeParse(data);
     if (!backlogs.success) return { success: false, errors: backlogs.error };
@@ -223,7 +223,7 @@ export const updateBacklogsOrderById = async (data: Partial<BacklogDTO[]>) => {
         Backlog.findByIdAndUpdate(backlog._id, {
           order: backlog.order,
           folder: backlog.folder,
-        }),
+        })
       );
     });
     await Promise.all(updates);
@@ -256,8 +256,8 @@ export const updateBacklogById = async (data: Partial<BacklogDTO>) => {
         updQueries.push(
           BacklogItem.updateMany(
             { backlogId: backlog?._id, category: oldBacklogCats[indx] },
-            { category: cat.name },
-          ),
+            { category: cat.name }
+          )
         );
       });
     }
@@ -304,7 +304,7 @@ export const isBacklogExist = async (userName: string, slug: string) => {
 };
 export const isAuthorizedBacklogOwner = async (
   backlogId: string,
-  method: "read" | "edit",
+  method: "read" | "edit"
 ): Promise<ResponseData<BacklogDTO>> => {
   const [user, backlog] = await Promise.all([
     getCurrentUserInfo(),

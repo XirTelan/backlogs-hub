@@ -1,8 +1,8 @@
 import toast, { Toast } from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { AnimatePresence, motion } from "framer-motion";
-import { toastStyle } from "@/components/Common/UI/Notification";
+import { toastStyle } from "@/shared/ui/Notification";
 
 const renderToastContent =
   // eslint-disable-next-line react/display-name
@@ -29,14 +29,14 @@ const renderToastContent =
       )}
     </AnimatePresence>
   );
-  
+
 export const toastCustom = {
   success: (text: string, options?: toastProps) =>
     toast.custom(renderToastContent(text, "success"), options),
   error: (text: string, options?: toastProps) =>
     toast.custom(
       renderToastContent(text || "Something goes wrong", "error"),
-      options,
+      options
     ),
 };
 

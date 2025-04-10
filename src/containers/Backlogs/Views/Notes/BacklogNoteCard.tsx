@@ -1,8 +1,8 @@
 "use client";
-import Divider from "@/components/Common/UI/Divider";
+import Divider from "@/shared/ui/Divider";
 import ItemFastRename from "@/containers/Items/ItemsFastRename";
 import useOutsideClickReg from "@/hooks/useOutsideClickReg";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/shared/hooks/useToggle";
 import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";
 import { fetcher } from "@/utils";
@@ -63,7 +63,7 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
     if (!data) return;
 
     const noteField = data.data.userFields.find(
-      (val) => val.type === "markdown" && val.title === "Note",
+      (val) => val.type === "markdown" && val.title === "Note"
     );
 
     const newItem: BacklogItemDTO = {

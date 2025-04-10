@@ -1,5 +1,5 @@
-import Divider from "@/components/Common/UI/Divider";
-import Notification from "@/components/Common/UI/Notification";
+import Divider from "@/shared/ui/Divider";
+import Notification from "@/shared/ui/Notification";
 
 import React from "react";
 

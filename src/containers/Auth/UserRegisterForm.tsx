@@ -1,5 +1,5 @@
 "use client";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import InputField from "@/components/Common/UI/Input/InputField";
 import InputWithLoader from "@/components/Common/UI/Input/InputWithLoader";
 import { apiRoutesList } from "@/lib/routesList";
@@ -8,7 +8,7 @@ import { toastCustom } from "@/lib/toast";
 import { RegistrationSchema } from "@/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useCallback, } from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowRight } from "react-icons/fa6";
 import { z } from "zod";

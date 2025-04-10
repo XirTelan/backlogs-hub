@@ -1,7 +1,7 @@
 "use client";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import InputField from "@/components/Common/UI/Input/InputField";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/shared/hooks/useToggle";
 import { apiRoutesList } from "@/lib/routesList";
 import { toastCustom } from "@/lib/toast";
 import { InputFieldProps } from "@/types";
@@ -50,7 +50,7 @@ const ItemFastRename = ({
         .filter(
           (key) =>
             key.includes(`${item._id}`) ||
-            key.startsWith(`${apiRoutesList.items}`),
+            key.startsWith(`${apiRoutesList.items}`)
         )
         .forEach((key) => mutate(key));
     } else {

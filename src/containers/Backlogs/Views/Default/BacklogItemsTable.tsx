@@ -1,7 +1,14 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ItemFormModalOpen } from "@/containers/Items/ItemFormModal";
-import { TableBody, TableHeader, ToolBar } from "@/components/Common/UI/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  ToolBar,
+} from "@/shared/ui/table";
 import SearchFilter from "@/containers/SearchFilter";
 import withWrap from "@/hoc/withWrap";
 
@@ -30,32 +37,20 @@ const BacklogItemsTable = ({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) => {
-  const headers = [
-    { id: "title", title: "Title" },
-    {
-      id: "actions",
-      title: (
-        <BsThreeDotsVertical
-          title="Actions"
-          className="m-auto text-text-secondary"
-        />
-      ),
-      width: "64px",
-    },
-  ];
-
   return (
     <>
-      <TableHeader>
-        <>
-          {headers.map((header) => (
-            <TableHeader key={header.id}>
-              {header.title}
-            </TableHeader>
-          ))}
-        </>
-      </TableHeader>
-      <TableBody>{children}</TableBody>
+      <Table>
+        <TableHeader>
+          <TableHead>Title</TableHead>
+          <TableCell className="w-16 ">
+            <BsThreeDotsVertical
+              title="Actions"
+              className="m-auto text-text-secondary"
+            />
+          </TableCell>
+        </TableHeader>
+        <TableBody>{children}</TableBody>
+      </Table>
     </>
   );
 };

@@ -9,13 +9,13 @@ import ItemFastRename from "./ItemsFastRename";
 import { apiRoutesList } from "@/lib/routesList";
 import { fetcher } from "@/utils";
 import useSWR from "swr";
-import ButtonBase from "@/components/Common/UI/ButtonBase";
+import ButtonBase from "@/shared/ui/ButtonBase";
 import { MdClose } from "react-icons/md";
 import { BacklogInfoContext } from "@/providers/backlogInfoProvider";
 import Title from "@/components/Common/Title";
 import ItemChangeCategory from "./ItemChangeCategory";
 import { IoMdSwap } from "react-icons/io";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/shared/hooks/useToggle";
 import { EditItemForm } from "./EditItemForm";
 import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/zodTypes";
 

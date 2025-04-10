@@ -1,12 +1,12 @@
 "use client";
 import { useCallback } from "react";
 import InputWithLoader from "../Common/UI/Input/InputWithLoader";
-import ButtonBase from "../Common/UI/ButtonBase";
+import ButtonBase from "../../shared/ui/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Common/Title";
 import useLoaderValue from "@/hooks/useLoaderValue";
 import { toastCustom } from "@/lib/toast";
-import Select from "../Common/UI/Select";
+import Select from "../../shared/ui/Select";
 import { BacklogCreationDTO, TemplateDTO } from "@/zodTypes";
 
 const TemplateForm = ({
@@ -58,14 +58,14 @@ const TemplateForm = ({
 
   const backlogIsExist = useCallback(async (value: string) => {
     const data = await fetch(`/api/backlogs?backlog=${value}&type=exist`).then(
-      (res) => res.json(),
+      (res) => res.json()
     );
     return !data.backlog;
   }, []);
 
   const { isAvailable, isLoading } = useLoaderValue(
     backlogTitle,
-    backlogIsExist,
+    backlogIsExist
   );
 
   return (

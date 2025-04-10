@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import ButtonBase from "./Common/UI/ButtonBase";
+import ButtonBase from "../shared/ui/ButtonBase";
 import useLoaderValue from "@/hooks/useLoaderValue";
 import InputWithLoader from "./Common/UI/Input/InputWithLoader";
 import { changeUserName } from "@/services/user";

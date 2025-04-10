@@ -1,28 +1,29 @@
-const SkeletonDataTable = () => {
-  const Content = () => (
-    <div className="m-auto h-2 w-10 animate-pulse bg-layer-3 "></div>
-  );
-  const TableTh = () => (
-    <th className=" h-16  ">
+const Content = () => (
+  <div className="m-auto h-2 w-10 animate-pulse bg-layer-3 "></div>
+);
+const TableTh = () => (
+  <th className=" h-16  ">
+    <Content />
+  </th>
+);
+const TableTr = () => (
+  <tr className=" h-16  ">
+    <td className="m-auto h-16  ">
       <Content />
-    </th>
-  );
-  const TableTr = () => (
-    <tr className=" h-16  ">
-      <td className="m-auto h-16  ">
-        <Content />
-      </td>
-      <td className="m-auto h-16  ">
-        <Content />
-      </td>
-      <td className="m-auto h-16  ">
-        <Content />
-      </td>
-      <td className="m-auto h-16  ">
-        <Content />
-      </td>
-    </tr>
-  );
+    </td>
+    <td className="m-auto h-16  ">
+      <Content />
+    </td>
+    <td className="m-auto h-16  ">
+      <Content />
+    </td>
+    <td className="m-auto h-16  ">
+      <Content />
+    </td>
+  </tr>
+);
+
+const SkeletonDataTable = () => {
   return (
     <>
       <div className=" flex min-h-80 w-full flex-col bg-layer-1">

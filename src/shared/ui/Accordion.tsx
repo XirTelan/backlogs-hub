@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-const Accordion = ({
+export const Accordion = ({
   id,
   title,
   children,
@@ -39,4 +39,3 @@ const Accordion = ({
   );
 };
 
-export default Accordion;

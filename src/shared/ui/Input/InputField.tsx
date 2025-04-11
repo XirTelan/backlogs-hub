@@ -1,10 +1,10 @@
 import React from "react";
 import { inputStyleVariants } from "@/shared/lib/styles";
 import { FaCircleExclamation } from "react-icons/fa6";
-import InputBase from "./InputBase";
+import { InputBase } from "./InputBase";
 import { InputFieldProps } from "@/shared/types";
 
-const InputField = ({
+export const InputField = ({
   id,
   label,
   helperText,
@@ -54,4 +54,3 @@ const InputField = ({
     </div>
   );
 };
-export default InputField;

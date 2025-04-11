@@ -60,13 +60,14 @@ const SidePanel = ({
 
   useEffect(() => {
     if (!onHover || !ref.current) return;
+    const refSave = ref.current;
 
-    ref.current.addEventListener("mouseenter", setOpen);
-    ref.current.addEventListener("mouseleave", setClose);
+    refSave.addEventListener("mouseenter", setOpen);
+    refSave.addEventListener("mouseleave", setClose);
 
     return () => {
-      ref.current?.removeEventListener("mouseenter", setOpen);
-      ref.current?.removeEventListener("mouseleave", setClose);
+      refSave.removeEventListener("mouseenter", setOpen);
+      refSave.removeEventListener("mouseleave", setClose);
     };
   }, [setClose, setOpen, onHover]);
 

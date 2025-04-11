@@ -3,8 +3,8 @@ import {
   getBacklogItemById,
   putBacklogItem,
   populateBacklogItem,
-} from "@/shared/services/api/backlogItem";
-import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
+} from "@/shared/api/backlogItem";
+import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
 import { sendMsg } from "@/utils";
 
 import { revalidateTag } from "next/cache";
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest, props: { params: Params }) {
   }
 }
 
-export async function DELETE(request: NextRequest, props: { params: Params }) {
+export async function DELETE(_request: NextRequest, props: { params: Params }) {
   const { itemId } = await props.params;
 
   try {

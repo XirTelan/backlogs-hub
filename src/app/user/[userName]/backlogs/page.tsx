@@ -4,9 +4,9 @@ import React from "react";
 import { MdOutlineManageSearch } from "react-icons/md";
 
 import { IoAdd } from "react-icons/io5";
-import { getCurrentUserInfo } from "@/features/auth/utils";
-import { getUserData } from "@/shared/services/api/user";
-import TopTitle from "@/components/Common/UI/TopTitle";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { getUserData } from "@/shared/api/user";
+import { TopTitle } from "@/shared/ui";
 
 export default async function Backlogs(props: {
   params: Promise<{ userName: string }>;

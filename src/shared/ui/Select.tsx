@@ -19,7 +19,7 @@ const sizeVariants = {
   large: "h-12",
 };
 
-const Select = ({
+export const Select = ({
   label,
   options,
   layer = 1,
@@ -42,7 +42,7 @@ const Select = ({
           className={classNames(
             sizeVariants[sizeVariant],
             elevStyle,
-            `w-full pe-8 ps-4 text-text-secondary appearance-none outline-none m-0  *:bg-layer-1 hover:cursor-pointer `,
+            `w-full pe-8 ps-4 text-text-secondary appearance-none outline-none m-0  *:bg-layer-1 hover:cursor-pointer `
           )}
         >
           {options.map((option, indx) => (
@@ -57,7 +57,6 @@ const Select = ({
   );
 };
 Select.displayName = "SelectInput";
-export default Select;
 
 type Variants = keyof typeof variants;
 type SelectProps = {

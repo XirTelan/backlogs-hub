@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import InputField from "./InputField";
+import { InputField } from "./InputField";
 import { FaCheck } from "react-icons/fa6";
 import { InputFieldProps } from "@/shared/types";
 
@@ -10,7 +10,7 @@ type InputWithLoaderProps = {
   errorMsg?: string;
 };
 
-const InputWithLoader = ({
+export const InputWithLoader = ({
   isLoading,
   errorMsg,
   isAvailable,
@@ -50,4 +50,3 @@ const InputWithLoader = ({
     </InputField>
   );
 };
-export default InputWithLoader;

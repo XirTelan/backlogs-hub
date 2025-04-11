@@ -5,7 +5,7 @@ export type HandleProps = {
   style: CSSProperties;
 } & JSX.IntrinsicElements["button"];
 
-const Handle = ({ children, style, ref, ...props }: HandleProps) => {
+export const Handle = ({ children, style, ref, ...props }: HandleProps) => {
   return (
     <button
       ref={ref}
@@ -18,4 +18,3 @@ const Handle = ({ children, style, ref, ...props }: HandleProps) => {
     </button>
   );
 };
-export default Handle;

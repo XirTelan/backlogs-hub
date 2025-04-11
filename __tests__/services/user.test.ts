@@ -3,7 +3,7 @@
  */
 
 import dbConnect from "@/shared/lib/dbConnect";
-import { getUserData } from "@/shared/services/api/user";
+import { getUserData } from "@/shared/api/user";
 import { describe } from "node:test";
 
 describe("getData", () => {

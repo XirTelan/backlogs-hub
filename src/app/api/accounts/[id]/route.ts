@@ -1,6 +1,6 @@
-import { getCurrentUserInfo } from "@/features/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
 import Account from "@/models/Account";
-import { deleteAccount } from "@/shared/services/api/account";
+import { deleteAccount } from "@/shared/api/account";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 

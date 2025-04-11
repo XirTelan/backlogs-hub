@@ -2,7 +2,7 @@ import ChangeNameForm from "@/components/ChangeNameForm";
 import Modal from "@/components/Common/Modal";
 import ButtonBase from "@/shared/ui/ButtonBase";
 
-import { updateUserInfo } from "@/shared/services/api/user";
+import { updateUserInfo } from "@/shared/api/user";
 import React, { useState } from "react";
 
 const ChangeUserName = () => {

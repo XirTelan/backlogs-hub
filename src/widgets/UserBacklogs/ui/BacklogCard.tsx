@@ -1,8 +1,7 @@
 import React from "react";
-import { getCurrentUserInfo } from "@/features/auth/utils";
-import LinkBase from "../../../shared/ui/LinkBase";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
 import { routesList } from "@/shared/lib/routesList";
-import Divider from "../../../shared/ui/Divider";
+import { Divider, LinkBase } from "@/shared/ui";
 
 const BacklogCard = async ({ children, href, backlogId }: BacklogCardProps) => {
   const user = await getCurrentUserInfo();

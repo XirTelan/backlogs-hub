@@ -1,7 +1,7 @@
 "use client";
-import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
+import { LoadingAnimation } from "@/shared/ui";
 import SearchBar from "@/components/SearchBar";
-import SearchFilter from "@/containers/SearchFilter";
+import SearchFilter from "@/features/searchFilter/SearchFilter";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
 import { BacklogItemDTO } from "@/zodTypes";
@@ -22,7 +22,7 @@ type items =
     };
 
 const BacklogNotesView = ({ backlogId }: { backlogId: string }) => {
-  const searchParams = new URLSearchParams(useSearchParams().toString());
+  const searchParams = new URLSearchParams(useSearchParams()?.toString());
   searchParams.append("backlog", backlogId);
   const requstUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
 

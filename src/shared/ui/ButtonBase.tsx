@@ -7,7 +7,7 @@ import React from "react";
  *Base UI button component
  * @param {boolean} hideText Text will be hidden with screen < 768px
  */
-const ButtonBase = ({
+export const ButtonBase = ({
   text,
   hideText = false,
   size = "large",
@@ -56,4 +56,3 @@ const ButtonBase = ({
   );
 };
 
-export default ButtonBase;

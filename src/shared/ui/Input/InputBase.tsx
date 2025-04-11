@@ -3,7 +3,7 @@ import { InputBaseProps } from "@/shared/types";
 import classNames from "classnames";
 import React from "react";
 
-const InputBase = ({
+export const InputBase = ({
   layer = 1,
   variant = "large",
   isError,
@@ -26,4 +26,3 @@ const InputBase = ({
     </input>
   );
 };
-export default InputBase;

@@ -1,11 +1,10 @@
 "use client";
-import Toggle from "@/shared/ui/Toggle";
 import React from "react";
-import { updateUserInfo } from "@/shared/services/api/user";
+import { updateUserInfo } from "@/shared/api/user";
 import { toastCustom } from "@/shared/lib/toast";
 import { UserDB } from "@/zodTypes";
-import Select from "@/shared/ui/Select";
 import Setting from "./Setting";
+import { Toggle, Select } from "@/shared/ui";
 
 const Preferences = ({ data }: { data: Partial<UserDB> }) => {
   const { config } = data;

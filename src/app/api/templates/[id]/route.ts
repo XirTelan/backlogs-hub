@@ -1,10 +1,10 @@
-import { getCurrentUserInfo } from "@/features/auth/utils";
-import { deleteTemplate } from "@/shared/services/api/template";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { deleteTemplate } from "@/shared/api/template";
 import { sendMsg } from "@/utils";
 import { NextRequest } from "next/server";
 
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   props: { params: Promise<{ id: string }> }
 ) {
   const params = await props.params;

@@ -6,8 +6,7 @@ const layers = {
   3: "bg-border-subtle-3",
 };
 
-const Divider = ({ layer }: { layer?: keyof typeof layers }) => (
+export const Divider = ({ layer }: { layer?: keyof typeof layers }) => (
   <div className={`my-1 flex h-[1px] w-full ${layers[layer ?? 1]}`}></div>
 );
 
-export default Divider;

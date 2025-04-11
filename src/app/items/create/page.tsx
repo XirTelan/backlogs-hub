@@ -1,6 +1,6 @@
-import TopTitle from "@/components/Common/UI/TopTitle";
+import TopTitle from "@/shared/ui/TopTitle";
 import { CreateItemForm } from "@/containers/Items/CreateItemForm";
-import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
+import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
 import { redirect } from "next/navigation";
 
 const CreateItem = async (props: {

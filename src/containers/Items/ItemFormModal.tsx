@@ -3,10 +3,10 @@ import { createModal } from "@/shared/lib/createModal";
 import React, { Suspense, useContext } from "react";
 import { IoAdd } from "react-icons/io5";
 import { CreateItemForm } from "./CreateItemForm";
-import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
-import Title from "@/components/Common/Title";
+
 import { ModalContext } from "@/shared/providers/modalProvider";
 import { BacklogInfoContext } from "@/shared/providers/backlogInfoProvider";
+import { LoadingAnimation, Title } from "@/shared/ui";
 
 const ModalProvider = createModal(
   ModalContext,

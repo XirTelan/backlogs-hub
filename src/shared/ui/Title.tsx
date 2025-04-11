@@ -1,7 +1,7 @@
 import React, { type JSX } from "react";
 import { TitleProps } from "../types";
 
-const Title = ({
+export const Title = ({
   title,
   variant = 1,
   description,
@@ -54,5 +54,3 @@ const Title = ({
     </div>
   );
 };
-
-export default Title;

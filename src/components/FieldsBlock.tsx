@@ -1,6 +1,5 @@
+import { Title, ButtonBase } from "@/shared/ui";
 import React from "react";
-import Title from "./Common/Title";
-import ButtonBase from "../shared/ui/ButtonBase";
 
 const FieldsBlock = (props: FieldsBlockProps) => {
   return (

@@ -1,7 +1,6 @@
+import { InputField, ButtonBase } from "@/shared/ui";
 import React, { useMemo, useState } from "react";
-import ButtonBase from "../../../shared/ui/ButtonBase";
 import { MdCheck, MdClose } from "react-icons/md";
-import InputField from "../../../shared/ui/Input/InputField";
 
 type AddItemProps = {
   action: (value: string) => void;
@@ -10,7 +9,7 @@ type AddItemProps = {
   defaultValue?: string;
 };
 
-const AddItem = ({
+export const AddItem = ({
   action,
   close,
   disabled,
@@ -71,5 +70,3 @@ const AddItem = ({
     </>
   );
 };
-
-export default AddItem;

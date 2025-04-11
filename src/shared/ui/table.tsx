@@ -1,12 +1,3 @@
-import React from "react";
-import SearchBar from "@/components/SearchBar";
-
-type ToolBarProps = {
-  search?: boolean;
-  showButton?: boolean;
-  customButton?: React.ReactElement;
-};
-
 type TableTitleProps = {
   title: string;
   description: string;
@@ -18,21 +9,6 @@ const TableTitle = ({ title, description }: TableTitleProps) => {
       <div className=" text-xl">{title}</div>
       <div className=" text-base text-text-secondary">{description}</div>
     </div>
-  );
-};
-
-const ToolBar = ({
-  showButton = true,
-  customButton,
-  search = false,
-}: ToolBarProps) => {
-  return (
-    <section aria-label="data table  toolbar">
-      <div className=" flex max-w-full  justify-between">
-        {search && <SearchBar />}
-        {customButton && showButton && <div>{customButton}</div>}
-      </div>
-    </section>
   );
 };
 
@@ -60,12 +36,4 @@ const Table = ({ ...props }: React.ComponentProps<"table">) => {
   return <table className="w-full table-fixed " {...props} />;
 };
 
-export {
-  Table,
-  TableHeader,
-  TableHead,
-  TableCell,
-  TableTitle,
-  ToolBar,
-  TableBody,
-};
+export { Table, TableHeader, TableHead, TableCell, TableTitle, TableBody };

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";
 import { apiRoutesList } from "@/shared/lib/routesList";
-import Loading from "@/components/Common/UI/Loading/Loading";
+import { LoadingAnimation } from "@/shared/ui";
 
 const isEmpty = <div>Its empty</div>;
 
@@ -24,7 +24,7 @@ const TemplateList = ({
     null
   );
   const { data, isLoading } = useSWR(`/api/templates${search}`, fetcher);
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingAnimation />;
   if (data?.length === 0) return isEmpty;
 
   const onDelete = async (id: string) => {

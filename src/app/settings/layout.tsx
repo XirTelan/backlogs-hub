@@ -1,4 +1,4 @@
-import TopTitle from "@/components/Common/UI/TopTitle";
+import TopTitle from "@/shared/ui/TopTitle";
 import NavLink from "@/components/NavLink";
 import React from "react";
 

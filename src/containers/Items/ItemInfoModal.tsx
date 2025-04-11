@@ -2,22 +2,20 @@
 import { createModal } from "@/shared/lib/createModal";
 import React, { useContext } from "react";
 import { IoAdd } from "react-icons/io5";
-import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import { ModalContext } from "@/shared/providers/modalProvider";
 import BacklogItem from "@/components/Backlog/BacklogItem";
-import ItemFastRename from "./ItemsFastRename";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
 import useSWR from "swr";
-import ButtonBase from "@/shared/ui/ButtonBase";
 import { MdClose } from "react-icons/md";
 import { BacklogInfoContext } from "@/shared/providers/backlogInfoProvider";
-import Title from "@/components/Common/Title";
 import ItemChangeCategory from "./ItemChangeCategory";
 import { IoMdSwap } from "react-icons/io";
 import useToggle from "@/shared/hooks/useToggle";
 import { EditItemForm } from "./EditItemForm";
 import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/zodTypes";
+import { ItemFastRename } from "@/features/itemsFastRename";
+import { LoadingAnimation, ButtonBase, Title } from "@/shared/ui";
 
 const KEY = "ItemInfo";
 

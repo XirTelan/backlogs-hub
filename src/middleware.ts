@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getTokenData } from "./features/auth/utils";
+import { getTokenData } from "./features/auth/utils/utils";
 import { routesCategories } from "./shared/lib/routesList";
 
 export async function middleware(request: NextRequest) {

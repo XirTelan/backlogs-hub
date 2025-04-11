@@ -21,7 +21,7 @@ type LinkBaseProps = LinkProps &
     icon?: React.ReactElement;
   };
 
-const LinkBase = ({
+export const LinkBase = ({
   children,
   size = "medium",
   isExternal,
@@ -34,7 +34,7 @@ const LinkBase = ({
       {...props}
       className={classNames(
         "flex text-link-primary hover:text-link-primary-hover font-normal hover:underline  ",
-        sizes[size],
+        sizes[size]
       )}
     >
       <>
@@ -43,7 +43,7 @@ const LinkBase = ({
           <div
             className={classNames(
               iconSizes[size],
-              "ms-1 inline-flex items-center justify-center  self-center",
+              "ms-1 inline-flex items-center justify-center  self-center"
             )}
           >
             {icon}
@@ -53,5 +53,3 @@ const LinkBase = ({
     </Link>
   );
 };
-
-export default LinkBase;

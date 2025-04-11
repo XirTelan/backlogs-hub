@@ -1,5 +1,4 @@
-import Title from "@/components/Common/Title";
-import ButtonBase from "@/shared/ui/ButtonBase";
+import { ButtonBase, Title } from "@/shared/ui";
 import { toastCustom } from "@/shared/lib/toast";
 import { useSession } from "@/shared/providers/sessionProvider";
 import { useRouter } from "next/navigation";

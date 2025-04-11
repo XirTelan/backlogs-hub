@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 
 import { BacklogDTO } from "@/zodTypes";
 import Modal from "@/components/Common/Modal";
-import Title from "@/components/Common/Title";
+import { Title } from "@/shared/ui";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import BacklogDndItem from "../../../containers/Backlogs/BacklogDndItem";
@@ -14,7 +14,7 @@ import { apiRoutesList } from "@/shared/lib/routesList";
 import DnDMultList from "../../../features/dragAndDrop/ui/DndMultiList";
 import { UniqueIdentifier } from "@dnd-kit/core";
 
-const BacklogManageDnD = ({
+export const BacklogManageDnD = ({
   data,
   view,
 }: {

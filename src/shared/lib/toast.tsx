@@ -1,6 +1,6 @@
 import toast, { Toast } from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
-import ButtonBase from "@/shared/ui/ButtonBase";
+import { ButtonBase } from "@/shared/ui";
 import { AnimatePresence, motion } from "framer-motion";
 import { toastStyle } from "@/shared/ui/Notification";
 

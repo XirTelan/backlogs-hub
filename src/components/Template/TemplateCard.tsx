@@ -6,7 +6,7 @@ import { AiOutlineFieldNumber } from "react-icons/ai";
 import { FaCalendarCheck, FaMarkdown } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import ButtonBase from "../../shared/ui/ButtonBase";
-import Title from "../Common/Title";
+import Title from "../../shared/ui/Title";
 import Tag from "../../shared/ui/Tag";
 import Accordion from "../../shared/ui/Accordion";
 import { TemplateDTO } from "@/zodTypes";

@@ -1,4 +1,4 @@
-import Title from "./Title";
+import { Title } from "../../shared/ui/Title";
 import DemoBlock from "./UI/DemoBlock";
 
 const BlockWrapper = ({

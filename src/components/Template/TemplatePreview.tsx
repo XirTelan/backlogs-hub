@@ -5,7 +5,7 @@ import InputField from "../../shared/ui/Input/InputField";
 import TextAreaInput from "../../shared/ui/TextAreaInput";
 import { BacklogFormData, TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";
-import Title from "../Common/Title";
+import Title from "../../shared/ui/Title";
 import ButtonBase from "../../shared/ui/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Select from "../../shared/ui/Select";

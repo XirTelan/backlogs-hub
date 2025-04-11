@@ -6,10 +6,10 @@ import BacklogForm from "./BacklogForm";
 import { BacklogDTO } from "@/zodTypes";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import TopTitle from "@/components/Common/UI/TopTitle";
-import Loading from "@/components/Common/UI/Loading/Loading";
+
 import NotFound from "@/components/Common/NotFound";
 import { apiRoutesList } from "@/shared/lib/routesList";
+import { LoadingAnimation, TopTitle } from "@/shared/ui";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const {
@@ -23,7 +23,7 @@ const BacklogEditForm = ({ id }: { id: string }) => {
   );
   const router = useRouter();
 
-  if (backlogIsLoading || foldersIsLoading) return <Loading />;
+  if (backlogIsLoading || foldersIsLoading) return <LoadingAnimation />;
 
   const onSubmit: SubmitHandler<BacklogDTO> = async (data) => {
     const res = await fetch(`${apiRoutesList.backlogs}/${data._id}`, {

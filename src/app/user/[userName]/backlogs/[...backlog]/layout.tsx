@@ -1,4 +1,4 @@
-import AsideNavWithBacklogs from "@/widgets/AsideNavWithBacklogs/AsideNavWithBacklogs";
+import { AsideNavWithBacklogs } from "@/widgets/AsideNavWithBacklogs";
 import React from "react";
 
 export default async function Layout({

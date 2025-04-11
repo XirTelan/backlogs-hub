@@ -1,6 +1,6 @@
-import BacklogItemActions from "@/containers/Backlogs/Views/Default/BacklogItemActions";
+import BacklogItemActions from "@/widgets/BacklogTableView/ui/BacklogItemActions";
 import { ItemInfoModalOpen } from "@/containers/Items/ItemInfoModal";
-import ItemFastRename from "@/containers/Items/ItemsFastRename";
+import { ItemFastRename } from "@/features/itemsFastRename";
 import SortableItem from "@/features/dragAndDrop/ui/SortableItem";
 import { RenderItemProps } from "@/types";
 import { BacklogItemDTO } from "@/zodTypes";

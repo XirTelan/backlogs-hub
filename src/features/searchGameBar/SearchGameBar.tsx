@@ -1,7 +1,5 @@
 "use client";
-import ButtonBase from "@/shared/ui/ButtonBase";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
-import Loading from "@/components/Common/UI/Loading/Loading";
 import SearchField from "@/components/Common/UI/SearchField";
 import useDebounce from "@/shared/hooks/useDebounce";
 import useToggle from "@/shared/hooks/useToggle";
@@ -9,6 +7,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { SearchBar } from "@/shared/types";
+import { ButtonBase, LoadingAnimation } from "@/shared/ui";
 
 const SearchGameBar = ({
   labelText,
@@ -72,7 +71,7 @@ const SearchGameBar = ({
               icon={<IoMdClose />}
               onClick={setClose}
             />
-            {loading && <Loading />}
+            {loading && <LoadingAnimation />}
 
             <ul className="w- mt-4 flex  w-full flex-wrap gap-4">
               {!loading &&

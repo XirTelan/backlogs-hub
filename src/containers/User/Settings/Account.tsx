@@ -1,8 +1,6 @@
 "useClient";
 import React, { useMemo } from "react";
 import Setting from "./Setting";
-import Title from "@/components/Common/Title";
-import ButtonBase from "@/shared/ui/ButtonBase";
 import { FaChevronRight } from "react-icons/fa";
 import { UserDB } from "@/zodTypes";
 import { SettingModalProps } from "../UserSettings";
@@ -10,6 +8,7 @@ import { toastCustom } from "@/shared/lib/toast";
 
 import DeleteAccount from "./DeleteAccount";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
+import { Title, ButtonBase } from "@/shared/ui";
 
 type AccountType = {
   provider: string;

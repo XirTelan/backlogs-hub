@@ -1,11 +1,11 @@
 import React from "react";
 import { useFieldArray } from "react-hook-form";
 import { FieldsBlockProps, FieldWithId } from "@/types";
-import ButtonBase from "@/shared/ui/ButtonBase";
-import Title from "@/components/Common/Title";
+
 import { BacklogFormData, Field } from "@/zodTypes";
 import withWrap from "@/hoc/withWrap";
 import UserFieldsTable from "./UserFieldsTable";
+import { Title, ButtonBase } from "@/shared/ui";
 
 const FieldsTable = withWrap(UserFieldsTable);
 

@@ -1,5 +1,5 @@
 import InputsDemoPage from "@/components/Common/InputsDemoPage";
-import Title from "@/components/Common/Title";
+import Title from "@/shared/ui/Title";
 import Accordion from "@/shared/ui/Accordion";
 import Divider from "@/shared/ui/Divider";
 import LinkBase from "@/shared/ui/LinkBase";

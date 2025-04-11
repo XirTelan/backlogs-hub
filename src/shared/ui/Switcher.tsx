@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { motion } from "framer-motion";
 import React, { useMemo, useState } from "react";
 
-const Switcher = ({
+export const Switcher = ({
   initial,
   options,
 }: {
@@ -93,4 +93,3 @@ type Options = {
     value: string;
   }[];
 };
-export default Switcher;

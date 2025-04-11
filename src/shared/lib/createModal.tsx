@@ -1,5 +1,5 @@
 import Modal, { BaseModalProps } from "@/components/Common/Modal";
-import ButtonBase from "@/shared/ui/ButtonBase";
+import { ButtonBase } from "@/shared/ui";
 import { ButtonBaseProps, ModalContextProps } from "@/types";
 import React, { Context, useContext } from "react";
 

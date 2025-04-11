@@ -1,7 +1,5 @@
-import Title from "@/components/Common/Title";
-import ButtonBase from "@/shared/ui/ButtonBase";
-import AddItem from "@/features/dragAndDrop/ui/AddItem";
-import Handle from "@/features/dragAndDrop/ui/Handle";
+import { Title, ButtonBase } from "@/shared/ui";
+import { AddItem, Handle } from "@/features/dragAndDrop";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";

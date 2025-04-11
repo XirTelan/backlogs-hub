@@ -7,9 +7,9 @@ import useToggle from "@/shared/hooks/useToggle";
 import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import cn from "classnames";
-import ButtonBase from "@/shared/ui/ButtonBase";
+import { ButtonBase } from "@/shared/ui/";
 
-const DropDown = ({
+export const DropDown = ({
   id,
   label,
   options,

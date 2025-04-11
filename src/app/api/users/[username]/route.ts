@@ -2,20 +2,20 @@ import {
   clearCookiesToken,
   getCurrentUserInfo,
   TokenData,
-} from "@/features/auth/utils";
+} from "@/features/auth/utils/utils";
 import {
   deleteUser,
   isUserNameExist,
   updateUserFolders,
-} from "@/shared/services/api/user";
+} from "@/shared/api/user";
 import { sendMsg } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/shared/lib/dbConnect";
-import UserDB from "@/models/User";
+import User from "@/models/User";
 
 type Params = Promise<{ username: string }>;
-export async function GET(request: NextRequest, props: { params: Params }) {
+export async function GET(_request: NextRequest, props: { params: Params }) {
   const { username } = await props.params;
 
   try {

@@ -3,7 +3,7 @@ import { BacklogItemDTO } from "@/zodTypes";
 import { FaFileLines } from "react-icons/fa6";
 
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
-import ItemFastRename from "@/containers/Items/ItemsFastRename";
+import ItemFastRename from "@/features/itemsFastRename/ui/ItemsFastRename";
 import BacklogItemActions from "./BacklogItemActions";
 import { ItemInfoModalOpen } from "@/containers/Items/ItemInfoModal";
 import { useSession } from "@/shared/providers/sessionProvider";

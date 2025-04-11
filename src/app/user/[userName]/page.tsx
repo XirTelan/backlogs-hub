@@ -1,8 +1,8 @@
-import { getCurrentUserInfo } from "@/features/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
 import NotAvailable from "@/components/Common/NotAvailable";
 import NotFound from "@/components/Common/NotFound";
 import UserProfile from "@/containers/User/UserProfile";
-import { getUserData } from "@/shared/services/api/user";
+import { getUserData } from "@/shared/api/user";
 import { UserDB } from "@/zodTypes";
 import React from "react";
 

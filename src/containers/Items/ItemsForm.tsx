@@ -1,10 +1,7 @@
 "use client";
-import InputField from "@/shared/ui/Input/InputField";
 import { useForm } from "react-hook-form";
 import FieldsBlock from "../../components/FieldsBlock";
 import { useRouter } from "next/navigation";
-import ButtonBase from "@/shared/ui/ButtonBase";
-import Select from "@/shared/ui/Select";
 import { BacklogItemCreationDTO, Field } from "@/zodTypes";
 import { useCallback, useMemo } from "react";
 import ProgressTimer from "@/features/progressTimer/ProgressTimer";
@@ -16,8 +13,8 @@ import { ItemsFormProps } from "@/types";
 import { FaSteam } from "react-icons/fa6";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/shared/lib/routesList";
-import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
 import DropDown from "@/shared/ui/DropDown/DropDown";
+import { Select, InputField, ButtonBase, LoadingAnimation } from "@/shared/ui";
 
 const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,

@@ -6,13 +6,13 @@ import { fetcher, generateSlug } from "@/utils";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";
 import useSWR from "swr";
-import Loading from "@/components/Common/UI/Loading/Loading";
+import { LoadingAnimation } from "@/shared/ui";
 import { apiRoutesList } from "@/shared/lib/routesList";
 
 const BacklogCreateForm = () => {
   const router = useRouter();
   const userFolders = useSWR(`/api/users/`, fetcher);
-  if (userFolders.isLoading) return <Loading />;
+  if (userFolders.isLoading) return <LoadingAnimation />;
   if (!userFolders.data.success) return <div>Error</div>;
   const defaultCategories: BacklogCategory[] = [
     {

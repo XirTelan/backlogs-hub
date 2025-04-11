@@ -1,20 +1,20 @@
-import { getCurrentUserInfo } from "@/features/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
-import TopTitle from "@/components/Common/UI/TopTitle";
 
-import BacklogDefaultView from "@/widgets/BacklogTableView/BacklogDefaultView";
 import BacklogModalsWrapper from "@/containers/Backlogs/BacklogModalsWrapper";
 import FilterBlock from "@/containers/FilterBlock";
 import { routesList } from "@/shared/lib/routesList";
 import { BacklogInfoProvider } from "@/shared/providers/backlogInfoProvider";
-import { getUserBacklogBySlug } from "@/shared/services/api/backlogs";
+import { getUserBacklogBySlug } from "@/shared/api/backlogs";
 import dynamic from "next/dynamic";
 import React from "react";
 import { MdEdit } from "react-icons/md";
 import BacklogNotesView from "@/widgets/BacklogsNotesView/ui/BacklogNotesView";
+import { TopTitle } from "@/shared/ui";
+import { BacklogDefaultView } from "@/widgets/BacklogTableView";
 
 const BoardView = dynamic(
-  () => import("@/widgets/BacklogBoardView/BacklogBoard")
+  () => import("@/widgets/BacklogBoardView/ui/BacklogBoard")
 );
 
 export default async function Backlog(props: {

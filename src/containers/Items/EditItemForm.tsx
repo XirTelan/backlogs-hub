@@ -6,7 +6,7 @@ import { ItemsFormProps } from "@/types";
 import useSWR from "swr";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
-import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
+import { LoadingAnimation } from "@/shared/ui";
 
 export const EditItemForm = ({
   backlogInfo,

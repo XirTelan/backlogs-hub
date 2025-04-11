@@ -1,9 +1,9 @@
-import { getCurrentUserInfo } from "@/features/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
 import {
   createTemplate,
   getTemplates,
   getTemplatesByUser,
-} from "@/shared/services/api/template";
+} from "@/shared/api/template";
 import { sendMsg } from "@/utils";
 import { TemplateCreateSchema } from "@/zod";
 import { NextRequest, NextResponse } from "next/server";

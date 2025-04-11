@@ -1,5 +1,5 @@
-import { getCurrentUserInfo } from "@/features/auth/utils";
-import TopTitle from "@/components/Common/UI/TopTitle";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { TopTitle } from "@/shared/ui";
 import dynamic from "next/dynamic";
 
 const TemplateSwitcher = dynamic(
@@ -9,12 +9,12 @@ const TemplateList = dynamic(
   () => import("@/containers/Backlogs/TemplateList")
 );
 
-const Templates = async (props: {
+type TemplatesProps = {
   searchParams: Promise<{ filter: string }>;
-}) => {
-  const searchParams = await props.searchParams;
+};
 
-  const { filter } = searchParams;
+const Templates = async ({ searchParams }: TemplatesProps) => {
+  const { filter } = await searchParams;
 
   const user = await getCurrentUserInfo();
   const query = filter ? `?filter=${filter}` : "";

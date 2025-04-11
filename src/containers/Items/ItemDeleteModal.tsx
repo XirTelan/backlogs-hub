@@ -5,7 +5,7 @@ import { ModalContext } from "@/shared/providers/modalProvider";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import { useSWRConfig } from "swr";
 import { MdDeleteForever } from "react-icons/md";
-import Title from "@/components/Common/Title";
+import { Title } from "@/shared/ui";
 import { toastCustom } from "@/shared/lib/toast";
 
 const ModalProvider = createModal(ModalContext, "ItemDelete", {

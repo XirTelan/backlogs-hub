@@ -1,4 +1,4 @@
-const Toggle = ({
+export const Toggle = ({
   value,
   action,
 }: {
@@ -20,5 +20,3 @@ const Toggle = ({
     </div>
   );
 };
-
-export default Toggle;

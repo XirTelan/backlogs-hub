@@ -2,16 +2,16 @@ import {
   handleCallback,
   handleSession,
   signInWithLogin,
-} from "@/features/auth/core";
+} from "@/features/auth/model/core";
 import {
   clearCookiesToken,
   generateAccessToken,
   getCurrentUserInfo,
   setTokenCookies,
-} from "@/features/auth/utils";
+} from "@/features/auth/utils/utils";
 import User from "@/models/User";
 
-import { createUser } from "@/shared/services/api/user";
+import { createUser } from "@/shared/api/user";
 import { sendMsg } from "@/utils";
 import { RegistrationSchema } from "@/zod";
 import bcrypt from "bcryptjs";

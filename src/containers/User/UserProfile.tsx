@@ -1,4 +1,4 @@
-import Title from "@/components/Common/Title";
+import { Title } from "@/shared/ui";
 import { UserDB } from "@/zodTypes";
 import React from "react";
 

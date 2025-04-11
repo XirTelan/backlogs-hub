@@ -2,9 +2,9 @@ import {
   addBacklogItem,
   getBacklogItemsData,
   getItemsGroupedByCategory,
-} from "@/shared/services/api/backlogItem";
+} from "@/shared/api/backlogItem";
 
-import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
+import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
 import { BacklogItemDTO } from "@/zodTypes";
 import { sendMsg } from "@/utils";
 import { revalidateTag } from "next/cache";

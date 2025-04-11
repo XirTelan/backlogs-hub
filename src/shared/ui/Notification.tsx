@@ -2,7 +2,7 @@ import React from "react";
 import { BsSlashCircleFill } from "react-icons/bs";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
-import ButtonBase from "./ButtonBase";
+import { ButtonBase } from "./ButtonBase";
 import { FaCircleInfo } from "react-icons/fa6";
 
 type NotificationTypes = "info" | "success" | "error";

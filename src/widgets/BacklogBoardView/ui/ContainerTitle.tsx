@@ -1,4 +1,4 @@
-import Title from "@/components/Common/Title";
+import { Title } from "@/shared/ui";
 import { ItemFormModalOpen } from "@/containers/Items/ItemFormModal";
 
 export function ContainerTitle({ id }: { id: string }) {

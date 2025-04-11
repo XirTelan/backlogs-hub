@@ -1,8 +1,8 @@
 import NotFound from "@/components/Common/NotFound";
-import TopTitle from "@/components/Common/UI/TopTitle";
+import TopTitle from "@/shared/ui/TopTitle";
 import ItemsForm from "@/containers/Items/ItemsForm";
-import { getBacklogItemById } from "@/shared/services/api/backlogItem";
-import { isAuthorizedBacklogOwner } from "@/shared/services/api/backlogs";
+import { getBacklogItemById } from "@/shared/api/backlogItem";
+import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
 import { redirect } from "next/navigation";
 
 const EditItem = async (props: { params: Promise<{ itemId: string }> }) => {

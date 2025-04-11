@@ -6,12 +6,11 @@ import Preferences from "./Settings/Preferences";
 import { UserDB } from "@/zodTypes";
 import Profile from "./Settings/Profile";
 import Modal from "@/components/Common/Modal";
-import { updateUserInfo } from "@/shared/services/api/user";
-import InputField from "@/shared/ui/Input/InputField";
+import { updateUserInfo } from "@/shared/api/user";
 import { toastCustom } from "@/shared/lib/toast";
-import Title from "@/components/Common/Title";
 import TextAreaInput from "@/shared/ui/TextAreaInput";
 import { ButtonBaseProps } from "@/types";
+import { InputField, Title } from "@/shared/ui";
 
 const TABS = {
   account: Account,

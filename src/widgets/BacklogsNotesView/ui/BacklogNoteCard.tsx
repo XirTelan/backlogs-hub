@@ -1,6 +1,6 @@
 "use client";
-import Divider from "@/shared/ui/Divider";
-import ItemFastRename from "@/containers/Items/ItemsFastRename";
+import { Divider } from "@/shared/ui";
+import { ItemFastRename } from "@/features/itemsFastRename/";
 import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
 import useToggle from "@/shared/hooks/useToggle";
 import { apiRoutesList } from "@/shared/lib/routesList";
@@ -11,7 +11,7 @@ import MDEditor from "@uiw/react-md-editor";
 import React, { useRef } from "react";
 import rehypeSanitize from "rehype-sanitize";
 import useSWR from "swr";
-import BacklogItemActions from "../../../containers/Backlogs/Views/Default/BacklogItemActions";
+import BacklogItemActions from "../../BacklogTableView/ui/BacklogItemActions";
 import SkeletonBacklogNoteCard from "@/widgets/BacklogsNotesView/ui/SkeletonBacklogNoteCard";
 import NotFound from "@/components/Common/NotFound";
 

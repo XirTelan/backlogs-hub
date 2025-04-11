@@ -1,6 +1,5 @@
 "use client";
-import ButtonBase from "@/shared/ui/ButtonBase";
-import Select from "@/shared/ui/Select";
+import { ButtonBase, Select } from "@/shared/ui";
 import SidePanel from "@/components/SidePanel";
 import useChangeSearchParams from "@/shared/hooks/useChangeParams";
 import { BacklogInfoContext } from "@/shared/providers/backlogInfoProvider";

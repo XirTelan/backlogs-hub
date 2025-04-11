@@ -1,6 +1,6 @@
-import { getCurrentUserInfo } from "@/features/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
 import LinkBase from "@/shared/ui/LinkBase";
-import TopTitle from "@/components/Common/UI/TopTitle";
+import TopTitle from "@/shared/ui/TopTitle";
 import ContactsForm from "@/components/ContactsForm";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";

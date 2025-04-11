@@ -4,8 +4,8 @@ import {
   deleteBacklogById,
   isAuthorizedBacklogOwner,
   updateBacklogById,
-} from "@/shared/services/api/backlogs";
-import { updateStat } from "@/shared/services/api/user";
+} from "@/shared/api/backlogs";
+import { updateStat } from "@/shared/api/user";
 import { cleanParamString, sendMsg } from "@/utils";
 import { BacklogDTOSchema } from "@/zod";
 import { revalidatePath } from "next/cache";

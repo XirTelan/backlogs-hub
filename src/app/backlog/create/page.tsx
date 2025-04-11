@@ -1,4 +1,4 @@
-import TopTitle from "@/components/Common/UI/TopTitle";
+import TopTitle from "@/shared/ui/TopTitle";
 import BacklogCreateForm from "@/containers/Backlogs/Form/BacklogCreateForm";
 
 const CreateBacklog = () => {

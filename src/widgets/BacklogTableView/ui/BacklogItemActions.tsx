@@ -1,4 +1,4 @@
-import Divider from "@/shared/ui/Divider";
+import { Divider } from "@/shared/ui";
 import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
 import SidePanel from "@/components/SidePanel";
 import ItemChangeCategory from "@/containers/Items/ItemChangeCategory";

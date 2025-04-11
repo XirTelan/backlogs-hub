@@ -1,8 +1,8 @@
 import React from "react";
 import { TitleProps } from "../types";
-import Title from "./Title";
+import { Title } from "./Title";
 
-const TopTitle = ({
+export const TopTitle = ({
   title,
   children,
   ...props
@@ -21,5 +21,3 @@ const TopTitle = ({
     </div>
   );
 };
-
-export default TopTitle;

@@ -1,13 +1,12 @@
 "use client";
 import React from "react";
-import ButtonBase from "../shared/ui/ButtonBase";
-import InputField from "../shared/ui/Input/InputField";
-import Select from "../shared/ui/Select";
+
 import TextAreaInput from "../shared/ui/TextAreaInput";
-import { TokenData } from "@/features/auth/utils";
+import { TokenData } from "@/features/auth/utils/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";
+import { InputField, Select, ButtonBase } from "@/shared/ui";
 
 const DEFAULT: LogDTO = {
   name: "",

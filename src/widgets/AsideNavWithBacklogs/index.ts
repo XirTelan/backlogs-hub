@@ -1,1 +1,1 @@
-export * from "./AsideNavWithBacklogs";
+export { AsideNavWithBacklogs } from "./ui/AsideNavWithBacklogs";

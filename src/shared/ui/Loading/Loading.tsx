@@ -1,6 +1,6 @@
 import style from "./Loading.module.css";
 
-const LoadingAnimation = ({
+export const LoadingAnimation = ({
   height = 160,
   wide = false,
 }: {
@@ -29,4 +29,4 @@ const LoadingAnimation = ({
   );
 };
 
-export default LoadingAnimation;
+

@@ -1,1 +1,1 @@
-export * from "./BacklogBoard";
+export { BacklogBoard } from "./ui/BacklogBoard";

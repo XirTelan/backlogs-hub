@@ -1,15 +1,15 @@
 "use client";
-import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
+import { LoadingAnimation } from "@/shared/ui";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import DnDMultList from "../../features/dragAndDrop/ui/DndMultiList";
+import DnDMultList from "../../../features/dragAndDrop/ui/DndMultiList";
 
-import { useSaveBacklogsOrder } from "./hooks/useSaveBacklogsOrder";
-import { ContainerTitle } from "./ui/ContainerTitle";
-import { BacklogDndItem } from "./ui/BacklogDndItem";
+import { useSaveBacklogsOrder } from "../hooks/useSaveBacklogsOrder";
+import { ContainerTitle } from "./ContainerTitle";
+import { BacklogDndItem } from "./BacklogDndItem";
 
-const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
+export const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
   const { data, isLoading, mutate } = useSWR(
     `${apiRoutesList.items}?backlog=${backlogId}`,
     fetcher

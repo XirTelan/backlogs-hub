@@ -1,17 +1,17 @@
 "use client";
 import React, { useState } from "react";
-import Title from "@/components/Common/Title";
-import BacklogDnDMultList from "./ui/BacklogManageDnD";
-import Switcher from "@/shared/ui/Switcher";
+import { Title } from "@/shared/ui";
+import BacklogDnDMultList from "./BacklogManageDnD";
+import { Switcher } from "@/shared/ui";
 import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";
 
 import useSWR from "swr";
 import { apiRoutesList } from "@/shared/lib/routesList";
-import LoadingAnimation from "@/components/Common/UI/Loading/Loading";
+import { LoadingAnimation } from "@/shared/ui";
 import { fetcher } from "@/utils";
 
-const ManageWrapper = () => {
+export const ManageWrapper = () => {
   const [isFullView, setIsFullView] = useState<boolean>(true);
 
   const { data: items, isLoading } = useSWR(
@@ -62,4 +62,3 @@ const ManageWrapper = () => {
   );
 };
 
-export default ManageWrapper;

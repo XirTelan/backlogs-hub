@@ -1,17 +1,16 @@
 "use client";
-import ButtonBase from "@/shared/ui/ButtonBase";
-import InputField from "@/shared/ui/Input/InputField";
+import { ButtonBase, InputField } from "@/shared/ui";
 import useToggle from "@/shared/hooks/useToggle";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import { toastCustom } from "@/shared/lib/toast";
-import { InputFieldProps } from "@/types";
 import { BacklogItemDTO } from "@/zodTypes";
 import React, { ReactElement, useState, type JSX } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import { useSWRConfig } from "swr";
+import { InputFieldProps } from "@/shared/types";
 
-const ItemFastRename = ({
+export const ItemFastRename = ({
   item,
   color,
   inputProps,
@@ -145,5 +144,3 @@ const ItemFastRename = ({
     </>
   );
 };
-
-export default ItemFastRename;

@@ -1,17 +1,17 @@
 "use client";
 
-import BacklogListData from "../../containers/Backlogs/Views/Default/BacklogListData";
+import BacklogListData from "./BacklogListData";
 
 import useSWR from "swr";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
 import SkeletonDataTable from "@/components/Common/Skeleton/SkeletonDataTable";
-import BacklogItemsTable, {
-  BacklogItemsTableToolbar,
-} from "../../containers/Backlogs/Views/Default/BacklogItemsTable";
-import { useSearchParams } from "next/navigation";
+
 import Pagination from "@/containers/Pagination";
 import { useSession } from "@/shared/providers/sessionProvider";
+import BacklogItemsTableToolbar from "./BacklogItemsTableToolbar";
+import BacklogItemsTable from "./BacklogItemsTable";
+import { useSearchParams } from "next/navigation";
 
 const itemsNotFound = (
   <>
@@ -37,8 +37,8 @@ const itemsDoesntExist = (
   </>
 );
 
-const BacklogDefaultView = ({ id, isOwner }: BackloglistProps) => {
-  const searchParams = new URLSearchParams(useSearchParams().toString());
+export const BacklogDefaultView = ({ id, isOwner }: BackloglistProps) => {
+  const searchParams = new URLSearchParams(useSearchParams()?.toString());
   searchParams.append("backlog", id);
   const { user } = useSession();
   const pagination = user?.config?.pagination ?? "bottom";
@@ -75,7 +75,6 @@ const BacklogDefaultView = ({ id, isOwner }: BackloglistProps) => {
     </>
   );
 };
-export default BacklogDefaultView;
 
 interface BackloglistProps {
   id: string;

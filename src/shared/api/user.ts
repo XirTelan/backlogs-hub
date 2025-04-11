@@ -1,5 +1,5 @@
 "use server";
-import { getCurrentUserInfo } from "@/features/auth/utils";
+import { getCurrentUserInfo } from "@/features/auth/utils/utils";
 import dbConnect from "@/shared/lib/dbConnect";
 import { ResponseData } from "@/types";
 import { ConfigType, StatsType, UserDTO } from "@/zodTypes";

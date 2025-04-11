@@ -1,7 +1,7 @@
 "use server";
 
 import dbConnect from "@/shared/lib/dbConnect";
-import { createUser } from "@/shared/services/api/user";
+import { createUser } from "@/shared/api/user";
 import { sendMsg } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 import {
@@ -9,7 +9,7 @@ import {
   generateAccessToken,
   setTokenCookies,
   getCurrentUserInfo,
-} from "./utils";
+} from "../utils/utils";
 import { getUserData as getDiscordUser } from "@/features/auth/providers/discordProvirer";
 import { getUserData as getGoogleUser } from "@/features/auth/providers/googleProvider";
 import { OAuthProps } from "@/zodTypes";

@@ -2,7 +2,7 @@
 import React from "react";
 
 import TextAreaInput from "../shared/ui/TextAreaInput";
-import { TokenData } from "@/features/auth/utils/utils";
+import { TokenData } from "@/entities/auth/utils/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";

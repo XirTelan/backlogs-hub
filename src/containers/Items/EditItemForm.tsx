@@ -1,7 +1,7 @@
 "use client";
 import { BacklogDTO, BacklogItemCreationDTO, BacklogItemDTO } from "@/zodTypes";
 import React from "react";
-import ItemsForm from "./ItemsForm";
+import ItemsForm from "../../entities/backlogItem/ui/ItemsForm";
 import { ItemsFormProps } from "@/types";
 import useSWR from "swr";
 import { apiRoutesList } from "@/shared/lib/routesList";

@@ -10,16 +10,8 @@ import { MdEdit } from "react-icons/md";
 import { useSWRConfig } from "swr";
 import { InputFieldProps } from "@/shared/types";
 
-export const ItemFastRename = ({
-  item,
-  color,
-  inputProps,
-  textProps = {
-    tag: "p",
-  },
-  type = "click",
-}: {
-  item: BacklogItemDTO;
+type ItemFastRenameItemFastRenameProps = {
+  item: Pick<BacklogItemDTO, "_id" | "title">;
   color: string;
   inputProps?: InputFieldProps;
   textProps?: {
@@ -28,7 +20,17 @@ export const ItemFastRename = ({
     render?: ReactElement;
   };
   type?: "click" | "doubleClick" | "button";
-}) => {
+};
+
+export const ItemFastRename = ({
+  item,
+  color,
+  inputProps,
+  textProps = {
+    tag: "p",
+  },
+  type = "click",
+}: ItemFastRenameItemFastRenameProps) => {
   const [value, setValue] = useState(item.title);
   const { isOpen, setOpen, setClose } = useToggle();
   const { cache, mutate } = useSWRConfig();

@@ -3,10 +3,10 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-import Header from "@/containers/Header";
-import Footer from "@/containers/Footer";
+import Header from "@/widgets/Header";
+import Footer from "@/widgets/Footer";
 
-import ProgressBarProvider from "@/components/ProgressBarProvider";
+import ProgressBarProvider from "@/app_fsd/providers/ProgressBarProvider";
 import Link from "next/link";
 
 const roboto = Roboto({

@@ -1,4 +1,4 @@
-import { Session } from "@/shared/providers/sessionProvider";
+import { Session } from "@/app_fsd/providers/sessionProvider";
 import { getCurrentUserData } from "@/shared/api/user";
 import React from "react";
 

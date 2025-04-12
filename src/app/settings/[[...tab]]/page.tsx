@@ -1,6 +1,6 @@
-import { TabsType } from "@/containers/User/UserSettings";
+import { TabsType } from "@/widgets/UserSettings/ui/UserSettings";
 import { routesList } from "@/shared/lib/routesList";
-import { Session } from "@/shared/providers/sessionProvider";
+import { Session } from "@/app_fsd/providers/sessionProvider";
 import { getCurrentUserData } from "@/shared/api/user";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
@@ -12,7 +12,11 @@ const isPopulated = (
   return arr.every((item) => typeof item === "object");
 };
 
-const UserSettings = dynamic(() => import("@/containers/User/UserSettings"));
+const UserSettings = dynamic(() =>
+  import("@/widgets/UserSettings/ui/UserSettings").then(
+    (mod) => mod.UserSettings
+  )
+);
 
 const Page = async (props: { params: Promise<{ tab: [TabsType] }> }) => {
   const params = await props.params;

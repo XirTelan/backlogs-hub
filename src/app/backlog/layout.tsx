@@ -1,5 +1,5 @@
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
-import { Session } from "@/shared/providers/sessionProvider";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
+import { Session } from "@/app_fsd/providers/sessionProvider";
 import { redirect } from "next/navigation";
 import React from "react";
 

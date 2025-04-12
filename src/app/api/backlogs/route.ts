@@ -1,4 +1,5 @@
-import { getCurrentUserInfo, TokenData } from "@/features/auth/utils/utils";
+import { getCurrentUserInfo, TokenData } from "@/entities/auth/utils/utils";
+
 import { getBacklogItemsByQuery } from "@/shared/api/backlogItem";
 import {
   createBacklog,

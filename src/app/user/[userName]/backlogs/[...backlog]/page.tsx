@@ -1,20 +1,22 @@
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
-import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
+import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
 
-import BacklogModalsWrapper from "@/containers/Backlogs/BacklogModalsWrapper";
+import BacklogModalsProvider from "@/app_fsd/providers/BacklogModalsProvider";
 import FilterBlock from "@/containers/FilterBlock";
 import { routesList } from "@/shared/lib/routesList";
-import { BacklogInfoProvider } from "@/shared/providers/backlogInfoProvider";
+import { BacklogInfoProvider } from "@/app_fsd/providers/backlogInfoProvider";
 import { getUserBacklogBySlug } from "@/shared/api/backlogs";
 import dynamic from "next/dynamic";
 import React from "react";
 import { MdEdit } from "react-icons/md";
-import BacklogNotesView from "@/widgets/BacklogsNotesView/ui/BacklogNotesView";
+import BacklogNotesView from "@/widgets/Backlog/BacklogsNotesView/ui/BacklogNotesView";
 import { TopTitle } from "@/shared/ui";
-import { BacklogDefaultView } from "@/widgets/BacklogTableView";
+import { BacklogDefaultView } from "@/widgets/Backlog/BacklogTableView";
 
-const BoardView = dynamic(
-  () => import("@/widgets/BacklogBoardView/ui/BacklogBoard")
+const BoardView = dynamic(() =>
+  import("@/widgets/Backlog/BacklogBoardView/ui/BacklogBoard").then(
+    (mod) => mod.BacklogBoard
+  )
 );
 
 export default async function Backlog(props: {
@@ -34,9 +36,9 @@ export default async function Backlog(props: {
     switch (data.view) {
       case "Board":
         return (
-          <BacklogModalsWrapper>
+          <BacklogModalsProvider>
             <BoardView backlogId={data._id} />
-          </BacklogModalsWrapper>
+          </BacklogModalsProvider>
         );
       case "Notes":
         return (
@@ -47,11 +49,11 @@ export default async function Backlog(props: {
                 backlogCategories={data.categories}
               />
             </section>
-            <BacklogModalsWrapper>
+            <BacklogModalsProvider>
               <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
                 <BacklogNotesView backlogId={data._id} />
               </section>
-            </BacklogModalsWrapper>
+            </BacklogModalsProvider>
           </>
         );
       case "Default":
@@ -64,14 +66,14 @@ export default async function Backlog(props: {
                 backlogCategories={data.categories}
               />
             </section>
-            <BacklogModalsWrapper>
+            <BacklogModalsProvider>
               <section className="me-auto flex flex-col px-4 py-4 lg:m-0">
                 <BacklogDefaultView
                   isOwner={isOwner}
                   id={data._id.toString()}
                 />
               </section>
-            </BacklogModalsWrapper>
+            </BacklogModalsProvider>
           </>
         );
     }

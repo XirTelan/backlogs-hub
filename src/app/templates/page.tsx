@@ -1,12 +1,16 @@
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import { TopTitle } from "@/shared/ui";
 import dynamic from "next/dynamic";
 
-const TemplateSwitcher = dynamic(
-  () => import("@/containers/Templates/TemplateSwitcher")
+const TemplateSwitcher = dynamic(() =>
+  import("@/containers/Templates/TemplateSwitcher").then(
+    (mod) => mod.TemplateSwitcher
+  )
 );
-const TemplateList = dynamic(
-  () => import("@/containers/Backlogs/TemplateList")
+const TemplateList = dynamic(() =>
+  import("@/entities/template/ui/TemplateList/TemplateList").then(
+    (mod) => mod.TemplateList
+  )
 );
 
 type TemplatesProps = {

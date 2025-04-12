@@ -2,13 +2,13 @@ import {
   handleCallback,
   handleSession,
   signInWithLogin,
-} from "@/features/auth/model/core";
+} from "@/entities/auth/model/core";
 import {
   clearCookiesToken,
   generateAccessToken,
   getCurrentUserInfo,
   setTokenCookies,
-} from "@/features/auth/utils/utils";
+} from "@/entities/auth/utils/utils";
 import User from "@/models/User";
 
 import { createUser } from "@/shared/api/user";

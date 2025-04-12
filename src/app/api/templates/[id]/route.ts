@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import { deleteTemplate } from "@/shared/api/template";
 import { sendMsg } from "@/utils";
 import { NextRequest } from "next/server";

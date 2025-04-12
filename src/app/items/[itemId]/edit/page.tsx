@@ -1,6 +1,6 @@
-import NotFound from "@/components/Common/NotFound";
+import NotFound from "@/pages_fsd/notFound/NotFound";
 import TopTitle from "@/shared/ui/TopTitle";
-import ItemsForm from "@/containers/Items/ItemsForm";
+import ItemsForm from "@/entities/backlogItem/ui/ItemsForm";
 import { getBacklogItemById } from "@/shared/api/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
 import { redirect } from "next/navigation";

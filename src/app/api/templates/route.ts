@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import {
   createTemplate,
   getTemplates,

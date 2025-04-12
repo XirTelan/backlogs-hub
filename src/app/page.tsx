@@ -1,7 +1,7 @@
 import LinkBase from "@/shared/ui/LinkBase";
 import Notification from "@/shared/ui/Notification";
 import Landing from "@/widgets/landing/ui/Landing";
-import SignInForm from "@/features/auth/ui/SignInForm";
+import SignInForm from "@/widgets/SignInForm/ui/SignInForm";
 
 export default async function Home() {
   return (

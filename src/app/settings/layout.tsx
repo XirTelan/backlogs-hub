@@ -1,5 +1,5 @@
 import TopTitle from "@/shared/ui/TopTitle";
-import NavLink from "@/components/NavLink";
+import NavLink from "@/shared/ui/NavLink";
 import React from "react";
 
 export default async function Layout({

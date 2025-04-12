@@ -1,27 +1,12 @@
 import {
-  Control,
-  FieldError,
-  FieldErrorsImpl,
-  UseFormRegister,
-} from "react-hook-form";
-import {
   BacklogCategory,
   ModifiersType,
   Field,
   UserDB,
   ConfigType,
-  BacklogFormData,
 } from "./zodTypes";
 import { btnStyleVariants } from "./shared/lib/styles";
-import React, {
-  ComponentType,
-  CSSProperties,
-  Dispatch,
-  JSX,
-  ReactElement,
-  ReactNode,
-  SetStateAction,
-} from "react";
+import React, { ComponentType, Dispatch, SetStateAction } from "react";
 import {
   CancelDrop,
   KeyboardCoordinateGetter,
@@ -45,32 +30,6 @@ export type ItemsFormProps<T> = {
   btnCancel?: () => void;
 };
 
-export type SortableItemProps = {
-  children?: React.ReactNode | ReactNode[];
-  id: UniqueIdentifier;
-  index: number;
-  title: string;
-  handle: boolean;
-  handpleProps?: HandleProps;
-  disabled?: boolean;
-  style?: React.CSSProperties;
-  renderItem?: () => React.ReactElement;
-};
-
-export type HandleProps = {
-  children: ReactElement;
-  style: CSSProperties;
-} & JSX.IntrinsicElements["button"];
-
-export type FieldsBlockProps = {
-  errors?:
-    | (FieldError &
-        ((FieldError & FieldErrorsImpl<Field | BacklogCategory>) | undefined)[])
-    | undefined;
-
-  control: Control<BacklogFormData>;
-  register: UseFormRegister<BacklogFormData>;
-};
 export type ResponseData<T> = {
   message?: string;
 } & (

@@ -1,7 +1,7 @@
-import Switcher from "@/shared/ui/Switcher";
+import { Switcher } from "@/shared/ui/Switcher";
 import React from "react";
 
-const TemplateSwitcher = () => {
+export const TemplateSwitcher = () => {
   const items = {
     key: "filter",
     items: [
@@ -21,5 +21,3 @@ const TemplateSwitcher = () => {
   };
   return <Switcher options={items} />;
 };
-
-export default TemplateSwitcher;

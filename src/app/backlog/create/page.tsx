@@ -1,5 +1,5 @@
 import TopTitle from "@/shared/ui/TopTitle";
-import BacklogCreateForm from "@/containers/Backlogs/Form/BacklogCreateForm";
+import BacklogCreateForm from "@/features/backlog/createBacklog/ui/BacklogCreateForm";
 
 const CreateBacklog = () => {
   return (

@@ -3,6 +3,7 @@ export { ButtonBase } from "./ButtonBase";
 export { DropDown } from "./DropDown/DropDown";
 export { Divider } from "./Divider";
 export { LinkBase } from "./LinkBase";
+export { Modal } from "./Modal/Modal";
 export { LoadingAnimation } from "./Loading/Loading";
 export { Title } from "./Title";
 export { TopTitle } from "./TopTitle";

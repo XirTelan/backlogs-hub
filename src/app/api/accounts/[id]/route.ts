@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import Account from "@/models/Account";
 import { deleteAccount } from "@/shared/api/account";
 import { sendMsg } from "@/utils";

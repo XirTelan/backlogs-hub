@@ -1,4 +1,4 @@
-import InputsDemoPage from "@/components/Common/InputsDemoPage";
+import InputsDemoPage from "@/widgets/InputsDemo/ui/InputsDemo";
 import Title from "@/shared/ui/Title";
 import Accordion from "@/shared/ui/Accordion";
 import Divider from "@/shared/ui/Divider";

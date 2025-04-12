@@ -1,6 +1,6 @@
-import HomeLink from "@/components/HomeLink";
-import NavLink from "@/components/NavLink";
-import SidePanel from "@/components/SidePanel";
+import HomeLink from "@/shared/ui/HomeLink";
+import NavLink from "@/shared/ui/NavLink";
+import SidePanel from "@/shared/ui/SidePanel";
 import { routesList } from "@/shared/lib/routesList";
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";

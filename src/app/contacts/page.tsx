@@ -1,4 +1,4 @@
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import LinkBase from "@/shared/ui/LinkBase";
 import TopTitle from "@/shared/ui/TopTitle";
 import ContactsForm from "@/components/ContactsForm";

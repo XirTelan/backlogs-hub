@@ -2,7 +2,7 @@ import {
   clearCookiesToken,
   getCurrentUserInfo,
   TokenData,
-} from "@/features/auth/utils/utils";
+} from "@/entities/auth/utils/utils";
 import {
   deleteUser,
   isUserNameExist,

@@ -1,10 +1,10 @@
-import LinkWithBtnStyle from "@/components/Common/UI/LinkWithBtnStyle";
-import UserBacklogs from "@/widgets/UserBacklogs/ui/UserBacklogs";
+import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
+import BacklogsList from "@/widgets/Backlog/BacklogsList/ui/BacklogsList";
 import React from "react";
 import { MdOutlineManageSearch } from "react-icons/md";
 
 import { IoAdd } from "react-icons/io5";
-import { getCurrentUserInfo } from "@/features/auth/utils/utils";
+import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import { getUserData } from "@/shared/api/user";
 import { TopTitle } from "@/shared/ui";
 
@@ -52,7 +52,7 @@ export default async function Backlogs(props: {
         className="container flex  w-full flex-col  self-center"
       >
         <div className="w-full px-4">
-          <UserBacklogs user={{ name: params.userName, isOwner }} />
+          <BacklogsList user={{ name: params.userName, isOwner }} />
         </div>
       </main>
     </>

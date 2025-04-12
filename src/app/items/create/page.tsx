@@ -1,5 +1,5 @@
 import TopTitle from "@/shared/ui/TopTitle";
-import { CreateItemForm } from "@/containers/Items/CreateItemForm";
+import { CreateItemForm } from "@/features/backlogItem/createBacklogItem/ui/CreateItemForm";
 import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
 import { redirect } from "next/navigation";
 

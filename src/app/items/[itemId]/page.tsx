@@ -1,4 +1,4 @@
-import BacklogItem from "@/components/Backlog/BacklogItem";
+import BacklogItem from "@/entities/backlogItem/ui/BacklogItem";
 import TopTitle from "@/shared/ui/TopTitle";
 import { populateBacklogItem } from "@/shared/api/backlogItem";
 

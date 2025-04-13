@@ -25,7 +25,7 @@ export const toastStyle = {
   },
 };
 
-const Notification = ({
+export const Notification = ({
   text,
   type,
   options = {

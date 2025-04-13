@@ -2,19 +2,19 @@ import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
 
 import BacklogModalsProvider from "@/app_fsd/providers/BacklogModalsProvider";
-import FilterBlock from "@/containers/FilterBlock";
+import FilterBlock from "@/features/backlogItem/filter/ui/FilterBlock";
 import { routesList } from "@/shared/lib/routesList";
 import { BacklogInfoProvider } from "@/app_fsd/providers/backlogInfoProvider";
 import { getUserBacklogBySlug } from "@/shared/api/backlogs";
 import dynamic from "next/dynamic";
 import React from "react";
 import { MdEdit } from "react-icons/md";
-import BacklogNotesView from "@/widgets/Backlog/BacklogsNotesView/ui/BacklogNotesView";
+import BacklogNotesView from "@/widgets/backlog/BacklogsNotesView/ui/BacklogNotesView";
 import { TopTitle } from "@/shared/ui";
-import { BacklogDefaultView } from "@/widgets/Backlog/BacklogTableView";
+import { BacklogDefaultView } from "@/widgets/backlog/BacklogTableView";
 
 const BoardView = dynamic(() =>
-  import("@/widgets/Backlog/BacklogBoardView/ui/BacklogBoard").then(
+  import("@/widgets/backlog/BacklogBoardView/ui/BacklogBoard").then(
     (mod) => mod.BacklogBoard
   )
 );

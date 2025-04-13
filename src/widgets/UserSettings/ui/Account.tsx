@@ -6,7 +6,7 @@ import { UserDB } from "@/zodTypes";
 import { SettingModalProps } from "../UserSettings";
 import { toastCustom } from "@/shared/lib/toast";
 
-import DeleteAccount from "../../../containers/User/Settings/DeleteAccount";
+import DeleteAccount from "../../../features/user/deleteAccount/ui/DeleteAccount";
 import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
 import { Title, ButtonBase } from "@/shared/ui";
 

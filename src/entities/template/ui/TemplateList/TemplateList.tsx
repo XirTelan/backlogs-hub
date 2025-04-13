@@ -2,7 +2,7 @@
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import { Modal } from "@/shared/ui";
-import TemplateForm from "@/widgets/Template/TemplateForm/TemplateForm";
+import TemplateForm from "@/features/backlog/createBacklogFromTemplate/ui/TemplateForm";
 import { useState } from "react";
 import { TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";

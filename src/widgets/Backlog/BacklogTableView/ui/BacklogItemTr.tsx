@@ -3,9 +3,9 @@ import { BacklogItemDTO } from "@/zodTypes";
 import { FaFileLines } from "react-icons/fa6";
 
 import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
-import ItemFastRename from "@/features/itemsFastRename/ui/ItemsFastRename";
+import ItemFastRename from "@/features/backlogItem/itemsFastRename/ui/ItemsFastRename";
 import BacklogItemActions from "../../../../entities/backlogItem/ui/BacklogItemActions";
-import { ItemInfoModalOpen } from "@/widgets/BacklogItem/ItemInfoModal/ui/ItemInfoModal";
+import { ItemInfoModalOpen } from "@/widgets/backlogItem/ItemInfoModal/ui/ItemInfoModal";
 import { useSession } from "@/app_fsd/providers/sessionProvider";
 
 const BacklogItemTr = ({

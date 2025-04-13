@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BacklogFormSchema } from "@/zod";
 import { routesList } from "@/shared/lib/routesList";
 import { usePathname } from "next/navigation";
-import BacklogOptionsMenu from "@/widgets/Backlog/BacklogForm/ui/BacklogOptionsMenu";
+import BacklogOptionsMenu from "@/widgets/backlog/BacklogForm/ui/BacklogOptionsMenu";
 import useToggle from "@/shared/hooks/useToggle";
 import { FaEye, FaEyeSlash, FaFolder } from "react-icons/fa6";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";

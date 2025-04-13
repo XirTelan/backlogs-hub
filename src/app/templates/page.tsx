@@ -3,7 +3,7 @@ import { TopTitle } from "@/shared/ui";
 import dynamic from "next/dynamic";
 
 const TemplateSwitcher = dynamic(() =>
-  import("@/containers/Templates/TemplateSwitcher").then(
+  import("@/widgets/Templates/ui/TemplateSwitcher").then(
     (mod) => mod.TemplateSwitcher
   )
 );

@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
-import BacklogForm from "../../../../widgets/Backlog/BacklogForm/ui/BacklogForm";
+import BacklogForm from "../../../../widgets/backlog/BacklogForm/ui/BacklogForm";
 import { fetcher, generateSlug } from "@/utils";
 import { BacklogCategory, BacklogFormData } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";

@@ -1,6 +1,6 @@
 "use client";
 import { Divider } from "@/shared/ui";
-import { ItemFastRename } from "@/features/itemsFastRename/";
+import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
 import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
 import useToggle from "@/shared/hooks/useToggle";
 import { apiRoutesList } from "@/shared/lib/routesList";
@@ -11,9 +11,9 @@ import MDEditor from "@uiw/react-md-editor";
 import React, { useRef } from "react";
 import rehypeSanitize from "rehype-sanitize";
 import useSWR from "swr";
-import BacklogItemActions from "../../../../entities/backlogItem/ui/BacklogItemActions";
-import SkeletonBacklogNoteCard from "@/widgets/Backlog/BacklogsNotesView/ui/SkeletonBacklogNoteCard";
+import SkeletonBacklogNoteCard from "@/widgets/backlog/BacklogsNotesView/ui/SkeletonBacklogNoteCard";
 import NotFound from "@/pages_fsd/notFound/NotFound";
+import { BacklogItemActions } from "@/entities/backlogItem";
 
 //[TODO: REFACTOR. State , props drill]
 type BacklogNoteCardProps = {

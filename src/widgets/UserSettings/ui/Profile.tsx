@@ -5,7 +5,7 @@ import { UserDB } from "@/zodTypes";
 import ButtonBase from "@/shared/ui/ButtonBase";
 import { FaChevronRight } from "react-icons/fa6";
 import { SettingModalProps } from "../UserSettings";
-import ChangeUserName from "../../../features/changeUserName/ui/ChangeUserName";
+import ChangeUserName from "../../../features/user/changeUserName/ui/ChangeUserName";
 
 const Profile = ({
   data,

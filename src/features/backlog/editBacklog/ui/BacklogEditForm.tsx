@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler } from "react-hook-form";
-import BacklogForm from "../../../../widgets/Backlog/BacklogForm/ui/BacklogForm";
+import BacklogForm from "../../../../widgets/backlog/BacklogForm/ui/BacklogForm";
 import { BacklogDTO } from "@/zodTypes";
 import useSWR from "swr";
 import { fetcher } from "@/utils";

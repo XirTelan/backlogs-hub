@@ -5,9 +5,9 @@ import BacklogListData from "./BacklogListData";
 import useSWR from "swr";
 import { apiRoutesList } from "@/shared/lib/routesList";
 import { fetcher } from "@/utils";
-import SkeletonDataTable from "@/widgets/Backlog/BacklogTableView/ui/SkeletonDataTable";
+import SkeletonDataTable from "@/widgets/backlog/BacklogTableView/ui/SkeletonDataTable";
 
-import Pagination from "@/widgets/Backlog/BacklogTableView/ui/Pagination";
+import Pagination from "@/widgets/backlog/BacklogTableView/ui/Pagination";
 import { useSession } from "@/app_fsd/providers/sessionProvider";
 import BacklogItemsTableToolbar from "./BacklogItemsTableToolbar";
 import BacklogItemsTable from "./BacklogItemsTable";

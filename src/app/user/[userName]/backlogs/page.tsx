@@ -1,5 +1,5 @@
 import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
-import BacklogsList from "@/widgets/Backlog/BacklogsList/ui/BacklogsList";
+import BacklogsList from "@/widgets/backlog/BacklogsList/ui/BacklogsList";
 import React from "react";
 import { MdOutlineManageSearch } from "react-icons/md";
 

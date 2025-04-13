@@ -1,6 +1,5 @@
-import LinkBase from "@/shared/ui/LinkBase";
-import Notification from "@/shared/ui/Notification";
-import Landing from "@/widgets/landing/ui/Landing";
+import { LinkBase, Notification } from "@/shared/ui";
+import Landing from "@/widgets/Landing/ui/Landing";
 import SignInForm from "@/widgets/SignInForm/ui/SignInForm";
 
 export default async function Home() {

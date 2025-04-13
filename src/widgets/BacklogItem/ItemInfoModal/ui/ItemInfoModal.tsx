@@ -12,9 +12,9 @@ import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
 import ItemChangeCategory from "../../../../features/backlogItem/changeCategory/ui/ItemChangeCategory";
 import { IoMdSwap } from "react-icons/io";
 import useToggle from "@/shared/hooks/useToggle";
-import { EditItemForm } from "../../../../containers/Items/EditItemForm";
+import { EditItemForm } from "../../../../features/backlogItem/editItem/ui/EditItemForm";
 import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/zodTypes";
-import { ItemFastRename } from "@/features/itemsFastRename";
+import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
 import { LoadingAnimation, ButtonBase, Title } from "@/shared/ui";
 
 const KEY = "ItemInfo";

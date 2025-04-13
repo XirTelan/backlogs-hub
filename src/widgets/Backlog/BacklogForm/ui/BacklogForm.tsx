@@ -7,19 +7,18 @@ import {
   useForm,
   FormProvider,
 } from "react-hook-form";
-import Modal from "@/shared/ui/Modal/Modal";
 import TemplatePreview from "@/entities/template/ui/TemplatePreview/TemplatePreview";
 import UserFieldsBlock from "./UserFieldsBlock";
-import { ButtonBase, Select, Switcher, InputField } from "@/shared/ui";
-import { BacklogFormData } from "@/zodTypes";
+import { ButtonBase, Select, Switcher, InputField, Modal } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BacklogFormSchema } from "@/zod";
-import { routesList } from "@/shared/lib/routesList";
+import { BacklogFormSchema } from "@/shared/zodSchemas/zod";
+import { routesList } from "@/shared/constants/routesList";
 import { usePathname } from "next/navigation";
 import BacklogOptionsMenu from "@/widgets/backlog/BacklogForm/ui/BacklogOptionsMenu";
-import useToggle from "@/shared/hooks/useToggle";
 import { FaEye, FaEyeSlash, FaFolder } from "react-icons/fa6";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
+import { useToggle } from "@/shared/hooks";
+import { BacklogFormData } from "@/shared/types";
 
 export const BacklogForm = <T extends BacklogFormData>({
   defaultValues,

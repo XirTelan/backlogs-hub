@@ -4,9 +4,9 @@ import { Controller, UseFieldArrayReturn } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 
 import FieldsBlock from "../../../../entities/field/FieldsBlock";
-import { BacklogFormData } from "@/zodTypes";
 import { ButtonBase, InputField } from "@/shared/ui";
 import { FieldsBlockProps } from "../../../../entities/backlog/model/types";
+import { BacklogFormData } from "@/shared/types";
 
 const CategoriesFieldsBlock = ({
   name,

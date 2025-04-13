@@ -1,19 +1,18 @@
 "use client";
-import useToggle from "@/shared/hooks/useToggle";
 import React from "react";
-import Modal from "../../../../shared/ui/Modal/Modal";
-import { ModifiersType } from "@/zodTypes";
 import { IoMdOptions } from "react-icons/io";
-import { Controller, useFormContext } from "react-hook-form";
-import { ButtonBase, Title, Select, Toggle } from "@/shared/ui";
+import { Control, Controller, useFormContext } from "react-hook-form";
+import { ButtonBase, Title, Select, Toggle, Modal } from "@/shared/ui";
+import { useToggle } from "@/shared/hooks";
+import { ModifiersType } from "@/shared/types";
 
-const MenuItem = ({
-  title,
-  modifier,
-}: {
+type MenuItemProps = {
   title: string;
   modifier: keyof ModifiersType;
-}) => {
+  control: Control;
+};
+
+const MenuItem = ({ title, modifier, control }: MenuItemProps) => {
   const renderControllerField = ({
     field: { onChange, value },
   }: {
@@ -69,8 +68,16 @@ const BacklogOptionsMenu = () => {
 
               <Title variant={2} title="Modifiers" />
               <div className="flex flex-col gap-4 p-4">
-                <MenuItem modifier={"useSteamSearch"} title={"Steam Search:"} />
-                <MenuItem modifier={"useTagsSystem"} title={"Tags:"} />
+                <MenuItem
+                  control={control}
+                  modifier={"useSteamSearch"}
+                  title={"Steam Search:"}
+                />
+                <MenuItem
+                  control={control}
+                  modifier={"useTagsSystem"}
+                  title={"Tags:"}
+                />
               </div>
             </div>
           </Modal>

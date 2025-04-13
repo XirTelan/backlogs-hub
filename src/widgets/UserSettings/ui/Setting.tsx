@@ -1,16 +1,11 @@
 import React from "react";
-
-const Setting = ({
-  label,
-  description,
-  value,
-  children,
-}: {
+type SettingProps = {
   label: string;
   description?: string;
   value?: string;
   children?: React.ReactNode;
-}) => {
+};
+const Setting = ({ label, description, value, children }: SettingProps) => {
   return (
     <div className="group relative flex  w-full items-center  justify-between py-2">
       <div className=" flex w-full  items-center justify-between">

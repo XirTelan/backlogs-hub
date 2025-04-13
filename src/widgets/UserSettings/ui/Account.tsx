@@ -2,13 +2,12 @@
 import React, { useMemo } from "react";
 import Setting from "./Setting";
 import { FaChevronRight } from "react-icons/fa";
-import { UserDB } from "@/zodTypes";
-import { SettingModalProps } from "../UserSettings";
 import { toastCustom } from "@/shared/lib/toast";
 
-import DeleteAccount from "../../../features/user/deleteAccount/ui/DeleteAccount";
-import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
-import { Title, ButtonBase } from "@/shared/ui";
+import { Title, ButtonBase, LinkWithBtnStyle } from "@/shared/ui";
+import { SettingModalProps } from "./UserSettings";
+import { OptionTab } from "../types/types";
+import DeleteAccount from "@/features/user/deleteAccount/ui/DeleteAccount";
 
 type AccountType = {
   provider: string;
@@ -32,8 +31,7 @@ const isType = (arr: unknown[]): arr is AccountType[] => {
 const Account = ({
   data,
   setModal,
-}: {
-  data: Partial<UserDB>;
+}: OptionTab & {
   setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 }) => {
   const { accounts } = data;

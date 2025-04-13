@@ -1,17 +1,16 @@
 "use client";
 import React from "react";
 import Setting from "./Setting";
-import { UserDB } from "@/zodTypes";
-import ButtonBase from "@/shared/ui/ButtonBase";
 import { FaChevronRight } from "react-icons/fa6";
-import { SettingModalProps } from "../UserSettings";
 import ChangeUserName from "../../../features/user/changeUserName/ui/ChangeUserName";
+import { ButtonBase } from "@/shared/ui";
+import { SettingModalProps } from "./UserSettings";
+import { OptionTab } from "../types/types";
 
 const Profile = ({
   data,
   setModal,
-}: {
-  data: Partial<UserDB>;
+}: OptionTab & {
   setModal: React.Dispatch<React.SetStateAction<SettingModalProps>>;
 }) => {
   return (

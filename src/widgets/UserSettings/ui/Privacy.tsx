@@ -2,11 +2,11 @@
 import { Toggle, Select } from "@/shared/ui/";
 import { toastCustom } from "@/shared/lib/toast";
 import { updateUserInfo } from "@/shared/api/user";
-import { UserDB } from "@/zodTypes";
 import React from "react";
 import Setting from "./Setting";
+import { OptionTab } from "../types/types";
 
-const Privacy = ({ data }: { data: Partial<UserDB> }) => {
+const Privacy = ({ data }: OptionTab) => {
   const { config } = data;
   return (
     <div className="flex flex-col">

@@ -2,11 +2,11 @@
 import React from "react";
 import { updateUserInfo } from "@/shared/api/user";
 import { toastCustom } from "@/shared/lib/toast";
-import { UserDB } from "@/zodTypes";
 import Setting from "./Setting";
 import { Toggle, Select } from "@/shared/ui";
+import { OptionTab } from "../types/types";
 
-const Preferences = ({ data }: { data: Partial<UserDB> }) => {
+const Preferences = ({ data }: OptionTab) => {
   const { config } = data;
   if (!config) return <div>Error</div>;
   const handleUpdate = async (key: string, state: boolean | string) => {

@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
-import useLoaderValue from "@/shared/hooks/useLoaderValue";
+import { useLoaderValue } from "@/shared/hooks";
 import { changeUserName } from "@/shared/api/user";
 import { useForm } from "react-hook-form";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { toastCustom } from "@/shared/lib/toast";
 import { useRouter } from "next/navigation";
 import { Title, InputWithLoader, ButtonBase } from "@/shared/ui";

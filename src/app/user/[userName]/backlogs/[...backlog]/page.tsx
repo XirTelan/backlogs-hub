@@ -1,9 +1,9 @@
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
-import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
+import { LinkWithBtnStyle } from "@/shared/ui";
 
 import BacklogModalsProvider from "@/app_fsd/providers/BacklogModalsProvider";
 import FilterBlock from "@/features/backlogItem/filter/ui/FilterBlock";
-import { routesList } from "@/shared/lib/routesList";
+import { routesList } from "@/shared/constants/routesList";
 import { BacklogInfoProvider } from "@/app_fsd/providers/backlogInfoProvider";
 import { getUserBacklogBySlug } from "@/shared/api/backlogs";
 import dynamic from "next/dynamic";

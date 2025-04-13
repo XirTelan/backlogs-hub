@@ -1,8 +1,8 @@
-import LinkBase from "@/shared/ui/LinkBase";
-import { routesList } from "@/shared/lib/routesList";
+import { LinkBase } from "@/shared/ui/LinkBase";
+import { routesList } from "@/shared/constants/routesList";
 import React from "react";
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <footer className="mt-auto flex  w-full justify-center bg-black ">
       <div className="container my-4 ">
@@ -21,5 +21,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

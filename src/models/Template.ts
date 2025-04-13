@@ -1,4 +1,4 @@
-import { TemplateDTO } from "@/zodTypes";
+import { TemplateDTO } from "@/entities/template";
 import mongoose, { Schema } from "mongoose";
 
 const TemplateSchema = new mongoose.Schema(

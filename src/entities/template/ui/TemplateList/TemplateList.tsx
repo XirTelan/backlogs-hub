@@ -1,14 +1,14 @@
 "use client";
 import useSWR from "swr";
-import { fetcher } from "@/utils";
+import { fetcher } from "@/shared/lib/utils";
 import { Modal } from "@/shared/ui";
 import TemplateForm from "@/features/backlog/createBacklogFromTemplate/ui/TemplateForm";
 import { useState } from "react";
-import { TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { LoadingAnimation } from "@/shared/ui";
 import TemplateCard from "../TemplateCard/TemplateCard";
+import { TemplateDTO } from "../..";
 
 const isEmpty = <div>Its empty</div>;
 

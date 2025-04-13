@@ -2,11 +2,11 @@ import React from "react";
 import SignInButton from "../../../entities/auth/ui/SignInButton";
 import NavBar from "./NavBar";
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
-import UserPanel from "../../../entities/user/ui/UserPanel";
-import HomeLink from "@/shared/ui/HomeLink";
 import ThemeSwitch from "@/shared/ui/ThemeSwitch";
+import { UserPanel } from "@/entities/user";
+import { HomeLink } from "@/shared/ui";
 
-const Header = async () => {
+export const Header = async () => {
   const user = await getCurrentUserInfo();
   return (
     <>
@@ -32,5 +32,3 @@ const Header = async () => {
     </>
   );
 };
-
-export default Header;

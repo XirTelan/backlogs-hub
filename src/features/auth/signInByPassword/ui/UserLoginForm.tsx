@@ -1,9 +1,9 @@
 "use client";
 
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { toastCustom } from "@/shared/lib/toast";
 import { InputField, LinkBase, ButtonBase } from "@/shared/ui";
-import { SignInSchema } from "@/zod";
+import { SignInSchema } from "@/shared/zodSchemas/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React from "react";

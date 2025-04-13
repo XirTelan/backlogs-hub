@@ -1,4 +1,4 @@
-import { BacklogFormSchema, RegistrationSchema } from "@/zod";
+import { BacklogFormSchema, RegistrationSchema } from "@/shared/zodSchemas/zod";
 
 describe("regestrationForm parse test", () => {
   it("parse success if password and conffirm Password same", () => {
@@ -52,7 +52,7 @@ describe("BacklogFormSchema", () => {
           message: "No duplicates allowed.",
           path: ["categories", 1, "name"],
         },
-      ]),
+      ])
     );
   });
 });

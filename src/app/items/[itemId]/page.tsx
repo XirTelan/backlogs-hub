@@ -1,5 +1,5 @@
 import BacklogItem from "@/entities/backlogItem/ui/BacklogItem";
-import TopTitle from "@/shared/ui/TopTitle";
+import { TopTitle } from "@/shared/ui";
 import { populateBacklogItem } from "@/shared/api/backlogItem";
 
 const Page = async (props: { params: Promise<{ itemId: string }> }) => {

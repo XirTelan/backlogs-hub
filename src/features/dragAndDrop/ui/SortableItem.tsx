@@ -2,9 +2,9 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { Item } from "./Item";
-import { SortableItemProps } from "@/types";
+import { SortableItemProps } from "../types/types";
 
-const SortableItem = ({
+export const SortableItem = ({
   children,
   disabled,
   id,
@@ -45,5 +45,3 @@ const SortableItem = ({
     </Item>
   );
 };
-
-export default SortableItem;

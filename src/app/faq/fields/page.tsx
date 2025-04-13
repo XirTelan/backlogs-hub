@@ -1,8 +1,5 @@
-import InputsDemoPage from "@/widgets/InputsDemo/ui/InputsDemo";
-import Title from "@/shared/ui/Title";
-import Accordion from "@/shared/ui/Accordion";
-import Divider from "@/shared/ui/Divider";
-import LinkBase from "@/shared/ui/LinkBase";
+import { Accordion, Title, LinkBase, Divider } from "@/shared/ui";
+import { InputsDemoPage } from "@/widgets/InputsDemo/ui/InputsDemo";
 import React from "react";
 
 const page = () => {

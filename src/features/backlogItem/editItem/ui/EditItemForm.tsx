@@ -1,12 +1,16 @@
 "use client";
-import { BacklogDTO, BacklogItemCreationDTO, BacklogItemDTO } from "@/zodTypes";
 import React from "react";
-import ItemsForm from "../../../../entities/backlogItem/ui/ItemsForm";
-import { ItemsFormProps } from "@/types";
 import useSWR from "swr";
-import { apiRoutesList } from "@/shared/lib/routesList";
-import { fetcher } from "@/utils";
+import { apiRoutesList } from "@/shared/constants";
+import { fetcher } from "@/shared/lib/utils";
 import { LoadingAnimation } from "@/shared/ui";
+import { ItemsForm } from "@/entities/backlogItem/";
+import {
+  BacklogDTO,
+  ItemsFormProps,
+  BacklogItemCreationDTO,
+  BacklogItemDTO,
+} from "@/shared/types";
 
 export const EditItemForm = ({
   backlogInfo,

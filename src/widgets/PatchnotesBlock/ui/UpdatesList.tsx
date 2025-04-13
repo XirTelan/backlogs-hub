@@ -2,11 +2,11 @@
 
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
-import { NewsType } from "@/zodTypes";
 import rehypeSanitize from "rehype-sanitize";
 import { Accordion } from "@/shared/ui";
+import { NewsType } from "../types/types";
 
-const UpdatesList = ({ data }: { data: NewsType[] }) => {
+export const UpdatesList = ({ data }: { data: NewsType[] }) => {
   if (!data || data.length === 0) return <div>Updates doesnot found</div>;
   let theme = "dark";
   if (typeof window !== "undefined") {
@@ -32,4 +32,3 @@ const UpdatesList = ({ data }: { data: NewsType[] }) => {
   );
 };
 
-export default UpdatesList;

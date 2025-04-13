@@ -1,7 +1,6 @@
 "use server";
 
-import { ResponseData } from "@/types";
-import { OAuthProps, UserDB } from "@/zodTypes";
+import { ResponseData, OAuthProps, UserDB } from "@/shared/types";
 import { JWTPayload, decodeJwt } from "jose";
 
 const TOKEN_URL = "https://oauth2.googleapis.com/token";

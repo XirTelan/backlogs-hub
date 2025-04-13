@@ -1,6 +1,6 @@
 "use client";
 import ToggleButton from "@/shared/ui/ToggleButton";
-import useChangeSearchParams from "@/shared/hooks/useChangeParams";
+import { useChangeSearchParams } from "@/shared/hooks";
 import { useSession } from "@/app_fsd/providers/sessionProvider";
 import React, { useState } from "react";
 import DropDown from "@/shared/ui/DropDown/DropDown";

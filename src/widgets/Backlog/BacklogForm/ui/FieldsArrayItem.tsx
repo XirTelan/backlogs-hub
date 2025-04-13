@@ -1,7 +1,5 @@
-import ButtonBase from "@/shared/ui/ButtonBase";
-import InputField from "@/shared/ui/Input/InputField";
-import Select from "@/shared/ui/Select";
-import { Field } from "@/zodTypes";
+import { Field } from "@/shared/types";
+import { InputField, Select, ButtonBase } from "@/shared/ui";
 import classNames from "classnames";
 import { produce } from "immer";
 import React from "react";

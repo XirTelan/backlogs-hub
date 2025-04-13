@@ -1,5 +1,5 @@
 import { TabsType } from "@/widgets/UserSettings/ui/UserSettings";
-import { routesList } from "@/shared/lib/routesList";
+import { routesList } from "@/shared/constants/routesList";
 import { Session } from "@/app_fsd/providers/sessionProvider";
 import { getCurrentUserData } from "@/shared/api/user";
 import dynamic from "next/dynamic";

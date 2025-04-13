@@ -21,9 +21,9 @@ import {
 import { Item } from "@/features/dragAndDrop/ui/Item";
 
 import useDragAndDrop from "@/features/dragAndDrop/hooks/useDragAndDrop";
-import { DndListProps } from "@/types";
 import ActionsBlock from "./ActionsBlock";
 import DroppableContainer from "./DroppableContainer";
+import { DndListProps } from "@/shared/types";
 
 type BaseItem = {
   _id: string;

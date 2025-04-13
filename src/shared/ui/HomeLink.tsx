@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 
-const HomeLink = () => {
+export const HomeLink = () => {
   return (
     <Link
       href={"/"}
@@ -21,5 +21,3 @@ const HomeLink = () => {
     </Link>
   );
 };
-
-export default HomeLink;

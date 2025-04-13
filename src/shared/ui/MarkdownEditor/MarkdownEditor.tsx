@@ -1,8 +1,9 @@
+"use client";
 import MDEditor from "@uiw/react-md-editor/nohighlight";
 import React, { useEffect, useState } from "react";
 import rehypeSanitize from "rehype-sanitize";
 
-const MarkdownEditor = ({
+export const MarkdownEditor = ({
   name,
   defaultValue,
   setValue,
@@ -32,7 +33,6 @@ const MarkdownEditor = ({
     </div>
   );
 };
-export default MarkdownEditor;
 
 type MarkdownEditorProps = {
   name: string;

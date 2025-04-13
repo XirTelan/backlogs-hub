@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-const useOutsideClickReg = (
+export const useOutsideClickReg = (
   state: boolean,
   ref: React.RefObject<HTMLDivElement | null>,
-  handleClick: () => void,
+  handleClick: () => void
 ) => {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -17,5 +17,3 @@ const useOutsideClickReg = (
     };
   }, [state, ref, handleClick]);
 };
-
-export default useOutsideClickReg;

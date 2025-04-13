@@ -2,14 +2,14 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler } from "react-hook-form";
-import BacklogForm from "../../../../widgets/backlog/BacklogForm/ui/BacklogForm";
-import { BacklogDTO } from "@/zodTypes";
 import useSWR from "swr";
-import { fetcher } from "@/utils";
+import { fetcher } from "@/shared/lib/utils";
 
 import NotFound from "@/pages_fsd/notFound/NotFound";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { LoadingAnimation, TopTitle } from "@/shared/ui";
+import { BacklogDTO } from "@/shared/types";
+import { BacklogForm } from "@/widgets/backlog/BacklogForm";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const {

@@ -1,9 +1,9 @@
 "use client";
-import { UserDB } from "@/zodTypes";
+import { UserDB } from "@/shared/types";
 import { createContext, useContext, useState } from "react";
 
 const defaultValue: {
-  user: Partial<UserDB> | null;
+  user: Partial<Omit<UserDB, "_id"> & { _id: string }> | null;
 } = { user: null };
 
 const SessionContext = createContext(defaultValue);

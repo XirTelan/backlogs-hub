@@ -1,4 +1,4 @@
-import { NewsType } from "@/zodTypes";
+import { NewsType } from "@/widgets/PatchnotesBlock/types/types";
 import mongoose from "mongoose";
 
 const NewsSchema = new mongoose.Schema(

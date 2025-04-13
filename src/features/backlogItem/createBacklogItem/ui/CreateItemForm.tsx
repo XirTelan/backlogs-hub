@@ -1,7 +1,10 @@
-import { BacklogDTO, BacklogItemCreationDTO } from "@/zodTypes";
+import { ItemsForm } from "@/entities/backlogItem";
+import {
+  BacklogDTO,
+  ItemsFormProps,
+  BacklogItemCreationDTO,
+} from "@/shared/types";
 import React from "react";
-import { ItemsFormProps } from "@/types";
-import ItemsForm from "@/entities/backlogItem/ui/ItemsForm";
 
 export const CreateItemForm = ({
   backlogInfo,

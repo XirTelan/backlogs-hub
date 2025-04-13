@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useContext } from "react";
-import { apiRoutesList } from "@/shared/lib/routesList";
-import { BacklogItemDTO } from "@/zodTypes";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { toastCustom } from "@/shared/lib/toast";
 import { useSWRConfig } from "swr";
 import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
-import SidePanel from "@/shared/ui/SidePanel";
-import ButtonBase from "@/shared/ui/ButtonBase";
 import { IoMdSwap } from "react-icons/io";
+import { BacklogItemDTO } from "@/shared/types";
+import { ButtonBase, SidePanel } from "@/shared/ui";
 
 const ItemChangeCategory = ({
   backlogItem,
@@ -65,18 +64,6 @@ const ItemChangeCategory = ({
     }
   }
 
-  const renderTitle = (toggle: () => void, isOpen: boolean) => {
-    return (
-      <ButtonBase
-        onClick={toggle}
-        aria-expanded={isOpen}
-        text="Move to"
-        variant="ghost"
-        size="small"
-        icon={<IoMdSwap />}
-      />
-    );
-  };
   return (
     <>
       <SidePanel
@@ -105,9 +92,7 @@ const ItemChangeCategory = ({
                       }}
                     ></div>
                   }
-                >
-                  {category.name}
-                </ButtonBase>
+                />
               </li>
             );
           })}
@@ -118,3 +103,16 @@ const ItemChangeCategory = ({
 };
 
 export default ItemChangeCategory;
+
+const renderTitle = (toggle: () => void, isOpen: boolean) => {
+  return (
+    <ButtonBase
+      onClick={toggle}
+      aria-expanded={isOpen}
+      text="Move to"
+      variant="ghost"
+      size="small"
+      icon={<IoMdSwap />}
+    />
+  );
+};

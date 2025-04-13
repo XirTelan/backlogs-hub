@@ -2,16 +2,16 @@
  * @jest-environment node
  */
 
+import { colors } from "@/features/colorPallete/lib/utils";
 import {
   clamp,
   cleanParamString,
-  colors,
   generateSlug,
   math,
   parseSeconds,
   parseToSeconds,
   sendMsg,
-} from "@/utils";
+} from "@/shared/lib/utils";
 
 describe("generate slug", () => {
   it("Test capital", () => {

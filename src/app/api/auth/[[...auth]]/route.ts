@@ -12,8 +12,8 @@ import {
 import User from "@/models/User";
 
 import { createUser } from "@/shared/api/user";
-import { sendMsg } from "@/utils";
-import { RegistrationSchema } from "@/zod";
+import { sendMsg } from "@/shared/lib/utils";
+import { RegistrationSchema } from "@/shared/zodSchemas/zod";
 import bcrypt from "bcryptjs";
 
 import { NextRequest, NextResponse } from "next/server";

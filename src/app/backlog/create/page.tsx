@@ -1,4 +1,4 @@
-import TopTitle from "@/shared/ui/TopTitle";
+import { TopTitle } from "@/shared/ui";
 import BacklogCreateForm from "@/features/backlog/createBacklog/ui/BacklogCreateForm";
 
 const CreateBacklog = () => {

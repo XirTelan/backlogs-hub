@@ -8,7 +8,7 @@ import {
   isUserNameExist,
   updateUserFolders,
 } from "@/shared/api/user";
-import { sendMsg } from "@/utils";
+import { sendMsg } from "@/shared/lib/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/shared/lib/dbConnect";

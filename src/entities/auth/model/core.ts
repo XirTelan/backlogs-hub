@@ -2,7 +2,7 @@
 
 import dbConnect from "@/shared/lib/dbConnect";
 import { createUser } from "@/shared/api/user";
-import { sendMsg } from "@/utils";
+import { sendMsg } from "@/shared/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 import {
   getTokenData,
@@ -12,12 +12,12 @@ import {
 } from "../utils/utils";
 import { getUserData as getDiscordUser } from "@/entities/auth/providers/discordProvirer";
 import { getUserData as getGoogleUser } from "@/entities/auth/providers/googleProvider";
-import { OAuthProps } from "@/zodTypes";
-import { ResponseData } from "@/types";
-import { SignInSchema, isEmailSchema } from "@/zod";
+
+import { SignInSchema, isEmailSchema } from "@/shared/zodSchemas/zod";
 import bcrypt from "bcryptjs";
 import Account from "@/models/Account";
 import User from "@/models/User";
+import { OAuthProps, ResponseData } from "@/shared/types";
 
 export const handleSession = async (request: NextRequest) => {
   const token = request.cookies.get("access_token")?.value || "";

@@ -1,8 +1,8 @@
 "use client";
-import { BacklogItemDTO } from "@/zodTypes";
 import BacklogItemTr from "./BacklogItemTr";
 import { useContext, useMemo } from "react";
 import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
+import { BacklogItemDTO } from "@/shared/types";
 
 const BacklogListData = ({ data, isOwner }: Props) => {
   const { backlog } = useContext(BacklogInfoContext);

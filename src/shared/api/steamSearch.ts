@@ -27,7 +27,7 @@ export async function searchSteamGame(search: string) {
     link: string;
     app_id: string;
   }[] = [];
-  $selected.each((i, el) => {
+  $selected.each((_, el) => {
     if (el.type !== "tag") return;
     const $elem = $(el);
     data.push({

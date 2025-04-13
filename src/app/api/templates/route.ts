@@ -4,8 +4,8 @@ import {
   getTemplates,
   getTemplatesByUser,
 } from "@/shared/api/template";
-import { sendMsg } from "@/utils";
-import { TemplateCreateSchema } from "@/zod";
+import { sendMsg } from "@/shared/lib/utils";
+import { TemplateCreateSchema } from "@/shared/zodSchemas/zod";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {

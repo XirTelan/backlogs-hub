@@ -1,9 +1,9 @@
 import { getBacklogsByFolder } from "@/shared/api/backlogs";
 import React from "react";
 import BacklogFolder from "./BacklogFolder";
-import { BacklogDTO } from "@/zodTypes";
 import { getConfigOptions } from "@/shared/api/user";
 import dynamic from "next/dynamic";
+import { BacklogDTO } from "@/shared/types";
 
 const EmptyBacklogList = dynamic(() =>
   import("./EmptyBacklogList").then((mod) => mod.EmptyBacklogList)

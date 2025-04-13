@@ -2,7 +2,7 @@
 import { LoadingAnimation } from "@/shared/ui";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import useSWR from "swr";
-import { fetcher } from "@/utils";
+import { fetcher } from "@/shared/lib/utils";
 import DnDMultList from "../../../../features/dragAndDrop/ui/DndMultiList";
 
 import { ContainerTitle } from "./ContainerTitle";

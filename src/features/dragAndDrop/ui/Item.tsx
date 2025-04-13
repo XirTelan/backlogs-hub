@@ -3,8 +3,8 @@ import type { DraggableSyntheticListeners } from "@dnd-kit/core";
 import type { Transform } from "@dnd-kit/utilities";
 import { CSS } from "@dnd-kit/utilities";
 
-import Handle, { HandleProps } from "./Handle";
 import { MdDragIndicator } from "react-icons/md";
+import { Handle, HandleProps } from "./Handle";
 
 export type Props = {
   dragOverlay?: boolean;

@@ -1,4 +1,4 @@
-import { apiRoutesList, routesList } from "@/shared/lib/routesList";
+import { apiRoutesList, routesList } from "@/shared/constants/routesList";
 import Backlog from "@/models/Backlog";
 import {
   deleteBacklogById,
@@ -6,8 +6,8 @@ import {
   updateBacklogById,
 } from "@/shared/api/backlogs";
 import { updateStat } from "@/shared/api/user";
-import { cleanParamString, sendMsg } from "@/utils";
-import { BacklogDTOSchema } from "@/zod";
+import { cleanParamString, sendMsg } from "@/shared/lib/utils";
+import { BacklogDTOSchema } from "@/shared/zodSchemas/zod";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 

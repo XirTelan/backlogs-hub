@@ -1,6 +1,6 @@
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import { getUserData } from "@/shared/api/user";
-import { sendMsg } from "@/utils";
+import { sendMsg } from "@/shared/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {

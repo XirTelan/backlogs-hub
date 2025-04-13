@@ -1,4 +1,4 @@
-import { inputStyleVariants } from "@/shared/lib/styles";
+import { inputStyleVariants } from "@/shared/constants/styles";
 import { InputBaseProps } from "@/shared/types";
 import classNames from "classnames";
 import React from "react";

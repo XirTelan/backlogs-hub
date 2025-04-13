@@ -1,6 +1,6 @@
-import { ConfigType, UserDB } from "@/zodTypes";
 import mongoose, { Schema } from "mongoose";
 import Account from "./Account";
+import { ConfigType, UserDB } from "@/shared/types";
 const userConfigSchema = new mongoose.Schema<ConfigType>(
   {
     profileVisibility: { type: String, default: "public" },

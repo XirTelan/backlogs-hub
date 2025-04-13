@@ -1,16 +1,13 @@
 "use client";
 import React from "react";
-import {
-  BacklogItemPopulated,
-  BacklogItemPopUserField,
-  BacklogItemWithSteamInfo,
-} from "@/zodTypes";
+
 import MDEditor from "@uiw/react-md-editor/nohighlight";
-import Accordion from "../../../shared/ui/Accordion";
 import rehypeSanitize from "rehype-sanitize";
 import SteamGameCard from "@/entities/backlogItem/ui/SteamGameCard";
 import { IoMdCreate } from "react-icons/io";
 import { MdOutlineUpdate } from "react-icons/md";
+import { BacklogItemPopUserField, BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/shared/types";
+import { Accordion } from "@/shared/ui";
 
 type TimeStamp = {
   value: Date | string;
@@ -65,10 +62,9 @@ const BacklogItem = ({
       </>
     );
   };
-//[TODO] Stean card shoud not be here . 
+  //[TODO] Stean card shoud not be here .
   return (
     <div>
-      
       {isHaveSteamData(data) ? (
         <div>
           <SteamGameCard data={data.steamData}>

@@ -1,4 +1,4 @@
-import TopTitle from "@/shared/ui/TopTitle";
+import { TopTitle } from "@/shared/ui";
 import { CreateItemForm } from "@/features/backlogItem/createBacklogItem/ui/CreateItemForm";
 import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
 import { redirect } from "next/navigation";

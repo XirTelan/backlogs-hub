@@ -1,6 +1,6 @@
-import { SearchBar } from "@/types";
 import { GoSearch } from "react-icons/go";
 import React from "react";
+import { SearchBar } from "../types";
 
 const SearchField = ({
   id,

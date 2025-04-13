@@ -1,5 +1,5 @@
 import { TopTitle } from "@/shared/ui";
-import UpdatesList from "@/widgets/PatchnotesBlock/ui/UpdatesList";
+import { UpdatesList } from "@/widgets/PatchnotesBlock/ui/UpdatesList";
 import { getNews } from "@/shared/api/news";
 import React from "react";
 

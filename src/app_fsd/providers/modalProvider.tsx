@@ -1,6 +1,6 @@
 "use client";
-import useToggle from "@/shared/hooks/useToggle";
-import { ModalContextProps } from "@/types";
+import { useToggle } from "@/shared/hooks/";
+import { ModalContextProps } from "@/shared/types";
 import { createContext, useState } from "react";
 
 const defaultValues: ModalContextProps = {
@@ -9,15 +9,15 @@ const defaultValues: ModalContextProps = {
   setOpen: () => {},
   setClose: () => {},
   toggle: () => {},
-  setData: undefined,
-  setKey: undefined,
+  setData: () => {},
+  setKey: () => {},
 };
 
 export const ModalContext = createContext<ModalContextProps>(defaultValues);
 
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const state = useToggle();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<unknown | null>(null);
   const [key, setKey] = useState("none");
   return (
     <ModalContext.Provider value={{ ...state, key, data, setKey, setData }}>

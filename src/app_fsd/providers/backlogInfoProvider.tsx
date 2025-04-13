@@ -1,6 +1,6 @@
 "use client";
 
-import { BacklogDTO } from "@/zodTypes";
+import { BacklogDTO } from "@/shared/types";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 
 const defaultValues: Props = {

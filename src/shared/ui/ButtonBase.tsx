@@ -1,7 +1,7 @@
-import { btnStyleVariants } from "@/shared/lib/styles";
-import { ButtonBaseProps } from "@/types";
+import { btnStyleVariants } from "@/shared/constants/styles";
 import classNames from "classnames";
 import React from "react";
+import { ButtonBaseProps } from "../types";
 
 /**
  *Base UI button component
@@ -55,4 +55,3 @@ export const ButtonBase = ({
     </>
   );
 };
-

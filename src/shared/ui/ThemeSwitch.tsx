@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { IoSunnyOutline } from "react-icons/io5";
 import { LuMoonStar } from "react-icons/lu";
-
-import ButtonBase from "./ButtonBase";
+import { ButtonBase } from "./ButtonBase";
 
 type Theme = "dark" | "light";
 

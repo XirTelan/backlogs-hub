@@ -1,12 +1,11 @@
 import { Divider } from "@/shared/ui";
-import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
-import SidePanel from "@/shared/ui/SidePanel";
+import { LinkWithBtnStyle, SidePanel } from "@/shared/ui";
 import { ItemDeleteModalOpen } from "@/features/backlogItem/deleteBacklogItem/ui/ItemDeleteModal";
-import { BacklogItemDTO } from "@/zodTypes";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaFileLines } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
+import { BacklogItemDTO } from "@/shared/types";
 
 type BacklogItemActionsProps = {
   item: BacklogItemDTO;

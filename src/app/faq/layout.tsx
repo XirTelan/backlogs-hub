@@ -1,5 +1,5 @@
 import PanelItemsWrapper from "@/widgets/AsideNavWithBacklogs/ui/PanelItemsWrapper";
-import TopTitle from "@/shared/ui/TopTitle";
+import { TopTitle } from "@/shared/ui";
 import React from "react";
 
 export default async function Layout({

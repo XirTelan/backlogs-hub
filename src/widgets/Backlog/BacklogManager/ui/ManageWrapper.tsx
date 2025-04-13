@@ -9,7 +9,7 @@ import { FaList } from "react-icons/fa";
 import useSWR from "swr";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import { LoadingAnimation } from "@/shared/ui";
-import { fetcher } from "@/utils";
+import { fetcher } from "@/shared/lib/utils";
 
 export const ManageWrapper = () => {
   const [isFullView, setIsFullView] = useState<boolean>(true);

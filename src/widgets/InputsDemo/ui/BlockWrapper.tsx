@@ -1,4 +1,4 @@
-import { Title } from "../../../shared/ui/Title";
+import { Title } from "../../../shared/ui/Title/Title";
 import DemoBlock from "./DemoBlock";
 
 export const DemoBlockContainer = ({

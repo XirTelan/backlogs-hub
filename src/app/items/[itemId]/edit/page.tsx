@@ -1,8 +1,9 @@
+import { ItemsForm } from "@/entities/backlogItem";
 import NotFound from "@/pages_fsd/notFound/NotFound";
-import TopTitle from "@/shared/ui/TopTitle";
-import ItemsForm from "@/entities/backlogItem/ui/ItemsForm";
+
 import { getBacklogItemById } from "@/shared/api/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
+import { TopTitle } from "@/shared/ui";
 import { redirect } from "next/navigation";
 
 const EditItem = async (props: { params: Promise<{ itemId: string }> }) => {

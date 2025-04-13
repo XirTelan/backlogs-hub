@@ -1,10 +1,9 @@
 "use client";
-import useDebounce from "@/shared/hooks/useDebounce";
 import { useEffect, useState } from "react";
-import useChangeSearchParams from "@/shared/hooks/useChangeParams";
 import SearchField from "../../../shared/ui/SearchField";
-import ButtonBase from "../../../shared/ui/ButtonBase";
 import { IoClose } from "react-icons/io5";
+import { useChangeSearchParams, useDebounce } from "@/shared/hooks";
+import { ButtonBase } from "@/shared/ui";
 
 const SearchBar = () => {
   const { searchParams, changeParams } = useChangeSearchParams();

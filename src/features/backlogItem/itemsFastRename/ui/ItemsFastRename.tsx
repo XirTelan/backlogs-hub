@@ -1,14 +1,13 @@
 "use client";
 import { ButtonBase, InputField } from "@/shared/ui";
-import useToggle from "@/shared/hooks/useToggle";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { useToggle } from "@/shared/hooks";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { toastCustom } from "@/shared/lib/toast";
-import { BacklogItemDTO } from "@/zodTypes";
-import React, { ReactElement, useState, type JSX } from "react";
+import { ReactElement, useState, type JSX } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import { useSWRConfig } from "swr";
-import { InputFieldProps } from "@/shared/types";
+import { BacklogItemDTO, InputFieldProps } from "@/shared/types";
 
 type ItemFastRenameItemFastRenameProps = {
   item: Pick<BacklogItemDTO, "_id" | "title">;

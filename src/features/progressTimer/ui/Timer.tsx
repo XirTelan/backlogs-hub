@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import ButtonBase from "../../../shared/ui/ButtonBase";
-import { parseSeconds } from "@/utils";
+import { parseSeconds } from "@/shared/lib/utils";
 import { CgClose } from "react-icons/cg";
+import { ButtonBase } from "@/shared/ui";
 
 const Timer = ({
   close,

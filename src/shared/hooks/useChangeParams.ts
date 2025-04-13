@@ -1,7 +1,7 @@
-import { usePathname, useRouter, useSearchParams,  } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
-const useChangeSearchParams = () => {
+export const useChangeSearchParams = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -10,7 +10,7 @@ const useChangeSearchParams = () => {
     (
       keys: string[],
       values: (string | undefined)[],
-      params: URLSearchParams,
+      params: URLSearchParams
     ) => {
       keys.forEach((key, indx) => {
         if (values[indx]) {
@@ -20,7 +20,7 @@ const useChangeSearchParams = () => {
         }
       });
     },
-    [],
+    []
   );
 
   const changeParams = useCallback(
@@ -39,10 +39,8 @@ const useChangeSearchParams = () => {
       const query = newSearch ? `?${newSearch}` : "";
       router.push(`${pathname}${query}`, { scroll: false });
     },
-    [pathname, router, searchParams, updateKeys],
+    [pathname, router, searchParams, updateKeys]
   );
 
   return { changeParams, searchParams };
 };
-
-export default useChangeSearchParams;

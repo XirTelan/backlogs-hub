@@ -1,15 +1,13 @@
 "use client";
 import React from "react";
 import TemplateCard from "../TemplateCard/TemplateCard";
-import InputField from "../../../../shared/ui/Input/InputField";
-import TextAreaInput from "../../../../shared/ui/TextAreaInput";
-import { BacklogFormData, TemplateDTO } from "@/zodTypes";
 import { toastCustom } from "@/shared/lib/toast";
-import Title from "../../../../shared/ui/Title";
-import ButtonBase from "../../../../shared/ui/ButtonBase";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Select from "../../../../shared/ui/Select";
 import { useSession } from "@/app_fsd/providers/sessionProvider";
+import { BacklogFormData } from "@/shared/types";
+import { Title, InputField, Select, ButtonBase } from "@/shared/ui";
+import TextAreaInput from "@/shared/ui/TextAreaInput";
+import { TemplateDTO } from "../../types/template.types";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
   const { user } = useSession();
   const {

@@ -1,26 +1,27 @@
 import { VscAccount } from "react-icons/vsc";
-import SidePanel from "@/shared/ui/SidePanel";
-import NavLink from "@/shared/ui/NavLink";
+import { NavLink, SidePanel, Divider } from "@/shared/ui";
+
+import SignOutButton from "@/entities/auth/ui/SignOutButton";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
-import { routesList } from "@/shared/lib/routesList";
-import { Divider } from "@/shared/ui";
-import SignOutButton from "@/entities/auth/ui/SignOutButton";
+import { routesList } from "@/shared/constants";
 
-const links = [
+const LINKS = [
   {
     href: routesList.manageBacklogs,
     label: "Manage Backlogs",
-    icon: <MdOutlineManageSearch size={24} />,
+    icon: MdOutlineManageSearch,
+    size: 24,
   },
   {
     href: routesList.settings,
     label: "Settings",
-    icon: <IoIosSettings size={20} />,
+    icon: IoIosSettings,
+    size: 20,
   },
 ];
 
-const UserPanel = async ({ userName }: { userName: string }) => {
+export const UserPanel = async ({ userName }: { userName: string }) => {
   return (
     <>
       <SidePanel
@@ -42,14 +43,16 @@ const UserPanel = async ({ userName }: { userName: string }) => {
           ></NavLink>
           <Divider />
           <ul>
-            {links.map((link, indx) => (
+            {LINKS.map((link, indx) => (
               <NavLink
                 text="secondary"
                 key={indx}
                 variant="simple"
                 href={link.href}
                 label={link.label}
-              ></NavLink>
+              >
+                <link.icon size={link.size} />
+              </NavLink>
             ))}
             <Divider />
             <SignOutButton />
@@ -60,4 +63,3 @@ const UserPanel = async ({ userName }: { userName: string }) => {
   );
 };
 
-export default UserPanel;

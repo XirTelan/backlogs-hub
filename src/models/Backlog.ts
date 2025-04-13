@@ -1,4 +1,4 @@
-import { BacklogDTO, ModifiersType } from "@/zodTypes";
+import { BacklogDTO, ModifiersType } from "@/shared/types";
 import mongoose, { Schema } from "mongoose";
 
 const backlogModifiersSchema = new mongoose.Schema<ModifiersType>(
@@ -7,7 +7,7 @@ const backlogModifiersSchema = new mongoose.Schema<ModifiersType>(
     useSteamImport: { type: Boolean, default: false },
     useTagsSystem: { type: Boolean, default: false },
   },
-  { _id: false },
+  { _id: false }
 );
 
 const BacklogSchema = new mongoose.Schema<BacklogDTO>(
@@ -76,7 +76,7 @@ const BacklogSchema = new mongoose.Schema<BacklogDTO>(
   },
   {
     timestamps: true,
-  },
+  }
 );
 BacklogSchema.index({ userName: 1, slug: 1 }, { unique: true });
 const Backlog: mongoose.Model<BacklogDTO> =

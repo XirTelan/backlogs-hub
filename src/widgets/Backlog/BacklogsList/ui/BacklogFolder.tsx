@@ -1,8 +1,8 @@
 import BacklogCard from "@/widgets/backlog/BacklogsList/ui/BacklogCard";
-import { BacklogDTO } from "@/zodTypes";
 import React from "react";
 import { Accordion, Title } from "@/shared/ui";
 import { FaFolder } from "react-icons/fa6";
+import { BacklogDTO } from "@/shared/types";
 
 const BacklogFolder = ({
   folderName,

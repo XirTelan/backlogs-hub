@@ -1,8 +1,7 @@
 import ChangeNameForm from "@/features/user/changeUserName/ui/ChangeNameForm";
-import Modal from "@/shared/ui/Modal/Modal";
-import ButtonBase from "@/shared/ui/ButtonBase";
 
 import { updateUserInfo } from "@/shared/api/user";
+import { ButtonBase, Modal } from "@/shared/ui";
 import React, { useState } from "react";
 
 const ChangeUserName = () => {

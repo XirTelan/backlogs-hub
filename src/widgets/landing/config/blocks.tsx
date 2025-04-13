@@ -1,4 +1,4 @@
-import LinkBase from "@/shared/ui/LinkBase";
+import { LinkBase } from "@/shared/ui";
 import { FaArrowDown, FaArrowRight } from "react-icons/fa6";
 import { LandingBlockItem } from "./types";
 

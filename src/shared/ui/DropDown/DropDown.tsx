@@ -1,9 +1,8 @@
 "use client";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { inputStyleVariants } from "@/shared/lib/styles";
+import { inputStyleVariants } from "@/shared/constants/styles";
 import styles from "./DropDown.module.css";
-import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
-import useToggle from "@/shared/hooks/useToggle";
+import { useToggle, useOutsideClickReg } from "@/shared/hooks";
 import { IoIosArrowDown, IoIosArrowUp, IoIosClose } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import cn from "classnames";

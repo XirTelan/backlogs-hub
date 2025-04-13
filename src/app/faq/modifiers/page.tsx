@@ -1,6 +1,4 @@
-import Title from "@/shared/ui/Title";
-import Divider from "@/shared/ui/Divider";
-import LinkBase from "@/shared/ui/LinkBase";
+import { Title, LinkBase, Divider } from "@/shared/ui";
 import Notification from "@/shared/ui/Notification";
 import React from "react";
 

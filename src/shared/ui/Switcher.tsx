@@ -1,5 +1,5 @@
 "use client";
-import useChangeSearchParams from "@/shared/hooks/useChangeParams";
+import { useChangeSearchParams } from "@/shared/hooks";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import React, { useMemo, useState } from "react";

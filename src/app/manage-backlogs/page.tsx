@@ -1,5 +1,5 @@
-import TopTitle from "@/shared/ui/TopTitle";
-import ManageWrapper from "@/widgets/backlog/BacklogManager/ui/ManageWrapper";
+import { TopTitle } from "@/shared/ui";
+import { ManageWrapper } from "@/widgets/backlog/BacklogManager";
 import { Suspense } from "react";
 
 const Page = async () => {

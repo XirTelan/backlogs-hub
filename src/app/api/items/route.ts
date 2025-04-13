@@ -5,11 +5,11 @@ import {
 } from "@/shared/api/backlogItem";
 
 import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
-import { BacklogItemDTO } from "@/zodTypes";
-import { sendMsg } from "@/utils";
+import { sendMsg } from "@/shared/lib/utils";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { SortOrder } from "mongoose";
+import { BacklogItemDTO } from "@/shared/types";
 
 const availableSortOptions: Record<string, string> = {
   title: "title",

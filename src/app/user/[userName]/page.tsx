@@ -1,9 +1,8 @@
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
+import { UserProfile } from "@/entities/user";
 import NotAvailable from "@/pages_fsd/notAvailable/NotAvailable";
 import NotFound from "@/pages_fsd/notFound/NotFound";
-import UserProfile from "@/entities/user/ui/UserProfile";
 import { getUserData } from "@/shared/api/user";
-import { UserDB } from "@/zodTypes";
 import React from "react";
 
 type Params = Promise<{ userName: string; backlog: string }>;
@@ -24,7 +23,7 @@ const Page = async ({ params }: { params: Params }) => {
   return (
     <>
       <main id="maincontent" className="container ">
-        <UserProfile data={user.data as UserDB} />
+        <UserProfile data={user.data} />
       </main>
     </>
   );

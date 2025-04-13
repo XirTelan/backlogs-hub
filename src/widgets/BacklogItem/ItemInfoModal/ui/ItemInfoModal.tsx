@@ -4,18 +4,18 @@ import React, { useContext } from "react";
 import { IoAdd } from "react-icons/io5";
 import { ModalContext } from "@/app_fsd/providers/modalProvider";
 import BacklogItem from "@/entities/backlogItem/ui/BacklogItem";
-import { apiRoutesList } from "@/shared/lib/routesList";
-import { fetcher } from "@/utils";
+import { apiRoutesList } from "@/shared/constants/routesList";
+import { fetcher } from "@/shared/lib/utils";
 import useSWR from "swr";
 import { MdClose } from "react-icons/md";
 import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
 import ItemChangeCategory from "../../../../features/backlogItem/changeCategory/ui/ItemChangeCategory";
 import { IoMdSwap } from "react-icons/io";
-import useToggle from "@/shared/hooks/useToggle";
+import { useToggle } from "@/shared/hooks";
 import { EditItemForm } from "../../../../features/backlogItem/editItem/ui/EditItemForm";
-import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/zodTypes";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
 import { LoadingAnimation, ButtonBase, Title } from "@/shared/ui";
+import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/shared/types";
 
 const KEY = "ItemInfo";
 

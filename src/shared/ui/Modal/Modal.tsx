@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { ButtonBaseProps, ButtonColorVariants } from "@/types";
 import { motion } from "framer-motion";
 import classNames from "classnames";
 import { ActionsBlock } from "./ActionsBlock";
+import { BaseModalProps } from "./modal.types";
 
 const DEFAULTS: BaseModalProps["actionOptions"] = {
   position: "inherit",
@@ -14,22 +14,23 @@ const DEFAULTS: BaseModalProps["actionOptions"] = {
 export const Modal = ({
   styleMain,
   action,
-  actionOptions = DEFAULTS,
+  actionOptions,
   setClose,
   children,
 }: BaseModalProps) => {
-  const positions = {
-    inherit: "",
-    absolute: "absolute top-10 z-50 left-10 right-10",
-  };
-
   useEffect(() => {
-    document.body.classList.toggle("modal");
+    document.body.classList.add("modal");
 
     return () => {
-      document.body.classList.toggle("modal");
+      document.body.classList.remove("modal");
     };
-  });
+  }, []);
+
+  const options = { ...DEFAULTS, ...actionOptions };
+
+  const Actions = options.showActions ? (
+    <ActionsBlock action={action} actionOptions={options} onClose={setClose} />
+  ) : null;
 
   return createPortal(
     <div
@@ -48,36 +49,11 @@ export const Modal = ({
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        {actionOptions.showActions &&
-          (actionOptions.align ?? DEFAULTS.align) == "top" && <ActionsBlock />}
+        {options.showActions && options.align == "top" && Actions}
         <>{children}</>
-        {actionOptions.showActions &&
-          (actionOptions.align ?? DEFAULTS.align) === "bottom" && (
-            <ActionsBlock />
-          )}
+        {options.showActions && options.align === "bottom" && Actions}
       </motion.div>
     </div>,
     document.body
   );
-};
-
-export type BaseModalProps = {
-  styleMain?: string;
-  action?: () => unknown;
-  actionOptions?: {
-    showActions?: boolean;
-    position?: "inherit" | "absolute";
-    align?: "top" | "bottom";
-    confirmBtn?: {
-      confirmOptions?: ButtonBaseProps;
-      text?: string;
-      clrVariant?: ButtonColorVariants;
-    };
-    cancelBtn?: {
-      text?: string;
-      clrVariant?: ButtonColorVariants;
-    };
-  };
-  setClose: () => void;
-  children: React.ReactElement | React.ReactElement[];
 };

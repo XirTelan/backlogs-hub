@@ -2,7 +2,7 @@
 import React from "react";
 import ProgressTimer from "../../../features/progressTimer/ProgressTimer";
 import { RxLapTimer } from "react-icons/rx";
-import MarkdownEditor from "@/shared/ui/MarkdownEditor/MarkdownEditor";
+import { MarkdownEditor } from "@/shared/ui";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { InputField, Divider, Select, LinkBase } from "@/shared/ui";
 import { DemoBlockContainer } from "./BlockWrapper";

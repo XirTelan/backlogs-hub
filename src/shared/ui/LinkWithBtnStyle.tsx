@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React from "react";
 
-import { ButtonBaseProps } from "@/types";
-import { btnStyleVariants } from "@/shared/lib/styles";
+import { btnStyleVariants } from "@/shared/constants/styles";
 import classNames from "classnames";
+import { ButtonBaseProps } from "../types";
 
-const LinkWithBtnStyle = ({
+export const LinkWithBtnStyle = ({
   href,
   children,
   icon,
@@ -43,7 +43,6 @@ const LinkWithBtnStyle = ({
   );
 };
 
-export default LinkWithBtnStyle;
 type LinkButtonProps = {
   href: string;
   children?: React.ReactNode;

@@ -1,8 +1,6 @@
 "use server";
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import dbConnect from "@/shared/lib/dbConnect";
-import { ResponseData } from "@/types";
-import { ConfigType, StatsType, UserDTO } from "@/zodTypes";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
@@ -11,6 +9,7 @@ import BacklogItem from "@/models/BacklogItem";
 import Account from "@/models/Account";
 import Template from "@/models/Template";
 import User from "@/models/User";
+import { ConfigType, ResponseData, UserDTO, StatsType } from "../types";
 
 const userDataTypes = {
   folders: { folders: 1, config: 1 },

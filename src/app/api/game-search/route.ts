@@ -1,6 +1,6 @@
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import { searchSteamGame } from "@/shared/api/steamSearch";
-import { sendMsg } from "@/utils";
+import { sendMsg } from "@/shared/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {

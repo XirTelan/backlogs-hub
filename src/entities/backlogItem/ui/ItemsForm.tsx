@@ -2,21 +2,20 @@
 import { useForm } from "react-hook-form";
 import FieldsBlock from "../../field/FieldsBlock";
 import { useRouter } from "next/navigation";
-import { BacklogItemCreationDTO, Field } from "@/zodTypes";
 import { useCallback, useMemo } from "react";
 import ProgressTimer from "@/features/progressTimer/ProgressTimer";
 import { toastCustom } from "@/shared/lib/toast";
 
-import MarkdownEditor from "../../../shared/ui/MarkdownEditor/MarkdownEditor";
+import { MarkdownEditor } from "@/shared/ui";
 import SearchGameBar from "../../../features/search/searchGameBar/SearchGameBar";
-import { ItemsFormProps } from "@/types";
 import { FaSteam } from "react-icons/fa6";
 import { useSWRConfig } from "swr";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import DropDown from "@/shared/ui/DropDown/DropDown";
 import { Select, InputField, ButtonBase, LoadingAnimation } from "@/shared/ui";
+import { BacklogItemCreationDTO, Field, ItemsFormProps } from "@/shared/types";
 
-const ItemsForm = <T extends BacklogItemCreationDTO>({
+export const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,
   defaultValues,
   type,
@@ -270,8 +269,6 @@ const ItemsForm = <T extends BacklogItemCreationDTO>({
     </form>
   );
 };
-
-export default ItemsForm;
 
 const inputTypes: Record<Field["type"], string> = {
   text: "col-span-2",

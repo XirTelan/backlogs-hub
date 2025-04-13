@@ -1,7 +1,7 @@
 "use client";
 import { ButtonBase, Select } from "@/shared/ui";
-import SidePanel from "@/shared/ui/SidePanel";
-import useChangeSearchParams from "@/shared/hooks/useChangeParams";
+import { SidePanel } from "@/shared/ui/";
+import { useChangeSearchParams } from "@/shared/hooks";
 import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { FiFilter } from "react-icons/fi";

@@ -1,10 +1,8 @@
-import { ButtonBase } from "@/shared/ui";
-import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
-import SortableItem from "@/features/dragAndDrop/ui/SortableItem";
+import { ButtonBase, LinkWithBtnStyle } from "@/shared/ui";
 import { routesList } from "@/shared/constants/routesList";
-import { SortableItemProps } from "@/types";
 import React from "react";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
+import { SortableItemProps, SortableItem } from "@/features/dragAndDrop";
 
 const BacklogDndItem = ({
   action,

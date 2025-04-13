@@ -1,7 +1,7 @@
 import { BacklogItemActions } from "@/entities/backlogItem/";
 import { ItemInfoModalOpen } from "@/widgets/backlogItem/ItemInfoModal/ui/ItemInfoModal";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
-import SortableItem from "@/features/dragAndDrop/ui/SortableItem";
+import { SortableItem } from "@/features/dragAndDrop";
 import { BacklogItemDTO, RenderItemProps } from "@/shared/types";
 import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useDebounce from "./useDebounce";
+import { useDebounce } from "./useDebounce";
 
-const useLoaderValue = (
+export const useLoaderValue = (
   value: string,
   checker: (value: string) => Promise<boolean>
 ) => {
@@ -28,6 +28,3 @@ const useLoaderValue = (
 
   return { isAvailable, isLoading };
 };
-
-export default useLoaderValue;
-//

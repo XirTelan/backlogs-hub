@@ -2,7 +2,7 @@
 import { createModal } from "@/shared/lib/createModal";
 import React, { useContext } from "react";
 import { ModalContext } from "@/app_fsd/providers/modalProvider";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { useSWRConfig } from "swr";
 import { MdDeleteForever } from "react-icons/md";
 import { Title } from "@/shared/ui";

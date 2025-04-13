@@ -1,6 +1,5 @@
 "use client";
-import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
-import useToggle from "@/shared/hooks/useToggle";
+import { useOutsideClickReg, useToggle } from "@/shared/hooks";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -26,7 +25,7 @@ const directionStyles = {
   bottom: "top-full",
 };
 
-const SidePanel = ({
+export const SidePanel = ({
   icon,
   position = "right",
   direction = "bottom",
@@ -123,8 +122,6 @@ const SidePanel = ({
     </div>
   );
 };
-
-export default SidePanel;
 
 type SidePanelProps = {
   position?: "left" | "right" | "none";

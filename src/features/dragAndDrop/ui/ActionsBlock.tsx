@@ -1,9 +1,10 @@
 "use client";
-import ButtonBase from "@/shared/ui/ButtonBase";
-import AddItem from "@/features/dragAndDrop/ui/AddItem";
-import useToggle from "@/shared/hooks/useToggle";
+
+import { useToggle } from "@/shared/hooks";
+import { ButtonBase } from "@/shared/ui";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
+import { AddItem } from "./AddItem";
 
 const ActionsBlock = ({
   addNewItem,

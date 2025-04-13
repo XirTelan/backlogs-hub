@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import ButtonBase from "@/shared/ui/ButtonBase";
-import LinkBase from "@/shared/ui/LinkBase";
 import { FaImages, FaSteam } from "react-icons/fa6";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
 import { MdLocalMovies } from "react-icons/md";
-import Modal from "@/shared/ui/Modal/Modal";
 import Carousel from "@/entities/backlogItem/ui/Carousel";
 import Clip from "@/shared/ui/Clip";
-import { SteamApp } from "@/types";
+import { SteamApp } from "@/shared/types";
+import { Modal, ButtonBase, LinkBase } from "@/shared/ui";
 const SteamGameCard = ({
   data,
   children,

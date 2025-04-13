@@ -1,13 +1,11 @@
 "use client";
-import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
 import SearchField from "@/shared/ui/SearchField";
-import useDebounce from "@/shared/hooks/useDebounce";
-import useToggle from "@/shared/hooks/useToggle";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { SearchBar } from "@/shared/types";
-import { ButtonBase, LoadingAnimation } from "@/shared/ui";
+import { ButtonBase, LinkWithBtnStyle, LoadingAnimation } from "@/shared/ui";
+import { useToggle, useDebounce } from "@/shared/hooks";
 
 const SearchGameBar = ({
   labelText,

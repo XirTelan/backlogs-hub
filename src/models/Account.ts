@@ -1,4 +1,4 @@
-import { AccountType } from "@/zodTypes";
+import { AccountType } from "@/shared/types";
 import mongoose, { Schema } from "mongoose";
 
 const AccountSchema = new mongoose.Schema<AccountType>({

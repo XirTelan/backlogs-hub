@@ -1,6 +1,6 @@
 import React from "react";
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
-import { routesList } from "@/shared/lib/routesList";
+import { routesList } from "@/shared/constants/routesList";
 import { Divider, LinkBase } from "@/shared/ui";
 
 const BacklogCard = async ({ children, href, backlogId }: BacklogCardProps) => {

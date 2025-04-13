@@ -1,9 +1,8 @@
 import React, { JSX, useEffect, useMemo, useState } from "react";
-import InputField from "../../shared/ui/Input/InputField";
 import Timer from "./ui/Timer";
-import { parseSeconds, parseToSeconds } from "@/utils";
-import ButtonBase from "../../shared/ui/ButtonBase";
+import { parseSeconds, parseToSeconds } from "@/shared/lib/utils";
 import { RxLapTimer } from "react-icons/rx";
+import { InputField, ButtonBase } from "@/shared/ui";
 
 const ProgressTimer = ({
   label,

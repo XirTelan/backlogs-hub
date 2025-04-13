@@ -1,6 +1,6 @@
 "use client";
-import Select from "@/shared/ui/Select";
-import useChangeSearchParams from "@/shared/hooks/useChangeParams";
+import { Select } from "@/shared/ui";
+import { useChangeSearchParams } from "@/shared/hooks";
 import React from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 

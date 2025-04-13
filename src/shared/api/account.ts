@@ -1,7 +1,7 @@
 import dbConnect from "@/shared/lib/dbConnect";
 import Account from "@/models/Account";
 import User from "@/models/User";
-import { ResponseData } from "@/types";
+import { ResponseData } from "../types";
 
 export const deleteAccount = async (
   id: string

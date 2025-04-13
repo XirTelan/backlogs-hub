@@ -1,4 +1,4 @@
-import Divider from "@/shared/ui/Divider";
+import { Divider } from "@/shared/ui";
 import Notification from "@/shared/ui/Notification";
 
 import React from "react";

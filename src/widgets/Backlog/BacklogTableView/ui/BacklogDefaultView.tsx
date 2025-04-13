@@ -3,8 +3,8 @@
 import BacklogListData from "./BacklogListData";
 
 import useSWR from "swr";
-import { apiRoutesList } from "@/shared/lib/routesList";
-import { fetcher } from "@/utils";
+import { apiRoutesList } from "@/shared/constants/routesList";
+import { fetcher } from "@/shared/lib/utils";
 import SkeletonDataTable from "@/widgets/backlog/BacklogTableView/ui/SkeletonDataTable";
 
 import Pagination from "@/widgets/backlog/BacklogTableView/ui/Pagination";
@@ -12,6 +12,8 @@ import { useSession } from "@/app_fsd/providers/sessionProvider";
 import BacklogItemsTableToolbar from "./BacklogItemsTableToolbar";
 import BacklogItemsTable from "./BacklogItemsTable";
 import { useSearchParams } from "next/navigation";
+import { isRenderPagination } from "../lib/lib";
+import { useMemo } from "react";
 
 const itemsNotFound = (
   <>
@@ -38,9 +40,15 @@ const itemsDoesntExist = (
 );
 
 export const BacklogDefaultView = ({ id, isOwner }: BackloglistProps) => {
-  const searchParams = new URLSearchParams(useSearchParams()?.toString());
-  searchParams.append("backlog", id);
   const { user } = useSession();
+  const searchParamsString = useSearchParams().toString();
+
+  const searchParams = useMemo(() => {
+    const sp = new URLSearchParams(searchParamsString);
+    sp.append("backlog", id);
+    return sp;
+  }, [searchParamsString, id]);
+
   const pagination = user?.config?.pagination ?? "bottom";
   const requstUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
   const isSearching =
@@ -54,7 +62,7 @@ export const BacklogDefaultView = ({ id, isOwner }: BackloglistProps) => {
         <SkeletonDataTable />
       ) : (
         <>
-          {["both", "top"].includes(pagination) && (
+          {isRenderPagination("top", pagination) && (
             <Pagination totalCount={data.totalCount} />
           )}
 
@@ -67,7 +75,7 @@ export const BacklogDefaultView = ({ id, isOwner }: BackloglistProps) => {
               itemsDoesntExist
             )}
           </BacklogItemsTable>
-          {["both", "bottom"].includes(pagination) && (
+          {isRenderPagination("bottom", pagination) && (
             <Pagination totalCount={data.totalCount} />
           )}
         </>

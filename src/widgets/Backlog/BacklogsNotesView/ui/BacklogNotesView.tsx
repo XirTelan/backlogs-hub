@@ -2,14 +2,14 @@
 import { LoadingAnimation } from "@/shared/ui";
 import SearchBar from "@/features/search/searchBar/SearchBar";
 import SearchFilter from "@/features/search/searchFilter/SearchFilter";
-import { apiRoutesList } from "@/shared/lib/routesList";
-import { fetcher } from "@/utils";
-import { BacklogItemDTO } from "@/zodTypes";
+import { apiRoutesList } from "@/shared/constants/routesList";
+import { fetcher } from "@/shared/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import useSWR from "swr";
 import BacklogNoteCard from "./BacklogNoteCard";
 import { ItemFormModalOpen } from "@/features/backlogItem/createBacklogItem/ui/ItemFormModal";
+import { BacklogItemDTO } from "@/shared/types";
 
 type items =
   | {

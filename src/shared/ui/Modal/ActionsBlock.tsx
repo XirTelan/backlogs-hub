@@ -1,28 +1,46 @@
-type ActionsBlockProps = {
-    
-} 
-export const ActionsBlock = ({}) => (
-  <div
-    className={`flex  ${positions[actionOptions.position ?? DEFAULTS.position!]} `}
-  >
-    <ButtonBase
-      style={{ width: "100%" }}
-      variant={actionOptions.cancelBtn?.clrVariant ?? "secondary"}
-      text={actionOptions.cancelBtn?.text ?? "Cancel"}
-      onClick={setClose}
-    />
-    {action && (
+"use client";
+
+import { ButtonBase } from "../ButtonBase";
+import { BaseModalProps } from "./modal.types";
+
+const POSITIONS = {
+  inherit: "",
+  absolute: "absolute top-10 z-50 left-10 right-10",
+};
+
+export const ActionsBlock = ({
+  action,
+  actionOptions,
+  onClose,
+}: {
+  action?: () => void;
+  actionOptions: Required<BaseModalProps>["actionOptions"];
+  onClose: () => void;
+}) => {
+  const { cancelBtn, confirmBtn } = actionOptions;
+
+  return (
+    <div
+      className={`flex ${POSITIONS[actionOptions.position as keyof typeof POSITIONS]}`}
+    >
       <ButtonBase
         style={{ width: "100%" }}
-        variant={actionOptions.confirmBtn?.clrVariant ?? "primary"}
-        text={actionOptions.confirmBtn?.text ?? "confirm"}
-        {...actionOptions.confirmBtn?.confirmOptions}
-        onClick={async () => {
-          if (!action) return;
-          action();
-          setClose();
-        }}
+        variant={cancelBtn?.clrVariant ?? "secondary"}
+        text={cancelBtn?.text ?? "Cancel"}
+        onClick={onClose}
       />
-    )}
-  </div>
-);
+      {action && (
+        <ButtonBase
+          style={{ width: "100%" }}
+          variant={confirmBtn?.clrVariant ?? "primary"}
+          text={confirmBtn?.text ?? "Confirm"}
+          onClick={async () => {
+            await action();
+            onClose();
+          }}
+          {...confirmBtn?.confirmOptions}
+        />
+      )}
+    </div>
+  );
+};

@@ -5,7 +5,7 @@ import {
   populateBacklogItem,
 } from "@/shared/api/backlogItem";
 import { isAuthorizedBacklogOwner } from "@/shared/api/backlogs";
-import { sendMsg } from "@/utils";
+import { sendMsg } from "@/shared/lib/utils";
 
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";

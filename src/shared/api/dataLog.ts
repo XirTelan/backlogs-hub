@@ -2,7 +2,7 @@
 
 import dbConnect from "@/shared/lib/dbConnect";
 import Log from "@/models/Log";
-import { LogDTO } from "@/zodTypes";
+import { LogDTO } from "../types";
 
 export const createLogEntry = async (data: LogDTO) => {
   try {

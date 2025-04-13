@@ -1,16 +1,16 @@
 import React from "react";
 import { Table, TableHeader, TableHead, TableBody } from "@/shared/ui/table";
-import InputField from "@/shared/ui/Input/InputField";
 import FieldsArrayItem from "./FieldsArrayItem";
 import Notification from "@/shared/ui/Notification";
-import { BacklogFormData, Field } from "@/zodTypes";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import {
+  Field,
   FieldValues,
   UseFieldArrayRemove,
   UseFieldArrayUpdate,
 } from "react-hook-form";
-import { FieldWithId } from "@/types";
+import { FieldWithId, BacklogFormData } from "@/shared/types";
+import { InputField } from "@/shared/ui";
 
 type UserFieldsTableProps<T extends FieldValues, U extends FieldValues> = {
   userFields: T[];

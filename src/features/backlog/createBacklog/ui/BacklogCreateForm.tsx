@@ -1,13 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
-import BacklogForm from "../../../../widgets/backlog/BacklogForm/ui/BacklogForm";
-import { fetcher, generateSlug } from "@/utils";
-import { BacklogCategory, BacklogFormData } from "@/zodTypes";
+import { fetcher, generateSlug } from "@/shared/lib/utils";
 import { toastCustom } from "@/shared/lib/toast";
 import useSWR from "swr";
 import { LoadingAnimation } from "@/shared/ui";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
+import { BacklogCategory, BacklogFormData } from "@/shared/types";
+import { BacklogForm } from "@/widgets/backlog/BacklogForm";
 
 const BacklogCreateForm = () => {
   const router = useRouter();

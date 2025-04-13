@@ -1,19 +1,23 @@
 import dbConnect from "@/shared/lib/dbConnect";
 import Backlog from "@/models/Backlog";
 import BacklogItem from "@/models/BacklogItem";
-import { ResponseData } from "@/types";
-import {
-  BacklogDTO,
-  BacklogItemCreationDTO,
-  BacklogItemDTO,
-  BacklogItemPopulated,
-  BacklogItemPopUserField,
-  BacklogItemWithSteamInfo,
-} from "@/zodTypes";
+
 import { getBacklogById } from "./backlogs";
 import { getSteamGameInfo } from "./steamSearch";
 import { Document, Query, SortOrder, UpdateWriteOpResult } from "mongoose";
-import { BacklogItemCreationSchema, BacklogItemSchema } from "@/zod";
+import {
+  BacklogItemCreationSchema,
+  BacklogItemSchema,
+} from "@/shared/zodSchemas/zod";
+import {
+  ResponseData,
+  BacklogItemDTO,
+  BacklogDTO,
+  BacklogItemCreationDTO,
+  BacklogItemPopulated,
+  BacklogItemWithSteamInfo,
+  BacklogItemPopUserField,
+} from "../types";
 
 export const getBacklogItemById = async (
   itemId: string

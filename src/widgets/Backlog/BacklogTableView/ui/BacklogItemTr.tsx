@@ -1,12 +1,13 @@
 "use client";
-import { BacklogItemDTO } from "@/zodTypes";
 import { FaFileLines } from "react-icons/fa6";
 
-import LinkWithBtnStyle from "@/shared/ui/LinkWithBtnStyle";
-import ItemFastRename from "@/features/backlogItem/itemsFastRename/ui/ItemsFastRename";
-import BacklogItemActions from "../../../../entities/backlogItem/ui/BacklogItemActions";
+import { LinkWithBtnStyle } from "@/shared/ui";
 import { ItemInfoModalOpen } from "@/widgets/backlogItem/ItemInfoModal/ui/ItemInfoModal";
 import { useSession } from "@/app_fsd/providers/sessionProvider";
+import { BacklogItemActions } from "@/entities/backlogItem";
+import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
+import { BacklogItemDTO } from "@/shared/types";
+import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
 
 const BacklogItemTr = ({
   item,
@@ -78,7 +79,7 @@ const BacklogItemTr = ({
         </td>
         <td className={`ms-auto flex p-2 `}>
           {showActions ? (
-            <BacklogItemActions item={item} />
+            <BacklogItemActions item={item} actionsSlot={ItemChangeCategory} />
           ) : (
             <DetailsButton id={item._id} text={""} />
           )}

@@ -1,6 +1,5 @@
-import Divider from "@/shared/ui/Divider";
-import LinkBase from "@/shared/ui/LinkBase";
-import { routesList } from "@/shared/lib/routesList";
+import { routesList } from "@/shared/constants/routesList";
+import { Divider, LinkBase } from "@/shared/ui";
 import React from "react";
 
 const Page = () => {

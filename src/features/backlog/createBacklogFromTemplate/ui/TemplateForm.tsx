@@ -1,10 +1,11 @@
 "use client";
 import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import useLoaderValue from "@/shared/hooks/useLoaderValue";
+import { useLoaderValue } from "@/shared/hooks";
 import { toastCustom } from "@/shared/lib/toast";
-import { BacklogCreationDTO, TemplateDTO } from "@/zodTypes";
 import { Title, InputWithLoader, Select, ButtonBase } from "@/shared/ui";
+import { BacklogCreationDTO } from "@/shared/types";
+import { TemplateDTO } from "@/entities/template";
 
 const TemplateForm = ({
   selectedTemplate,

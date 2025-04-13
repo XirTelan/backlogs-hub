@@ -1,7 +1,7 @@
-import Modal, { BaseModalProps } from "@/shared/ui/Modal/Modal";
-import { ButtonBase } from "@/shared/ui";
-import { ButtonBaseProps, ModalContextProps } from "@/types";
+import { ButtonBase, Modal } from "@/shared/ui";
 import React, { Context, useContext } from "react";
+import { ModalContextProps, ButtonBaseProps } from "../types";
+import { BaseModalProps } from "../ui/Modal/modal.types";
 
 export function createModal(
   cntx: Context<ModalContextProps>,
@@ -21,7 +21,10 @@ export function createModal(
     const ctx = useContext(cntx);
 
     const handleClick = () => {
-      if (data) ctx.setData(data);
+      if (data) {
+      
+        ctx.setData(data);
+      }
       ctx.setKey(key);
       ctx.setOpen();
     };

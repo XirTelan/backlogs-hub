@@ -5,13 +5,12 @@ import { IoText } from "react-icons/io5";
 import { AiOutlineFieldNumber } from "react-icons/ai";
 import { FaCalendarCheck, FaMarkdown } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
-import ButtonBase from "../../../../shared/ui/ButtonBase";
-import Title from "../../../../shared/ui/Title";
-import Tag from "../../../../shared/ui/Tag";
-import Accordion from "../../../../shared/ui/Accordion";
-import { TemplateDTO } from "@/zodTypes";
+
 import { MdDelete } from "react-icons/md";
 import { GoMultiSelect } from "react-icons/go";
+import { Title, Accordion, ButtonBase } from "@/shared/ui";
+import Tag from "@/shared/ui/Tag";
+import { TemplateDTO } from "../../types/template.types";
 
 const icons = {
   timer: <IoMdTimer />,

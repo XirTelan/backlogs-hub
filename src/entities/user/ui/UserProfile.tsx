@@ -1,8 +1,8 @@
+import { UserDTO } from "@/shared/types";
 import { Title } from "@/shared/ui";
-import { UserDB } from "@/zodTypes";
 import React from "react";
 
-const UserProfile = ({ data }: { data: UserDB }) => {
+export const UserProfile = ({ data }: { data: UserDTO }) => {
   return (
     <div className="ml-10 mt-10 ">
       <div className=" bg-layer-1 p-4">
@@ -14,13 +14,11 @@ const UserProfile = ({ data }: { data: UserDB }) => {
         <div className=" mt-4 bg-layer-1 p-4">
           <Title variant={3} title={"Statistic"} />
           <div className=" flex flex-col gap-4">
-            <div className="">{data.folders.length}</div>
-            <div className="">{data.stats.totalBacklogs}</div>
+            <div className="">{data.folders?.length}</div>
+            <div className="">{data.stats?.totalBacklogs}</div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-export default UserProfile;

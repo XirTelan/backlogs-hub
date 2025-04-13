@@ -12,9 +12,12 @@ import {
   getBacklogsByFolder,
 } from "@/shared/api/backlogs";
 import { updateStat, updateUserFolders } from "@/shared/api/user";
-import { generateSlug, sendMsg } from "@/utils";
-import { BacklogCreationSchema, BacklogFormSchema } from "@/zod";
-import { BacklogCreationDTO, BacklogDTO, BacklogItemDTO } from "@/zodTypes";
+import { generateSlug, sendMsg } from "@/shared/lib/utils";
+import { BacklogCreationDTO, BacklogDTO, BacklogItemDTO } from "@/shared/types";
+import {
+  BacklogCreationSchema,
+  BacklogFormSchema,
+} from "@/shared/zodSchemas/zod";
 import { Types } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";

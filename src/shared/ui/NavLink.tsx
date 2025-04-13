@@ -23,7 +23,7 @@ const textSizes = {
   primary: "text-[18px] leading-[18px] text-text-primary",
   secondary: "text-sm leading-4 text-text-secondary ",
 };
-const NavLink = ({
+export const NavLink = ({
   href,
   label,
   text = "primary",
@@ -37,7 +37,7 @@ const NavLink = ({
     <li
       className={classNames(
         "relative list-none outline-offset-4  after:w-full hover:bg-layer-1-hover ",
-        style[variant][isActive ? "active" : "default"],
+        style[variant][isActive ? "active" : "default"]
       )}
     >
       <Link href={href} className={`flex  items-center  ${textSizes[text]}`}>
@@ -53,8 +53,6 @@ const NavLink = ({
     </li>
   );
 };
-
-export default NavLink;
 
 interface NavItemProps {
   href: string;

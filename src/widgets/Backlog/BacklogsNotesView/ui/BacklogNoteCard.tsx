@@ -1,12 +1,10 @@
 "use client";
 import { Divider } from "@/shared/ui";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
-import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
-import useToggle from "@/shared/hooks/useToggle";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { useOutsideClickReg, useToggle } from "@/shared/hooks";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { toastCustom } from "@/shared/lib/toast";
-import { fetcher } from "@/utils";
-import { BacklogItemDTO, BacklogItemPopulated } from "@/zodTypes";
+import { fetcher } from "@/shared/lib/utils";
 import MDEditor from "@uiw/react-md-editor";
 import React, { useRef } from "react";
 import rehypeSanitize from "rehype-sanitize";
@@ -14,6 +12,8 @@ import useSWR from "swr";
 import SkeletonBacklogNoteCard from "@/widgets/backlog/BacklogsNotesView/ui/SkeletonBacklogNoteCard";
 import NotFound from "@/pages_fsd/notFound/NotFound";
 import { BacklogItemActions } from "@/entities/backlogItem";
+import { BacklogItemDTO, BacklogItemPopulated } from "@/shared/types";
+import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
 
 //[TODO: REFACTOR. State , props drill]
 type BacklogNoteCardProps = {
@@ -91,7 +91,7 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
         <div className="flex">
           <ItemFastRename item={item} color={""} />
         </div>
-        <BacklogItemActions item={item} />
+        <BacklogItemActions item={item} actionsSlot={ItemChangeCategory} />
       </div>
       <Divider />
       {isEdit ? (

@@ -1,5 +1,5 @@
 import { createLogEntry } from "@/shared/api/dataLog";
-import { sendMsg } from "@/utils";
+import { sendMsg } from "@/shared/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {

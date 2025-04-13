@@ -1,8 +1,8 @@
 import React from "react";
-import SignInButton from "../entities/auth/ui/SignInButton";
-import NavBar from "../containers/NavBar";
+import SignInButton from "../../../entities/auth/ui/SignInButton";
+import NavBar from "./NavBar";
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
-import UserPanel from "../entities/user/ui/UserPanel";
+import UserPanel from "../../../entities/user/ui/UserPanel";
 import HomeLink from "@/shared/ui/HomeLink";
 import ThemeSwitch from "@/shared/ui/ThemeSwitch";
 

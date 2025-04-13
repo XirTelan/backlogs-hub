@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import TextAreaInput from "../shared/ui/TextAreaInput";
+import TextAreaInput from "../../shared/ui/TextAreaInput";
 import { TokenData } from "@/entities/auth/utils/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LogDTO } from "@/zodTypes";

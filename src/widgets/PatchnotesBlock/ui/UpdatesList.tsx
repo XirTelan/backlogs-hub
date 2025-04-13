@@ -2,9 +2,9 @@
 
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
-import Accordion from "../shared/ui/Accordion";
 import { NewsType } from "@/zodTypes";
 import rehypeSanitize from "rehype-sanitize";
+import { Accordion } from "@/shared/ui";
 
 const UpdatesList = ({ data }: { data: NewsType[] }) => {
   if (!data || data.length === 0) return <div>Updates doesnot found</div>;

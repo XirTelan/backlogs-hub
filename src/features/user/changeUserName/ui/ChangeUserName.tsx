@@ -1,4 +1,4 @@
-import ChangeNameForm from "@/features/changeUserName/ui/ChangeNameForm";
+import ChangeNameForm from "@/features/user/changeUserName/ui/ChangeNameForm";
 import Modal from "@/shared/ui/Modal/Modal";
 import ButtonBase from "@/shared/ui/ButtonBase";
 

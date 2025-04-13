@@ -1,5 +1,5 @@
 import React, { type JSX } from "react";
-import { TitleProps } from "../types";
+import { TitleProps } from "./title.types";
 
 export const Title = ({
   title,

@@ -1,6 +1,6 @@
 import React from "react";
-import { TitleProps } from "../types";
 import { Title } from "./Title";
+import { TitleProps } from "./title.types";
 
 export const TopTitle = ({
   title,

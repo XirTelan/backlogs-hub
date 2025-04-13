@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ColorRGB } from "./types";
+import { ColorRGB } from "../types";
 
 export const sendMsg = {
   success: (message: string = "success", status: number = 200) => {

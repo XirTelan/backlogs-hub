@@ -10,7 +10,7 @@ import BacklogDndItem from "./BacklogDndItem";
 import { DndData } from "@/types";
 import { toastCustom } from "@/shared/lib/toast";
 import { useSWRConfig } from "swr";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import DnDMultList from "../../../../features/dragAndDrop/ui/DndMultiList";
 import { UniqueIdentifier } from "@dnd-kit/core";
 

@@ -7,7 +7,7 @@ import { GrTree } from "react-icons/gr";
 import { FaList } from "react-icons/fa";
 
 import useSWR from "swr";
-import { apiRoutesList } from "@/shared/lib/routesList";
+import { apiRoutesList } from "@/shared/constants/routesList";
 import { LoadingAnimation } from "@/shared/ui";
 import { fetcher } from "@/utils";
 
@@ -61,4 +61,3 @@ export const ManageWrapper = () => {
     </>
   );
 };
-

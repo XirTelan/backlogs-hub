@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosColorPalette } from "react-icons/io";
-import ButtonBase from "../../../shared/ui/ButtonBase";
-import useOutsideClickReg from "@/shared/hooks/useOutsideClickReg";
-import useToggle from "@/shared/hooks/useToggle";
+import { useToggle, useOutsideClickReg } from "@/shared/hooks";
 import ColorPicker from "./ColorPicker";
-import { colors } from "@/utils";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
+import { ButtonBase } from "@/shared/ui";
+import { colors } from "../lib/utils";
 
-const defaultColors = [
+const DEFAULT_COLORS = [
   "0043CE",
   "6929C4",
   "4D5358",
@@ -67,7 +66,7 @@ const ColorPallete = ({
             <ColorPicker value={colors.hexToRgb(value)} onChange={onChange} />
             <div id="colorpallete" className="  flex    p-2">
               <div className=" flex gap-1 flex-wrap">
-                {defaultColors.map((color, index) => (
+                {DEFAULT_COLORS.map((color, index) => (
                   <div
                     key={index}
                     className="z-40 h-6 w-6 cursor-pointer rounded-sm "

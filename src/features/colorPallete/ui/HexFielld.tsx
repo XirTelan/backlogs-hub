@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import InputField from "../../../shared/ui/Input/InputField";
-import { colors } from "@/utils";
-import { ColorPickerValue, ColorRGB } from "@/types";
 import { FiHash } from "react-icons/fi";
+import { InputField } from "@/shared/ui";
+import { colors } from "../lib/utils";
+import { ColorPickerValue, ColorRGB } from "../types/types";
 
 const HexFielld = ({
   selectedColor,

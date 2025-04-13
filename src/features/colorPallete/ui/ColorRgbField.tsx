@@ -1,7 +1,7 @@
 import React from "react";
-import InputField from "../../../shared/ui/Input/InputField";
-import { ColorRGB } from "@/types";
-import { clamp } from "@/utils";
+import { clamp } from "@/shared/lib/utils";
+import { InputField } from "@/shared/ui";
+import { ColorRGB } from "../types/types";
 
 const ColorRgbField = ({
   color,

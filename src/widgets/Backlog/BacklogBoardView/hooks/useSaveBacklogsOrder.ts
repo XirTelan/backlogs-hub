@@ -1,11 +1,10 @@
-import { DndData } from "@/types";
-import { BacklogItemDTO } from "@/zodTypes";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useCallback } from "react";
 import { KeyedMutator } from "swr";
-import { FormattedData } from "../types/types";
-import { putBoard } from "../api/api";
 import { toastCustom } from "@/shared/lib/toast";
+import { BacklogItemDTO, DndData } from "@/shared/types";
+import { FormattedData } from "../types";
+import { putBoard } from "../api";
 
 export function useSaveBacklogsOrder(
   backlogId: string,

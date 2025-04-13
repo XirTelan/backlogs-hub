@@ -1,4 +1,4 @@
-import { BacklogItemDTO } from "@/zodTypes";
+import { BacklogItemDTO } from "@/shared/types";
 
 export type FormattedData = {
   backlogId: string;

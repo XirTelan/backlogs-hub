@@ -2,8 +2,8 @@ import { BacklogItemActions } from "@/entities/backlogItem/";
 import { ItemInfoModalOpen } from "@/widgets/backlogItem/ItemInfoModal/ui/ItemInfoModal";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
 import SortableItem from "@/features/dragAndDrop/ui/SortableItem";
-import { RenderItemProps } from "@/types";
-import { BacklogItemDTO } from "@/zodTypes";
+import { BacklogItemDTO, RenderItemProps } from "@/shared/types";
+import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
 
 export function BacklogDndItem({
   item,
@@ -49,7 +49,7 @@ export function BacklogDndItem({
         </div>
 
         <div onMouseDown={(e) => e.preventDefault()}>
-          <BacklogItemActions item={item} />
+          <BacklogItemActions actionsSlot={ItemChangeCategory} item={item} />
         </div>
       </div>
     </SortableItem>

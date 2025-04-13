@@ -1,4 +1,4 @@
-import { FormattedData } from "../types/types";
+import { FormattedData } from "./types";
 
 export async function putBoard(dataFormatted: FormattedData) {
   try {

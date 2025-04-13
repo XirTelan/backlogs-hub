@@ -1,13 +1,10 @@
 import React from "react";
 import { Field, useFieldArray } from "react-hook-form";
 
-import withWrap from "@/hoc/withWrap";
 import UserFieldsTable from "./UserFieldsTable";
 import { Title, ButtonBase } from "@/shared/ui";
 import { FieldsBlockProps } from "@/entities/backlog/model/types";
 import { BacklogFormData, FieldWithId } from "@/shared/types";
-
-const FieldsTable = withWrap(UserFieldsTable);
 
 const UserFieldsBlock = ({ control }: FieldsBlockProps) => {
   const { fields, append, remove, update } = useFieldArray<
@@ -38,7 +35,11 @@ const UserFieldsBlock = ({ control }: FieldsBlockProps) => {
           }
         />
       </Title>
-      <FieldsTable userFields={userFields} remove={remove} update={update} />
+      <UserFieldsTable
+        userFields={userFields}
+        remove={remove}
+        update={update}
+      />
     </section>
   );
 };

@@ -33,7 +33,11 @@ const TableCell = (props: React.ComponentProps<"td">) => {
 };
 
 const Table = ({ ...props }: React.ComponentProps<"table">) => {
-  return <table className="w-full table-fixed " {...props} />;
+  return (
+    <div className=" flex  w-full flex-col bg-layer-1">
+      <table className="w-full table-fixed " {...props} />;
+    </div>
+  );
 };
 
 export { Table, TableHeader, TableHead, TableCell, TableTitle, TableBody };

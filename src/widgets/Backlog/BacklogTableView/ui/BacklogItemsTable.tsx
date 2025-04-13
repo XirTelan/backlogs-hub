@@ -7,7 +7,6 @@ import {
   TableHead,
   TableHeader,
 } from "@/shared/ui/table";
-import withWrap from "@/hoc/withWrap";
 
 const BacklogItemsTable = ({
   children,
@@ -32,4 +31,4 @@ const BacklogItemsTable = ({
   );
 };
 
-export default withWrap(BacklogItemsTable);
+export default BacklogItemsTable;

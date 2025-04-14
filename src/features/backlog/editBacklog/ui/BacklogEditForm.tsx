@@ -9,7 +9,7 @@ import NotFound from "@/pages_fsd/notFound/NotFound";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import { LoadingAnimation, TopTitle } from "@/shared/ui";
 import { BacklogDTO } from "@/shared/model/";
-import { BacklogForm } from "@/widgets/backlog/BacklogForm";
+import { BacklogForm } from "@/widgets/backlog/backlog-form";
 
 const BacklogEditForm = ({ id }: { id: string }) => {
   const {

@@ -7,9 +7,9 @@ import useSWR from "swr";
 import { LoadingAnimation } from "@/shared/ui";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import { BacklogCategory, BacklogFormData } from "@/shared/model/";
-import { BacklogForm } from "@/widgets/backlog/BacklogForm";
+import { BacklogForm } from "@/widgets/backlog/backlog-form";
 
-const BacklogCreateForm = () => {
+export const BacklogCreateForm = () => {
   const router = useRouter();
   const userFolders = useSWR(`/api/users/`, fetcher);
   if (userFolders.isLoading) return <LoadingAnimation />;

@@ -4,11 +4,7 @@ import { Modal, ButtonBase } from "@/shared/ui";
 import { usePathname } from "next/navigation";
 import { GrLogin } from "react-icons/gr";
 
-export const SignInButton = ({
-  formSlot: SignInForm,
-}: {
-  formSlot: React.FC;
-}) => {
+export const SignInButton = ({ children }: { children: React.ReactNode }) => {
   const [showForm, setShowForm] = useState(false);
   const pathName = usePathname();
   if (pathName === "/") return;
@@ -22,9 +18,7 @@ export const SignInButton = ({
       />
       {showForm ? (
         <Modal setClose={() => setShowForm(false)}>
-          <div className="px-4 pb-4 bg-bg-main">
-            <SignInForm />
-          </div>
+          <>{children}</>
         </Modal>
       ) : null}
     </div>

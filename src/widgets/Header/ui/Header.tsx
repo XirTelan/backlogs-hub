@@ -25,7 +25,11 @@ export const Header = async () => {
             <HomeLink />
             <div className="ms-auto flex">
               <ThemeSwitch />
-              <SignInButton formSlot={SignInForm} />
+              <SignInButton>
+                <div className="px-4 pb-4 bg-bg-main">
+                  <SignInForm />
+                </div>
+              </SignInButton>
             </div>
           </>
         )}

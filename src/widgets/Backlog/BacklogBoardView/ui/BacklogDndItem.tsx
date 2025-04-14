@@ -1,9 +1,9 @@
-import { BacklogItemActions } from "@/entities/backlogItem/";
 import { ItemInfoModalOpen } from "@/widgets/backlogItem/ItemInfoModal/ui/ItemInfoModal";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
 import { SortableItem } from "@/features/dragAndDrop";
-import { BacklogItemDTO, RenderItemProps } from "@/shared/model";
+import { BacklogItemDTO, RenderItemProps } from "@/shared/model/";
 import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
+import { BacklogItemActions } from "@/features/backlogItem/showActions";
 
 export function BacklogDndItem({
   item,

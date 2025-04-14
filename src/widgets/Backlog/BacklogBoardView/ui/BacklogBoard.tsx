@@ -8,9 +8,10 @@ import DnDMultList from "../../../../features/dragAndDrop/ui/DndMultiList";
 import { ContainerTitle } from "./ContainerTitle";
 import { BacklogDndItem } from "./BacklogDndItem";
 import { useSaveBacklogsOrder } from "../model/useSaveBacklogsOrder";
+import { Responce } from "../model/types";
 
 export const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
-  const { data, isLoading, mutate } = useSWR(
+  const { data, isLoading, mutate } = useSWR<Responce>(
     `${apiRoutesList.items}?backlog=${backlogId}`,
     fetcher
   );

@@ -2,13 +2,13 @@ import { UniqueIdentifier } from "@dnd-kit/core";
 import { useCallback } from "react";
 import { KeyedMutator } from "swr";
 import { toastCustom } from "@/shared/lib/toast";
-import { BacklogItemDTO, DndData } from "@/shared/model";
-import { FormattedData } from "./types";
+import { BacklogItemDTO, DndData } from "@/shared/model/";
+import { FormattedData, Responce } from "./types";
 import { putBoard } from "../api";
 
 export function useSaveBacklogsOrder(
   backlogId: string,
-  mutate: KeyedMutator<any>
+  mutate: KeyedMutator<Responce>
 ) {
   async function saveBacklogs(
     containers: UniqueIdentifier[],

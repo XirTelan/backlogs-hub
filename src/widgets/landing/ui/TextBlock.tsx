@@ -9,9 +9,9 @@ export default function TextBlock({
 }) {
   return (
     <div
-      className={`${dir === "left" ? " col-start-1 col-end-4" : " col-start-10 col-end-13 "} row-start-1  bg-btn-primary-hover`}
+      className={`${dir === "left" ? " col-start-1 col-end-4" : " col-start-10 col-end-13 "} row-start-1 flex bg-btn-primary-hover`}
     >
-      <div className="p-4">{children}</div>
+      <div className="p-4 text-text-on-color ">{children}</div>
     </div>
   );
 }

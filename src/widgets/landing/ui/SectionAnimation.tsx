@@ -1,4 +1,3 @@
-import { Title } from "@/shared/ui/Title/Title";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { LandingBlockItem } from "../config/types";
@@ -27,8 +26,6 @@ export function SectionAnimated({
         className={` container  flex w-full  justify-center  text-2xl   `}
       >
         <div className="container  bg-bg-main">
-          <Title variant={2} title={"Test"} />
-
           <div className="grid-rows-1  md:grid md:grid-cols-12 ">
             <TextBlock dir={dir}>{textBlock}</TextBlock>
             <ContentBlock dir={dir === "left" ? "right" : "left"}>

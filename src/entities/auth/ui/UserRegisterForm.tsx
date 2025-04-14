@@ -127,9 +127,7 @@ export const UserRegisterForm = () => {
             text="Continue"
             style={{ width: "100%" }}
             icon={<FaArrowRight />}
-          >
-            <FaArrowRight size={16} />
-          </ButtonBase>
+          />
         </form>
       </div>
     </div>

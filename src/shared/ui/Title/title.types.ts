@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 
 export type TitleProps = {
   title: string;
@@ -8,4 +8,4 @@ export type TitleProps = {
   children?: React.ReactElement | null;
   style?: CSSProperties;
   width?: string | number;
-};
+} & React.HTMLAttributes<HTMLHeadingElement>;

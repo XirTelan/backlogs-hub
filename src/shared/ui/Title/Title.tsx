@@ -9,6 +9,7 @@ export const Title = ({
   width = "auto",
   titleOffset = 0,
   children,
+  ...rest
 }: TitleProps) => {
   const fonts = {
     1: "text-3xl font-semibold ",
@@ -43,6 +44,7 @@ export const Title = ({
         <Tag
           className={`${fonts[variant]} flex break-all `}
           style={{ marginLeft: titleOffset }}
+          {...rest}
         >
           {title}
         </Tag>

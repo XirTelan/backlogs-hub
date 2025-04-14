@@ -1,5 +1,5 @@
 import { HomeLink, NavLink, SidePanel } from "@/shared/ui";
-import { routesList } from "@/shared/constants/routesList";
+import { routesList } from "@/shared/constants";
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 

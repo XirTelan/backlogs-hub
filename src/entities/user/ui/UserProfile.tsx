@@ -1,4 +1,4 @@
-import { UserDTO } from "@/shared/types";
+import { UserDTO } from "@/shared/model";
 import { Title } from "@/shared/ui";
 import React from "react";
 

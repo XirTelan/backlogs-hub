@@ -7,7 +7,7 @@ import DnDMultList from "../../../../features/dragAndDrop/ui/DndMultiList";
 
 import { ContainerTitle } from "./ContainerTitle";
 import { BacklogDndItem } from "./BacklogDndItem";
-import { useSaveBacklogsOrder } from "../hooks/useSaveBacklogsOrder";
+import { useSaveBacklogsOrder } from "../model/useSaveBacklogsOrder";
 
 export const BacklogBoard = ({ backlogId }: { backlogId: string }) => {
   const { data, isLoading, mutate } = useSWR(

@@ -4,7 +4,7 @@ import { updateUserInfo } from "@/shared/api/user";
 import { toastCustom } from "@/shared/lib/toast";
 import Setting from "./Setting";
 import { Toggle, Select } from "@/shared/ui";
-import { OptionTab } from "../types/types";
+import { OptionTab } from "../model/types";
 
 const Preferences = ({ data }: OptionTab) => {
   const { config } = data;

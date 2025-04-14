@@ -23,7 +23,7 @@ const ModalProvider = createModal(
 
 export const ItemFormModalOpen = ModalProvider.Opener;
 
-const ItemFormModal = () => {
+export const ItemFormModal = () => {
   const cntx = useContext(ModalContext);
   const backlogInfo = useContext(BacklogInfoContext);
 
@@ -46,4 +46,3 @@ const ItemFormModal = () => {
   );
 };
 
-export default ItemFormModal;

@@ -3,19 +3,19 @@ import { createModal } from "@/shared/lib/createModal";
 import React, { useContext } from "react";
 import { IoAdd } from "react-icons/io5";
 import { ModalContext } from "@/app_fsd/providers/modalProvider";
-import BacklogItem from "@/entities/backlogItem/ui/BacklogItem";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import { fetcher } from "@/shared/lib/utils";
 import useSWR from "swr";
 import { MdClose } from "react-icons/md";
 import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
-import ItemChangeCategory from "../../../../features/backlogItem/changeCategory/ui/ItemChangeCategory";
 import { IoMdSwap } from "react-icons/io";
 import { useToggle } from "@/shared/hooks";
-import { EditItemForm } from "../../../../features/backlogItem/editItem/ui/EditItemForm";
+import { EditItemForm } from "@/features/backlogItem/editItem";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
 import { LoadingAnimation, ButtonBase, Title } from "@/shared/ui";
-import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/shared/types";
+import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/shared/model";
+import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
+import { BacklogItem } from "@/entities/backlogItem";
 
 const KEY = "ItemInfo";
 
@@ -43,7 +43,7 @@ const Wrapper = ({
   );
 };
 
-const ItemInfoModal = () => {
+export const ItemInfoModal = () => {
   const cntx = useContext(ModalContext);
   const { backlog } = useContext(BacklogInfoContext);
   const { isOpen: isEdit, setClose, setOpen } = useToggle(false);
@@ -64,7 +64,7 @@ const ItemInfoModal = () => {
     );
 
   if (!data || !data.status) return;
-
+//[TODO: Refactor. Edit form into separate thing. Compose on page layer]
   return (
     <>
       <Wrapper>
@@ -143,5 +143,3 @@ const ItemInfoModal = () => {
     </>
   );
 };
-
-export default ItemInfoModal;

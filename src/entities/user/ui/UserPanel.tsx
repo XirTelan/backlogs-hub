@@ -1,7 +1,7 @@
 import { VscAccount } from "react-icons/vsc";
 import { NavLink, SidePanel, Divider } from "@/shared/ui";
 
-import SignOutButton from "@/entities/auth/ui/SignOutButton";
+import { SignOutButton } from "@/entities/auth/";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { routesList } from "@/shared/constants";
@@ -62,4 +62,3 @@ export const UserPanel = async ({ userName }: { userName: string }) => {
     </>
   );
 };
-

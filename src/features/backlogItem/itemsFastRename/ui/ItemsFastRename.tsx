@@ -7,7 +7,7 @@ import { ReactElement, useState, type JSX } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import { useSWRConfig } from "swr";
-import { BacklogItemDTO, InputFieldProps } from "@/shared/types";
+import { BacklogItemDTO, InputFieldProps } from "@/shared/model";
 
 type ItemFastRenameItemFastRenameProps = {
   item: Pick<BacklogItemDTO, "_id" | "title">;

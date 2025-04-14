@@ -3,7 +3,7 @@ import {
   BacklogDTO,
   ItemsFormProps,
   BacklogItemCreationDTO,
-} from "@/shared/types";
+} from "@/shared/model";
 import React from "react";
 
 export const CreateItemForm = ({

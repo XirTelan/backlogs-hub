@@ -1,5 +1,4 @@
 import { apiRoutesList, routesList } from "@/shared/constants/routesList";
-import Backlog from "@/models/Backlog";
 import {
   deleteBacklogById,
   isAuthorizedBacklogOwner,
@@ -10,6 +9,7 @@ import { cleanParamString, sendMsg } from "@/shared/lib/utils";
 import { BacklogDTOSchema } from "@/shared/zodSchemas/zod";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { Backlog } from "@/entities/backlog";
 
 type Params = Promise<{ id: string }>;
 

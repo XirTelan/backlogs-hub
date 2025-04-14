@@ -9,7 +9,7 @@ import {
   getCurrentUserInfo,
   setTokenCookies,
 } from "@/entities/auth/utils/utils";
-import User from "@/models/User";
+import { User } from "@/entities/user";
 
 import { createUser } from "@/shared/api/user";
 import { sendMsg } from "@/shared/lib/utils";

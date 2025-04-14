@@ -1,7 +1,7 @@
 import { btnStyleVariants } from "@/shared/constants/styles";
 import classNames from "classnames";
 import React from "react";
-import { ButtonBaseProps } from "../types";
+import { ButtonBaseProps } from "@/shared/model";
 
 /**
  *Base UI button component

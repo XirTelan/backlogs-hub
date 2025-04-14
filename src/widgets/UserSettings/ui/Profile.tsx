@@ -2,10 +2,10 @@
 import React from "react";
 import Setting from "./Setting";
 import { FaChevronRight } from "react-icons/fa6";
-import ChangeUserName from "../../../features/user/changeUserName/ui/ChangeUserName";
 import { ButtonBase } from "@/shared/ui";
 import { SettingModalProps } from "./UserSettings";
-import { OptionTab } from "../types/types";
+import { OptionTab } from "../model/types";
+import { ChangeUserName } from "@/features/user/changeUserName";
 
 const Profile = ({
   data,

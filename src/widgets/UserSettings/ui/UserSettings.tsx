@@ -1,11 +1,10 @@
 "use client";
 import React, { useState } from "react";
 
-import { updateUserInfo } from "@/shared/api/user";
+import { updateUserInfo } from "@/shared/api";
 import { toastCustom } from "@/shared/lib/toast";
-import TextAreaInput from "@/shared/ui/TextAreaInput";
-import { InputField, Modal, Title } from "@/shared/ui";
-import { ButtonBaseProps, UserDTO } from "@/shared/types";
+import { InputField, Modal, Title, TextAreaInput } from "@/shared/ui";
+import { ButtonBaseProps, UserDTO } from "@/shared/model";
 import Account from "./Account";
 import Preferences from "./Preferences";
 import Privacy from "./Privacy";

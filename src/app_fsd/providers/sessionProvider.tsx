@@ -1,5 +1,5 @@
 "use client";
-import { UserDB } from "@/shared/types";
+import { UserDB } from "@/shared/model";
 import { createContext, useContext, useState } from "react";
 
 const defaultValue: {

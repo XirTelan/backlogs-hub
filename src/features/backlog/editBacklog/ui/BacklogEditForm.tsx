@@ -8,7 +8,7 @@ import { fetcher } from "@/shared/lib/utils";
 import NotFound from "@/pages_fsd/notFound/NotFound";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import { LoadingAnimation, TopTitle } from "@/shared/ui";
-import { BacklogDTO } from "@/shared/types";
+import { BacklogDTO } from "@/shared/model";
 import { BacklogForm } from "@/widgets/backlog/BacklogForm";
 
 const BacklogEditForm = ({ id }: { id: string }) => {

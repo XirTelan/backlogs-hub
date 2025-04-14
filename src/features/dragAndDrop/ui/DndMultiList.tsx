@@ -23,7 +23,7 @@ import { Item } from "@/features/dragAndDrop/ui/Item";
 import useDragAndDrop from "@/features/dragAndDrop/hooks/useDragAndDrop";
 import ActionsBlock from "./ActionsBlock";
 import DroppableContainer from "./DroppableContainer";
-import { DndListProps } from "@/shared/types";
+import { DndListProps } from "@/shared/model";
 
 type BaseItem = {
   _id: string;

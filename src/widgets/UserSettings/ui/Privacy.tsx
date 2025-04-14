@@ -1,10 +1,10 @@
 "use client";
 import { Toggle, Select } from "@/shared/ui/";
 import { toastCustom } from "@/shared/lib/toast";
-import { updateUserInfo } from "@/shared/api/user";
+import { updateUserInfo } from "@/shared/api";
 import React from "react";
 import Setting from "./Setting";
-import { OptionTab } from "../types/types";
+import { OptionTab } from "../model/types";
 
 const Privacy = ({ data }: OptionTab) => {
   const { config } = data;

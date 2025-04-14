@@ -1,4 +1,4 @@
-import UserRegisterForm from "@/entities/auth/ui/UserRegisterForm";
+import { UserRegisterForm } from "@/entities/auth";
 import React from "react";
 
 const Register = () => {

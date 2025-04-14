@@ -19,3 +19,4 @@ export { Select } from "./Select";
 export { Toggle } from "./Toggle";
 export { LinkWithBtnStyle } from "./LinkWithBtnStyle";
 export { MarkdownEditor } from "./MarkdownEditor/MarkdownEditor";
+export { TextAreaInput } from "./TextAreaInput";

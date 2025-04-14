@@ -10,7 +10,7 @@ import {
   ItemsFormProps,
   BacklogItemCreationDTO,
   BacklogItemDTO,
-} from "@/shared/types";
+} from "@/shared/model";
 
 export const EditItemForm = ({
   backlogInfo,

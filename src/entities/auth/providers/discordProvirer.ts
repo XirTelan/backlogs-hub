@@ -1,6 +1,6 @@
 "use server";
 
-import { OAuthProps, ResponseData } from "@/shared/types";
+import { OAuthProps, ResponseData } from "@/shared/model";
 
 const TOKEN_URL = "https://discord.com/api/oauth2/token	";
 

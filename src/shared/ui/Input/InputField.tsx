@@ -2,7 +2,7 @@ import React from "react";
 import { inputStyleVariants } from "@/shared/constants/styles";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { InputBase } from "./InputBase";
-import { InputFieldProps } from "@/shared/types";
+import { InputFieldProps } from "@/shared/model";
 
 export const InputField = ({
   id,

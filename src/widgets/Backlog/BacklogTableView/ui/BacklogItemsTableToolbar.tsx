@@ -1,6 +1,6 @@
-import SearchBar from "@/features/search/searchBar/SearchBar";
+import SearchBar from "@/features/search/searchBar/ui/SearchBar";
 import { ItemFormModalOpen } from "@/features/backlogItem/createBacklogItem/ui/ItemFormModal";
-import SearchFilter from "@/features/search/searchFilter/SearchFilter";
+import SearchFilter from "@/features/search/searchFilter/ui/SearchFilter";
 
 const BacklogItemsTableToolbar = ({
   showFilters = true,

@@ -6,7 +6,7 @@ import { ItemInfoModalOpen } from "@/widgets/backlogItem/ItemInfoModal/ui/ItemIn
 import { useSession } from "@/app_fsd/providers/sessionProvider";
 import { BacklogItemActions } from "@/entities/backlogItem";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
-import { BacklogItemDTO } from "@/shared/types";
+import { BacklogItemDTO } from "@/shared/model";
 import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
 
 const BacklogItemTr = ({

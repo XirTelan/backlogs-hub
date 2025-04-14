@@ -2,7 +2,7 @@
 import BacklogItemTr from "./BacklogItemTr";
 import { useContext, useMemo } from "react";
 import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
-import { BacklogItemDTO } from "@/shared/types";
+import { BacklogItemDTO } from "@/shared/model";
 
 const BacklogListData = ({ data, isOwner }: Props) => {
   const { backlog } = useContext(BacklogInfoContext);

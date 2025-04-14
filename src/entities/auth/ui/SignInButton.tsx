@@ -1,11 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import SignInForm from "../../../widgets/SignInForm/ui/SignInForm";
 import { Modal, ButtonBase } from "@/shared/ui";
 import { usePathname } from "next/navigation";
 import { GrLogin } from "react-icons/gr";
 
-const SignInButton = () => {
+export const SignInButton = ({
+  formSlot: SignInForm,
+}: {
+  formSlot: React.FC;
+}) => {
   const [showForm, setShowForm] = useState(false);
   const pathName = usePathname();
   if (pathName === "/") return;
@@ -27,5 +30,3 @@ const SignInButton = () => {
     </div>
   );
 };
-
-export default SignInButton;

@@ -6,7 +6,7 @@ import { toastCustom } from "@/shared/lib/toast";
 import { useSWRConfig } from "swr";
 import { BacklogInfoContext } from "@/app_fsd/providers/backlogInfoProvider";
 import { IoMdSwap } from "react-icons/io";
-import { BacklogItemDTO } from "@/shared/types";
+import { BacklogItemDTO } from "@/shared/model";
 import { ButtonBase, SidePanel } from "@/shared/ui";
 
 const ItemChangeCategory = ({

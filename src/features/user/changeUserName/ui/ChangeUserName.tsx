@@ -4,7 +4,7 @@ import { updateUserInfo } from "@/shared/api/user";
 import { ButtonBase, Modal } from "@/shared/ui";
 import React, { useState } from "react";
 
-const ChangeUserName = () => {
+export const ChangeUserName = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const keepUserName = async () => {
@@ -30,5 +30,3 @@ const ChangeUserName = () => {
     </>
   );
 };
-
-export default ChangeUserName;

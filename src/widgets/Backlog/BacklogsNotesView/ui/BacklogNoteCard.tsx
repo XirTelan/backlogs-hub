@@ -12,7 +12,7 @@ import useSWR from "swr";
 import SkeletonBacklogNoteCard from "@/widgets/backlog/BacklogsNotesView/ui/SkeletonBacklogNoteCard";
 import NotFound from "@/pages_fsd/notFound/NotFound";
 import { BacklogItemActions } from "@/entities/backlogItem";
-import { BacklogItemDTO, BacklogItemPopulated } from "@/shared/types";
+import { BacklogItemDTO, BacklogItemPopulated } from "@/shared/model";
 import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
 
 //[TODO: REFACTOR. State , props drill]

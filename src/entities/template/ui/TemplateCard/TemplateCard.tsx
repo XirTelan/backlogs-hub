@@ -10,7 +10,7 @@ import { MdDelete } from "react-icons/md";
 import { GoMultiSelect } from "react-icons/go";
 import { Title, Accordion, ButtonBase } from "@/shared/ui";
 import Tag from "@/shared/ui/Tag";
-import { TemplateDTO } from "../../types/template.types";
+import { TemplateDTO } from "../../model/template.types";
 
 const icons = {
   timer: <IoMdTimer />,
@@ -22,7 +22,7 @@ const icons = {
   markdown: <FaMarkdown />,
 };
 
-const TemplateCard = ({
+export const TemplateCard = ({
   template,
   canDelete,
   onDelete,
@@ -118,8 +118,6 @@ const TemplateCard = ({
     </div>
   );
 };
-
-export default TemplateCard;
 
 type TemplateCardProps = {
   template: TemplateDTO;

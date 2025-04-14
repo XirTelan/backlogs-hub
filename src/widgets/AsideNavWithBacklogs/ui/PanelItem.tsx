@@ -2,7 +2,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import React from "react";
-import { BacklogNavProps } from "../types/types";
+import { BacklogNavProps } from "../model/types";
 
 const PanelItem = ({ active, href, children, ...props }: BacklogNavProps) => {
   return (

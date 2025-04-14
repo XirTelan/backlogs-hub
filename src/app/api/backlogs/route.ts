@@ -13,7 +13,7 @@ import {
 } from "@/shared/api/backlogs";
 import { updateStat, updateUserFolders } from "@/shared/api/user";
 import { generateSlug, sendMsg } from "@/shared/lib/utils";
-import { BacklogCreationDTO, BacklogDTO, BacklogItemDTO } from "@/shared/types";
+import { BacklogCreationDTO, BacklogDTO, BacklogItemDTO } from "@/shared/model";
 import {
   BacklogCreationSchema,
   BacklogFormSchema,

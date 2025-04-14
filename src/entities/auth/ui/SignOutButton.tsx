@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { mutate } from "swr";
 import { GrLogout } from "react-icons/gr";
 
-const SignOutButton = () => {
+export const SignOutButton = () => {
   const router = useRouter();
   return (
     <button
@@ -22,5 +22,3 @@ const SignOutButton = () => {
     </button>
   );
 };
-
-export default SignOutButton;

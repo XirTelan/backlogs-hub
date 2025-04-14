@@ -1,7 +1,7 @@
 import { ButtonBase, Modal } from "@/shared/ui";
 import React, { Context, useContext } from "react";
-import { ModalContextProps, ButtonBaseProps } from "../types";
 import { BaseModalProps } from "../ui/Modal/modal.types";
+import { ModalContextProps, ButtonBaseProps } from "../model";
 
 export function createModal(
   cntx: Context<ModalContextProps>,

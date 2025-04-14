@@ -1,5 +1,5 @@
 import React from "react";
-import { TextArea } from "../types";
+import { TextArea } from "@/shared/model";
 
 const elevation = {
   1: "bg-field-1 border-b-border-strong-1",
@@ -7,7 +7,7 @@ const elevation = {
   3: "bg-field-3 border-b-border-strong-3",
 };
 
-const TextAreaInput = ({
+export const TextAreaInput = ({
   id,
   label,
   placeholder,
@@ -38,4 +38,3 @@ const TextAreaInput = ({
   );
 };
 TextAreaInput.displayName = "TextArea";
-export default TextAreaInput;

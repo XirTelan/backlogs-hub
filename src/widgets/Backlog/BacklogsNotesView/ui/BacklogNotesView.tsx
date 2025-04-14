@@ -1,7 +1,7 @@
 "use client";
 import { LoadingAnimation } from "@/shared/ui";
-import SearchBar from "@/features/search/searchBar/SearchBar";
-import SearchFilter from "@/features/search/searchFilter/SearchFilter";
+import SearchBar from "@/features/search/searchBar/ui/SearchBar";
+import SearchFilter from "@/features/search/searchFilter/ui/SearchFilter";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import { fetcher } from "@/shared/lib/utils";
 import { useSearchParams } from "next/navigation";
@@ -9,7 +9,7 @@ import React from "react";
 import useSWR from "swr";
 import BacklogNoteCard from "./BacklogNoteCard";
 import { ItemFormModalOpen } from "@/features/backlogItem/createBacklogItem/ui/ItemFormModal";
-import { BacklogItemDTO } from "@/shared/types";
+import { BacklogItemDTO } from "@/shared/model";
 
 type items =
   | {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const DiscordSignIn = () => {
+export const DiscordSignIn = () => {
   return (
     <Link
       href={process.env.NEXT_PUBLIC_DISCORDOAUTH!}
@@ -25,5 +25,3 @@ const DiscordSignIn = () => {
     </Link>
   );
 };
-
-export default DiscordSignIn;

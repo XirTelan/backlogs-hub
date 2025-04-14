@@ -1,13 +1,13 @@
 "use server";
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import dbConnect from "@/shared/lib/dbConnect";
-import Backlog from "@/models/Backlog";
-import BacklogItem from "@/models/BacklogItem";
 import { BacklogCreationSchema } from "@/shared/zodSchemas/zod";
 import { z } from "zod";
 import { generateSlug } from "@/shared/lib/utils";
 import { getUserData } from "./user";
-import { BacklogDTO, BacklogCreationDTO, ResponseData } from "../types";
+import { BacklogDTO, BacklogCreationDTO, ResponseData } from "@/shared/model";
+import { Backlog } from "@/entities/backlog";
+import { BacklogItemDB as BacklogItem } from "@/entities/backlogItem";
 
 //GET SECTION
 export const getBacklogById = async (

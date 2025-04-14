@@ -1,7 +1,6 @@
 import dbConnect from "@/shared/lib/dbConnect";
-import Template from "@/models/Template";
-import { TemplateDTO } from "@/entities/template";
-import { ResponseData } from "../types";
+import { Template, TemplateDTO } from "@/entities/template";
+import { ResponseData } from "../model";
 
 export const getTemplateById = async (id: string) => {
   try {

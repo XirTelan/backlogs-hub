@@ -9,7 +9,7 @@ import {
   UseFieldArrayRemove,
   UseFieldArrayUpdate,
 } from "react-hook-form";
-import { FieldWithId, BacklogFormData } from "@/shared/types";
+import { FieldWithId, BacklogFormData } from "@/shared/model";
 import { InputField } from "@/shared/ui";
 
 type UserFieldsTableProps<T extends FieldValues, U extends FieldValues> = {

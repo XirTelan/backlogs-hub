@@ -3,7 +3,7 @@ import React from "react";
 import BacklogFolder from "./BacklogFolder";
 import { getConfigOptions } from "@/shared/api/user";
 import dynamic from "next/dynamic";
-import { BacklogDTO } from "@/shared/types";
+import { BacklogDTO } from "@/shared/model";
 
 const EmptyBacklogList = dynamic(() =>
   import("./EmptyBacklogList").then((mod) => mod.EmptyBacklogList)

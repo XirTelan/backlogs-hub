@@ -14,7 +14,7 @@ import { z } from "zod";
 
 type FormData = z.infer<typeof RegistrationSchema>;
 
-const UserRegisterForm = () => {
+export const UserRegisterForm = () => {
   const {
     handleSubmit,
     register,
@@ -135,5 +135,3 @@ const UserRegisterForm = () => {
     </div>
   );
 };
-
-export default UserRegisterForm;

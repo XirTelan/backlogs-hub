@@ -4,7 +4,7 @@ import { IoMdOptions } from "react-icons/io";
 import { Control, Controller, useFormContext } from "react-hook-form";
 import { ButtonBase, Title, Select, Toggle, Modal } from "@/shared/ui";
 import { useToggle } from "@/shared/hooks";
-import { ModifiersType } from "@/shared/types";
+import { ModifiersType } from "@/shared/model";
 
 type MenuItemProps = {
   title: string;

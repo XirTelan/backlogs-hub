@@ -6,7 +6,7 @@ import { toastCustom } from "@/shared/lib/toast";
 import useSWR from "swr";
 import { LoadingAnimation } from "@/shared/ui";
 import { apiRoutesList } from "@/shared/constants/routesList";
-import { BacklogCategory, BacklogFormData } from "@/shared/types";
+import { BacklogCategory, BacklogFormData } from "@/shared/model";
 import { BacklogForm } from "@/widgets/backlog/BacklogForm";
 
 const BacklogCreateForm = () => {

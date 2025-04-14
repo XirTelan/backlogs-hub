@@ -15,9 +15,9 @@ import { getUserData as getGoogleUser } from "@/entities/auth/providers/googlePr
 
 import { SignInSchema, isEmailSchema } from "@/shared/zodSchemas/zod";
 import bcrypt from "bcryptjs";
-import Account from "@/models/Account";
-import User from "@/models/User";
-import { OAuthProps, ResponseData } from "@/shared/types";
+import { OAuthProps, ResponseData } from "@/shared/model";
+import { Account } from "@/shared/model";
+import { User } from "@/entities/user";
 
 export const handleSession = async (request: NextRequest) => {
   const token = request.cookies.get("access_token")?.value || "";

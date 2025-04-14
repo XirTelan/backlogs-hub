@@ -1,4 +1,4 @@
-import { DndData } from "@/shared/types";
+import { DndData } from "@/shared/model";
 import {
   CollisionDetection,
   DragEndEvent,

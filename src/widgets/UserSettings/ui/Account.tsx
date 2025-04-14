@@ -6,7 +6,7 @@ import { toastCustom } from "@/shared/lib/toast";
 
 import { Title, ButtonBase, LinkWithBtnStyle } from "@/shared/ui";
 import { SettingModalProps } from "./UserSettings";
-import { OptionTab } from "../types/types";
+import { OptionTab } from "../model/types";
 import DeleteAccount from "@/features/user/deleteAccount/ui/DeleteAccount";
 
 type AccountType = {

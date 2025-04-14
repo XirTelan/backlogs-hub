@@ -1,4 +1,4 @@
-import { ButtonBaseProps, ButtonColorVariants } from "@/shared/types";
+import { ButtonBaseProps, ButtonColorVariants } from "@/shared/model";
 
 export type BaseModalProps = {
   styleMain?: string;

@@ -4,7 +4,7 @@ import MDEditor from "@uiw/react-md-editor";
 import React from "react";
 import rehypeSanitize from "rehype-sanitize";
 import { Accordion } from "@/shared/ui";
-import { NewsType } from "../types/types";
+import { NewsType } from "../model/types";
 
 export const UpdatesList = ({ data }: { data: NewsType[] }) => {
   if (!data || data.length === 0) return <div>Updates doesnot found</div>;
@@ -31,4 +31,3 @@ export const UpdatesList = ({ data }: { data: NewsType[] }) => {
     </div>
   );
 };
-

@@ -4,12 +4,18 @@ import dbConnect from "@/shared/lib/dbConnect";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import Backlog from "@/models/Backlog";
-import BacklogItem from "@/models/BacklogItem";
-import Account from "@/models/Account";
-import Template from "@/models/Template";
-import User from "@/models/User";
-import { ConfigType, ResponseData, UserDTO, StatsType } from "../types";
+
+import { Backlog } from "@/entities/backlog";
+import { BacklogItemDB as BacklogItem } from "@/entities/backlogItem";
+import { Template } from "@/entities/template";
+import { User } from "@/entities/user";
+import {
+  Account,
+  ConfigType,
+  ResponseData,
+  StatsType,
+  UserDTO,
+} from "@/shared/model";
 
 const userDataTypes = {
   folders: { folders: 1, config: 1 },

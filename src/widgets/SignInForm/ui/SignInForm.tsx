@@ -1,7 +1,7 @@
+import { DiscordSignIn } from "@/entities/auth";
+import { GoogleSignIn } from "@/entities/auth";
+import { UserLoginForm } from "@/features/auth/signInByPassword";
 import React from "react";
-import { GoogleSignIn } from "../../../entities/auth/ui/GoogleSignIn/GoogleSignIn";
-import DiscordSignIn from "../../../entities/auth/ui/DiscordSignIn";
-import UserLoginForm from "../../../features/auth/signInByPassword/ui/UserLoginForm";
 
 const SignInForm = () => {
   return (

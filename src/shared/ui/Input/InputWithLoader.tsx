@@ -2,7 +2,7 @@
 import React from "react";
 import { InputField } from "./InputField";
 import { FaCheck } from "react-icons/fa6";
-import { InputFieldProps } from "@/shared/types";
+import { InputFieldProps } from "@/shared/model";
 
 type InputWithLoaderProps = {
   isLoading: boolean;

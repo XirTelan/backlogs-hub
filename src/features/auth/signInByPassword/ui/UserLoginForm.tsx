@@ -12,7 +12,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { z } from "zod";
 
 type FormData = z.infer<typeof SignInSchema>;
-const UserLoginForm = () => {
+export const UserLoginForm = () => {
   const {
     handleSubmit,
     register,
@@ -80,5 +80,3 @@ const UserLoginForm = () => {
     </form>
   );
 };
-
-export default UserLoginForm;

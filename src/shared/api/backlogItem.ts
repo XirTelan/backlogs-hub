@@ -1,6 +1,4 @@
 import dbConnect from "@/shared/lib/dbConnect";
-import Backlog from "@/models/Backlog";
-import BacklogItem from "@/models/BacklogItem";
 
 import { getBacklogById } from "./backlogs";
 import { getSteamGameInfo } from "./steamSearch";
@@ -17,7 +15,9 @@ import {
   BacklogItemPopulated,
   BacklogItemWithSteamInfo,
   BacklogItemPopUserField,
-} from "../types";
+} from "@/shared/model";
+import { BacklogItemDB as BacklogItem } from "@/entities/backlogItem";
+import { Backlog } from "@/entities/backlog";
 
 export const getBacklogItemById = async (
   itemId: string

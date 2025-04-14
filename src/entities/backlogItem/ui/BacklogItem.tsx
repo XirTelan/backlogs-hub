@@ -6,7 +6,11 @@ import rehypeSanitize from "rehype-sanitize";
 import SteamGameCard from "@/entities/backlogItem/ui/SteamGameCard";
 import { IoMdCreate } from "react-icons/io";
 import { MdOutlineUpdate } from "react-icons/md";
-import { BacklogItemPopUserField, BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/shared/types";
+import {
+  BacklogItemPopUserField,
+  BacklogItemPopulated,
+  BacklogItemWithSteamInfo,
+} from "@/shared/model";
 import { Accordion } from "@/shared/ui";
 
 type TimeStamp = {
@@ -21,7 +25,7 @@ type WrapperProps = {
   renderField: (field: BacklogItemPopUserField) => React.ReactNode;
 };
 
-const BacklogItem = ({
+export const BacklogItem = ({
   data,
   hideCategory = false,
 }: {

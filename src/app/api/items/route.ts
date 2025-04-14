@@ -9,7 +9,7 @@ import { sendMsg } from "@/shared/lib/utils";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { SortOrder } from "mongoose";
-import { BacklogItemDTO } from "@/shared/types";
+import { BacklogItemDTO } from "@/shared/model";
 
 const availableSortOptions: Record<string, string> = {
   title: "title",

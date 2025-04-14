@@ -1,19 +1,19 @@
 "use client";
 import { useForm } from "react-hook-form";
-import FieldsBlock from "../../field/FieldsBlock";
+import FieldsBlock from "./FieldsBlock";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import ProgressTimer from "@/features/progressTimer/ProgressTimer";
 import { toastCustom } from "@/shared/lib/toast";
 
 import { MarkdownEditor } from "@/shared/ui";
-import SearchGameBar from "../../../features/search/searchGameBar/SearchGameBar";
+import SearchGameBar from "../../../features/search/searchGameBar/ui/SearchGameBar";
 import { FaSteam } from "react-icons/fa6";
 import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import DropDown from "@/shared/ui/DropDown/DropDown";
 import { Select, InputField, ButtonBase, LoadingAnimation } from "@/shared/ui";
-import { BacklogItemCreationDTO, Field, ItemsFormProps } from "@/shared/types";
+import { BacklogItemCreationDTO, Field, ItemsFormProps } from "@/shared/model";
 
 export const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,

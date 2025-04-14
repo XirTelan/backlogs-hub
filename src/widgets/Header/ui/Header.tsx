@@ -1,10 +1,11 @@
 import React from "react";
-import SignInButton from "../../../entities/auth/ui/SignInButton";
 import NavBar from "./NavBar";
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import ThemeSwitch from "@/shared/ui/ThemeSwitch";
 import { UserPanel } from "@/entities/user";
 import { HomeLink } from "@/shared/ui";
+import { SignInButton } from "@/entities/auth";
+import SignInForm from "@/widgets/SignInForm/ui/SignInForm";
 
 export const Header = async () => {
   const user = await getCurrentUserInfo();
@@ -24,7 +25,7 @@ export const Header = async () => {
             <HomeLink />
             <div className="ms-auto flex">
               <ThemeSwitch />
-              <SignInButton />
+              <SignInButton formSlot={SignInForm} />
             </div>
           </>
         )}

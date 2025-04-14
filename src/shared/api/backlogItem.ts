@@ -15,9 +15,9 @@ import {
   BacklogItemPopulated,
   BacklogItemWithSteamInfo,
   BacklogItemPopUserField,
-} from "@/shared/model";
-import { BacklogItemDB as BacklogItem } from "@/entities/backlogItem";
-import { Backlog } from "@/entities/backlog";
+} from "@/shared/model/";
+import { BacklogItem } from "../model/db/BacklogItem";
+import { Backlog } from "../model/db";
 
 export const getBacklogItemById = async (
   itemId: string

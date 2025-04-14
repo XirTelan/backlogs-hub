@@ -7,7 +7,8 @@ import { useState } from "react";
 import { toastCustom } from "@/shared/lib/toast";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import { LoadingAnimation } from "@/shared/ui";
-import { TemplateCard, TemplateDTO } from "../..";
+import { TemplateCard } from "../..";
+import { TemplateDTO } from "@/shared/model/";
 
 const isEmpty = <div>Its empty</div>;
 

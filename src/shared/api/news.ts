@@ -1,5 +1,5 @@
 import dbConnect from "@/shared/lib/dbConnect";
-import { News } from "../model";
+import { News } from "../model/db";
 
 export async function getNews() {
   try {

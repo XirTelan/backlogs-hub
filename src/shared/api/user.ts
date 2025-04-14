@@ -5,17 +5,9 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
-import { Backlog } from "@/entities/backlog";
-import { BacklogItemDB as BacklogItem } from "@/entities/backlogItem";
-import { Template } from "@/entities/template";
-import { User } from "@/entities/user";
-import {
-  Account,
-  ConfigType,
-  ResponseData,
-  StatsType,
-  UserDTO,
-} from "@/shared/model";
+import { ConfigType, ResponseData, StatsType, UserDTO } from "@/shared/model/";
+import { Template } from "../model/db/Template";
+import { Account, Backlog, BacklogItem, User } from "../model/db";
 
 const userDataTypes = {
   folders: { folders: 1, config: 1 },

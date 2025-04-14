@@ -1,4 +1,4 @@
-import { ButtonBaseProps } from "@/shared/model";
+import { ButtonBaseProps } from "@/shared/model/";
 import { ButtonBase } from "./ButtonBase";
 
 type ToggleButtonProps = {

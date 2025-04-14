@@ -18,7 +18,7 @@ import BacklogOptionsMenu from "@/widgets/backlog/BacklogForm/ui/BacklogOptionsM
 import { FaEye, FaEyeSlash, FaFolder } from "react-icons/fa6";
 import CategoriesFieldsBlock from "./CategoriesFieldsBlock";
 import { useToggle } from "@/shared/hooks";
-import { BacklogFormData } from "@/shared/model";
+import { BacklogFormData } from "@/shared/model/";
 
 export const BacklogForm = <T extends BacklogFormData>({
   defaultValues,

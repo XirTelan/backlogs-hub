@@ -1,4 +1,4 @@
-import { BacklogCategory, BacklogFormData, Field } from "@/shared/model";
+import { BacklogCategory, BacklogFormData, Field } from "@/shared/model/";
 import {
   Control,
   FieldError,

@@ -13,7 +13,7 @@ import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import DropDown from "@/shared/ui/DropDown/DropDown";
 import { Select, InputField, ButtonBase, LoadingAnimation } from "@/shared/ui";
-import { BacklogItemCreationDTO, Field, ItemsFormProps } from "@/shared/model";
+import { BacklogItemCreationDTO, Field, ItemsFormProps } from "@/shared/model/";
 
 export const ItemsForm = <T extends BacklogItemCreationDTO>({
   backlog,

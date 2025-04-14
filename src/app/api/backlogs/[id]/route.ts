@@ -9,7 +9,7 @@ import { cleanParamString, sendMsg } from "@/shared/lib/utils";
 import { BacklogDTOSchema } from "@/shared/zodSchemas/zod";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import { Backlog } from "@/entities/backlog";
+import { Backlog } from "@/shared/model/db";
 
 type Params = Promise<{ id: string }>;
 

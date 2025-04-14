@@ -5,7 +5,7 @@ import Image from "next/image";
 import { MdLocalMovies } from "react-icons/md";
 import Carousel from "@/entities/backlogItem/ui/Carousel";
 import Clip from "@/shared/ui/Clip";
-import { SteamApp } from "@/shared/model";
+import { SteamApp } from "@/shared/model/";
 import { Modal, ButtonBase, LinkBase } from "@/shared/ui";
 const SteamGameCard = ({
   data,

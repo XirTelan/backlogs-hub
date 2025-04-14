@@ -4,10 +4,10 @@ import { FaFileLines } from "react-icons/fa6";
 import { LinkWithBtnStyle } from "@/shared/ui";
 import { ItemInfoModalOpen } from "@/widgets/backlogItem/ItemInfoModal/ui/ItemInfoModal";
 import { useSession } from "@/app_fsd/providers/sessionProvider";
-import { BacklogItemActions } from "@/entities/backlogItem";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
-import { BacklogItemDTO } from "@/shared/model";
+import { BacklogItemDTO } from "@/shared/model/";
 import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
+import { BacklogItemActions } from "@/features/backlogItem/showActions";
 
 const BacklogItemTr = ({
   item,

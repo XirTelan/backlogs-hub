@@ -1,4 +1,4 @@
-import { Field } from "@/shared/model";
+import { Field } from "@/shared/model/";
 import { InputField, Select, ButtonBase } from "@/shared/ui";
 import classNames from "classnames";
 import { produce } from "immer";

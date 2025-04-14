@@ -9,10 +9,10 @@ import {
   getCurrentUserInfo,
   setTokenCookies,
 } from "@/entities/auth/utils/utils";
-import { User } from "@/entities/user";
 
 import { createUser } from "@/shared/api/user";
 import { sendMsg } from "@/shared/lib/utils";
+import { User } from "@/shared/model/db";
 import { RegistrationSchema } from "@/shared/zodSchemas/zod";
 import bcrypt from "bcryptjs";
 

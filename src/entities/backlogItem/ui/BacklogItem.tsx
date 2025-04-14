@@ -10,7 +10,7 @@ import {
   BacklogItemPopUserField,
   BacklogItemPopulated,
   BacklogItemWithSteamInfo,
-} from "@/shared/model";
+} from "@/shared/model/";
 import { Accordion } from "@/shared/ui";
 
 type TimeStamp = {

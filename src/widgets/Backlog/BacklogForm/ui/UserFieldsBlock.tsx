@@ -4,7 +4,7 @@ import { Field, useFieldArray } from "react-hook-form";
 import UserFieldsTable from "./UserFieldsTable";
 import { Title, ButtonBase } from "@/shared/ui";
 import { FieldsBlockProps } from "@/entities/backlog/model/types";
-import { BacklogFormData, FieldWithId } from "@/shared/model";
+import { BacklogFormData, FieldWithId } from "@/shared/model/";
 
 const UserFieldsBlock = ({ control }: FieldsBlockProps) => {
   const { fields, append, remove, update } = useFieldArray<

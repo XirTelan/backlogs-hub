@@ -1,4 +1,4 @@
-import { AccountType } from "@/shared/model";
+import { AccountType } from "@/shared/model/";
 import mongoose, { Schema } from "mongoose";
 
 const AccountSchema = new mongoose.Schema<AccountType>({

@@ -3,7 +3,7 @@ import React from "react";
 
 import { btnStyleVariants } from "@/shared/constants/styles";
 import classNames from "classnames";
-import { ButtonBaseProps } from "@/shared/model";
+import { ButtonBaseProps } from "@/shared/model/";
 
 export const LinkWithBtnStyle = ({
   href,

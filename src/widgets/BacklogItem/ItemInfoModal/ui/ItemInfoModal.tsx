@@ -13,7 +13,10 @@ import { useToggle } from "@/shared/hooks";
 import { EditItemForm } from "@/features/backlogItem/editItem";
 import { ItemFastRename } from "@/features/backlogItem/itemsFastRename";
 import { LoadingAnimation, ButtonBase, Title } from "@/shared/ui";
-import { BacklogItemPopulated, BacklogItemWithSteamInfo } from "@/shared/model";
+import {
+  BacklogItemPopulated,
+  BacklogItemWithSteamInfo,
+} from "@/shared/model/";
 import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
 import { BacklogItem } from "@/entities/backlogItem";
 
@@ -64,7 +67,7 @@ export const ItemInfoModal = () => {
     );
 
   if (!data || !data.status) return;
-//[TODO: Refactor. Edit form into separate thing. Compose on page layer]
+  //[TODO: Refactor. Edit form into separate thing. Compose on page layer]
   return (
     <>
       <Wrapper>

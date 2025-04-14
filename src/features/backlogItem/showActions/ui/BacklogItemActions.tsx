@@ -1,5 +1,5 @@
 import { ItemDeleteModalOpen } from "@/entities/backlog";
-import { BacklogItemDTO } from "@/shared/model";
+import { BacklogItemDTO } from "@/shared/model/";
 import { Divider } from "@/shared/ui";
 import { LinkWithBtnStyle, SidePanel } from "@/shared/ui";
 import React from "react";

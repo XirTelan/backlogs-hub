@@ -1,7 +1,7 @@
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
 import { deleteAccount } from "@/shared/api/account";
 import { sendMsg } from "@/shared/lib/utils";
-import { Account } from "@/shared/model";
+import { Account } from "@/shared/model/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(

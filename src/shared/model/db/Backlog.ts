@@ -1,4 +1,4 @@
-import { BacklogDTO, ModifiersType } from "@/shared/model";
+import { BacklogDTO, ModifiersType } from "@/shared/model/";
 import mongoose, { Schema } from "mongoose";
 
 const backlogModifiersSchema = new mongoose.Schema<ModifiersType>(

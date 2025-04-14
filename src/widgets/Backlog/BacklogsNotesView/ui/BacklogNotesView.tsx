@@ -9,7 +9,7 @@ import React from "react";
 import useSWR from "swr";
 import BacklogNoteCard from "./BacklogNoteCard";
 import { ItemFormModalOpen } from "@/features/backlogItem/createBacklogItem/ui/ItemFormModal";
-import { BacklogItemDTO } from "@/shared/model";
+import { BacklogItemDTO } from "@/shared/model/";
 
 type items =
   | {

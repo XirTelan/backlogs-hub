@@ -1,8 +1,8 @@
 "use server";
 
 import dbConnect from "@/shared/lib/dbConnect";
-import { LogDTO } from "@/shared/model";
-import { Log } from "../model";
+import { LogDTO } from "@/shared/model/";
+import { Log } from "../model/db";
 
 export const createLogEntry = async (data: LogDTO) => {
   try {

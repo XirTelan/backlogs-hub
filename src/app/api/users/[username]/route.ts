@@ -12,7 +12,7 @@ import { sendMsg } from "@/shared/lib/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/shared/lib/dbConnect";
-import { User } from "@/entities/user";
+import { User } from "@/shared/model/db";
 
 type Params = Promise<{ username: string }>;
 export async function GET(_request: NextRequest, props: { params: Params }) {

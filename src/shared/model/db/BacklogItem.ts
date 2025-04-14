@@ -1,4 +1,4 @@
-import { BacklogItemDTO } from "@/shared/model";
+import { BacklogItemDTO } from "@/shared/model/";
 import mongoose from "mongoose";
 
 const DataItemSchema = new mongoose.Schema<{

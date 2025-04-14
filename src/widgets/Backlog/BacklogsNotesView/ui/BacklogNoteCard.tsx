@@ -11,9 +11,9 @@ import rehypeSanitize from "rehype-sanitize";
 import useSWR from "swr";
 import SkeletonBacklogNoteCard from "@/widgets/backlog/BacklogsNotesView/ui/SkeletonBacklogNoteCard";
 import NotFound from "@/pages_fsd/notFound/NotFound";
-import { BacklogItemActions } from "@/entities/backlogItem";
-import { BacklogItemDTO, BacklogItemPopulated } from "@/shared/model";
+import { BacklogItemDTO, BacklogItemPopulated } from "@/shared/model/";
 import ItemChangeCategory from "@/features/backlogItem/changeCategory/ui/ItemChangeCategory";
+import { BacklogItemActions } from "@/features/backlogItem/showActions";
 
 //[TODO: REFACTOR. State , props drill]
 type BacklogNoteCardProps = {

@@ -1,5 +1,6 @@
-import { TemplateDTO } from "@/entities/template";
+
 import mongoose, { Schema } from "mongoose";
+import { TemplateDTO } from "../types";
 
 const TemplateSchema = new mongoose.Schema(
   {
@@ -33,8 +34,8 @@ const TemplateSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
+
 export const Template: mongoose.Model<TemplateDTO> =
   mongoose.models.Template || mongoose.model("Template", TemplateSchema);
-

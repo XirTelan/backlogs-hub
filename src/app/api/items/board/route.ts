@@ -1,8 +1,8 @@
 import { getCurrentUserInfo } from "@/entities/auth/utils/utils";
-import { Backlog } from "@/entities/backlog";
 import { updateMany } from "@/shared/api/backlogItem";
 import { sendMsg } from "@/shared/lib/utils";
 import { BacklogItemDTO, BacklogCategory } from "@/shared/model";
+import { Backlog } from "@/shared/model/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {

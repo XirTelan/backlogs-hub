@@ -4,8 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useLoaderValue } from "@/shared/hooks";
 import { toastCustom } from "@/shared/lib/toast";
 import { Title, InputWithLoader, Select, ButtonBase } from "@/shared/ui";
-import { BacklogCreationDTO } from "@/shared/model";
-import { TemplateDTO } from "@/entities/template";
+import { BacklogCreationDTO, TemplateDTO } from "@/shared/model/";
 
 const TemplateForm = ({
   selectedTemplate,

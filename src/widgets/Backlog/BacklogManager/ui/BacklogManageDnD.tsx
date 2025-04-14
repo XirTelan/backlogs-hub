@@ -10,7 +10,7 @@ import { useSWRConfig } from "swr";
 import { apiRoutesList } from "@/shared/constants/routesList";
 import DnDMultList from "../../../../features/dragAndDrop/ui/DndMultiList";
 import { UniqueIdentifier } from "@dnd-kit/core";
-import { BacklogDTO, DndData } from "@/shared/model";
+import { BacklogDTO, DndData } from "@/shared/model/";
 
 export const BacklogManageDnD = ({
   data,

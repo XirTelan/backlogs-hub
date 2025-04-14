@@ -3,7 +3,7 @@ import React from "react";
 import { toastCustom } from "@/shared/lib/toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "@/app_fsd/providers/sessionProvider";
-import { BacklogFormData } from "@/shared/model";
+import { BacklogFormData, TemplateDTO } from "@/shared/model/";
 import {
   Title,
   InputField,
@@ -11,7 +11,7 @@ import {
   ButtonBase,
   TextAreaInput,
 } from "@/shared/ui";
-import { TemplateDTO } from "../../model/template.types";
+
 import { TemplateCard } from "../TemplateCard/TemplateCard";
 const TemplatePreview = ({ backlogData, onClose }: TemplatePreviewProps) => {
   const { user } = useSession();

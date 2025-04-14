@@ -10,7 +10,7 @@ import { MdDelete } from "react-icons/md";
 import { GoMultiSelect } from "react-icons/go";
 import { Title, Accordion, ButtonBase } from "@/shared/ui";
 import Tag from "@/shared/ui/Tag";
-import { TemplateDTO } from "../../model/template.types";
+import { TemplateDTO } from "@/shared/model/";
 
 const icons = {
   timer: <IoMdTimer />,

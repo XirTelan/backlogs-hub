@@ -5,7 +5,7 @@ import { TokenData } from "@/entities/auth/utils/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toastCustom } from "@/shared/lib/toast";
 import { InputField, Select, ButtonBase, TextAreaInput } from "@/shared/ui";
-import { LogDTO } from "@/shared/model";
+import { LogDTO } from "@/shared/model/";
 
 const DEFAULT: LogDTO = {
   name: "",

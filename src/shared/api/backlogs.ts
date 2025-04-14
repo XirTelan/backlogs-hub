@@ -5,9 +5,8 @@ import { BacklogCreationSchema } from "@/shared/zodSchemas/zod";
 import { z } from "zod";
 import { generateSlug } from "@/shared/lib/utils";
 import { getUserData } from "./user";
-import { BacklogDTO, BacklogCreationDTO, ResponseData } from "@/shared/model";
-import { Backlog } from "@/entities/backlog";
-import { BacklogItemDB as BacklogItem } from "@/entities/backlogItem";
+import { BacklogDTO, BacklogCreationDTO, ResponseData } from "@/shared/model/";
+import { Backlog, BacklogItem } from "../model/db";
 
 //GET SECTION
 export const getBacklogById = async (

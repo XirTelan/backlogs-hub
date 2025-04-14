@@ -1,6 +1,6 @@
 import { GoSearch } from "react-icons/go";
 import React from "react";
-import { SearchBar } from "@/shared/model";
+import { SearchBar } from "@/shared/model/";
 
 const SearchField = ({
   id,

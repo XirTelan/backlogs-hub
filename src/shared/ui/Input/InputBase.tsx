@@ -1,5 +1,5 @@
 import { inputStyleVariants } from "@/shared/constants/styles";
-import { InputBaseProps } from "@/shared/model";
+import { InputBaseProps } from "@/shared/model/";
 import classNames from "classnames";
 import React from "react";
 

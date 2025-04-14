@@ -20,7 +20,7 @@ type BacklogNoteCardProps = {
   item: BacklogItemDTO;
 };
 
-const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
+export const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
   const url = `${apiRoutesList.items}/${item._id}?type=populate`;
 
   const { isOpen: isEdit, toggle } = useToggle();
@@ -124,5 +124,3 @@ const BacklogNoteCard = ({ item }: BacklogNoteCardProps) => {
     </div>
   );
 };
-
-export default BacklogNoteCard;

@@ -7,7 +7,7 @@ import { fetcher } from "@/shared/lib/utils";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import useSWR from "swr";
-import BacklogNoteCard from "./BacklogNoteCard";
+import { BacklogNoteCard } from "./BacklogNoteCard";
 import { ItemFormModalOpen } from "@/features/backlogItem/createBacklogItem/ui/ItemFormModal";
 import { BacklogItemDTO } from "@/shared/model/";
 
@@ -21,7 +21,7 @@ type items =
       items: BacklogItemDTO[];
     };
 
-const BacklogNotesView = ({ backlogId }: { backlogId: string }) => {
+export const BacklogNotesView = ({ backlogId }: { backlogId: string }) => {
   const searchParams = new URLSearchParams(useSearchParams()?.toString());
   searchParams.append("backlog", backlogId);
   const requstUrl = `${apiRoutesList.items}?${searchParams.toString()}`;
@@ -49,8 +49,6 @@ const BacklogNotesView = ({ backlogId }: { backlogId: string }) => {
     </>
   );
 };
-
-export default BacklogNotesView;
 
 const FilterBlock = () => (
   <div className=" flex">

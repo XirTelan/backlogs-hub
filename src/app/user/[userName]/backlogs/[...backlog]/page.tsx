@@ -9,7 +9,7 @@ import { getUserBacklogBySlug } from "@/shared/api/backlogs";
 import dynamic from "next/dynamic";
 import React from "react";
 import { MdEdit } from "react-icons/md";
-import BacklogNotesView from "@/widgets/backlog/BacklogsNotesView/ui/BacklogNotesView";
+import { BacklogNotesView } from "@/widgets/backlog/BacklogsNotesView";
 import { TopTitle } from "@/shared/ui";
 import { BacklogDefaultView } from "@/widgets/backlog/BacklogTableView";
 

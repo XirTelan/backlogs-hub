@@ -11,13 +11,11 @@ const page = async () => {
     <>
       <TopTitle title="Contacts" />
       <main id="maincontent" className="container self-center px-4 ">
-        <div>
-          <p>I&apos;d Love to Hear From You</p>
-          <p>
-            Whether you have a problem, a question, or just want to share
-            something, I&apos;m all ears.
-          </p>
-        </div>
+        <p>I&apos;d Love to Hear From You</p>
+        <p>
+          Whether you have a problem, a question, or just want to share
+          something, I&apos;m all ears.
+        </p>
         <div>
           <label htmlFor="">
             You can create issue on the GitHub project page
@@ -32,9 +30,9 @@ const page = async () => {
               <span>GitHub</span>
             </div>
           </LinkBase>
+          <p> Or you can fill form below</p>
         </div>
-        <p> Or you can fill form below</p>
-        <div className=" max-w-xl bg-layer-1 p-4 ">
+        <div className="mt-4 max-w-xl bg-layer-1 p-4 ">
           <ContactsForm user={user} code={confirmCode} />
         </div>
       </main>

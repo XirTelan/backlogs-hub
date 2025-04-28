@@ -5,7 +5,7 @@ import React from "react";
 
 const SignInForm = () => {
   return (
-    <div className="h-full pt-10 lg:mx-4 lg:mb-4 lg:w-80">
+    <div className="h-full lg:mb-4 lg:w-80 xl:w-100 bg-white  dark:bg-black  border border-border-subtle-1 p-4">
       <h1 className=" font-semibol mb-2 text-3xl text-text-primary">
         <span className=" text-link-primary"> Sign In</span> to BacklogsHub
       </h1>
@@ -15,8 +15,15 @@ const SignInForm = () => {
         <DiscordSignIn />
       </div>
       <div className="flex flex-col">
-        <div className="mb-4 mt-4 border-t border-border-subtle-1 pt-4">
-          <span className=" text-text-secondary">Alternative logins</span>
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex  items-center">
+            <span className="w-full h-[1px] bg-border-subtle-1 "></span>
+          </div>
+          <div className="relative   flex justify-center text-xs uppercase">
+            <span className=" bg-white  dark:bg-black px-2 text-muted-foreground">
+              Or continue with
+            </span>
+          </div>
         </div>
 
         <UserLoginForm />

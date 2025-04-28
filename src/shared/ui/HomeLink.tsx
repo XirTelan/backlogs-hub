@@ -15,7 +15,7 @@ export const HomeLink = () => {
         height={18}
         src={"/logo.png"}
       />
-      <span className="leading-[18px]    text-text-primary font-semibold">
+      <span className=" text-xl font-bold tracking-tight glow-text   text-text-primary ">
         BacklogsHub
       </span>
     </Link>

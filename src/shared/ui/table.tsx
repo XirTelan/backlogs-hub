@@ -35,7 +35,7 @@ const TableCell = (props: React.ComponentProps<"td">) => {
 const Table = ({ ...props }: React.ComponentProps<"table">) => {
   return (
     <div className=" flex  w-full flex-col bg-layer-1">
-      <table className="w-full table-fixed " {...props} />;
+      <table className="w-full table-fixed " {...props} />
     </div>
   );
 };

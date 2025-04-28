@@ -33,7 +33,7 @@ export const LinkBase = ({
       rel={isExternal ? "noopener nofollow noreferrer" : undefined}
       {...props}
       className={classNames(
-        "flex text-link-primary hover:text-link-primary-hover font-normal hover:underline  ",
+        "flex text-link-primary hover:text-link-primary-hover font-normal hover:underline transition-colors ",
         sizes[size]
       )}
     >

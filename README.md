@@ -2,6 +2,11 @@ WIP
 
 [RU VERSION](README_RU.md)
 
+- [General](#general)
+- [Creating Backlogs](#creating-backlogs)
+- [Backlog View](#backlog-view)
+- [Manage](#manage)
+- [Installation](#installation)
 
 
 # General
@@ -10,6 +15,8 @@ BacklogHub - project where you have one space to create,customize  and manage yo
 
 Tech stack: NextJs, Tailwind, FramerMotion, React Hook Forms,Zod,Swr, mongoose, Jest
 
+![Landing Page](https://github.com/user-attachments/assets/0748253c-2535-4747-a12a-adb084a2c6f1)
+
 
 ![image](https://github.com/user-attachments/assets/014383dc-afac-4114-a35b-f2c75deebf58)
 
@@ -17,6 +24,7 @@ Tech stack: NextJs, Tailwind, FramerMotion, React Hook Forms,Zod,Swr, mongoose, 
 
 
 # Creating backlogs
+
 
 ![CreatingBacklogDemo)](https://github.com/user-attachments/assets/9cec4a09-fbe5-4a90-8643-4a8657a9be42)
 
@@ -27,6 +35,8 @@ Tech stack: NextJs, Tailwind, FramerMotion, React Hook Forms,Zod,Swr, mongoose, 
 
 
 # Manage
+
+
 
 ![image](https://github.com/user-attachments/assets/2b079631-1793-4027-97f9-b990df255006)
 

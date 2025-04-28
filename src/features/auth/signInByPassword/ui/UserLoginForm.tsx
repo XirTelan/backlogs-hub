@@ -52,8 +52,8 @@ export const UserLoginForm = () => {
             type: "error",
           }
         }
-        placeholder="Email or username"
-        label="Continue with email/username"
+        placeholder="name@example.com"
+        label="Email/username"
         {...register("login")}
       />
       <InputField
@@ -68,15 +68,15 @@ export const UserLoginForm = () => {
         label="Password"
         {...register("password")}
       />
-      <span className=" inline-flex w-full items-center text-nowrap border-b border-border-subtle-1 pb-4 text-text-secondary">
+      <ButtonBase
+        style={{ width: "100%" }}
+        text="Sign In"
+        icon={<FaArrowRight size={16} />}
+      />
+      <span className="mt-4 inline-flex w-full items-center text-nowrap text-text-secondary">
         Don&apos;t have an account?&nbsp;
         <LinkBase href={"/register"}>Create</LinkBase>
       </span>
-      <ButtonBase
-        style={{ width: "100%" }}
-        text="Continue"
-        icon={<FaArrowRight size={16} />}
-      />
     </form>
   );
 };
